@@ -58,7 +58,7 @@ export default [
           {
             // 单个随访任务患者列表
             path: '/followup-management/lists/:followupId',
-            name: 'followupPatientLists',
+            name: 'followup-patientLists',
             // icon: 'edit',
             component: './FollowupManagement/FollowupPatientLists/index',
             hideInMenu: true,
@@ -68,6 +68,53 @@ export default [
             name: 'create',
             icon: 'edit',
             component: './FollowupManagement/Create/Layout',
+            routes: [
+              {
+                path: '/followup-management/create',
+                redirect: '/followup-management/create/step1',
+              },
+              {
+                // 选择任务类型
+                path: '/followup-management/create/step1',
+                name: 'select-type',
+                component: './FollowupManagement/Create/Step1',
+                hideInMenu: true,
+              },
+              {
+                // 选择对象
+                path: '/followup-management/create/step2',
+                name: 'select-object',
+                component: './FollowupManagement/Create/Step2',
+                hideInMenu: true,
+              },
+              {
+                // 编辑任务内容
+                path: '/followup-management/create/step3',
+                name: 'task-definition',
+                component: './FollowupManagement/Create/Step3',
+                hideInMenu: true,
+              },
+              {
+                // 发布
+                path: '/followup-management/create/step4',
+                name: 'issue',
+                component: './FollowupManagement/Create/Step4',
+                hideInMenu: true,
+              }
+            ]
+          },
+        ]
+      },
+      {
+        path: '/followup-configuration',
+        name: 'followup-configuration',
+        icon: 'book',
+        routes: [
+          {
+            path: '/followup-configuration/questionnaire',
+            name: 'questionnaire',
+            icon: 'edit',
+            // component: './FollowupConfiguration/Questionnaire',
           },
         ]
       },

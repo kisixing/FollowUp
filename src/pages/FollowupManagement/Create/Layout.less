@@ -1,7 +1,18 @@
+@import '~antd/lib/style/themes/default.less';
+@import '~@/utils/utils.less';
 
 .steps {
-  margin-left: 68px;
-  margin-right: 68px;
+  padding-left: 68px;
+  padding-right: 68px;
+
+  :global {
+    .ant-steps-item-process {
+      .ant-steps-item-title {
+        font-weight: bold;
+        color: @primary-color;
+      }
+    }
+  }
 }
 
 .content {
