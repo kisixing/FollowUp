@@ -5,92 +5,103 @@
  */
 import React, { PureComponent } from 'react';
 import { Table } from 'antd';
+import Link from 'umi/link';
 
 const data = [
   {
     key: '1',
-    name: 'John Brown',
-    age: 32,
+    name: '李依依',
+    ID: '440104199903245678',
+    phone: '15098765432',
+    age: 30,
+    birth: '1996-04-20',
+    createCard: '2019-05-18',
+    cardNum: '109992',
     address: 'New York No. 1 Lake Park',
   },
   {
     key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
+    name: '李依依',
+    ID: '440104199903245678',
+    phone: '15098765432',
+    age: 31,
+    birth: '1996-04-20',
+    createCard: '2019-05-18',
+    cardNum: '109992',
+    address: 'New York No. 1 Lake Park',
   },
   {
     key: '3',
-    name: 'Joe Black',
+    name: '李依依',
+    ID: '440104199903245678',
+    phone: '15098765432',
     age: 32,
-    address: 'Sidney No. 1 Lake Park',
+    birth: '1996-04-20',
+    createCard: '2019-05-18',
+    cardNum: '109992',
+    address: 'New York No. 1 Lake Park',
   },
   {
     key: '4',
-    name: 'Jim Red',
-    age: 32,
-    address: 'London No. 2 Lake Park',
+    name: '李依依',
+    ID: '440104199903245678',
+    phone: '15098765432',
+    age: 33,
+    birth: '1996-04-20',
+    createCard: '2019-05-18',
+    cardNum: '109992',
+    address: 'New York No. 1 Lake Park',
+  },
+  {
+    key: '5',
+    name: '李依依',
+    ID: '440104199903245678',
+    phone: '15098765432',
+    age: 34,
+    birth: '1996-04-20',
+    createCard: '2019-05-18',
+    cardNum: '109992',
   },
 ];
 
 class TableForm extends PureComponent {
   columns = [
     {
-      title: 'Name',
+      title: 'No.',
+      dataIndex: 'key',
+    },
+    {
+      title: '患者姓名',
       dataIndex: 'name',
-      filters: [
-        {
-          text: 'Joe',
-          value: 'Joe',
-        },
-        {
-          text: 'Jim',
-          value: 'Jim',
-        },
-        {
-          text: 'Submenu',
-          value: 'Submenu',
-          children: [
-            {
-              text: 'Green',
-              value: 'Green',
-            },
-            {
-              text: 'Black',
-              value: 'Black',
-            },
-          ],
-        },
-      ],
-      // specify the condition of filtering result
-      // here is that finding the name started with `value`
-      onFilter: (value, record) => record.name.indexOf(value) === 0,
-      sorter: (a, b) => a.name.length - b.name.length,
-      sortDirections: ['descend'],
     },
     {
-      title: 'Age',
+      title: '身份证号',
+      dataIndex: 'ID',
+    },
+    {
+      title: '手机号码    ',
+      dataIndex: 'phone',
+    },
+    {
+      title: '年龄',
       dataIndex: 'age',
-      defaultSortOrder: 'descend',
-      sorter: (a, b) => a.age - b.age,
+      // sorter: (a, b) => a.age - b.age,
     },
     {
-      title: 'Address',
-      dataIndex: 'address',
-      filters: [
-        {
-          text: 'London',
-          value: 'London',
-        },
-        {
-          text: 'New York',
-          value: 'New York',
-        },
-      ],
-      filterMultiple: false,
-      onFilter: (value, record) => record.address.indexOf(value) === 0,
-      sorter: (a, b) => a.address.length - b.address.length,
-      sortDirections: ['descend', 'ascend'],
+      title: '出生日期',
+      dataIndex: 'birth',
+    },
+    {
+      title: '建卡日期',
+      dataIndex: 'createCard',
+    },
+    {
+      title: '就诊卡号',
+      dataIndex: 'cardNum',
+    },
+    {
+      title: '操作',
+      render: () => <Link to="\">随访记录</Link>,
     },
   ];
 
@@ -98,22 +109,24 @@ class TableForm extends PureComponent {
   //   console.log('params', pagination, filters, sorter);
   // };
 
-  showTotal = total => {
-    return `共${total}条`;
-  };
+  // onShowSizeChange = (current, pageSize) => {
+  //   console.log(current, pageSize);
+  // };
 
   render() {
     return (
       <Table
-        size="small"
         columns={this.columns}
         dataSource={data}
         pagination={{
           size: 'small',
-          total: 50,
+          total: 54,
           pageSize: 10,
-          showTotal: this.showTotal,
+          showSizeChanger: true,
+          // onShowSizeChange={ this.onShowSizeChange }
+          showQuickJumper: true,
           // onChange: this.onChange,
+          showTotal: total => `总记录数${total}/总页数:${Math.ceil(total / 10)}`,
         }}
       />
     );

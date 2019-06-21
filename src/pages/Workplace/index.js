@@ -2,39 +2,9 @@ import React, { PureComponent } from 'react';
 import moment from 'moment';
 import { connect } from 'dva';
 import Link from 'umi/link';
-import { Row, Col, Card, List, Avatar } from 'antd';
-import { Radar } from '@/components/Charts';
-import EditableLinkGroup from '@/components/EditableLinkGroup';
+import { Row, Col, Card, List, Avatar, Icon } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-
 import styles from './index.less';
-
-const links = [
-  {
-    title: '操作一',
-    href: '',
-  },
-  {
-    title: '操作二',
-    href: '',
-  },
-  {
-    title: '操作三',
-    href: '',
-  },
-  {
-    title: '操作四',
-    href: '',
-  },
-  {
-    title: '操作五',
-    href: '',
-  },
-  {
-    title: '操作六',
-    href: '',
-  },
-];
 
 @connect(({ user, project, activities, chart, loading }) => ({
   currentUser: user.currentUser,
@@ -43,7 +13,6 @@ const links = [
   chart,
   currentUserLoading: loading.effects['user/fetchCurrent'],
   projectLoading: loading.effects['project/fetchNotice'],
-  activitiesLoading: loading.effects['activities/fetchList'],
 }))
 class Workplace extends PureComponent {
   componentDidMount() {
@@ -100,13 +69,60 @@ class Workplace extends PureComponent {
   }
 
   render() {
-    const {
-      currentUserLoading,
-      project: { notice },
-      projectLoading,
-      activitiesLoading,
-      chart: { radarData },
-    } = this.props;
+    const { currentUserLoading, projectLoading } = this.props;
+
+    const notices = [
+      {
+        id: '1',
+        icon: 'medicine-box',
+        title: '高危复诊提醒',
+        status: '运行中',
+        total: '1.6万',
+        today: '1235',
+      },
+      {
+        id: '2',
+        icon: 'medicine-box',
+        title: '高危复诊提醒',
+        status: '运行中',
+        total: '1.6万',
+        today: '1235',
+      },
+      {
+        id: '3',
+        icon: 'medicine-box',
+        title: '高危复诊提醒',
+        status: '运行中',
+        total: '1.6万',
+        today: '1235',
+      },
+      {
+        id: '4',
+        icon: 'medicine-box',
+        title: '高危复诊提醒',
+        status: '运行中',
+        total: '1.6万',
+        today: '1235',
+      },
+      {
+        id: '5',
+        icon: 'medicine-box',
+        title: '高危复诊提醒',
+        status: '运行中',
+        total: '1.6万',
+        today: '1235',
+      },
+      {
+        id: '6',
+        icon: 'medicine-box',
+        title: '高危复诊提醒',
+        status: '运行中',
+        total: '1.6万',
+        today: '1235',
+      },
+    ];
+
+    const cardIcon = ['edit', 'book', 'diff', 'fund'];
 
     return (
       <PageHeaderWrapper loading={currentUserLoading}>
@@ -121,79 +137,86 @@ class Workplace extends PureComponent {
               loading={projectLoading}
               bodyStyle={{ padding: 0 }}
             >
-              {notice.map(item => (
+              {notices.map(item => (
                 <Card.Grid className={styles.projectGrid} key={item.id}>
-                  <Card bodyStyle={{ padding: 0 }} bordered={false}>
-                    <Card.Meta
-                      title={
-                        <div className={styles.cardTitle}>
-                          <Avatar size="small" src={item.logo} />
-                          <Link to={item.href}>{item.title}</Link>
+                  <Card
+                    bodyStyle={{ padding: '15px' }}
+                    bordered={false}
+                    title={
+                      <div className={styles.cardTitle}>
+                        <Icon type={item.icon} theme="twoTone" style={{ fontSize: '20px' }} />
+                        <Link to="/">{item.title}</Link>
+                      </div>
+                    }
+                    extra={<Link to="/">{item.status}</Link>}
+                    actions={cardIcon.map(item2 => (
+                      <Link to="/" key={item2}>
+                        <Icon type={item2} />
+                      </Link>
+                    ))}
+                  >
+                    <Row>
+                      <Col span={12}>
+                        <div style={{ textAlign: 'center', marginBottom: 5 }}>随访患者</div>
+                        <div style={{ textAlign: 'center', font: 'bold 20px/20px Georgia,serif' }}>
+                          {item.total}
                         </div>
-                      }
-                      description={item.description}
-                    />
-                    <div className={styles.projectItemContent}>
-                      <Link to={item.memberLink}>{item.member || ''}</Link>
-                      {item.updatedAt && (
-                        <span className={styles.datetime} title={item.updatedAt}>
-                          {moment(item.updatedAt).fromNow()}
-                        </span>
-                      )}
-                    </div>
+                      </Col>
+                      <Col span={12}>
+                        <div style={{ textAlign: 'center', marginBottom: 5 }}>今日随访</div>
+                        <div style={{ textAlign: 'center', font: 'bold 20px/20px Georgia,serif' }}>
+                          {item.today}
+                        </div>
+                      </Col>
+                    </Row>
                   </Card>
                 </Card.Grid>
               ))}
             </Card>
-            <Card
-              bodyStyle={{ padding: 0 }}
-              bordered={false}
-              className={styles.activeCard}
-              title="动态"
-              loading={activitiesLoading}
-            >
-              <List loading={activitiesLoading} size="large">
-                <div className={styles.activitiesList}>{this.renderActivities()}</div>
-              </List>
-            </Card>
           </Col>
+
           <Col xl={8} lg={24} md={24} sm={24} xs={24}>
-            <Card
-              style={{ marginBottom: 24 }}
-              title="快速开始 / 便捷导航"
-              bordered={false}
-              bodyStyle={{ padding: 0 }}
-            >
-              <EditableLinkGroup onAdd={() => {}} links={links} linkElement={Link} />
+            <Card style={{ marginBottom: 24 }}>
+              <Row>
+                <Col span={12}>
+                  <div style={{ textAlign: 'center' }}>今日随访总量</div>
+                  <div style={{ textAlign: 'center', font: 'bold 20px/20px Georgia,serif' }}>
+                    6431 人
+                  </div>
+                </Col>
+                <Col span={12}>
+                  <div style={{ textAlign: 'center' }}>人工随访总量</div>
+                  <div style={{ textAlign: 'center', font: 'bold 20px/20px Georgia,serif' }}>
+                    312 人
+                  </div>
+                </Col>
+              </Row>
             </Card>
-            <Card
-              style={{ marginBottom: 24 }}
-              bordered={false}
-              title="XX 指数"
-              loading={radarData.length === 0}
-            >
-              <div className={styles.chart}>
-                <Radar hasLegend height={343} data={radarData} />
-              </div>
+
+            <Card title="投诉提醒" bordered={false} style={{ marginBottom: 24 }}>
+              <Row type="flex" justify="space-around" style={{ marginBottom: 10 }}>
+                <Col style={{ color: '#0096FA' }}>待受理的投诉</Col>
+                <Col style={{ color: '#0096FA' }}>1起</Col>
+              </Row>
+              <Row type="flex" justify="space-around">
+                <Col style={{ color: '#0096FA' }}>待处理的投诉</Col>
+                <Col style={{ color: '#0096FA' }}>9起</Col>
+              </Row>
             </Card>
-            <Card
-              bodyStyle={{ paddingTop: 12, paddingBottom: 12 }}
-              bordered={false}
-              title="团队"
-              loading={projectLoading}
-            >
-              <div className={styles.members}>
-                <Row gutter={48}>
-                  {notice.map(item => (
-                    <Col span={12} key={`members-item-${item.id}`}>
-                      <Link to={item.href}>
-                        <Avatar src={item.logo} size="small" />
-                        <span className={styles.member}>{item.member}</span>
-                      </Link>
-                    </Col>
-                  ))}
-                </Row>
-              </div>
+
+            <Card title="人工随访提醒" bordered={false} style={{ marginBottom: 24 }}>
+              <Row type="flex" justify="space-around" style={{ marginBottom: 10 }}>
+                <Col style={{ color: '#0096FA' }}>待随访的患者</Col>
+                <Col style={{ color: '#0096FA' }}>9人</Col>
+              </Row>
+              <Row type="flex" justify="space-around" style={{ marginBottom: 10 }}>
+                <Col style={{ color: '#0096FA' }}>待跟进的随访</Col>
+                <Col style={{ color: '#0096FA' }}>17起</Col>
+              </Row>
+              <Row type="flex" justify="space-around">
+                <Col style={{ color: '#0096FA' }}>紧急的随访</Col>
+                <Col style={{ color: '#0096FA' }}>8起</Col>
+              </Row>
             </Card>
           </Col>
         </Row>
