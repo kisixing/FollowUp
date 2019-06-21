@@ -8,23 +8,26 @@ import React, { Component } from 'react';
 import router from 'umi/router';
 import { connect } from 'dva';
 
-import  { Form, List, Card, Tooltip, Menu, Input, Dropdown, Icon, Avatar, Button } from 'antd';
+import { Form, List, Card, Tooltip, Menu, Input, Dropdown, Icon, Avatar, Button, Tag } from 'antd';
+import { TweenOneGroup } from 'rc-tween-one';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import TagSelect from '@/components/TagSelect';
 import StandardFormRow from '@/components/StandardFormRow';
+import { objToArr } from '@/utils/utils';
 
 import styles from './Lists.less';
 
 @connect(({ global, followupLists }) => ({
   global,
+  selectedTags: followupLists.selectedTags,
   lists: followupLists.lists,
 }))
 class FollowupManagement extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       tabActiveKey: 'all',
-    }
+    };
   }
 
   handleTabChange = key => {
@@ -36,9 +39,25 @@ class FollowupManagement extends Component {
     console.log(value);
   };
 
-  cardClick = (e) => {
-    const { match } = this.props;
+  cardClick = e => {
+    // const { match } = this.props;
     router.push(`/followup-management/lists/${e.id}`);
+  };
+
+  handleTags = () => {
+    // console.log(checkedTags);
+  };
+
+  handleTagClose = removedTag => {
+    const { dispatch } = this.props;
+    let { selectedTags } = this.props;
+    selectedTags = objToArr(selectedTags);
+    const tags = selectedTags.filter(tag => tag !== removedTag);
+    // console.log('removedTag', removedTag, tags);
+    dispatch({
+      type: 'followupLists/updateTags',
+      payload: tags,
+    });
   };
 
   render() {
@@ -104,7 +123,14 @@ class FollowupManagement extends Component {
     );
 
     const tabBarExtraContent = (
-      <Button type="primary" icon="plus" size="small" style={{ lineHeight: 1 }}>新建</Button>
+      <Button
+        type="primary"
+        icon="plus"
+        size="small"
+        onClick={() => router.push('/followup-management/create')}
+      >
+        新建
+      </Button>
     );
 
     const CardInfo = ({ all, today }) => (
@@ -120,16 +146,30 @@ class FollowupManagement extends Component {
       </div>
     );
 
-    const {
-      loading,
-      form,
-      lists,
-    } = this.props;
+    const tagsMap = tags => {
+      const tagChild = tags.map(tag => (
+        <span key={tag} style={{ display: 'inline-block' }}>
+          <Tag
+            closable
+            onClose={e => {
+              e.preventDefault();
+              this.handleTagClose(tag);
+            }}
+          >
+            {tag}
+          </Tag>
+        </span>
+      ));
+      return tagChild;
+    };
+
+    const { loading, form, selectedTags, lists } = this.props;
     const { getFieldDecorator } = form;
     const { tabActiveKey } = this.state;
 
     return (
       <PageHeaderWrapper
+        wrapperClassName={styles.wrapper}
         title="随访任务列表"
         content={mainSearch}
         tabList={tabList}
@@ -141,12 +181,28 @@ class FollowupManagement extends Component {
           <Card>
             <Form layout="inline">
               <StandardFormRow title="您选择的类目" block style={{ paddingBottom: 11 }}>
-
+                <div style={{ lineHeight: '32px' }}>
+                  <TweenOneGroup
+                    enter={{
+                      scale: 0.8,
+                      opacity: 0,
+                      type: 'from',
+                      duration: 100,
+                      onComplete: e => {
+                        e.target.style = '';
+                      },
+                    }}
+                    leave={{ opacity: 0, width: 0, scale: 0, duration: 200 }}
+                    appear={false}
+                  >
+                    {tagsMap(objToArr(selectedTags))}
+                  </TweenOneGroup>
+                </div>
               </StandardFormRow>
               <StandardFormRow title="所属类目" block style={{ paddingBottom: 11 }}>
                 <Form.Item>
                   {getFieldDecorator('category')(
-                    <TagSelect expandable actionsText={actionsTextMap}>
+                    <TagSelect expandable onChange={this.handleTags} actionsText={actionsTextMap}>
                       <TagSelect.Option value="cat1">科室随访</TagSelect.Option>
                       <TagSelect.Option value="cat2">专项随访</TagSelect.Option>
                       <TagSelect.Option value="cat3">关怀类随访</TagSelect.Option>
@@ -159,7 +215,7 @@ class FollowupManagement extends Component {
               <StandardFormRow title="二级类目" block style={{ paddingBottom: 11 }}>
                 <Form.Item>
                   {getFieldDecorator('secondaryCategory')(
-                    <TagSelect expandable actionsText={actionsTextMap}>
+                    <TagSelect expandable onChange={this.handleTags} actionsText={actionsTextMap}>
                       <TagSelect.Option value="cat001">高危妊娠管理</TagSelect.Option>
                       <TagSelect.Option value="cat002">妊娠糖尿病管理</TagSelect.Option>
                       <TagSelect.Option value="cat003">妊娠高血压管理</TagSelect.Option>
@@ -198,10 +254,14 @@ class FollowupManagement extends Component {
                   ]}
                 >
                   <Card.Meta
-                    style={{ cursor: 'pointer'}}
+                    style={{ cursor: 'pointer' }}
                     onClick={() => this.cardClick(item)}
                     avatar={<Avatar size="small" src={item.avatar} />}
-                    title={<div>{item.title} <span className={styles.status}>{item.status.dec}</span></div>}
+                    title={
+                      <div>
+                        {item.title} <span className={styles.status}>{item.status.dec}</span>
+                      </div>
+                    }
                   />
                   <div className={styles.cardItemContent}>
                     <CardInfo all={item.allFollowup} today={item.todayFollowup} />
@@ -212,7 +272,7 @@ class FollowupManagement extends Component {
           />
         </div>
       </PageHeaderWrapper>
-    )
+    );
   }
 }
 

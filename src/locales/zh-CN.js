@@ -11,6 +11,7 @@ import settings from './zh-CN/settings';
 import pwa from './zh-CN/pwa';
 import component from './zh-CN/component';
 import editor from './zh-CN/editor';
+import step2 from './zh-CN/step2';
 
 export default {
   'navBar.lang': '语言',
@@ -34,4 +35,5 @@ export default {
   ...pwa,
   ...component,
   ...editor,
+  ...step2,
 };

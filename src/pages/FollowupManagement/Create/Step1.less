@@ -1,5 +1,36 @@
+@import '~antd/lib/style/themes/default.less';
 
-.searchItem {
+.step1 {
+  .searchItem {
+    width: 100%;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+}
+
+.newButton {
   width: 100%;
-  text-align: center;
+  height: 91px;
+  color: @text-color-secondary;
+  background-color: #fff;
+  border-color: @border-color-base;
+  border-radius: @border-radius-sm;
+}
+
+.modal {
+  :global {
+    .ant-modal-header {
+      border-bottom: none;
+    }
+
+    .ant-modal-body {
+      height: 460px;
+      overflow-y: auto;
+    }
+
+    .ant-modal-footer {
+      text-align: center;
+      border-top: none;
+    }
+  }
 }

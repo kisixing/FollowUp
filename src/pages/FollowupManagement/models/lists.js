@@ -1,8 +1,11 @@
-
 export default {
   namespace: 'followupLists',
 
   state: {
+    selectedTags: {
+      category: ['科室随访', '专项随访'],
+      secondaryCategory: ['高危妊娠管理'],
+    },
     lists: [
       {
         id: '4545454',
@@ -10,7 +13,7 @@ export default {
         avatar: '',
         status: {
           code: 1,
-          dec: '运行中'
+          dec: '运行中',
         },
         allFollowup: 50,
         todayFollowup: 25,
@@ -21,7 +24,7 @@ export default {
         avatar: '',
         status: {
           code: 1,
-          dec: '运行中'
+          dec: '运行中',
         },
         allFollowup: 45,
         todayFollowup: 20,
@@ -32,7 +35,7 @@ export default {
         avatar: '',
         status: {
           code: 1,
-          dec: '运行中'
+          dec: '运行中',
         },
         allFollowup: 45,
         todayFollowup: 20,
@@ -43,29 +46,36 @@ export default {
         avatar: '',
         status: {
           code: 1,
-          dec: '运行中'
+          dec: '运行中',
         },
         allFollowup: 45,
         todayFollowup: 20,
-      },{
+      },
+      {
         id: '4545451421',
         title: '高危复诊提醒1',
         avatar: '',
         status: {
           code: 1,
-          dec: '运行中'
+          dec: '运行中',
         },
         allFollowup: 45,
         todayFollowup: 20,
-      }
+      },
     ],
   },
 
   effects: {
-
+    // *addTag({ payload }, { call, put }) {},
+    // *removeTag({ payload }, { call, put }) {},
   },
 
-  reduces: {
-
+  reducers: {
+    updateState(state, { payload }) {
+      return {
+        ...state,
+        ...payload,
+      };
+    },
   },
-}
+};

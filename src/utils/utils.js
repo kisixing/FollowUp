@@ -2,6 +2,7 @@ import moment from 'moment';
 import React from 'react';
 import nzh from 'nzh/cn';
 import { parse, stringify } from 'qs';
+import pathToRegexp from 'path-to-regexp';
 
 export function fixedZero(val) {
   return val * 1 < 10 ? `0${val}` : val;
@@ -192,3 +193,26 @@ export const importCDN = (url, name) =>
     };
     document.head.appendChild(dom);
   });
+
+export function objToArr(obj) {
+  const array = [];
+  // for (const key in obj) {
+  //   const item = obj[key];
+  //   array.push(...item);
+  // }
+  Object.keys(obj).forEach(key => {
+    const item = obj[key];
+    array.push(...item);
+  });
+  return array;
+}
+
+/**
+ * Whether the path matches the regexp if the language prefix is ignored, https://github.com/pillarjs/path-to-regexp.
+ * @param   {string|regexp|array}     regexp     Specify a string, array of strings, or a regular expression.
+ * @param   {string}                  pathname   Specify the pathname to match.
+ * @return  {array|null}              Return the result of the match or null.
+ */
+export function pathMatchRegexp(regexp, pathname) {
+  return pathToRegexp(regexp).exec(pathname);
+}

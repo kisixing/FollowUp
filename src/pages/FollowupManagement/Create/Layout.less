@@ -2,20 +2,22 @@
 @import '~@/utils/utils.less';
 
 .steps {
-  padding-left: 68px;
+  margin-bottom: 16px;
   padding-right: 68px;
+  padding-left: 68px;
 
   :global {
     .ant-steps-item-process {
       .ant-steps-item-title {
-        font-weight: bold;
         color: @primary-color;
+        font-weight: bold;
       }
     }
   }
 }
 
 .content {
-  background: #fff;
+  min-height: calc(~'100vh - 250px');
   padding: 24px;
+  background: #fff;
 }

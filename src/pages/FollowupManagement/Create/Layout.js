@@ -12,43 +12,22 @@ import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 
 import styles from './Layout.less';
 
-const steps = [
-  {
-    title: '选择任务类型',
-    content: '选择任务类型',
-  },
-  {
-    title: '选择对象',
-    content: '选择对象',
-  },
-  {
-    title: '编辑任务内容',
-    content: '任务内容',
-  },
-  {
-    title: '发布',
-    content: '发布',
-  }
-];
-
-@connect(({ global, followupCreate }) => ({
+@connect(({ global, newFollowupLayout }) => ({
   global,
-  step: followupCreate.step,
+  currentStep: newFollowupLayout.currentStep,
+  steps: newFollowupLayout.steps,
 }))
 class Layout extends Component {
   constructor(props) {
-    super(props)
-    this.state = {
-
-    }
+    super(props);
+    this.state = {};
   }
 
-
   render() {
-    const { match, children, location, step } = this.props;
+    const { children, steps, currentStep } = this.props;
 
     const mainSteps = (
-      <Steps current={step} className={styles.steps}>
+      <Steps current={currentStep} className={styles.steps}>
         {steps.map(item => (
           <Steps.Step key={item.title} title={item.title} />
         ))}
@@ -56,15 +35,10 @@ class Layout extends Component {
     );
 
     return (
-      <PageHeaderWrapper
-        title="新建随访任务"
-        content={mainSteps}
-      >
-        <div className={styles.content}>
-          {children}
-        </div>
+      <PageHeaderWrapper title="新建随访任务" content={mainSteps}>
+        <div className={styles.content}>{children}</div>
       </PageHeaderWrapper>
-    )
+    );
   }
 }
 

@@ -85,10 +85,10 @@ class SearchForm extends PureComponent {
                 rules: [{ required: false, message: '请选择年龄段' }],
               })(
                 <Input.Group compact>
-                  <Input style={{ width: 100, textAlign: 'center' }} placeholder="Minimum" />
+                  <Input style={{ width: '45%', textAlign: 'center' }} placeholder="Minimum" />
                   <Input
                     style={{
-                      width: 30,
+                      width: '10%',
                       borderLeft: 0,
                       pointerEvents: 'none',
                       backgroundColor: '#fff',
@@ -97,7 +97,7 @@ class SearchForm extends PureComponent {
                     disabled
                   />
                   <Input
-                    style={{ width: 100, textAlign: 'center', borderLeft: 0 }}
+                    style={{ width: '45%', textAlign: 'center', borderLeft: 0 }}
                     placeholder="Maximum"
                   />
                 </Input.Group>

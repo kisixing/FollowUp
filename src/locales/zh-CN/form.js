@@ -2,6 +2,7 @@ export default {
   'form.get-captcha': '获取验证码',
   'form.captcha.second': '秒',
   'form.optional': '（选填）',
+  'form.confirm': '确定',
   'form.submit': '提交',
   'form.save': '保存',
   'form.email.placeholder': '邮箱',

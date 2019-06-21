@@ -10,6 +10,12 @@
     background: #fff;
     border-bottom: 1px solid #e8e8e8;
 
+    .tabs {
+      :global(.ant-tabs-extra-content) {
+        line-height: 1;
+      }
+    }
+
     :global {
       .ant-page-header {
         padding: 0;
@@ -76,13 +82,14 @@
     margin-bottom: 16px;
   }
 
-  .content,
-  .extraContent {
-    margin-bottom: 16px;
-  }
+  // .content,
+  // .extraContent {
+  //   margin-bottom: 16px;
+  // }
 
   .extraContent {
     min-width: 242px;
+    margin-bottom: 16px;
     margin-left: 88px;
     text-align: right;
   }
