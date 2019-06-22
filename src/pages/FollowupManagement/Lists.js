@@ -39,9 +39,13 @@ class FollowupManagement extends Component {
     console.log(value);
   };
 
-  cardClick = e => {
+  onDetailClick = e => {
     // const { match } = this.props;
-    router.push(`/followup-management/lists/${e.id}`);
+    router.push(`/followup-management/lists/table/${e.id}`);
+  };
+
+  onChartClick = e => {
+    router.push(`/followup-management/lists/chart/${e.id}`);
   };
 
   handleTags = () => {
@@ -94,17 +98,17 @@ class FollowupManagement extends Component {
       <Menu>
         <Menu.Item>
           <a target="_blank" rel="noopener noreferrer" href="https://www.alipay.com/">
-            1st alipay
+            1、推荐 alipay
           </a>
         </Menu.Item>
         <Menu.Item>
           <a target="_blank" rel="noopener noreferrer" href="https://www.taobao.com/">
-            2nd taobao
+            2、推荐 taobao
           </a>
         </Menu.Item>
         <Menu.Item>
           <a target="_blank" rel="noopener noreferrer" href="https://www.tmall.com/">
-            3d tmall
+            3、推荐 tmall
           </a>
         </Menu.Item>
       </Menu>
@@ -230,20 +234,20 @@ class FollowupManagement extends Component {
           <List
             rowKey="id"
             style={{ marginTop: 24 }}
-            grid={{ gutter: 24, xl: 4, lg: 3, md: 3, sm: 2, xs: 1 }}
+            grid={{ gutter: 24, xxl: 4, xl: 3, lg: 2, md: 2, sm: 1 }}
             loading={loading}
             dataSource={lists}
             renderItem={item => (
               <List.Item key={item.id}>
                 <Card
-                  // hoverable
+                  hoverable
                   bodyStyle={{ paddingBottom: 20 }}
                   actions={[
-                    <Tooltip title="下载">
-                      <Icon type="download" />
+                    <Tooltip title="随访人员统计">
+                      <Icon type="ordered-list" onClick={() => this.onDetailClick(item)} />
                     </Tooltip>,
-                    <Tooltip title="编辑">
-                      <Icon type="edit" />
+                    <Tooltip title="图表分析">
+                      <Icon type="line-chart" onClick={() => this.onChartClick(item)} />
                     </Tooltip>,
                     <Tooltip title="分享">
                       <Icon type="share-alt" />
@@ -255,7 +259,6 @@ class FollowupManagement extends Component {
                 >
                   <Card.Meta
                     style={{ cursor: 'pointer' }}
-                    onClick={() => this.cardClick(item)}
                     avatar={<Avatar size="small" src={item.avatar} />}
                     title={
                       <div>

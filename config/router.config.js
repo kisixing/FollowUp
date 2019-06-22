@@ -56,11 +56,19 @@ export default [
             component: './FollowupManagement/Lists',
           },
           {
-            // 单个随访任务患者列表
-            path: '/followup-management/lists/:followupId',
+            // 单个随访任务患者统计列表
+            path: '/followup-management/lists/table/:followupId',
             name: 'followup-patientLists',
-            // icon: 'edit',
+            icon: 'edit',
             component: './FollowupManagement/FollowupPatientLists/index',
+            hideInMenu: true,
+          },
+          {
+            // 单个随访任务图形分析统计
+            path: '/followup-management/lists/chart/:followupId',
+            name: 'followup-chart',
+            icon: 'area-chart',
+            component: './FollowupManagement/FollowupPatientChart/index',
             hideInMenu: true,
           },
           {
@@ -100,10 +108,10 @@ export default [
                 name: 'issue',
                 component: './FollowupManagement/Create/Step4',
                 hideInMenu: true,
-              }
-            ]
+              },
+            ],
           },
-        ]
+        ],
       },
       {
         path: '/followup-configuration',
@@ -116,7 +124,7 @@ export default [
             icon: 'edit',
             // component: './FollowupConfiguration/Questionnaire',
           },
-        ]
+        ],
       },
       {
         path: '/schedule-reminder',

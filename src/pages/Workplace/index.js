@@ -6,11 +6,10 @@ import { Row, Col, Card, List, Avatar, Icon } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './index.less';
 
-@connect(({ user, project, activities, chart, loading }) => ({
+@connect(({ user, project, activities, loading }) => ({
   currentUser: user.currentUser,
   project,
   activities,
-  chart,
   currentUserLoading: loading.effects['user/fetchCurrent'],
   projectLoading: loading.effects['project/fetchNotice'],
 }))
@@ -140,8 +139,8 @@ class Workplace extends PureComponent {
               {notices.map(item => (
                 <Card.Grid className={styles.projectGrid} key={item.id}>
                   <Card
-                    bodyStyle={{ padding: '15px' }}
-                    bordered={false}
+                    bodyStyle={{ padding: '16px' }}
+                    // bordered={false}
                     title={
                       <div className={styles.cardTitle}>
                         <Icon type={item.icon} theme="twoTone" style={{ fontSize: '20px' }} />

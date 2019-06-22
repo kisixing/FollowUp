@@ -32,15 +32,47 @@ const PreviewModal = props => {
       <Timeline style={{ paddingLeft: '24px' }}>
         <Timeline.Item color="green">
           <p>预约日期 之后 1天 发送微信</p>
-          <div style={{ height: '80px' }} />
+          <div className={styles.wechart}>
+            <div className={styles.header}>
+              <div className={styles.title}>
+                <h4>复诊提醒</h4>
+                <span>4月15号</span>
+              </div>
+              <span className={styles.right}>
+                <Icon type="notification" />
+              </span>
+            </div>
+            <div className={styles.body}>
+              <p>姓名：张女士</p>
+              <p>预约日期：2019年5月8日</p>
+              <p>我掐指一算，您已经迟到1天了哦！尽快来医院复诊吧！</p>
+            </div>
+            <div className={styles.footer}>
+              <h4>详情</h4>
+              <span>
+                <Icon type="ellipsis" />
+              </span>
+            </div>
+          </div>
+          <div>
+            点击转链接:
+            <Button type="link">预约挂号页面</Button>
+          </div>
         </Timeline.Item>
         <Timeline.Item color="green">
           <p>预约日期 之后 5天 发送短信</p>
-          <div style={{ height: '80px' }} />
+          <div className={styles.sms}>
+            【暨南大学第一附属医院】
+            张女士，您好！距离约定的产检时间已经过去4天了，为了您与宝宝的健康，请尽快来院产检，并点击t.cn/Aj9IqeTy填写回执，谢谢！
+          </div>
+          <div>
+            点击转链接:
+            <Button type="link">复诊超时回执问卷</Button>
+          </div>
         </Timeline.Item>
         <Timeline.Item color="red">
           <p>预约日期之后 7天</p>
-          <div style={{ height: '80px' }} />
+          <div>进入人工管理模式，可通过电话随访并记录随访内容</div>
         </Timeline.Item>
         <Timeline.Item>
           <p>随访统计</p>

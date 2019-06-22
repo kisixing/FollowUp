@@ -20,7 +20,7 @@ export default {
       },
       {
         id: '454545421',
-        title: '高危复诊提醒1',
+        title: '高危妊娠复诊提醒',
         avatar: '',
         status: {
           code: 1,
@@ -31,7 +31,7 @@ export default {
       },
       {
         id: '4545454211',
-        title: '高危复诊提醒1',
+        title: '高危高血糖复诊提醒',
         avatar: '',
         status: {
           code: 1,
