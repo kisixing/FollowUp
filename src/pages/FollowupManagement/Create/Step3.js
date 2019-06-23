@@ -12,6 +12,8 @@ import {
   Checkbox,
   Col,
   Row,
+  Modal,
+  Timeline
 } from 'antd';
 import { lh40, colorC, mRb8 } from './Step3.less';
 import router from 'umi/router';
@@ -31,6 +33,7 @@ export default class Demo extends React.Component {
     this.state = {
       activeKey: panes[0].key,
       panes,
+
     };
   }
 
@@ -95,30 +98,33 @@ function handleButtonClick(e) {
 }
 
 function handleMenuClick(e) {
-  debugger;
   message.info('Click on menu item.');
   console.log('click', e);
 }
 
-const menu = (
-  <Menu onClick={handleMenuClick}>
-    <Menu.Item key="1">1st menu item</Menu.Item>
-    <Menu.Item key="2">2nd menu item</Menu.Item>
-  </Menu>
-);
 
 function Content1(props) {
-  const [formData, setFormData] = useState({
-    dateType: reservationDateType[0],
-    duringType: reservationDuringType[0],
-    mediaType: reservationMediaType[0],
-    IsfollowOrder: false,
+  const [state, setState] = useState({
+    formData: {
+      dateType: reservationDateType[0],
+      duringType: reservationDuringType[0],
+      mediaType: reservationMediaType[0],
+      IsfollowOrder: false,
+      text: '',
+    },
+    previewVisible: false
   });
+  const { previewVisible, formData } = state
 
   function _setFormData(key, value) {
-    setFormData({ ...formData, [key]: value });
+    setState({
+      ...state, formData: {
+        ...formData,
+        [key]: value
+      }
+    });
   }
-  const { dateType, duringType, mediaType, IsfollowOrder } = formData;
+  const { dateType, duringType, mediaType, IsfollowOrder, text } = formData;
 
   function getDropDown(type, typeList) {
     return (
@@ -129,7 +135,9 @@ function Content1(props) {
       </Dropdown>
     );
   }
-
+  function setVisible(previewVisible) {
+    setState({ ...state, previewVisible })
+  }
   return (
     <Form
       layout="horizontal"
@@ -187,7 +195,7 @@ function Content1(props) {
       <Form.Item label="提示文字">
         <Input.TextArea
           style={{ width: '80%' }}
-          placeholder="Autosize height with minimum and maximum number of lines"
+          value={text}
           autosize={{ minRows: 2, maxRows: 6 }}
         />
         <Button type="link" style={{ float: 'none' }}>
@@ -195,9 +203,9 @@ function Content1(props) {
         </Button>
         <div>
           您可以在提示文字中插入：
-          {['孕妇姓名', '复诊预约时间', ' 超时天数'].map(_ => {
+          {['孕妇姓名', '复诊预约时间', '超时天数'].map(_ => {
             return (
-              <Button type="link" key={_}>
+              <Button type="link" key={_} onClick={() => _setFormData('text', formData.text.concat(' ', _, ' '))}>
                 {_}
               </Button>
             );
@@ -223,17 +231,20 @@ function Content1(props) {
         </Col>
       </Row>
       <div style={{ textAlign: 'center' }}>
-        <Button className={mRb8}>预览</Button>
+        <Button className={mRb8} onClick={() => setVisible(true)}>预览</Button>
         <Button type="primary" className={mRb8}>
           上一步
         </Button>
         <Button type="primary" className={mRb8}>
           下一步
         </Button>
-        <Button type="primary" className={mRb8} onClick={() => router.push('Step4')}>
+        <Button type="primary" className={mRb8} onClick={() => router.push('step4')}>
           确定
         </Button>
       </div>
+      <Preview visible={previewVisible} onCancel={() => setVisible(false)} onOk={() => { setVisible(false) }}>
+
+      </Preview>
     </Form>
   );
 }
@@ -253,4 +264,28 @@ function getMenu(arr, handleMenuClick) {
       ))}
     </Menu>
   );
+}
+//预览
+function Preview({ visible, onOk, onCancel }) {
+  // const [state,setState] = useState({
+  //   visible:false
+  // })
+  return (
+    <Modal visible={visible} onOk={onOk} onCancel={onCancel}>
+      <Timeline>
+        <Timeline.Item color="green">Create a services site 2015-09-01</Timeline.Item>
+        <Timeline.Item color="green">Create a services site 2015-09-01</Timeline.Item>
+        <Timeline.Item color="red">
+          <p>Solve initial network problems 1</p>
+          <p>Solve initial network problems 2</p>
+          <p>Solve initial network problems 3 2015-09-01</p>
+        </Timeline.Item>
+        <Timeline.Item>
+          <p>Technical testing 1</p>
+          <p>Technical testing 2</p>
+          <p>Technical testing 3 2015-09-01</p>
+        </Timeline.Item>
+      </Timeline>,
+    </Modal>
+  )
 }

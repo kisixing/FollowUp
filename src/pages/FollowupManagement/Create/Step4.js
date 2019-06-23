@@ -1,6 +1,5 @@
 import {
   Transfer,
-  Modal,
   Tabs,
   Button,
   Dropdown,
@@ -14,6 +13,7 @@ import {
   Checkbox,
   Col,
   Row,
+  Modal
 } from 'antd';
 const CheckboxGroup = Checkbox.Group;
 
@@ -176,10 +176,12 @@ export default function(props) {
       </Form.Item>
       <div style={{ textAlign: 'center' }}>
         <Button className={mRb8}>预览</Button>
-        <Button type="primary" className={mRb8} onClick={() => router.push('Step4')}>
+        <Button type="primary" className={mRb8} onClick={() => router.push('step4')}>
           发布
         </Button>
       </div>
+
+
     </Form>
   );
 }
@@ -243,3 +245,4 @@ function CheckboxList({ list }) {
     </div>
   );
 }
+
