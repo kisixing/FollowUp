@@ -13,9 +13,20 @@ import { TweenOneGroup } from 'rc-tween-one';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import TagSelect from '@/components/TagSelect';
 import StandardFormRow from '@/components/StandardFormRow';
-import { objToArr } from '@/utils/utils';
+import { objFormatArr } from '@/utils/utils';
 
 import styles from './Lists.less';
+
+const category = ['科室随访', '专项随访', '关怀类随访', '管理类随访', '科研随访', '其他随访'];
+const secondaryCategory = [
+  '高危妊娠管理',
+  '妊娠糖尿病管理',
+  '妊娠高血压管理',
+  '产后随访',
+  '术前随访',
+  '术后随访',
+  '其他高危管理',
+];
 
 @connect(({ global, followupLists }) => ({
   global,
@@ -48,19 +59,23 @@ class FollowupManagement extends Component {
     router.push(`/followup-management/lists/chart/${e.id}`);
   };
 
-  handleTags = () => {
-    // console.log(checkedTags);
+  // 选择标签
+  handleTags = (target, checkedTags) => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'followupLists/updateTags',
+      payload: {
+        target,
+        checkedTags,
+      },
+    });
   };
 
   handleTagClose = removedTag => {
     const { dispatch } = this.props;
-    let { selectedTags } = this.props;
-    selectedTags = objToArr(selectedTags);
-    const tags = selectedTags.filter(tag => tag !== removedTag);
-    // console.log('removedTag', removedTag, tags);
     dispatch({
-      type: 'followupLists/updateTags',
-      payload: tags,
+      type: 'followupLists/removeTag',
+      payload: removedTag,
     });
   };
 
@@ -167,6 +182,15 @@ class FollowupManagement extends Component {
       return tagChild;
     };
 
+    const tagOptionsMap = options => {
+      const tagChild = options.map(tag => (
+        <TagSelect.Option key={tag} value={tag}>
+          {tag}
+        </TagSelect.Option>
+      ));
+      return tagChild;
+    };
+
     const { loading, form, selectedTags, lists } = this.props;
     const { getFieldDecorator } = form;
     const { tabActiveKey } = this.state;
@@ -184,7 +208,7 @@ class FollowupManagement extends Component {
         <div className={styles.content}>
           <Card>
             <Form layout="inline">
-              <StandardFormRow title="您选择的类目" block style={{ paddingBottom: 11 }}>
+              <StandardFormRow title="已选类目" block style={{ paddingBottom: 11 }}>
                 <div style={{ lineHeight: '32px' }}>
                   <TweenOneGroup
                     enter={{
@@ -199,19 +223,19 @@ class FollowupManagement extends Component {
                     leave={{ opacity: 0, width: 0, scale: 0, duration: 200 }}
                     appear={false}
                   >
-                    {tagsMap(objToArr(selectedTags))}
+                    {tagsMap(objFormatArr(selectedTags))}
                   </TweenOneGroup>
                 </div>
               </StandardFormRow>
               <StandardFormRow title="所属类目" block style={{ paddingBottom: 11 }}>
                 <Form.Item>
                   {getFieldDecorator('category')(
-                    <TagSelect expandable onChange={this.handleTags} actionsText={actionsTextMap}>
-                      <TagSelect.Option value="cat1">科室随访</TagSelect.Option>
-                      <TagSelect.Option value="cat2">专项随访</TagSelect.Option>
-                      <TagSelect.Option value="cat3">关怀类随访</TagSelect.Option>
-                      <TagSelect.Option value="cat4">管理类随访</TagSelect.Option>
-                      <TagSelect.Option value="cat5">科研随访</TagSelect.Option>
+                    <TagSelect
+                      expandable
+                      onChange={tags => this.handleTags('category', tags)}
+                      actionsText={actionsTextMap}
+                    >
+                      {tagOptionsMap(category)}
                     </TagSelect>
                   )}
                 </Form.Item>
@@ -219,12 +243,12 @@ class FollowupManagement extends Component {
               <StandardFormRow title="二级类目" block style={{ paddingBottom: 11 }}>
                 <Form.Item>
                   {getFieldDecorator('secondaryCategory')(
-                    <TagSelect expandable onChange={this.handleTags} actionsText={actionsTextMap}>
-                      <TagSelect.Option value="cat001">高危妊娠管理</TagSelect.Option>
-                      <TagSelect.Option value="cat002">妊娠糖尿病管理</TagSelect.Option>
-                      <TagSelect.Option value="cat003">妊娠高血压管理</TagSelect.Option>
-                      <TagSelect.Option value="cat004">产后随访</TagSelect.Option>
-                      <TagSelect.Option value="cat005">术后随访</TagSelect.Option>
+                    <TagSelect
+                      expandable
+                      onChange={tags => this.handleTags('secondaryCategory', tags)}
+                      actionsText={actionsTextMap}
+                    >
+                      {tagOptionsMap(secondaryCategory)}
                     </TagSelect>
                   )}
                 </Form.Item>

@@ -194,12 +194,13 @@ export const importCDN = (url, name) =>
     document.head.appendChild(dom);
   });
 
-export function objToArr(obj) {
+/**
+ * { label1: [ value11, value12, ...], label2: [ value21, value22, ...] } ==> [value11, value12, value21, value22, ...]
+ * @param {*} obj
+ * @returns array
+ */
+export function objFormatArr(obj) {
   const array = [];
-  // for (const key in obj) {
-  //   const item = obj[key];
-  //   array.push(...item);
-  // }
   Object.keys(obj).forEach(key => {
     const item = obj[key];
     array.push(...item);

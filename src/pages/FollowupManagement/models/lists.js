@@ -1,10 +1,12 @@
+/* eslint-disable no-plusplus */
+
 export default {
   namespace: 'followupLists',
 
   state: {
     selectedTags: {
-      category: ['科室随访', '专项随访'],
-      secondaryCategory: ['高危妊娠管理'],
+      category: [],
+      secondaryCategory: [],
     },
     lists: [
       {
@@ -66,7 +68,42 @@ export default {
   },
 
   effects: {
-    // *addTag({ payload }, { call, put }) {},
+    *removeTag({ payload }, { put, select }) {
+      const selectedTags = yield select(_ => _.followupLists.selectedTags);
+      const types = Object.keys(selectedTags);
+      let tags = [];
+      for (let i = 0; i < types.length; i++) {
+        const array = selectedTags[types[i]];
+        const index = array.findIndex(tag => tag === payload);
+        if (index > -1) {
+          array.splice(index, 1);
+          tags = {
+            ...selectedTags,
+            [types[i]]: array,
+          };
+        }
+      }
+      yield put({
+        type: 'updateState',
+        payload: {
+          selectedTags: tags,
+        },
+      });
+    },
+    *updateTags({ payload }, { put, select }) {
+      const selectedTags = yield select(_ => _.followupLists.selectedTags);
+      const { target, checkedTags } = payload;
+      const tags = {
+        ...selectedTags,
+        [target]: checkedTags,
+      };
+      yield put({
+        type: 'updateState',
+        payload: {
+          selectedTags: tags,
+        },
+      });
+    },
     // *removeTag({ payload }, { call, put }) {},
   },
 

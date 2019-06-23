@@ -1,8 +1,13 @@
+/* eslint-disable no-plusplus */
+
 export default {
   namespace: 'step1',
 
   state: {
-    selectedTags: ['科室随访', '专项随访'],
+    selectedTags: {
+      category: [],
+      secondaryCategory: [],
+    },
     lists: [
       {
         id: '11112222',
@@ -58,9 +63,35 @@ export default {
   },
 
   effects: {
+    *removeTag({ payload }, { put, select }) {
+      const selectedTags = yield select(_ => _.step1.selectedTags);
+      const types = Object.keys(selectedTags);
+      let tags = [];
+      for (let i = 0; i < types.length; i++) {
+        const array = selectedTags[types[i]];
+        const index = array.findIndex(tag => tag === payload);
+        if (index > -1) {
+          array.splice(index, 1);
+          tags = {
+            ...selectedTags,
+            [types[i]]: array,
+          };
+        }
+      }
+      yield put({
+        type: 'updateState',
+        payload: {
+          selectedTags: tags,
+        },
+      });
+    },
     *updateTags({ payload }, { put, select }) {
       const selectedTags = yield select(_ => _.step1.selectedTags);
-      const tags = selectedTags.filter(tag => tag !== payload);
+      const { target, checkedTags } = payload;
+      const tags = {
+        ...selectedTags,
+        [target]: checkedTags,
+      };
       yield put({
         type: 'updateState',
         payload: {

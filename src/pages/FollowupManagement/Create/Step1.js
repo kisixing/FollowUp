@@ -12,8 +12,24 @@ import { TweenOneGroup } from 'rc-tween-one';
 import TagSelect from '@/components/TagSelect';
 import StandardFormRow from '@/components/StandardFormRow';
 
+import { objFormatArr } from '@/utils/utils';
+
 import styles from './Step1.less';
 
+const category = ['科室随访', '专项随访', '关怀类随访', '管理类随访', '科研随访', '其他随访'];
+const secondaryCategory = [
+  '高危妊娠管理',
+  '妊娠糖尿病管理',
+  '妊娠高血压管理',
+  '产后随访',
+  '术前随访',
+  '术后随访',
+  '其他高危管理',
+];
+
+/**
+ * 预览弹窗modal
+ */
 const PreviewModal = props => {
   const { dataSource, modalVisible, handleSelect, handleModalVisible } = props;
   return (
@@ -56,7 +72,9 @@ const PreviewModal = props => {
           </div>
           <div>
             点击转链接:
-            <Button type="link">预约挂号页面</Button>
+            <Button type="link" style={{ fontSize: '12px' }}>
+              预约挂号页面
+            </Button>
           </div>
         </Timeline.Item>
         <Timeline.Item color="green">
@@ -67,7 +85,9 @@ const PreviewModal = props => {
           </div>
           <div>
             点击转链接:
-            <Button type="link">复诊超时回执问卷</Button>
+            <Button type="link" style={{ fontSize: '12px' }}>
+              复诊超时回执问卷
+            </Button>
           </div>
         </Timeline.Item>
         <Timeline.Item color="red">
@@ -82,6 +102,9 @@ const PreviewModal = props => {
   );
 };
 
+/**
+ * 主页面内容
+ */
 @connect(({ global, step1 }) => ({
   global,
   selectedTags: step1.selectedTags,
@@ -98,10 +121,23 @@ class Step1 extends Component {
     };
   }
 
+  // 选择标签
+  handleTags = (target, checkedTags) => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'step1/updateTags',
+      payload: {
+        target,
+        checkedTags,
+      },
+    });
+  };
+
   onSearch = () => {
     // console.log('onSearch', value);
   };
 
+  // 选择模板事件
   onClick = value => {
     this.setState({
       showTemplate: true,
@@ -114,10 +150,11 @@ class Step1 extends Component {
     this.handleModalVisible(true);
   };
 
-  handleTagClose = removedTag => {
+  // 移除tag标签
+  handleTagRemove = removedTag => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'step1/updateTags',
+      type: 'step1/removeTag',
       payload: removedTag,
     });
   };
@@ -146,17 +183,17 @@ class Step1 extends Component {
     };
 
     /**
-     * map func
+     * map 已选择的tags标签
      * @param {array} tags 已选择的tag标签
      */
-    const tagsMap = tags => {
+    const selectedTagsMap = tags => {
       const tagChild = tags.map(tag => (
         <span key={tag} style={{ display: 'inline-block' }}>
           <Tag
             closable
             onClose={e => {
               e.preventDefault();
-              this.handleTagClose(tag);
+              this.handleTagRemove(tag);
             }}
           >
             {tag}
@@ -166,9 +203,19 @@ class Step1 extends Component {
       return tagChild;
     };
 
+    const tagOptionsMap = options => {
+      const tagChild = options.map(tag => (
+        <TagSelect.Option key={tag} value={tag}>
+          {tag}
+        </TagSelect.Option>
+      ));
+      return tagChild;
+    };
+
     return (
       <div className={styles.step1}>
         {!showTemplate ? (
+          // 选择随访任务类型
           <>
             <Form layout="inline">
               <Form.Item className={styles.searchItem}>
@@ -179,8 +226,8 @@ class Step1 extends Component {
                   onSearch={this.onSearch}
                 />
               </Form.Item>
-              <StandardFormRow title="您选择的类目" block style={{ paddingBottom: 11 }}>
-                <div style={{ lineHeight: '32px' }}>
+              <StandardFormRow title="已选类目" block style={{ paddingBottom: 11 }}>
+                <div style={{ lineHeight: '32px', marginLeft: '-8px' }}>
                   <TweenOneGroup
                     enter={{
                       scale: 0.8,
@@ -194,19 +241,19 @@ class Step1 extends Component {
                     leave={{ opacity: 0, width: 0, scale: 0, duration: 200 }}
                     appear={false}
                   >
-                    {tagsMap(selectedTags)}
+                    {selectedTagsMap(objFormatArr(selectedTags))}
                   </TweenOneGroup>
                 </div>
               </StandardFormRow>
               <StandardFormRow title="所属类目" block style={{ paddingBottom: 11 }}>
                 <Form.Item>
                   {getFieldDecorator('category')(
-                    <TagSelect expandable actionsText={actionsTextMap}>
-                      <TagSelect.Option value="cat1">科室随访</TagSelect.Option>
-                      <TagSelect.Option value="cat2">专项随访</TagSelect.Option>
-                      <TagSelect.Option value="cat3">关怀类随访</TagSelect.Option>
-                      <TagSelect.Option value="cat4">管理类随访</TagSelect.Option>
-                      <TagSelect.Option value="cat5">科研随访</TagSelect.Option>
+                    <TagSelect
+                      expandable
+                      onChange={tags => this.handleTags('category', tags)}
+                      actionsText={actionsTextMap}
+                    >
+                      {tagOptionsMap(category)}
                     </TagSelect>
                   )}
                 </Form.Item>
@@ -214,12 +261,12 @@ class Step1 extends Component {
               <StandardFormRow title="二级类目" block style={{ paddingBottom: 11 }}>
                 <Form.Item>
                   {getFieldDecorator('secondaryCategory')(
-                    <TagSelect expandable actionsText={actionsTextMap}>
-                      <TagSelect.Option value="cat001">高危妊娠管理</TagSelect.Option>
-                      <TagSelect.Option value="cat002">妊娠糖尿病管理</TagSelect.Option>
-                      <TagSelect.Option value="cat003">妊娠高血压管理</TagSelect.Option>
-                      <TagSelect.Option value="cat004">产后随访</TagSelect.Option>
-                      <TagSelect.Option value="cat005">术后随访</TagSelect.Option>
+                    <TagSelect
+                      expandable
+                      onChange={tags => this.handleTags('secondaryCategory', tags)}
+                      actionsText={actionsTextMap}
+                    >
+                      {tagOptionsMap(secondaryCategory)}
                     </TagSelect>
                   )}
                 </Form.Item>
@@ -251,6 +298,7 @@ class Step1 extends Component {
             />
           </>
         ) : (
+          // 选择随访任务模板
           <>
             <h3>推荐模板</h3>
             <List
