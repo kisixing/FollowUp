@@ -13,7 +13,7 @@ import {
   Checkbox,
   Col,
   Row,
-  Modal
+  Modal,
 } from 'antd';
 const CheckboxGroup = Checkbox.Group;
 
@@ -22,45 +22,53 @@ import router from 'umi/router';
 const { TabPane } = Tabs;
 const reservationDateType = ['预约日期', '末次就诊日期'];
 const reservationDuringType = ['之前', '当天', '之后'];
-const filterType = ['复诊预约时间段', '超时天数', '高危等级', '跟踪结果'];
-const taskTableContent = setMock([
-  '姓名',
-  '就诊卡号',
-  '手机号',
-  '现孕周',
-  '高危等级',
-  '上次就诊时间',
-  '复诊预约时间',
-  '超时天数',
-  '短信回执',
-  '电话状态',
-  '电话随访记录超时原因',
-  '电话随访备注',
-]);
-const statisticTableContent = setMock([
-  '姓名',
-  '就诊卡号',
-  '手机号',
-  '孕周',
-  '高危等级',
-  '上次就诊时间',
-  '复诊预约时间',
-  '按时复诊',
-  '跟踪结果',
-  '实际复诊时间',
-  '追踪方式',
-  '电话状态',
-]);
+const filterType = setMock(['复诊预约时间段', '超时天数', '高危等级', '跟踪结果']);
+const taskTableContent = setMock(
+  [
+    '姓名',
+    '就诊卡号',
+    '手机号',
+    '现孕周',
+    '高危等级',
+    '上次就诊时间',
+    '复诊预约时间',
+    '超时天数',
+    '短信回执',
+    '电话状态',
+    '电话随访记录超时原因',
+    '电话随访备注',
+  ],
+  'title',
+  'key'
+);
+const statisticTableContent = setMock(
+  [
+    '姓名',
+    '就诊卡号',
+    '手机号',
+    '孕周',
+    '高危等级',
+    '上次就诊时间',
+    '复诊预约时间',
+    '按时复诊',
+    '跟踪结果',
+    '实际复诊时间',
+    '追踪方式',
+    '电话状态',
+  ],
+  'title',
+  'key'
+);
 
-function setMock(arr) {
+function setMock(arr, labelKey = 'label', valueKey = 'value') {
   return arr.map(a => {
     return {
-      key:
+      [valueKey]:
         a +
         Math.random()
           .toString(16)
           .slice(2),
-      title: a,
+      [labelKey]: a,
       // description: `description of content${a}`,
       // chosen:true
     };
@@ -78,11 +86,14 @@ export default function(props) {
     taskVisible: false,
     taskTargetKeys: [],
     _taskTargetKeys: [],
+    statisticVisible: false,
     statisticTargetKeys: [],
     _statisticTargetKeys: [],
+    filterCheckedList1: [],
+    filterCheckedList2: [],
   });
 
-  function _setFormData(key, value) {
+  function _setState(key, value) {
     setState({ ...state, [key]: value });
   }
   const {
@@ -90,13 +101,18 @@ export default function(props) {
     duringType,
     IsfollowOrder,
     taskVisible,
+    statisticVisible,
+    statisticTargetKeys,
+    _statisticTargetKeys,
     taskTargetKeys,
     _taskTargetKeys,
+    filterCheckedList1,
+    filterCheckedList2,
   } = state;
 
   function getDropDown(type, typeList) {
     return (
-      <Dropdown overlay={getMenu(typeList, ({ key }) => _setFormData(type, key))}>
+      <Dropdown overlay={getMenu(typeList, ({ key }) => _setState(type, key))}>
         <Button>
           {state[type]} <Icon type="down" />
         </Button>
@@ -129,13 +145,14 @@ export default function(props) {
       labelAlign="left"
     >
       <Title label="任务管理" isTop />
-      <Row>
+      <Row style={{ marginBottom: '20px' }}>
         <Col offset={1}>
           <div className={lh40}>
             <Checkbox>人工管理</Checkbox>
           </div>
         </Col>
       </Row>
+
       <Form.Item label="对象范围">
         <Input.Group compact style={{ lineHeight: '32px' }}>
           {getDropDown('dateType', reservationDateType)}
@@ -144,7 +161,14 @@ export default function(props) {
         </Input.Group>
       </Form.Item>
 
-      <Form.Item label="筛选条件">{CheckboxList({ list: filterType })}</Form.Item>
+      <Form.Item label="筛选条件">
+        {CheckboxList({
+          list: filterType,
+          onChange(checkedList) {
+            _setState('filterCheckedList1', checkedList);
+          },
+        })}
+      </Form.Item>
 
       <Form.Item label="表格内容">
         <Button
@@ -174,14 +198,57 @@ export default function(props) {
           }}
         />
       </Form.Item>
+
+      <Title label="随访统计配置" isTop />
+
+      <Form.Item label="筛选条件">
+        {CheckboxList({
+          list: filterType,
+          onChange(checkedList) {
+            _setState('filterCheckedList2', checkedList);
+          },
+        })}
+      </Form.Item>
+
+      <Form.Item label="表格内容">
+        <Button
+          type="link"
+          style={{ whiteSpace: 'normal', textAlign: 'left' }}
+          onClick={() => setState({ ...state, statisticVisible: true })}
+        >
+          {statisticTargetKeys.length > 0 ? (
+            statisticTableContent
+              .filter(t => statisticTargetKeys.includes(t.key))
+              .map(t => t.title)
+              .join('、')
+          ) : (
+            <a>添加</a>
+          )}
+        </Button>
+        <TransferModal
+          visible={statisticVisible}
+          dataSource={statisticTableContent}
+          targetKeys={_statisticTargetKeys}
+          onOk={() => {
+            setState({
+              ...state,
+              statisticTargetKeys: _statisticTargetKeys,
+              statisticVisible: false,
+            });
+          }}
+          onCancel={() => setState({ ...state, _statisticTargetKeys: [], statisticVisible: false })}
+          onChange={targetkeys => {
+            setState({ ...state, _statisticTargetKeys: targetkeys });
+          }}
+        />
+      </Form.Item>
+
       <div style={{ textAlign: 'center' }}>
         <Button className={mRb8}>预览</Button>
         <Button type="primary" className={mRb8} onClick={() => router.push('step4')}>
           发布
         </Button>
       </div>
-
-
     </Form>
   );
 }
@@ -209,32 +276,30 @@ function getMenu(arr, handleMenuClick) {
   );
 }
 
-function CheckboxList({ list }) {
+function CheckboxList({ list, onChange }) {
   const [state, setState] = useState({
     checkedList: [],
     indeterminate: false,
     checkAll: false,
   });
 
-  const onChange = checkedList => {
+  const _onChange = checkedList => {
     setState({
       checkedList,
       indeterminate: !!checkedList.length && checkedList.length < list.length,
       checkAll: checkedList.length === list.length,
     });
+    onChange(checkedList);
   };
 
   const onCheckAllChange = e => {
-    setState({
-      checkedList: e.target.checked ? list : [],
-      indeterminate: false,
-      checkAll: e.target.checked,
-    });
+    const checkedList = e.target.checked ? list.map(_ => _.label) : [];
+    _onChange(checkedList);
   };
 
   return (
     <div>
-      <CheckboxGroup options={list} value={state.checkedList} onChange={onChange} />
+      <CheckboxGroup options={list} value={state.checkedList} onChange={_onChange} />
       <Checkbox
         indeterminate={state.indeterminate}
         onChange={onCheckAllChange}
@@ -245,4 +310,3 @@ function CheckboxList({ list }) {
     </div>
   );
 }
-

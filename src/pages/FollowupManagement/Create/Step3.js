@@ -12,11 +12,10 @@ import {
   Checkbox,
   Col,
   Row,
-  Modal,
-  Timeline
 } from 'antd';
 import { lh40, colorC, mRb8 } from './Step3.less';
 import router from 'umi/router';
+import Preview from './TaskPreview';
 const { TabPane } = Tabs;
 const reservationDateType = ['预约日期', '末次就诊日期'];
 const reservationDuringType = ['之前', '当天', '之后'];
@@ -33,7 +32,6 @@ export default class Demo extends React.Component {
     this.state = {
       activeKey: panes[0].key,
       panes,
-
     };
   }
 
@@ -102,7 +100,6 @@ function handleMenuClick(e) {
   console.log('click', e);
 }
 
-
 function Content1(props) {
   const [state, setState] = useState({
     formData: {
@@ -112,16 +109,17 @@ function Content1(props) {
       IsfollowOrder: false,
       text: '',
     },
-    previewVisible: false
+    previewVisible: true,
   });
-  const { previewVisible, formData } = state
+  const { previewVisible, formData } = state;
 
   function _setFormData(key, value) {
     setState({
-      ...state, formData: {
+      ...state,
+      formData: {
         ...formData,
-        [key]: value
-      }
+        [key]: value,
+      },
     });
   }
   const { dateType, duringType, mediaType, IsfollowOrder, text } = formData;
@@ -136,7 +134,7 @@ function Content1(props) {
     );
   }
   function setVisible(previewVisible) {
-    setState({ ...state, previewVisible })
+    setState({ ...state, previewVisible });
   }
   return (
     <Form
@@ -205,7 +203,11 @@ function Content1(props) {
           您可以在提示文字中插入：
           {['孕妇姓名', '复诊预约时间', '超时天数'].map(_ => {
             return (
-              <Button type="link" key={_} onClick={() => _setFormData('text', formData.text.concat(' ', _, ' '))}>
+              <Button
+                type="link"
+                key={_}
+                onClick={() => _setFormData('text', formData.text.concat(' ', _, ' '))}
+              >
                 {_}
               </Button>
             );
@@ -231,7 +233,9 @@ function Content1(props) {
         </Col>
       </Row>
       <div style={{ textAlign: 'center' }}>
-        <Button className={mRb8} onClick={() => setVisible(true)}>预览</Button>
+        <Button className={mRb8} onClick={() => setVisible(true)}>
+          预览
+        </Button>
         <Button type="primary" className={mRb8}>
           上一步
         </Button>
@@ -242,9 +246,13 @@ function Content1(props) {
           确定
         </Button>
       </div>
-      <Preview visible={previewVisible} onCancel={() => setVisible(false)} onOk={() => { setVisible(false) }}>
-
-      </Preview>
+      <Preview
+        visible={previewVisible}
+        onCancel={() => setVisible(false)}
+        onOk={() => {
+          setVisible(false);
+        }}
+      ></Preview>
     </Form>
   );
 }
@@ -264,28 +272,4 @@ function getMenu(arr, handleMenuClick) {
       ))}
     </Menu>
   );
-}
-//预览
-function Preview({ visible, onOk, onCancel }) {
-  // const [state,setState] = useState({
-  //   visible:false
-  // })
-  return (
-    <Modal visible={visible} onOk={onOk} onCancel={onCancel}>
-      <Timeline>
-        <Timeline.Item color="green">Create a services site 2015-09-01</Timeline.Item>
-        <Timeline.Item color="green">Create a services site 2015-09-01</Timeline.Item>
-        <Timeline.Item color="red">
-          <p>Solve initial network problems 1</p>
-          <p>Solve initial network problems 2</p>
-          <p>Solve initial network problems 3 2015-09-01</p>
-        </Timeline.Item>
-        <Timeline.Item>
-          <p>Technical testing 1</p>
-          <p>Technical testing 2</p>
-          <p>Technical testing 3 2015-09-01</p>
-        </Timeline.Item>
-      </Timeline>,
-    </Modal>
-  )
 }
