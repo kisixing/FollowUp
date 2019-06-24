@@ -50,25 +50,25 @@ export default [
         routes: [
           {
             // 随访任务列表
-            path: '/followup-management/lists',
-            name: 'lists',
+            path: '/followup-management/task-lists',
+            name: 'task-lists',
             icon: 'edit',
-            component: './FollowupManagement/Lists',
+            component: './FollowupManagement/TaskLists/index',
           },
           {
             // 单个随访任务患者统计列表
-            path: '/followup-management/lists/table/:followupId',
-            name: 'followup-patientLists',
+            path: '/followup-management/task-lists/table/:followupId',
+            name: 'details-table',
             icon: 'edit',
-            component: './FollowupManagement/FollowupPatientLists/index',
+            component: './FollowupManagement/TaskDetails/index',
             hideInMenu: true,
           },
           {
             // 单个随访任务图形分析统计
-            path: '/followup-management/lists/chart/:followupId',
-            name: 'followup-chart',
+            path: '/followup-management/task-lists/chart/:followupId',
+            name: 'details-chart',
             icon: 'area-chart',
-            component: './FollowupManagement/FollowupPatientChart/index',
+            component: './FollowupManagement/TaskDetailsChart/index',
             hideInMenu: true,
           },
           {

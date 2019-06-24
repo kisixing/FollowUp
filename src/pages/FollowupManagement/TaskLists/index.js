@@ -15,7 +15,7 @@ import TagSelect from '@/components/TagSelect';
 import StandardFormRow from '@/components/StandardFormRow';
 import { objFormatArr } from '@/utils/utils';
 
-import styles from './Lists.less';
+import styles from './index.less';
 
 const category = ['科室随访', '专项随访', '关怀类随访', '管理类随访', '科研随访', '其他随访'];
 const secondaryCategory = [
@@ -52,11 +52,11 @@ class FollowupManagement extends Component {
 
   onDetailClick = e => {
     // const { match } = this.props;
-    router.push(`/followup-management/lists/table/${e.id}`);
+    router.push(`/followup-management/task-lists/table/${e.id}`);
   };
 
   onChartClick = e => {
-    router.push(`/followup-management/lists/chart/${e.id}`);
+    router.push(`/followup-management/task-lists/chart/${e.id}`);
   };
 
   // 选择标签
