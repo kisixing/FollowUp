@@ -19,7 +19,7 @@
     transform: translateY(-50%);
     li {
       height: 22px;
-      margin-bottom: 16px;
+      margin-bottom: 4px;
       line-height: 22px;
       cursor: pointer;
       &:last-child {
@@ -90,5 +90,18 @@
   .legend {
     position: relative;
     transform: none;
+  }
+}
+
+@media (max-width: 1520px) {
+  .pie {
+    &.hasLegend .chart {
+      canvas {
+        position: relative;
+        top: 100px;
+        right: 115px;
+        transform: translateY(-50%);
+      }
+    }
   }
 }

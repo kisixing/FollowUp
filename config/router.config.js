@@ -103,13 +103,20 @@ export default [
                 hideInMenu: true,
               },
               {
-                // 发布
+                // 发布statistics
                 path: '/followup-management/create/step4',
                 name: 'issue',
                 component: './FollowupManagement/Create/Step4',
                 hideInMenu: true,
               },
             ],
+          },
+          {
+            // 全部随访的统计分析
+            path: '/followup-management/statistics',
+            name: 'statistics',
+            icon: 'table',
+            // component: './FollowupManagement/Statistics',
           },
         ],
       },
@@ -121,7 +128,19 @@ export default [
           {
             path: '/followup-configuration/questionnaire',
             name: 'questionnaire',
-            icon: 'edit',
+            icon: 'snippets',
+            // component: './FollowupConfiguration/Questionnaire',
+          },
+          {
+            path: '/followup-configuration/mission-care',
+            name: 'mission-care',
+            icon: 'heart',
+            // component: './FollowupConfiguration/Questionnaire',
+          },
+          {
+            path: '/followup-configuration/medium',
+            name: 'medium',
+            icon: 'wechat',
             // component: './FollowupConfiguration/Questionnaire',
           },
         ],
@@ -148,14 +167,39 @@ export default [
       {
         path: '/system-settings',
         name: 'system-settings',
-        icon: 'book',
-        // component: './SystemSettings',
+        icon: 'setting',
+        routes: [
+          {
+            path: '/system-settings/user',
+            name: 'user-add',
+            icon: 'edit',
+            // component: './ScheduleReminder/Create',
+          },
+          {
+            path: '/system-settings/permission',
+            name: 'permission',
+            icon: 'check',
+            // component: './ScheduleReminder/Management',
+          },
+          {
+            path: '/system-settings/record',
+            name: 'record',
+            icon: 'read',
+            // component: './ScheduleReminder/Management',
+          },
+          {
+            path: '/system-settings/monitor ',
+            name: 'monitor',
+            icon: 'book',
+            // component: './Monitor',online-service
+          },
+        ],
       },
       {
-        path: '/Monitor ',
-        name: 'Monitor',
-        icon: 'book',
-        // component: './Monitor',
+        path: '/online-service ',
+        name: 'online-service',
+        icon: 'customer-service',
+        // component: './OnlineService',
       },
       {
         name: 'exception',
