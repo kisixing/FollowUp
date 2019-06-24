@@ -2,35 +2,23 @@
  * header 搜索表单
  */
 import React from 'react';
-import { Form, Row, Col, Input, DatePicker, Button,   } from 'antd';
+import { Form, Row, Col, Input, DatePicker, Button } from 'antd';
 import styles from './index.less';
 
 const SearchForm = Form.create()(props => {
-  const { submitting, dispatch, form: { getFieldDecorator, validateFields, resetFields } } = props;
-
-  const okHandle = () => {
-    validateFields((err, fieldsValue) => {
-      if (err) return;
-      resetFields();
-      handleAdd(fieldsValue);
-    });
-  };
+  const { submitting, form, onSearch = () => {} } = props;
+  const { getFieldDecorator, validateFields, resetFields } = form;
 
   const validate = () => {
-    validateFields((error, values) => {
-      if (!error) {
-        // submit the values
-        // console.log('search values', values);
-        dispatch({
-          type: 'form/submitAdvancedForm',
-          payload: values,
-        });
-      }
+    validateFields((err, fieldsValue) => {
+      if (err) return;
+      // resetFields();
+      onSearch(fieldsValue);
     });
   };
 
   const handleReset = () => {
-    form.resetFields();
+    resetFields();
   };
 
   const formItemLayout = {

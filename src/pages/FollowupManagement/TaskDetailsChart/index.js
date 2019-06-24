@@ -6,10 +6,10 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import { Row, Col, Button } from 'antd';
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 
-import Pie from './Pie';
-import TableForm from '../FollowupPatientLists/TableForm';
+import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import { Pie } from '@/components/Charts';
+import TableForm from '../TaskDetails/TableForm';
 import styles from './index.less';
 
 @connect(({ global, chart }) => ({

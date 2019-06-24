@@ -50,25 +50,25 @@ export default [
         routes: [
           {
             // 随访任务列表
-            path: '/followup-management/lists',
-            name: 'lists',
+            path: '/followup-management/task-lists',
+            name: 'task-lists',
             icon: 'edit',
-            component: './FollowupManagement/Lists',
+            component: './FollowupManagement/TaskLists/index',
           },
           {
             // 单个随访任务患者统计列表
-            path: '/followup-management/lists/table/:followupId',
-            name: 'followup-patientLists',
+            path: '/followup-management/task-lists/table/:followupId',
+            name: 'details-table',
             icon: 'edit',
-            component: './FollowupManagement/FollowupPatientLists/index',
+            component: './FollowupManagement/TaskDetails/index',
             hideInMenu: true,
           },
           {
             // 单个随访任务图形分析统计
-            path: '/followup-management/lists/chart/:followupId',
-            name: 'followup-chart',
+            path: '/followup-management/task-lists/chart/:followupId',
+            name: 'details-chart',
             icon: 'area-chart',
-            component: './FollowupManagement/FollowupPatientChart/index',
+            component: './FollowupManagement/TaskDetailsChart/index',
             hideInMenu: true,
           },
           {
@@ -103,13 +103,20 @@ export default [
                 hideInMenu: true,
               },
               {
-                // 发布
+                // 发布statistics
                 path: '/followup-management/create/step4',
                 name: 'issue',
                 component: './FollowupManagement/Create/Step4',
                 hideInMenu: true,
               },
             ],
+          },
+          {
+            // 全部随访的统计分析
+            path: '/followup-management/statistics',
+            name: 'statistics',
+            icon: 'table',
+            // component: './FollowupManagement/Statistics',
           },
         ],
       },
@@ -121,7 +128,19 @@ export default [
           {
             path: '/followup-configuration/questionnaire',
             name: 'questionnaire',
-            icon: 'edit',
+            icon: 'snippets',
+            // component: './FollowupConfiguration/Questionnaire',
+          },
+          {
+            path: '/followup-configuration/mission-care',
+            name: 'mission-care',
+            icon: 'heart',
+            // component: './FollowupConfiguration/Questionnaire',
+          },
+          {
+            path: '/followup-configuration/medium',
+            name: 'medium',
+            icon: 'wechat',
             // component: './FollowupConfiguration/Questionnaire',
           },
         ],
@@ -148,14 +167,39 @@ export default [
       {
         path: '/system-settings',
         name: 'system-settings',
-        icon: 'book',
-        // component: './SystemSettings',
+        icon: 'setting',
+        routes: [
+          {
+            path: '/system-settings/user',
+            name: 'user-add',
+            icon: 'edit',
+            // component: './ScheduleReminder/Create',
+          },
+          {
+            path: '/system-settings/permission',
+            name: 'permission',
+            icon: 'check',
+            // component: './ScheduleReminder/Management',
+          },
+          {
+            path: '/system-settings/record',
+            name: 'record',
+            icon: 'read',
+            // component: './ScheduleReminder/Management',
+          },
+          {
+            path: '/system-settings/monitor ',
+            name: 'monitor',
+            icon: 'book',
+            // component: './Monitor',online-service
+          },
+        ],
       },
       {
-        path: '/Monitor ',
-        name: 'Monitor',
-        icon: 'book',
-        // component: './Monitor',
+        path: '/online-service ',
+        name: 'online-service',
+        icon: 'customer-service',
+        // component: './OnlineService',
       },
       {
         name: 'exception',
