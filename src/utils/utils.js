@@ -217,3 +217,13 @@ export function objFormatArr(obj) {
 export function pathMatchRegexp(regexp, pathname) {
   return pathToRegexp(regexp).exec(pathname);
 }
+//extends
+export function getValueOfFirstItem(arr, key, defaultValue = '') {
+
+  if (!Array.isArray(arr)) return defaultValue;
+  let value = arr[0] && arr[0][key]
+  if (value === undefined || value === '' || value === null || (typeof value === 'number' && isNaN(value))) {
+    return defaultValue
+  }
+  return value
+}

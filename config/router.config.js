@@ -99,7 +99,7 @@ export default [
                 // 编辑任务内容
                 path: '/followup-management/create/step3',
                 name: 'task-definition',
-                component: './FollowupManagement/Create/Step3',
+                component: './FollowupManagement/Create/Step3/index',
                 hideInMenu: true,
               },
               {

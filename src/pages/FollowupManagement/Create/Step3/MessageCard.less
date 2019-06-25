@@ -1,0 +1,20 @@
+.wrap {
+    background:#eee;
+    border-radius: 4px;
+    width: 300px;
+    padding:10px;
+    position: relative;
+    margin:10px 15px;   
+    &::before{
+        content:'';
+        display: block;
+        position: absolute;
+ 
+        left:-20px;
+        bottom:10px;
+        border-style: solid;
+        border-width: 15px 10px;
+        border-color: transparent #eee #eee transparent;
+        
+    }
+}
