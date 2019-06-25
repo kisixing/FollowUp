@@ -16,15 +16,9 @@ import {
 import { lh40, colorC, mRb8 } from './index.less';
 import router from 'umi/router';
 import Preview from './TaskPreview';
-import { connect } from 'dva'
 const { TabPane } = Tabs;
 import { getValueOfFirstItem } from '@/utils/utils';
 const reservationMediaType = ['微信', '短信', '电话'];
-const { useState, useEffect } = React;
-
-
-
-
 
 const Content1 = connect(({ followupCreationState }) => {
   return { followupCreationState }
