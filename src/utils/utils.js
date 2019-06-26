@@ -153,7 +153,7 @@ export function isUrl(path) {
 
 export function formatWan(val) {
   const v = val * 1;
-  if (!v) return '';
+  if (!v && v !== 0) return '';
 
   let result = val;
   if (val > 10000) {

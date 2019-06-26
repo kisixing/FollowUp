@@ -126,22 +126,22 @@ export default [
         icon: 'book',
         routes: [
           {
-            path: '/followup-configuration/questionnaire',
+            path: '/followup-configuration/Questionnaire',
             name: 'questionnaire',
             icon: 'snippets',
-            // component: './FollowupConfiguration/Questionnaire',
+            component: './FollowupConfiguration/Questionnaire',
           },
           {
             path: '/followup-configuration/mission-care',
             name: 'mission-care',
             icon: 'heart',
-            // component: './FollowupConfiguration/Questionnaire',
+            component: './FollowupConfiguration/MissionCare',
           },
           {
             path: '/followup-configuration/medium',
             name: 'medium',
             icon: 'wechat',
-            // component: './FollowupConfiguration/Questionnaire',
+            component: './FollowupConfiguration/Medium',
           },
         ],
       },

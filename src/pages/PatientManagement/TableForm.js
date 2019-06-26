@@ -79,7 +79,7 @@ class TableForm extends PureComponent {
       dataIndex: 'ID',
     },
     {
-      title: '手机号码    ',
+      title: '手机号码',
       dataIndex: 'phone',
     },
     {
