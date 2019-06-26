@@ -67,7 +67,7 @@ const Content1 = connect(({ followupCreationState }) => {
         })}>
 
           <Button>
-            {getValueOfFirstItem(a, F_LABEL, '22')} <Icon type="down" />
+            {getValueOfFirstItem(a, F_LABEL, '请选择')} <Icon type="down" />
           </Button>
         </Dropdown>
       );

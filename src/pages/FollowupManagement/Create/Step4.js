@@ -245,7 +245,8 @@ export default function(props) {
 
       <div style={{ textAlign: 'center' }}>
         <Button className={mRb8}>预览</Button>
-        <Button type="primary" className={mRb8} onClick={() => router.push('step4')}>
+        <Button type="primary" className={mRb8} onClick={() => router.push('/followup-management/task-lists')}>
+          <Icon type="upload"></Icon>
           发布
         </Button>
       </div>

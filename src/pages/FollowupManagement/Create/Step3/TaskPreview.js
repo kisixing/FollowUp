@@ -1,5 +1,5 @@
 import { Modal, Timeline } from 'antd';
-import WechatCard from './WeChatCard'
+import WechatCard from '@/components/WechatCard'
 import MessageCard from './MessageCard'
 
 //预览
