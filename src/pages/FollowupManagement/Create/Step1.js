@@ -5,7 +5,6 @@
  */
 import React, { Component } from 'react';
 import router from 'umi/router';
-import { connect } from 'dva';
 import { Form, Modal, List, Card, Input, Icon, Avatar, Button, Tag, Timeline } from 'antd';
 import { TweenOneGroup } from 'rc-tween-one';
 
@@ -15,6 +14,8 @@ import StandardFormRow from '@/components/StandardFormRow';
 import { objFormatArr } from '@/utils/utils';
 
 import styles from './Step1.less';
+
+import WechatCard from '@/components/WechatCard';
 
 const category = ['科室随访', '专项随访', '关怀类随访', '管理类随访', '科研随访', '其他随访'];
 const secondaryCategory = [
@@ -48,28 +49,7 @@ const PreviewModal = props => {
       <Timeline style={{ paddingLeft: '24px' }}>
         <Timeline.Item color="green">
           <p>预约日期 之后 1天 发送微信</p>
-          <div className={styles.wechart}>
-            <div className={styles.header}>
-              <div className={styles.title}>
-                <h4>复诊提醒</h4>
-                <span>4月15号</span>
-              </div>
-              <span className={styles.right}>
-                <Icon type="notification" />
-              </span>
-            </div>
-            <div className={styles.body}>
-              <p>姓名：张女士</p>
-              <p>预约日期：2019年5月8日</p>
-              <p>我掐指一算，您已经迟到1天了哦！尽快来医院复诊吧！</p>
-            </div>
-            <div className={styles.footer}>
-              <h4>详情</h4>
-              <span>
-                <Icon type="ellipsis" />
-              </span>
-            </div>
-          </div>
+          <WechatCard />
           <div>
             点击转链接:
             <Button type="link" style={{ fontSize: '12px' }}>

@@ -1,6 +1,9 @@
 import { Modal, Timeline } from 'antd';
+import WechatCard from '@/components/WechatCard';
+import MessageCard from './MessageCard';
 
 //预览
+const yellowStyle = { color: 'orange', fontWeight: 'bold' };
 export default function Preview({ visible, onOk, onCancel }) {
   // const [state,setState] = useState({
   //   visible:false
@@ -10,21 +13,20 @@ export default function Preview({ visible, onOk, onCancel }) {
       <Timeline>
         <Timeline.Item color="green">
           预约日期 之后 1天 发送微信
-          <div>
-            复诊提醒
-            <div></div>
-          </div>
+          <WechatCard />
         </Timeline.Item>
-        <Timeline.Item color="green">Create a services site 2015-09-01</Timeline.Item>
+
+        <Timeline.Item color="green">
+          <div style={yellowStyle}>预约日期 之后 5天 发送短信</div>
+          <MessageCard />
+        </Timeline.Item>
+
         <Timeline.Item color="red">
-          <p>Solve initial network problems 111</p>
-          <p>Solve initial network problems 2</p>
-          <p>Solve initial network problems 3 2015-09-01</p>
+          <div>预约日期之后 7天</div>
+          <p>进入人工管理模式，可通过电话随访并记录随访内容</p>
         </Timeline.Item>
         <Timeline.Item>
-          <p>Technical testing 1</p>
-          <p>Technical testing 2</p>
-          <p>Technical testing 3 2015-09-01</p>
+          <p>随访统计</p>
         </Timeline.Item>
       </Timeline>
       ,

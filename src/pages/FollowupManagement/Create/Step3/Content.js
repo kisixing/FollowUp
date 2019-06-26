@@ -13,122 +13,59 @@ import {
   Col,
   Row,
 } from 'antd';
-import { lh40, colorC, mRb8 } from './Step3.less';
+import { lh40, colorC, mRb8 } from './index.less';
 import router from 'umi/router';
 import Preview from './TaskPreview';
-const { TabPane } = Tabs;
-const reservationDateType = ['预约日期', '末次就诊日期'];
-const reservationDuringType = ['之前', '当天', '之后'];
+import { getValueOfFirstItem } from '@/utils/utils';
 const reservationMediaType = ['微信', '短信', '电话'];
-const { useState } = React;
-export default class Demo extends React.Component {
-  constructor(props) {
-    super(props);
-    this.newTabIndex = 0;
-    const panes = [
-      { title: '步骤1', content: <Content1 />, key: '1' },
-      { title: '步骤2', content: 'Content of Tab Pane 2', key: '2' },
-    ];
-    this.state = {
-      activeKey: panes[0].key,
-      panes,
-    };
-  }
 
-  onChange = activeKey => {
-    this.setState({ activeKey });
-  };
+const Content = connect(({ followupCreationState }) => {
+  return { followupCreationState };
+})(function({ followupCreationState, index, onUp, onDown }) {
+  const reservationDateType = followupCreationState.reservationDateType || [];
+  const initDateType = getValueOfFirstItem(reservationDateType, F_VALUE, '');
 
-  onEdit = (targetKey, action) => {
-    this[action](targetKey);
-  };
+  const reservationDuringType = followupCreationState.reservationDuringType || [];
+  const initDuringType = getValueOfFirstItem(reservationDuringType, F_VALUE, '1');
 
-  add = () => {
-    const panes = this.state.panes;
-    const activeKey = `newTab${this.newTabIndex++}`;
-    panes.push({ title: 'New Tab', content: 'New Tab Pane', key: activeKey });
-    this.setState({ panes, activeKey });
-  };
-
-  remove = targetKey => {
-    let activeKey = this.state.activeKey;
-    let lastIndex;
-    this.state.panes.forEach((pane, i) => {
-      if (pane.key === targetKey) {
-        lastIndex = i - 1;
-      }
-    });
-    const panes = this.state.panes.filter(pane => pane.key !== targetKey);
-    if (panes.length && activeKey === targetKey) {
-      if (lastIndex >= 0) {
-        activeKey = panes[lastIndex].key;
-      } else {
-        activeKey = panes[0].key;
-      }
-    }
-    this.setState({ panes, activeKey });
-  };
-
-  render() {
-    return (
-      <div>
-        <Tabs
-          // hideAdd={false}
-          onChange={this.onChange}
-          activeKey={this.state.activeKey}
-          type="editable-card"
-          onEdit={this.onEdit}
-        >
-          {this.state.panes.map(pane => (
-            <TabPane tab={pane.title} key={pane.key}>
-              {pane.content}
-            </TabPane>
-          ))}
-        </Tabs>
-      </div>
-    );
-  }
-}
-
-function handleButtonClick(e) {
-  message.info('Click on left button.');
-  console.log('click left button', e);
-}
-
-function handleMenuClick(e) {
-  message.info('Click on menu item.');
-  console.log('click', e);
-}
-
-function Content1(props) {
   const [state, setState] = useState({
     formData: {
-      dateType: reservationDateType[0],
-      duringType: reservationDuringType[0],
+      followupDateType: initDateType,
+      followupDuringType: initDuringType,
+      followupDay: 5,
       mediaType: reservationMediaType[0],
       IsfollowOrder: false,
       text: '',
+      judgeDateType: initDateType,
+      judgeDuringType: initDuringType,
+      judgeDay: 7,
     },
-    previewVisible: true,
+    previewVisible: false,
   });
-  const { previewVisible, formData } = state;
 
-  function _setFormData(key, value) {
+  const { previewVisible, formData } = state;
+  console.log(state, followupCreationState);
+  function _setFormData(data) {
     setState({
       ...state,
       formData: {
         ...formData,
-        [key]: value,
+        ...data,
       },
     });
   }
-  const { dateType, duringType, mediaType, IsfollowOrder, text } = formData;
+  const { followupDay, judgeDay, mediaType, IsfollowOrder, text } = formData;
 
   function getDropDown(type, typeList) {
+    let a = typeList.filter(_ => _.value === formData[type]);
     return (
-      <Dropdown overlay={getMenu(typeList, ({ key }) => _setFormData(type, key))}>
+      <Dropdown
+        overlay={getMenu(typeList, ({ key }) => {
+          _setFormData({ [type]: key });
+        })}
+      >
         <Button>
-          {formData[type]} <Icon type="down" />
+          {getValueOfFirstItem(a, F_LABEL, '请选择')} <Icon type="down" />
         </Button>
       </Dropdown>
     );
@@ -146,9 +83,16 @@ function Content1(props) {
       <Title label="随访时间&媒介" isTop />
       <Form.Item label="时间">
         <Input.Group compact style={{ lineHeight: '32px' }}>
-          {getDropDown('dateType', reservationDateType)}
-          {getDropDown('duringType', reservationDuringType)}
-          <Input style={{ width: '60px' }} /> 天 <TimePicker />
+          {getDropDown('followupDateType', reservationDateType)}
+          {getDropDown('followupDuringType', reservationDuringType)}
+          <Input
+            style={{ width: '60px' }}
+            value={followupDay}
+            onChange={({ target }) => {
+              _setFormData({ followupDay: target.value });
+            }}
+          />{' '}
+          天 <TimePicker />
         </Input.Group>
       </Form.Item>
 
@@ -156,7 +100,7 @@ function Content1(props) {
         <Radio.Group
           value={mediaType}
           onChange={({ target }) => {
-            _setFormData('mediaType', target.value);
+            _setFormData({ mediaType: target.value });
           }}
         >
           {reservationMediaType.map(r => (
@@ -171,9 +115,11 @@ function Content1(props) {
           选择媒介没发送成功，将按微信>短信>电话的先后顺序依次执行随访任务
         </label>
         <Switch
+          checkedChildren="开"
+          unCheckedChildren="关"
           checked={IsfollowOrder}
           onChange={IsfollowOrder => {
-            _setFormData('IsfollowOrder', IsfollowOrder);
+            _setFormData({ IsfollowOrder });
           }}
         ></Switch>
       </Form.Item>
@@ -182,9 +128,14 @@ function Content1(props) {
 
       <Form.Item label="条件">
         <Input.Group compact style={{ lineHeight: '32px' }}>
-          {getDropDown('dateType', reservationDateType)}
-          {getDropDown('duringType', reservationDuringType)}
-          <Input style={{ width: '60px' }} /> 天 至 随访当天仍未复诊患者
+          {getDropDown('judgeDateType', reservationDateType)}
+          {getDropDown('judgeDuringType', reservationDuringType)}
+          <Input
+            style={{ width: '60px' }}
+            value={judgeDay}
+            onChange={({ target }) => _setFormData({ judgeDay: target.value })}
+          />{' '}
+          天 至 随访当天仍未复诊患者
         </Input.Group>
       </Form.Item>
 
@@ -195,6 +146,7 @@ function Content1(props) {
           style={{ width: '80%' }}
           value={text}
           autosize={{ minRows: 2, maxRows: 6 }}
+          onChange={e => _setFormData({ text: e.target.value })}
         />
         <Button type="link" style={{ float: 'none' }}>
           导入模板
@@ -206,7 +158,7 @@ function Content1(props) {
               <Button
                 type="link"
                 key={_}
-                onClick={() => _setFormData('text', formData.text.concat(' ', _, ' '))}
+                onClick={() => _setFormData({ text: formData.text.concat(' ', _, ' ') })}
               >
                 {_}
               </Button>
@@ -234,16 +186,19 @@ function Content1(props) {
       </Row>
       <div style={{ textAlign: 'center' }}>
         <Button className={mRb8} onClick={() => setVisible(true)}>
-          预览
+          预览{' '}
         </Button>
-        <Button type="primary" className={mRb8}>
-          上一步
+        <Button type="primary" className={mRb8} onClick={() => onUp(index)}>
+          {' '}
+          上一步{' '}
         </Button>
-        <Button type="primary" className={mRb8}>
-          下一步
+        <Button type="primary" className={mRb8} onClick={() => onDown(index)}>
+          {' '}
+          下一步{' '}
         </Button>
         <Button type="primary" className={mRb8} onClick={() => router.push('step4')}>
-          确定
+          {' '}
+          确定{' '}
         </Button>
       </div>
       <Preview
@@ -255,7 +210,7 @@ function Content1(props) {
       ></Preview>
     </Form>
   );
-}
+});
 export function Title({ label, isTop }) {
   return (
     <div style={{ fontWeight: 'bold', marginTop: isTop || '30px', marginBottom: '10px' }}>
@@ -264,11 +219,12 @@ export function Title({ label, isTop }) {
   );
 }
 
+export default Content;
 function getMenu(arr, handleMenuClick) {
   return (
     <Menu onClick={handleMenuClick}>
-      {arr.map(a => (
-        <Menu.Item key={a}>{a}</Menu.Item>
+      {arr.map(({ value, label }) => (
+        <Menu.Item key={value}>{label}</Menu.Item>
       ))}
     </Menu>
   );

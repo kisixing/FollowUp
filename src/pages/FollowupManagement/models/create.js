@@ -1,6 +1,6 @@
-
+import request from '@/utils/request';
 export default {
-  namespace: 'followupCreate',
+  namespace: 'followupCreationState',
 
   state: {
     step: 0, // 当前步骤
@@ -28,15 +28,24 @@ export default {
         title: '妊娠高血压产后复诊',
         description: '自动发送复诊提醒 · 管理复诊结果',
         avatar: '',
-      }
-    ]
+      },
+    ],
+    reservationDateType: [],
   },
 
   effects: {
-
+    *fetchDataset({ payload }, { put, call }) {
+      const data = yield call(request, '/api/followup/dataset');
+      yield put({ type: 'updateState', payload: data });
+    },
   },
 
-  reduces: {
-
+  reducers: {
+    updateState(state, { payload }) {
+      return {
+        ...state,
+        ...payload,
+      };
+    },
   },
-}
+};

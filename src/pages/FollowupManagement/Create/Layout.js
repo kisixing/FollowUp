@@ -18,9 +18,10 @@ import styles from './Layout.less';
   steps: newFollowupLayout.steps,
 }))
 class Layout extends Component {
-  constructor(props) {
-    super(props);
+  constructor({ dispatch }) {
+    super(...arguments);
     this.state = {};
+    dispatch({ type: 'followupCreationState/fetchDataset', payload: {} });
   }
 
   render() {

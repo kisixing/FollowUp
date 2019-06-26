@@ -17,7 +17,7 @@ import {
 } from 'antd';
 const CheckboxGroup = Checkbox.Group;
 
-import { lh40, colorC, mRb8 } from './Step3.less';
+import { lh40, colorC, mRb8 } from './Step3/index.less';
 import router from 'umi/router';
 const { TabPane } = Tabs;
 const reservationDateType = ['预约日期', '末次就诊日期'];
@@ -76,7 +76,7 @@ function setMock(arr, labelKey = 'label', valueKey = 'value') {
 }
 
 const { useState } = React;
-import { Title } from './Step3';
+import { Title } from './Step3/index';
 
 export default function(props) {
   const [state, setState] = useState({
@@ -245,7 +245,12 @@ export default function(props) {
 
       <div style={{ textAlign: 'center' }}>
         <Button className={mRb8}>预览</Button>
-        <Button type="primary" className={mRb8} onClick={() => router.push('step4')}>
+        <Button
+          type="primary"
+          className={mRb8}
+          onClick={() => router.push('/followup-management/task-lists')}
+        >
+          <Icon type="upload"></Icon>
           发布
         </Button>
       </div>
