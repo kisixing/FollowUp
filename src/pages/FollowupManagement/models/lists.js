@@ -1,4 +1,7 @@
+/* eslint-disable no-console */
 /* eslint-disable no-plusplus */
+import { objFormatArr } from '@/utils/utils';
+import { queryLists } from '../service';
 
 export default {
   namespace: 'followupLists',
@@ -8,68 +11,31 @@ export default {
       category: [],
       secondaryCategory: [],
     },
-    lists: [
-      {
-        id: '4545454',
-        title: '高危复诊提醒',
-        avatar: '',
-        status: {
-          code: 1,
-          dec: '运行中',
-        },
-        allFollowup: 50,
-        todayFollowup: 25,
-      },
-      {
-        id: '454545421',
-        title: '高危妊娠复诊提醒',
-        avatar: '',
-        status: {
-          code: 1,
-          dec: '运行中',
-        },
-        allFollowup: 45,
-        todayFollowup: 20,
-      },
-      {
-        id: '4545454211',
-        title: '高危高血糖复诊提醒',
-        avatar: '',
-        status: {
-          code: 1,
-          dec: '运行中',
-        },
-        allFollowup: 45,
-        todayFollowup: 20,
-      },
-      {
-        id: '4545415421',
-        title: '高危复诊提醒1',
-        avatar: '',
-        status: {
-          code: 1,
-          dec: '运行中',
-        },
-        allFollowup: 45,
-        todayFollowup: 20,
-      },
-      {
-        id: '4545451421',
-        title: '高危复诊提醒1',
-        avatar: '',
-        status: {
-          code: 1,
-          dec: '运行中',
-        },
-        allFollowup: 45,
-        todayFollowup: 20,
-      },
-    ],
+    tabActiveKey: '',
+    lists: [],
   },
 
   effects: {
+    *query({ payload }, { call, put }) {
+      const { status, type } = payload;
+      let params = payload;
+      if (status === 'all' && !type) {
+        params = {};
+      }
+      if (status === 'all' && type) {
+        params = { type };
+      }
+      const res = yield call(queryLists, params);
+      yield put({
+        type: 'updateState',
+        payload: {
+          tabActiveKey: payload.status || 'all',
+          lists: res.data,
+        },
+      });
+    },
     *removeTag({ payload }, { put, select }) {
-      const selectedTags = yield select(_ => _.followupLists.selectedTags);
+      const { tabActiveKey, selectedTags } = yield select(_ => _.followupLists);
       const types = Object.keys(selectedTags);
       let tags = [];
       for (let i = 0; i < types.length; i++) {
@@ -89,9 +55,18 @@ export default {
           selectedTags: tags,
         },
       });
+      // update lists
+      const typeArr = objFormatArr(tags).join(',');
+      yield put({
+        type: 'query',
+        payload: {
+          status: tabActiveKey,
+          type: typeArr,
+        },
+      });
     },
     *updateTags({ payload }, { put, select }) {
-      const selectedTags = yield select(_ => _.followupLists.selectedTags);
+      const { tabActiveKey, selectedTags } = yield select(_ => _.followupLists);
       const { target, checkedTags } = payload;
       const tags = {
         ...selectedTags,
@@ -101,6 +76,15 @@ export default {
         type: 'updateState',
         payload: {
           selectedTags: tags,
+        },
+      });
+      // update lists
+      const typeArr = objFormatArr(tags).join(',');
+      yield put({
+        type: 'query',
+        payload: {
+          status: tabActiveKey,
+          type: typeArr,
         },
       });
     },

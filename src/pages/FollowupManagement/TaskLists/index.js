@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /*
  * @Description: 随访任务列表
  * @Author: jun
@@ -17,32 +18,52 @@ import { objFormatArr } from '@/utils/utils';
 
 import styles from './index.less';
 
-const category = ['科室随访', '专项随访', '关怀类随访', '管理类随访', '科研随访', '其他随访'];
+const category = ['科室随访', '专项随访', '关怀类随访', '管理类随访', '科研随访'];
 const secondaryCategory = [
-  '高危妊娠管理',
-  '妊娠糖尿病管理',
-  '妊娠高血压管理',
+  '高危妊娠孕妇复诊管理',
+  '妊娠糖尿病孕妇管理',
   '产后随访',
-  '术前随访',
-  '术后随访',
-  '其他高危管理',
+  '无创基因检查随访',
+  'OGTT异常随访',
+  '节日问候',
+  '生日问候',
+  '三伏天通知',
+  '新生儿疾病护理讲座通知',
+  '可是满意度',
+  '投诉建议',
+  '妊娠期体重管理与巨大儿',
+  '妊娠糖尿病产后病情发展',
 ];
 
-@connect(({ global, followupLists }) => ({
+@connect(({ global, loading, followupLists }) => ({
   global,
+  loading: loading.effects['followupLists/query'],
   selectedTags: followupLists.selectedTags,
   lists: followupLists.lists,
+  tabActiveKey: followupLists.tabActiveKey,
 }))
 class FollowupManagement extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      tabActiveKey: 'all',
-    };
+    this.state = {};
+  }
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'followupLists/query',
+      payload: {},
+    });
   }
 
   handleTabChange = key => {
-    this.setState({ tabActiveKey: key });
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'followupLists/query',
+      payload: {
+        status: key,
+      },
+    });
   };
 
   handleFormSubmit = value => {
@@ -191,9 +212,8 @@ class FollowupManagement extends Component {
       return tagChild;
     };
 
-    const { loading, form, selectedTags, lists } = this.props;
+    const { loading, form, selectedTags, lists, tabActiveKey } = this.props;
     const { getFieldDecorator } = form;
-    const { tabActiveKey } = this.state;
 
     return (
       <PageHeaderWrapper

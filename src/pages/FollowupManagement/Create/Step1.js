@@ -5,27 +5,32 @@
  */
 import React, { Component } from 'react';
 import router from 'umi/router';
+import { connect } from 'dva';
 import { Form, Modal, List, Card, Input, Icon, Avatar, Button, Tag, Timeline } from 'antd';
 import { TweenOneGroup } from 'rc-tween-one';
 
 import TagSelect from '@/components/TagSelect';
 import StandardFormRow from '@/components/StandardFormRow';
-
+import WechatCard from '@/components/WechatCard';
 import { objFormatArr } from '@/utils/utils';
 
 import styles from './Step1.less';
 
-import WechatCard from '@/components/WechatCard';
-
-const category = ['科室随访', '专项随访', '关怀类随访', '管理类随访', '科研随访', '其他随访'];
+const category = ['科室随访', '专项随访', '关怀类随访', '管理类随访', '科研随访'];
 const secondaryCategory = [
-  '高危妊娠管理',
-  '妊娠糖尿病管理',
-  '妊娠高血压管理',
+  '高危妊娠孕妇复诊管理',
+  '妊娠糖尿病孕妇管理',
   '产后随访',
-  '术前随访',
-  '术后随访',
-  '其他高危管理',
+  '无创基因检查随访',
+  'OGTT异常随访',
+  '节日问候',
+  '生日问候',
+  '三伏天通知',
+  '新生儿疾病护理讲座通知',
+  '可是满意度',
+  '投诉建议',
+  '妊娠期体重管理与巨大儿',
+  '妊娠糖尿病产后病情发展',
 ];
 
 /**
