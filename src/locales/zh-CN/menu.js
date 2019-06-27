@@ -17,7 +17,7 @@ export default {
   'menu.followup-management.create.issue': '发布',
   'menu.followup-management.statistics': '统计分析',
   'menu.followup-management.statistics-detail': '统计分析详细',
-  'menu.online-consultation': '在线咨询',
+  'menu.online-service': '在线咨询',
   'menu.followup-configuration': '随访配置',
   'menu.followup-configuration.questionnaire': '问卷配置',
   'menu.followup-configuration.mission-care': '宣教关怀',
@@ -30,7 +30,7 @@ export default {
   'menu.system-settings.permission': '权限管理',
   'menu.system-settings.record': '操作日记',
   'menu.system-settings.monitor': '监控台',
-  'menu.online-service': '在线咨询',
+  // 'menu.online-service': '在线咨询',
 
   'menu.result': '结果页',
   'menu.result.success': '成功页',

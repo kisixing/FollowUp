@@ -158,10 +158,10 @@ export default [
         ],
       },
       {
-        path: '/online-consultation',
-        name: 'online-consultation',
+        path: '/online-service',
+        name: 'online-service',
         icon: 'book',
-        component:'./OnlineConsultation'
+        component:'./OnlineService'
       },
       {
         path: '/schedule-reminder',
@@ -212,12 +212,6 @@ export default [
             // component: './Monitor',online-service
           },
         ],
-      },
-      {
-        path: '/online-service ',
-        name: 'online-service',
-        icon: 'customer-service',
-        // component: './OnlineService',
       },
       {
         name: 'exception',

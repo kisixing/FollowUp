@@ -2,7 +2,7 @@ import styles from './index.less'
 import { Tabs } from "antd";
 import ChattingList from './ChattingList'
 const TabPane = Tabs.TabPane
-function mapStateToProps({ onlineConsultation_model }) {
+function mapStateToProps({ onlineService_model }) {
   return {}
 }
 
