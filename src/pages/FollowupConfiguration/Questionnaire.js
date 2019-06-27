@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import All from '@/components/FollowupConfiguration/Questionnaire/All';
-import { Input } from 'antd';
+import { Input, Button } from 'antd';
 
 class Questionnaire extends Component {
   constructor(props) {
@@ -12,16 +12,19 @@ class Questionnaire extends Component {
     };
   }
 
-  // componentWillMount() {
-  //   import('./Questionnaire/All').then(module => {
-  //     let children = module.default
-  //     console.log(children)
-  //     // this.setState({ children: module.All })
-  //   })
-  // }
+  componentWillMount() {
+    import(`@/components/FollowupConfiguration/Questionnaire/All`)
+      .then(module => {
+        this.setState({ children: <module.default /> })
+      })
+  };
 
   handleTabChange = tabActiveKey => {
     this.setState({ tabActiveKey });
+    import(`@/components/FollowupConfiguration/Questionnaire/${tabActiveKey}`)
+      .then(module =>
+        this.setState({ children: <module.default /> })
+      )
   };
 
   // handleFormSubmit = value => {
@@ -29,6 +32,8 @@ class Questionnaire extends Component {
   // };
 
   render() {
+    const { tabActiveKey, children } = this.state;
+
     const tabList = [
       {
         key: 'All ',
@@ -64,7 +69,14 @@ class Questionnaire extends Component {
       </div>
     );
 
-    const { tabActiveKey } = this.state;
+    const tabBarExtraContent = (
+      <Button
+        type="primary"
+        icon="plus"
+      >
+        新建
+        </Button>
+    )
 
     return (
       <PageHeaderWrapper
@@ -72,9 +84,10 @@ class Questionnaire extends Component {
         content={mainSearch}
         tabList={tabList}
         tabActiveKey={tabActiveKey}
-        onTabChange={this.handleTabChange}
+        // onTabChange={this.handleTabChange}
+        tabBarExtraContent={tabBarExtraContent}
       >
-        <All />
+        {children}
       </PageHeaderWrapper>
     );
   }
