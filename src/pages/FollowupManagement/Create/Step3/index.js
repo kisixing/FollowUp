@@ -1,8 +1,10 @@
-import { Tabs, Menu } from 'antd';
+import { Tabs, Menu, Button } from 'antd';
 import router from 'umi/router';
+import { mRb8 } from './index.less'
+import Preview from './TaskPreview';
+import Content from './Content';
 const { TabPane } = Tabs;
 const digits = '一二三四五六七八九十';
-import Content from './Content';
 export function Title({ label, isTop }) {
   return (
     <div style={{ fontWeight: 'bold', marginTop: isTop || '30px', marginBottom: '10px' }}>
@@ -14,14 +16,18 @@ export default props => {
   const [state, setState] = useState({
     activeKey: null,
     panes: [],
+    previewVisible: false,
   });
-  const { panes, activeKey } = state;
+  const { panes, activeKey, previewVisible } = state;
 
   const onChange = activeKey => {
     // debugger
     setState({ ...state, activeKey });
   };
 
+  function setVisible(previewVisible) {
+    setState({ ...state, previewVisible });
+  }
   function getKey(index) {
     return `${index}newTab`;
   }
@@ -37,25 +43,7 @@ export default props => {
         content: (
           <Content
             index={length}
-            onUp={index => {
-              if (index <= 0) {
-                return;
-              }
-              setState({
-                ...state,
-                activeKey: getKey(parseInt(activeKey) - 1),
-              });
-            }}
-            onDown={index => {
-              if (index >= panes.length - 1) {
-                return;
-              }
 
-              setState({
-                ...state,
-                activeKey: getKey(parseInt(activeKey) + 1),
-              });
-            }}
           />
         ),
         key: activeKey,
@@ -105,6 +93,54 @@ export default props => {
           </TabPane>
         ))}
       </Tabs>
+
+
+
+
+      <div style={{ textAlign: 'center' }}>
+        <Button className={mRb8} onClick={() => setVisible(true)}>
+          预览{' '}
+        </Button>
+        <Button type="primary" className={mRb8} onClick={() => {
+          const index = parseInt(activeKey)
+          if (index <= 0) {
+            return;
+          }
+          setState({
+            ...state,
+            activeKey: getKey(index - 1),
+          });
+        }}>
+          {' '}
+          上一步{' '}
+        </Button>
+        <Button type="primary" className={mRb8} onClick={() => {
+          const index = parseInt(activeKey)
+          if (index >= panes.length - 1) {
+            return;
+          }
+
+          setState({
+            ...state,
+            activeKey: getKey(index + 1),
+          });
+        }}>
+          {' '}
+          下一步{' '}
+        </Button>
+        <Button type="primary" className={mRb8} onClick={() => router.push('step4')}>
+          {' '}
+          确定{' '}
+        </Button>
+      </div>
+      <Preview
+        // formData={formData}
+        visible={previewVisible}
+        onCancel={() => setVisible(false)}
+        onOk={() => {
+          setVisible(false);
+        }}
+      ></Preview>
     </div>
   );
 };

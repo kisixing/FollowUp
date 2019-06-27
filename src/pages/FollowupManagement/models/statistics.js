@@ -1,10 +1,8 @@
-/* eslint-disable no-console */
-/* eslint-disable no-plusplus */
 import { objFormatArr } from '@/utils/utils';
-import { queryLists } from '../service';
-
+import request from "@/utils/request";
+import { stringify } from "qs";
 export default {
-  namespace: 'followupLists',
+  namespace: 'taskStatistics_model',
 
   state: {
     selectedTags: {
@@ -25,7 +23,7 @@ export default {
       if (status === 'all' && type) {
         params = { type };
       }
-      const res = yield call(queryLists, params);
+      const res = yield call(request, `/api/list?${stringify(params)}`);
       yield put({
         type: 'updateState',
         payload: {

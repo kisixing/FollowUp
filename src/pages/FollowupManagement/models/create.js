@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 export default {
-  namespace: 'followupCreationState',
+  namespace: 'followupCreation_model',
 
   state: {
     step: 0, // 当前步骤

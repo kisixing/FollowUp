@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> c2ee1100e58b9015e1d30ecde1f77533b5cd91ed
 export default [
   // user
   {
@@ -116,8 +120,16 @@ export default [
             path: '/followup-management/statistics',
             name: 'statistics',
             icon: 'table',
-            // component: './FollowupManagement/Statistics',
+            component: './FollowupManagement/Statistics/index',
           },
+          {
+            // 单个随访任务图形分析统计
+            path: '/followup-management/statistics/detail/:followupId',
+            name: 'statistics-detail',
+            icon: 'area-chart',
+            component: './FollowupManagement/Statistics/detail',
+            hideInMenu: true,
+          }
         ],
       },
       {
