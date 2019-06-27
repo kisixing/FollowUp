@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-// import All from '@/components/FollowupConfiguration/Medium/All';
 
 import { Input } from 'antd';
 

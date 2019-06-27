@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import All from '@/components/FollowupConfiguration/Questionnaire/All';
 import { Input, Button } from 'antd';
 
 class Questionnaire extends Component {

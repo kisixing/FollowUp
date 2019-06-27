@@ -22,8 +22,8 @@
 //       index === 0
 //         ? 'all'
 //         : Math.random()
-//             .toString(16)
-//             .slice(2),
+//           .toString(16)
+//           .slice(2),
 //   }));
 // });
 // export default {

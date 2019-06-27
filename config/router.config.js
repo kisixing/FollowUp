@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> c2ee1100e58b9015e1d30ecde1f77533b5cd91ed
 export default [
   // user
   {
