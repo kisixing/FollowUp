@@ -12,26 +12,26 @@ import { TweenOneGroup } from 'rc-tween-one';
 import TagSelect from '@/components/TagSelect';
 import StandardFormRow from '@/components/StandardFormRow';
 import WechatCard from '@/components/WechatCard';
-import { objFormatArr } from '@/utils/utils';
+import { getObjectValues } from '@/utils/utils';
 
 import styles from './Step1.less';
 
-const category = ['科室随访', '专项随访', '关怀类随访', '管理类随访', '科研随访'];
-const secondaryCategory = [
-  '高危妊娠孕妇复诊管理',
-  '妊娠糖尿病孕妇管理',
-  '产后随访',
-  '无创基因检查随访',
-  'OGTT异常随访',
-  '节日问候',
-  '生日问候',
-  '三伏天通知',
-  '新生儿疾病护理讲座通知',
-  '可是满意度',
-  '投诉建议',
-  '妊娠期体重管理与巨大儿',
-  '妊娠糖尿病产后病情发展',
-];
+// const category = ['科室随访', '专项随访', '关怀类随访', '管理类随访', '科研随访'];
+// const secondaryCategory = [
+//   '高危妊娠孕妇复诊管理',
+//   '妊娠糖尿病孕妇管理',
+//   '产后随访',
+//   '无创基因检查随访',
+//   'OGTT异常随访',
+//   '节日问候',
+//   '生日问候',
+//   '三伏天通知',
+//   '新生儿疾病护理讲座通知',
+//   '可是满意度',
+//   '投诉建议',
+//   '妊娠期体重管理与巨大儿',
+//   '妊娠糖尿病产后病情发展',
+// ];
 
 /**
  * 预览弹窗modal
@@ -94,6 +94,8 @@ const PreviewModal = props => {
   global,
   selectedTags: step1.selectedTags,
   lists: step1.lists,
+  category: step1.category,
+  secondaryCategory: step1.secondaryCategory,
   templateList: step1.templateList,
 }))
 class Step1 extends Component {
@@ -106,14 +108,21 @@ class Step1 extends Component {
     };
   }
 
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'step1/query',
+    });
+  }
+
   // 选择标签
-  handleTags = (target, checkedTags) => {
+  handleTags = (target, checkedTag) => {
     const { dispatch } = this.props;
     dispatch({
       type: 'step1/updateTags',
       payload: {
         target,
-        checkedTags,
+        checkedTag,
       },
     });
   };
@@ -158,8 +167,7 @@ class Step1 extends Component {
 
   render() {
     const { currentTemplate, modalVisible, showTemplate } = this.state;
-    const { loading, form, selectedTags, lists, templateList } = this.props;
-    const { getFieldDecorator } = form;
+    const { loading, selectedTags, lists, templateList, category, secondaryCategory } = this.props;
 
     const actionsTextMap = {
       expandText: '展开',
@@ -226,34 +234,36 @@ class Step1 extends Component {
                     leave={{ opacity: 0, width: 0, scale: 0, duration: 200 }}
                     appear={false}
                   >
-                    {selectedTagsMap(objFormatArr(selectedTags))}
+                    {selectedTagsMap(getObjectValues(selectedTags).filter(e => e !== ''))}
                   </TweenOneGroup>
                 </div>
               </StandardFormRow>
               <StandardFormRow title="所属类目" block style={{ paddingBottom: 11 }}>
                 <Form.Item>
-                  {getFieldDecorator('category')(
-                    <TagSelect
-                      expandable
-                      onChange={tags => this.handleTags('category', tags)}
-                      actionsText={actionsTextMap}
-                    >
-                      {tagOptionsMap(category)}
-                    </TagSelect>
-                  )}
+                  <TagSelect
+                    radio
+                    expandable
+                    hideCheckAll
+                    value={[selectedTags.category]}
+                    onChange={tags => this.handleTags('category', tags)}
+                    actionsText={actionsTextMap}
+                  >
+                    {tagOptionsMap(category.map(e => e.name))}
+                  </TagSelect>
                 </Form.Item>
               </StandardFormRow>
               <StandardFormRow title="二级类目" block style={{ paddingBottom: 11 }}>
                 <Form.Item>
-                  {getFieldDecorator('secondaryCategory')(
-                    <TagSelect
-                      expandable
-                      onChange={tags => this.handleTags('secondaryCategory', tags)}
-                      actionsText={actionsTextMap}
-                    >
-                      {tagOptionsMap(secondaryCategory)}
-                    </TagSelect>
-                  )}
+                  <TagSelect
+                    radio
+                    expandable
+                    hideCheckAll
+                    value={[selectedTags.secondaryCategory]}
+                    onChange={tags => this.handleTags('secondaryCategory', tags)}
+                    actionsText={actionsTextMap}
+                  >
+                    {tagOptionsMap(secondaryCategory)}
+                  </TagSelect>
                 </Form.Item>
               </StandardFormRow>
             </Form>

@@ -217,14 +217,32 @@ export function objFormatArr(obj) {
 export function pathMatchRegexp(regexp, pathname) {
   return pathToRegexp(regexp).exec(pathname);
 }
-//extends
+
+export function getObjectKeys(object) {
+  const keys = [];
+  Object.keys(object).forEach(property => {
+    keys.push(property);
+  });
+  return keys;
+}
+
+export function getObjectValues(object) {
+  const values = [];
+  Object.keys(object).forEach(property => {
+    values.push(object[property]);
+  });
+  return values;
+}
+
+// extends
 export function getValueOfFirstItem(arr, key, defaultValue = '') {
   if (!Array.isArray(arr)) return defaultValue;
-  let value = arr[0] && arr[0][key];
+  const value = arr[0] && arr[0][key];
   if (
     value === undefined ||
     value === '' ||
     value === null ||
+    // eslint-disable-next-line no-restricted-globals
     (typeof value === 'number' && isNaN(value))
   ) {
     return defaultValue;

@@ -106,8 +106,7 @@ class All extends Component {
   };
 
   render() {
-    const { form } = this.props;
-    const { getFieldDecorator } = form;
+    const { form: { getFieldDecorator } } = this.props;
 
     const actionsTextMap = {
       expandText: <FormattedMessage id="component.tagSelect.expand" defaultMessage="Expand" />,
@@ -152,23 +151,23 @@ class All extends Component {
         title: '全部',
       },
       {
-        id: 1,
+        id: 2,
         title: '随访问卷',
       },
       {
-        id: 1,
+        id: 3,
         title: '满意度调查',
       },
       {
-        id: 1,
+        id: 4,
         title: '报名登记',
       },
       {
-        id: 1,
+        id: 5,
         title: '分数测评',
       },
       {
-        id: 1,
+        id: 6,
         title: '科研项目',
       },
     ];
@@ -235,7 +234,7 @@ class All extends Component {
             <List.Item key={item.id}>
               <Card
                 hoverable
-                bodyStyle={{ paddingBottom: 20 }}
+                bodyStyle={{ padding: 0 }}
                 actions={[
                   <Tooltip title="随访人员统计">
                     <Icon type="ordered-list" />
@@ -253,6 +252,7 @@ class All extends Component {
                 extra={<p style={{ color: '#0096FA' }}>{item.state}</p>}
                 title={item.title}
               >
+
                 <CardInfo answer={formatWan(item.answer)} date={item.date} />
                 {this.createTag(item.tag)}
               </Card>

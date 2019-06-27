@@ -14,32 +14,34 @@ import { TweenOneGroup } from 'rc-tween-one';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import TagSelect from '@/components/TagSelect';
 import StandardFormRow from '@/components/StandardFormRow';
-import { objFormatArr } from '@/utils/utils';
+import { getObjectValues } from '@/utils/utils';
 
 import styles from './index.less';
 
-const category = ['科室随访', '专项随访', '关怀类随访', '管理类随访', '科研随访'];
-const secondaryCategory = [
-  '高危妊娠孕妇复诊管理',
-  '妊娠糖尿病孕妇管理',
-  '产后随访',
-  '无创基因检查随访',
-  'OGTT异常随访',
-  '节日问候',
-  '生日问候',
-  '三伏天通知',
-  '新生儿疾病护理讲座通知',
-  '可是满意度',
-  '投诉建议',
-  '妊娠期体重管理与巨大儿',
-  '妊娠糖尿病产后病情发展',
-];
+// const category = ['科室随访', '专项随访', '关怀类随访', '管理类随访', '科研随访'];
+// const secondaryCategory = [
+//   '高危妊娠孕妇复诊管理',
+//   '妊娠糖尿病孕妇管理',
+//   '产后随访',
+//   '无创基因检查随访',
+//   'OGTT异常随访',
+//   '节日问候',
+//   '生日问候',
+//   '三伏天通知',
+//   '新生儿疾病护理讲座通知',
+//   '可是满意度',
+//   '投诉建议',
+//   '妊娠期体重管理与巨大儿',
+//   '妊娠糖尿病产后病情发展',
+// ];
 
 @connect(({ global, loading, followupLists }) => ({
   global,
   loading: loading.effects['followupLists/query'],
   selectedTags: followupLists.selectedTags,
   lists: followupLists.lists,
+  category: followupLists.category,
+  secondaryCategory: followupLists.secondaryCategory,
   tabActiveKey: followupLists.tabActiveKey,
 }))
 class FollowupManagement extends Component {
@@ -81,13 +83,13 @@ class FollowupManagement extends Component {
   };
 
   // 选择标签
-  handleTags = (target, checkedTags) => {
+  handleTags = (target, checkedTag) => {
     const { dispatch } = this.props;
     dispatch({
       type: 'followupLists/updateTags',
       payload: {
         target,
-        checkedTags,
+        checkedTag,
       },
     });
   };
@@ -163,12 +165,7 @@ class FollowupManagement extends Component {
     );
 
     const tabBarExtraContent = (
-      <Button
-        type="primary"
-        icon="plus"
-        size="small"
-        onClick={() => router.push('/followup-management/create')}
-      >
+      <Button type="primary" icon="plus" onClick={() => router.push('/followup-management/create')}>
         新建
       </Button>
     );
@@ -212,8 +209,7 @@ class FollowupManagement extends Component {
       return tagChild;
     };
 
-    const { loading, form, selectedTags, lists, tabActiveKey } = this.props;
-    const { getFieldDecorator } = form;
+    const { loading, selectedTags, lists, category, secondaryCategory, tabActiveKey } = this.props;
 
     return (
       <PageHeaderWrapper
@@ -243,34 +239,36 @@ class FollowupManagement extends Component {
                     leave={{ opacity: 0, width: 0, scale: 0, duration: 200 }}
                     appear={false}
                   >
-                    {tagsMap(objFormatArr(selectedTags))}
+                    {tagsMap(getObjectValues(selectedTags).filter(e => e !== ''))}
                   </TweenOneGroup>
                 </div>
               </StandardFormRow>
               <StandardFormRow title="所属类目" block style={{ paddingBottom: 11 }}>
                 <Form.Item>
-                  {getFieldDecorator('category')(
-                    <TagSelect
-                      expandable
-                      onChange={tags => this.handleTags('category', tags)}
-                      actionsText={actionsTextMap}
-                    >
-                      {tagOptionsMap(category)}
-                    </TagSelect>
-                  )}
+                  <TagSelect
+                    radio
+                    expandable
+                    hideCheckAll
+                    value={[selectedTags.category]}
+                    onChange={tags => this.handleTags('category', tags)}
+                    actionsText={actionsTextMap}
+                  >
+                    {tagOptionsMap(category.map(e => e.name))}
+                  </TagSelect>
                 </Form.Item>
               </StandardFormRow>
               <StandardFormRow title="二级类目" block style={{ paddingBottom: 11 }}>
                 <Form.Item>
-                  {getFieldDecorator('secondaryCategory')(
-                    <TagSelect
-                      expandable
-                      onChange={tags => this.handleTags('secondaryCategory', tags)}
-                      actionsText={actionsTextMap}
-                    >
-                      {tagOptionsMap(secondaryCategory)}
-                    </TagSelect>
-                  )}
+                  <TagSelect
+                    radio
+                    expandable
+                    hideCheckAll
+                    value={[selectedTags.secondaryCategory]}
+                    onChange={tags => this.handleTags('secondaryCategory', tags)}
+                    actionsText={actionsTextMap}
+                  >
+                    {tagOptionsMap(secondaryCategory)}
+                  </TagSelect>
                 </Form.Item>
               </StandardFormRow>
             </Form>
@@ -293,8 +291,8 @@ class FollowupManagement extends Component {
                     <Tooltip title="图表分析">
                       <Icon type="line-chart" onClick={() => this.onChartClick(item)} />
                     </Tooltip>,
-                    <Tooltip title="分享">
-                      <Icon type="share-alt" />
+                    <Tooltip title="编辑">
+                      <Icon type="edit" />
                     </Tooltip>,
                     <Dropdown overlay={itemMenu}>
                       <Icon type="ellipsis" />

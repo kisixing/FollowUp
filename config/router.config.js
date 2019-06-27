@@ -1,4 +1,3 @@
-
 export default [
   // user
   {
@@ -134,6 +133,10 @@ export default [
         name: 'followup-configuration',
         icon: 'book',
         routes: [
+          {
+            path: '/followup-configuration',
+            redirect: '/followup-configuration/Questionnaire'
+          },
           {
             path: '/followup-configuration/Questionnaire',
             name: 'questionnaire',
