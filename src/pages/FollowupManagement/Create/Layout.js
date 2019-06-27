@@ -21,7 +21,7 @@ class Layout extends Component {
   constructor({ dispatch }) {
     super(...arguments);
     this.state = {};
-    dispatch({ type: 'followupCreationState/fetchDataset', payload: {} });
+    dispatch({ type: 'followupCreation_model/fetchDataset', payload: {} });
   }
 
   render() {

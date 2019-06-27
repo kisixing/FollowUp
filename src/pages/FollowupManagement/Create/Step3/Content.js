@@ -15,36 +15,36 @@ import {
 } from 'antd';
 import { lh40, colorC, mRb8 } from './index.less';
 import router from 'umi/router';
-import Preview from './TaskPreview';
 import { getValueOfFirstItem } from '@/utils/utils';
-const reservationMediaType = ['微信', '短信', '电话'];
 
-const Content = connect(({ followupCreationState }) => {
-  return { followupCreationState };
-})(function({ followupCreationState, index, onUp, onDown }) {
-  const reservationDateType = followupCreationState.reservationDateType || [];
+const mapStateToProps = ({ followupCreation_model }) => {
+  return { followupCreation_model };
+}
+const Content = connect(mapStateToProps)(function ({ followupCreation_model, index, onUp, onDown }) {
+  const reservationDateType = followupCreation_model.reservationDateType || [];
   const initDateType = getValueOfFirstItem(reservationDateType, F_VALUE, '');
 
-  const reservationDuringType = followupCreationState.reservationDuringType || [];
-  const initDuringType = getValueOfFirstItem(reservationDuringType, F_VALUE, '1');
+  const reservationDuringType = followupCreation_model.reservationDuringType || [];
+  const initDuringType = getValueOfFirstItem(reservationDuringType, F_VALUE, '');
+
+  const reservationMediaType = followupCreation_model.reservationMediaType || [];
+  const initMediaType = getValueOfFirstItem(reservationMediaType, F_VALUE, '');
 
   const [state, setState] = useState({
     formData: {
       followupDateType: initDateType,
       followupDuringType: initDuringType,
       followupDay: 5,
-      mediaType: reservationMediaType[0],
+      mediaType: initMediaType,
       IsfollowOrder: false,
       text: '',
       judgeDateType: initDateType,
       judgeDuringType: initDuringType,
       judgeDay: 7,
     },
-    previewVisible: false,
   });
 
   const { previewVisible, formData } = state;
-  console.log(state, followupCreationState);
   function _setFormData(data) {
     setState({
       ...state,
@@ -58,6 +58,15 @@ const Content = connect(({ followupCreationState }) => {
 
   function getDropDown(type, typeList) {
     let a = typeList.filter(_ => _.value === formData[type]);
+    function getMenu(arr, handleMenuClick) {
+      return (
+        <Menu onClick={handleMenuClick}>
+          {arr.map(({ value, label }) => (
+            <Menu.Item key={value}>{label}</Menu.Item>
+          ))}
+        </Menu>
+      );
+    }
     return (
       <Dropdown
         overlay={getMenu(typeList, ({ key }) => {
@@ -69,9 +78,6 @@ const Content = connect(({ followupCreationState }) => {
         </Button>
       </Dropdown>
     );
-  }
-  function setVisible(previewVisible) {
-    setState({ ...state, previewVisible });
   }
   return (
     <Form
@@ -104,8 +110,8 @@ const Content = connect(({ followupCreationState }) => {
           }}
         >
           {reservationMediaType.map(r => (
-            <Radio.Button value={r} key={r}>
-              {r}
+            <Radio.Button value={r[F_VALUE]} key={r[F_VALUE]}>
+              {r[F_LABEL]}
             </Radio.Button>
           ))}
         </Radio.Group>
@@ -180,34 +186,12 @@ const Content = connect(({ followupCreationState }) => {
             <Button type="primary" ghost>
               未及时就诊原因
             </Button>
-            <Button type="link">其他问卷</Button>
+            <Button type="link" onClick={() => router.push('/followup-configuration/Questionnaire')}>其他问卷</Button>
           </div>
         </Col>
       </Row>
-      <div style={{ textAlign: 'center' }}>
-        <Button className={mRb8} onClick={() => setVisible(true)}>
-          预览{' '}
-        </Button>
-        <Button type="primary" className={mRb8} onClick={() => onUp(index)}>
-          {' '}
-          上一步{' '}
-        </Button>
-        <Button type="primary" className={mRb8} onClick={() => onDown(index)}>
-          {' '}
-          下一步{' '}
-        </Button>
-        <Button type="primary" className={mRb8} onClick={() => router.push('step4')}>
-          {' '}
-          确定{' '}
-        </Button>
-      </div>
-      <Preview
-        visible={previewVisible}
-        onCancel={() => setVisible(false)}
-        onOk={() => {
-          setVisible(false);
-        }}
-      ></Preview>
+
+
     </Form>
   );
 });
@@ -220,12 +204,3 @@ export function Title({ label, isTop }) {
 }
 
 export default Content;
-function getMenu(arr, handleMenuClick) {
-  return (
-    <Menu onClick={handleMenuClick}>
-      {arr.map(({ value, label }) => (
-        <Menu.Item key={value}>{label}</Menu.Item>
-      ))}
-    </Menu>
-  );
-}

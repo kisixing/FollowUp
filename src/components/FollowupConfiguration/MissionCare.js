@@ -181,9 +181,7 @@ class MissionCareComponent extends Component {
             <Link to="">编辑 </Link>
             <Link to="">预览 </Link>
             <Link to="">推送测试 </Link>
-            <Link to="" className={styles.cancel}>
-              删除{' '}
-            </Link>
+            <Link to="" className={styles.cancel}>删除</Link>
           </div>
         ),
       },

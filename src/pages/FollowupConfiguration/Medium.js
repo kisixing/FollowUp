@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import All from '@/components/FollowupConfiguration/Medium/All';
 
 import { Input } from 'antd';
 
@@ -13,8 +12,19 @@ class Medium extends Component {
     };
   }
 
+  componentWillMount() {
+    import(`@/components/FollowupConfiguration/Medium/All`)
+      .then(module => {
+        this.setState({ children: <module.default /> })
+      })
+  };
+
   handleTabChange = tabActiveKey => {
     this.setState({ tabActiveKey });
+    import(`@/components/FollowupConfiguration/Medium/${tabActiveKey}`)
+      .then(module =>
+        this.setState({ children: <module.default /> })
+      )
   };
 
   handleFormSubmit = value => {
@@ -61,7 +71,7 @@ class Medium extends Component {
       </div>
     );
 
-    const { tabActiveKey } = this.state;
+    const { tabActiveKey, children } = this.state;
 
     return (
       <PageHeaderWrapper
@@ -69,10 +79,9 @@ class Medium extends Component {
         content={mainSearch}
         tabList={tabList}
         tabActiveKey={tabActiveKey}
-        onTabChange={this.handleTabChange}
+      // onTabChange={this.handleTabChange}
       >
-        {/* <Children /> */}
-        <All />
+        {children}
       </PageHeaderWrapper>
     );
   }
