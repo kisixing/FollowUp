@@ -24,29 +24,17 @@ export default [
     Routes: ['src/pages/Authorized'],
     routes: [
       // dashboard
-      { path: '/', redirect: '/workplace', authority: ['admin', 'user'] },
+      { path: '/', redirect: '/calendar', authority: ['admin', 'user'] },
       {
-        path: '/workplace',
-        name: 'workplace',
-        icon: 'dashboard',
-        component: './Workplace',
-      },
-      {
-        path: '/patient-management',
-        name: 'patient-management',
-        icon: 'book',
-        component: './PatientManagement',
-      },
-      {
-        path: '/archives-management',
-        name: 'archives-management',
-        icon: 'book',
-        // component: './ArchivesManagement',
+        path: '/calendar',
+        name: 'calendar',
+        icon: 'calendar',
+        component: './Calendar',
       },
       {
         path: '/followup-management',
         name: 'followup-management',
-        icon: 'book',
+        icon: 'file-text',
         routes: [
           {
             // 随访任务列表
@@ -122,7 +110,7 @@ export default [
             // 单个随访任务图形分析统计
             path: '/followup-management/statistics/detail/:followupId',
             name: 'statistics-detail',
-            icon: 'area-chart',
+            icon: 'bar-chart',
             component: './FollowupManagement/Statistics/detail',
             hideInMenu: true,
           }
@@ -131,7 +119,7 @@ export default [
       {
         path: '/followup-configuration',
         name: 'followup-configuration',
-        icon: 'book',
+        icon: 'tool',
         routes: [
           {
             path: '/followup-configuration',
@@ -161,27 +149,47 @@ export default [
         path: '/online-service',
         name: 'online-service',
         icon: 'book',
-        component:'./OnlineService'
+        component: './OnlineService'
       },
       {
-        path: '/schedule-reminder',
-        name: 'schedule-reminder',
-        icon: 'book',
-        routes: [
-          {
-            path: '/schedule-reminder/create',
-            name: 'create',
-            icon: 'edit',
-            // component: './ScheduleReminder/Create',
-          },
-          {
-            path: '/schedule-reminder/management',
-            name: 'management',
-            icon: 'edit',
-            // component: './ScheduleReminder/Management',
-          },
-        ],
+        path: '/patient-management',
+        name: 'patient-management',
+        icon: 'user',
+        component: './PatientManagement',
       },
+      {
+        path: '/archives-management',
+        name: 'archives-management',
+        icon: 'book',
+        // component: './ArchivesManagement',
+      },
+      {
+        path: '/statistics',
+        name: 'statistics',
+        icon: 'bar-chart',
+        // component: './Statistics',
+      },
+
+      // {
+      //   path: '/schedule-reminder',
+      //   name: 'schedule-reminder',
+      //   icon: 'book',
+      //   routes: [
+      //     {
+      //       path: '/schedule-reminder/create',
+      //       name: 'create',
+      //       icon: 'edit',
+      //       // component: './ScheduleReminder/Create',
+      //     },
+      //     {
+      //       path: '/schedule-reminder/management',
+      //       name: 'management',
+      //       icon: 'edit',
+      //       // component: './ScheduleReminder/Management',
+      //     },
+      //   ],
+      // },
+
       {
         path: '/system-settings',
         name: 'system-settings',
@@ -209,10 +217,17 @@ export default [
             path: '/system-settings/monitor ',
             name: 'monitor',
             icon: 'book',
-            // component: './Monitor',online-service
+            // component: './Monitor',
           },
         ],
       },
+      {
+        path: '/monitor',
+        name: 'monitor',
+        icon: 'desktop',
+        // component:'./Monitor'
+      },
+
       {
         name: 'exception',
         icon: 'warning',

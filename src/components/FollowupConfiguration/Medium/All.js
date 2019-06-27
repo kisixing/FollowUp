@@ -160,7 +160,7 @@ class All extends Component {
       {
         title: '人工管理设置',
         // dataIndex: 'key',
-        render: () => <Link to="">设置 </Link>,
+        render: () => <Link to="#">设置 </Link>,
       },
     ];
 
