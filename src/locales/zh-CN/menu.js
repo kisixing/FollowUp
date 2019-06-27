@@ -3,7 +3,7 @@ export default {
   'menu.login': '登录',
   'menu.register': '注册',
   'menu.register.result': '注册结果',
-  'menu.workplace': '工作台',
+  'menu.calendar': '随访日历',
   'menu.patient-management': '患者管理',
   'menu.archives-management': '档案管理',
   'menu.followup-management': '随访管理',
@@ -31,6 +31,8 @@ export default {
   'menu.system-settings.record': '操作日记',
   'menu.system-settings.monitor': '监控台',
   'menu.online-service': '在线咨询',
+  'menu.monitor': '监控台（仅管理员）',
+  'menu.statistics': '统计管理',
 
   'menu.result': '结果页',
   'menu.result.success': '成功页',

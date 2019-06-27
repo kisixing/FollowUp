@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import moment from 'moment';
 import { connect } from 'dva';
 import Link from 'umi/link';
-import { Row, Col, Card, List, Avatar, Icon } from 'antd';
+import { Row, Col, Card, List, Avatar, Icon, Calendar, Badge } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './index.less';
 
@@ -13,7 +13,7 @@ import styles from './index.less';
   currentUserLoading: loading.effects['user/fetchCurrent'],
   projectLoading: loading.effects['project/fetchNotice'],
 }))
-class Workplace extends PureComponent {
+class CalendarComponent extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
@@ -65,6 +65,90 @@ class Workplace extends PureComponent {
         </List.Item>
       );
     });
+  }
+
+  getListData = value => {
+    let listData;
+    switch (value.date()) {
+      case 7:
+        listData = [
+          { type: 'warning', content: '高危复诊管理' }
+        ];
+        break;
+      case 8:
+        listData = [
+          { type: 'warning', content: '高危复诊管理' },
+          { type: 'error', content: 'OGTT异常...' }
+        ];
+        break;
+      case 9:
+        listData = [
+          { type: 'warning', content: '唐筛+羊穿+无...' }
+        ];
+        break;
+      case 10:
+        listData = [
+          { type: 'success', content: '投诉与建议处理' }
+        ];
+        break;
+      case 14:
+        listData = [
+          { type: 'warning', content: '高危复诊管理' }
+        ];
+        break;
+      case 15:
+        listData = [
+          { type: 'warning', content: '高危复诊管理' },
+          { type: 'error', content: 'OGTT异常...' }
+        ];
+        break;
+      case 16:
+        listData = [
+          { type: 'warning', content: '唐筛+羊穿+无...' }
+        ];
+        break;
+      case 17:
+        listData = [
+          { type: 'success', content: '投诉与建议处理' }
+        ];
+        break;
+      case 21:
+        listData = [
+          { type: 'warning', content: '高危复诊管理' }
+        ];
+        break;
+      case 22:
+        listData = [
+          { type: 'warning', content: '高危复诊管理' },
+          { type: 'error', content: 'OGTT异常...' }
+        ];
+        break;
+      case 23:
+        listData = [
+          { type: 'warning', content: '唐筛+羊穿+无...' }
+        ];
+        break;
+      case 24:
+        listData = [
+          { type: 'success', content: '投诉与建议处理' }
+        ];
+        break;
+      default:
+    }
+    return listData || [];
+  }
+
+  dateCellRender = value => {
+    const listData = this.getListData(value);
+    return (
+      <ul style={{ padding: 0 }}>
+        {listData.map(item => (
+          <li key={item.content}>
+            <Badge status={item.type} text={item.content} />
+          </li>
+        ))}
+      </ul>
+    );
   }
 
   render() {
@@ -126,10 +210,17 @@ class Workplace extends PureComponent {
     return (
       <PageHeaderWrapper loading={currentUserLoading}>
         <Row gutter={24}>
-          <Col xl={16} lg={24} md={24} sm={24} xs={24}>
+          <Col xl={18} lg={24} md={24} sm={24} xs={24}>
+            <div style={{ width: '100 %' }}>
+              <Calendar
+                style={{ border: '1px solid #d9d9d9', borderRadius: 4, backgroundColor: 'white' }}
+                dateCellRender={this.dateCellRender}
+              />
+            </div>
+
             <Card
               className={styles.projectList}
-              style={{ marginBottom: 24 }}
+              style={{ margin: '24px 0' }}
               title="进行中的项目"
               bordered={false}
               extra={<Link to="/">全部项目</Link>}
@@ -149,20 +240,20 @@ class Workplace extends PureComponent {
                     }
                     extra={<Link to="/">{item.status}</Link>}
                     actions={cardIcon.map(item2 => (
-                      <Link to="/" key={item2}>
+                      <Link to="#" key={item2}>
                         <Icon type={item2} />
                       </Link>
                     ))}
                   >
                     <Row>
                       <Col span={12}>
-                        <div style={{ textAlign: 'center', marginBottom: 5 }}>随访患者</div>
-                        <div style={{ textAlign: 'center', font: 'bold 20px/20px Georgia,serif' }}>
+                        <div style={{ textAlign: 'center', marginBottom: 5, color: '#FF00FF' }}>紧急随访</div>
+                        <div style={{ textAlign: 'center', font: 'bold 20px/20px Georgia,serif', color: '#FF00FF' }}>
                           {item.total}
                         </div>
                       </Col>
                       <Col span={12}>
-                        <div style={{ textAlign: 'center', marginBottom: 5 }}>今日随访</div>
+                        <div style={{ textAlign: 'center', marginBottom: 5 }}>待随访</div>
                         <div style={{ textAlign: 'center', font: 'bold 20px/20px Georgia,serif' }}>
                           {item.today}
                         </div>
@@ -174,7 +265,7 @@ class Workplace extends PureComponent {
             </Card>
           </Col>
 
-          <Col xl={8} lg={24} md={24} sm={24} xs={24}>
+          <Col xl={6} lg={24} md={24} sm={24} xs={24}>
             <Card style={{ marginBottom: 24 }}>
               <Row>
                 <Col span={12}>
@@ -192,6 +283,16 @@ class Workplace extends PureComponent {
               </Row>
             </Card>
 
+            <Card title="在线咨询" bordered={false} style={{ marginBottom: 24 }}>
+              <Row type="flex" justify="space-around" style={{ marginBottom: 10 }}>
+                <Col style={{ color: '#0096FA' }}>待接入的咨询</Col>
+                <Col style={{ color: '#0096FA' }}>120人</Col>
+              </Row>
+              <Row type="flex" justify="space-around">
+                <Col style={{ color: '#0096FA' }}>待回复</Col>
+                <Col style={{ color: '#0096FA' }}>34人</Col>
+              </Row>
+            </Card>
             <Card title="投诉提醒" bordered={false} style={{ marginBottom: 24 }}>
               <Row type="flex" justify="space-around" style={{ marginBottom: 10 }}>
                 <Col style={{ color: '#0096FA' }}>待受理的投诉</Col>
@@ -202,7 +303,6 @@ class Workplace extends PureComponent {
                 <Col style={{ color: '#0096FA' }}>9起</Col>
               </Row>
             </Card>
-
             <Card title="人工随访提醒" bordered={false} style={{ marginBottom: 24 }}>
               <Row type="flex" justify="space-around" style={{ marginBottom: 10 }}>
                 <Col style={{ color: '#0096FA' }}>待随访的患者</Col>
@@ -224,4 +324,4 @@ class Workplace extends PureComponent {
   }
 }
 
-export default Workplace;
+export default CalendarComponent;
