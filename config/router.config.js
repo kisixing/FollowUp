@@ -155,6 +155,12 @@ export default [
         ],
       },
       {
+        path: '/online-consultation',
+        name: 'online-consultation',
+        icon: 'book',
+        component:'./OnlineConsultation'
+      },
+      {
         path: '/schedule-reminder',
         name: 'schedule-reminder',
         icon: 'book',
