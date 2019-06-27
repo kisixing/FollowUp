@@ -4,15 +4,33 @@ import MessageCard from './MessageCard';
 
 //预览
 const yellowStyle = { color: 'orange', fontWeight: 'bold' };
-export default function Preview({ visible, onOk, onCancel }) {
+const mapStateToProps = ({ followupCreation_model }) => {
+  return { followupCreation_model };
+}
+const Preview = connect(mapStateToProps)(({ visible, onOk, onCancel, formData, followupCreation_model }) => {
   // const [state,setState] = useState({
   //   visible:false
   // })
+
+  const { reservationDateType, reservationDuringType, reservationMediaType } = followupCreation_model
+
+  // const {
+  //   followupDateType,
+  //   followupDuringType,
+  //   followupDay,
+  //   mediaType,
+  //   IsfollowOrder,
+  //   text,
+  //   judgeDateType,
+  //   judgeDuringType,
+  //   judgeDay,
+  // } = formData
+
   return (
-    <Modal visible={visible} onOk={onOk} onCancel={onCancel}>
+    <Modal visible={visible} onOk={onOk} onCancel={onCancel} >
       <Timeline>
         <Timeline.Item color="green">
-          预约日期 之后 1天 发送微信
+          {'预约日期'} 之后 1天 发送微信
           <WechatCard />
         </Timeline.Item>
 
@@ -32,4 +50,12 @@ export default function Preview({ visible, onOk, onCancel }) {
       ,
     </Modal>
   );
+})
+export default Preview
+function getLabelByValue(arr, value, valueSymbol = F_VALUE, labelSymbol = F_LABEL) {
+  const target = arr.find(_ => _[valueSymbol] === value)
+  if (!target) {
+    return null
+  }
+  return target[labelSymbol]
 }

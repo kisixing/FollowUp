@@ -16,6 +16,7 @@ export default {
   'menu.followup-management.create.task-definition': '编辑任务内容',
   'menu.followup-management.create.issue': '发布',
   'menu.followup-management.statistics': '统计分析',
+  'menu.followup-management.statistics-detail': '统计分析详细',
   'menu.followup-configuration': '随访配置',
   'menu.followup-configuration.questionnaire': '问卷配置',
   'menu.followup-configuration.mission-care': '宣教关怀',
