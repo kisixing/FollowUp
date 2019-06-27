@@ -19,10 +19,12 @@ class TagSelect extends Component {
   static propTypes = {
     actionsText: PropTypes.object,
     hideCheckAll: PropTypes.bool,
+    radio: PropTypes.bool,
   };
 
   static defaultProps = {
     hideCheckAll: false,
+    radio: false,
     actionsText: {
       expandText: 'Expand',
       collapseText: 'Collapse',
@@ -74,15 +76,25 @@ class TagSelect extends Component {
 
   handleTagChange = (value, checked) => {
     const { value: StateValue } = this.state;
-    const checkedTags = [...StateValue];
-
-    const index = checkedTags.indexOf(value);
-    if (checked && index === -1) {
-      checkedTags.push(value);
-    } else if (!checked && index > -1) {
-      checkedTags.splice(index, 1);
+    const { radio } = this.props;
+    if (radio) {
+      let checkedTag = '';
+      if (checked) {
+        checkedTag = value;
+      } else if (!checked) {
+        checkedTag = '';
+      }
+      this.onChange(checkedTag);
+    } else {
+      const checkedTags = [...StateValue];
+      const index = checkedTags.indexOf(value);
+      if (checked && index === -1) {
+        checkedTags.push(value);
+      } else if (!checked && index > -1) {
+        checkedTags.splice(index, 1);
+      }
+      this.onChange(checkedTags);
     }
-    this.onChange(checkedTags);
   };
 
   handleExpand = () => {
