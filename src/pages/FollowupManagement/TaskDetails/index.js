@@ -7,9 +7,9 @@ import TableForm from './TableForm';
 import styles from './index.less';
 
 class FollowupPatientLists extends Component {
-  onSearch = fieldsValue => {
-    console.log('on search', fieldsValue);
-  };
+  // onSearch = fieldsValue => {
+  //   console.log('on search', fieldsValue);
+  // };
 
   render() {
     return (
@@ -17,15 +17,15 @@ class FollowupPatientLists extends Component {
         title="随访任务列表"
         content={
           <SearchForm
-            wrappedComponentRef={form => (this.searchForm = form)}
-            onSearch={this.onSearch}
+          // wrappedComponentRef={form => (this.searchForm = form)}
+          // onSearch={this.onSearch}
           />
         }
       >
         <div className={styles.tableForm}>
           <TableForm />
         </div>
-      </PageHeaderWrapper>
+      </PageHeaderWrapper >
     );
   }
 }

@@ -140,7 +140,7 @@ export default [
           // },
           {
             path: '/followup-configuration/questionnaire/create',
-            name: 'questionnaire-create',
+            // name: 'questionnaire-create',
             icon: 'edit',
             component: './FollowupConfiguration/Questionnaire/Create/Layout',
             hideInMenu: true,
@@ -152,21 +152,21 @@ export default [
               {
                 // 选择任务类型
                 path: '/followup-configuration/questionnaire/create/step1',
-                name: 'questionnaire-create1',
+                // name: 'questionnaire-create1',
                 component: './FollowupConfiguration/Questionnaire/Create/Step1',
                 hideInMenu: true,
               },
               {
                 // 选择对象
                 path: '/followup-configuration/questionnaire/create/step2',
-                name: 'questionnaire-create2',
+                // name: 'questionnaire-create2',
                 component: './FollowupConfiguration/Questionnaire/Create/Step2',
                 hideInMenu: true,
               },
               {
                 // 编辑任务内容
                 path: '/followup-configuration/questionnaire/create/step3',
-                name: 'questionnaire-create3',
+                // name: 'questionnaire-create3',
                 component: './FollowupConfiguration/Questionnaire/Create/Step3',
                 hideInMenu: true,
               }
