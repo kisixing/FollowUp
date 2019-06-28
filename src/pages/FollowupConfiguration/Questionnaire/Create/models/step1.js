@@ -20,7 +20,7 @@ const secondaryCategoryData = [
 ];
 
 export default {
-  namespace: 'step1',
+  namespace: 'questionnaire_model',
 
   state: {
     selectedTags: {
@@ -77,6 +77,7 @@ export default {
         description: '自动发送复诊提醒 · 管理复诊结果',
       },
     ],
+    questionList: []
   },
 
   effects: {
@@ -90,7 +91,7 @@ export default {
       });
     },
     *removeTag({ payload }, { put, select }) {
-      const selectedTags = yield select(_ => _.step1.selectedTags);
+      const selectedTags = yield select(_ => _.questionnaire_model.selectedTags);
       const types = Object.keys(selectedTags);
       let tags = [];
       for (let i = 0; i < types.length; i++) {
@@ -128,7 +129,7 @@ export default {
       });
     },
     *updateTags({ payload }, { put, select }) {
-      const { selectedTags, category } = yield select(_ => _.step1);
+      const { selectedTags, category } = yield select(_ => _.questionnaire_model);
       const { target, checkedTag } = payload;
       const tags = {
         ...selectedTags,
@@ -172,5 +173,12 @@ export default {
         ...payload,
       };
     },
+
+    pushQuestionList(state, { payload }) {
+      state.questionList.push(payload)
+      return {
+        ...state
+      }
+    }
   },
 };

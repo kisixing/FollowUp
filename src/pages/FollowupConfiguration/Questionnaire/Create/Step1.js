@@ -86,13 +86,13 @@ const PreviewModal = props => {
 /**
  * 主页面内容
  */
-@connect(({ global, step1 }) => ({
+@connect(({ global, questionnaire_model }) => ({
   global,
-  selectedTags: step1.selectedTags,
-  lists: step1.lists,
-  category: step1.category,
-  secondaryCategory: step1.secondaryCategory,
-  templateList: step1.templateList,
+  selectedTags: questionnaire_model.selectedTags,
+  lists: questionnaire_model.lists,
+  category: questionnaire_model.category,
+  secondaryCategory: questionnaire_model.secondaryCategory,
+  templateList: questionnaire_model.templateList,
 }))
 class Step1 extends Component {
   constructor(props) {
@@ -107,7 +107,7 @@ class Step1 extends Component {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'step1/query',
+      type: 'questionnaire_model/query',
     });
   }
 
@@ -115,7 +115,7 @@ class Step1 extends Component {
   handleTags = (target, checkedTag) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'step1/updateTags',
+      type: 'questionnaire_model/updateTags',
       payload: {
         target,
         checkedTag,
@@ -144,7 +144,7 @@ class Step1 extends Component {
   handleTagRemove = removedTag => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'step1/removeTag',
+      type: 'questionnaire_model/removeTag',
       payload: removedTag,
     });
   };
