@@ -52,7 +52,20 @@ const dataSource = mockjs.mock({
     },
   ],
 });
-
+const item = {
+  id: '10000',
+  title: `高危妊娠复诊管理`,
+  'type': '科室随访',
+  'secondaryType': '高危妊娠',
+  avatar: '',
+  'status': {
+    code: 'running',
+    dec: '运行中',
+  },
+  allFollowup: 55,
+  todayFollowup: 22,
+}
+dataSource.data.unshift(item)
 const templates = mockjs.mock({
   decs: '随访任务模板列表',
   'data|30-50': [
