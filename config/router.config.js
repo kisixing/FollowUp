@@ -38,10 +38,10 @@ export default [
         routes: [
           {
             // 随访任务列表
-            path: '/followup-management/task-lists',
-            name: 'task-lists',
-            icon: 'edit',
-            component: './FollowupManagement/TaskLists/index',
+            path: '/followup-management/task-management',
+            name: 'task-management',
+            // icon: 'edit',
+            component: './FollowupManagement/TaskManagement/index',
           },
           {
             // 单个随访任务患者统计列表
@@ -62,7 +62,7 @@ export default [
           {
             path: '/followup-management/create',
             name: 'create',
-            icon: 'edit',
+            // icon: 'edit',
             component: './FollowupManagement/Create/Layout',
             routes: [
               {
@@ -99,21 +99,21 @@ export default [
               },
             ],
           },
-          {
-            // 全部随访的统计分析
-            path: '/followup-management/statistics',
-            name: 'statistics',
-            icon: 'table',
-            component: './FollowupManagement/Statistics/index',
-          },
-          {
-            // 单个随访任务图形分析统计
-            path: '/followup-management/statistics/detail/:followupId',
-            name: 'statistics-detail',
-            icon: 'bar-chart',
-            component: './FollowupManagement/Statistics/detail',
-            hideInMenu: true,
-          }
+          // {
+          //   // 全部随访的统计分析
+          //   path: '/followup-management/statistics',
+          //   name: 'statistics',
+          //   icon: 'table',
+          //   component: './FollowupManagement/Statistics/index',
+          // },
+          // {
+          //   // 单个随访任务图形分析统计
+          //   path: '/followup-management/statistics/detail/:followupId',
+          //   name: 'statistics-detail',
+          //   icon: 'bar-chart',
+          //   component: './FollowupManagement/Statistics/detail',
+          //   hideInMenu: true,
+          // }
         ],
       },
       {
@@ -128,7 +128,7 @@ export default [
           {
             path: '/followup-configuration/Questionnaire',
             name: 'questionnaire',
-            icon: 'snippets',
+            // icon: 'snippets',
             component: './FollowupConfiguration/Questionnaire',
           },
           // {
@@ -175,13 +175,13 @@ export default [
           {
             path: '/followup-configuration/mission-care',
             name: 'mission-care',
-            icon: 'heart',
+            // icon: 'heart',
             component: './FollowupConfiguration/MissionCare',
           },
           {
             path: '/followup-configuration/medium',
             name: 'medium',
-            icon: 'wechat',
+            // icon: 'wechat',
             component: './FollowupConfiguration/Medium',
           },
         ],
@@ -208,7 +208,7 @@ export default [
         path: '/statistics',
         name: 'statistics',
         icon: 'bar-chart',
-        // component: './Statistics',
+        component: './Statistics/Analysis',
       },
 
       // {
