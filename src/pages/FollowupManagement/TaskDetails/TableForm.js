@@ -4,7 +4,7 @@
  * @Date: 2019-06-19 23:43:14
  */
 import React, { Component } from 'react';
-import { Table, Divider, Modal, Tabs, Form, Select, Cascader, Input, Radio } from 'antd';
+import { Table, Divider, Modal, Tabs, Form, Select, Cascader, Input, Radio, Row, Col, Card, Checkbox, Button } from 'antd';
 import styles from './TableForm.less'
 
 
@@ -271,81 +271,94 @@ class TableForm extends Component {
           onCancel={() => this.setState({ visible: false })}
           okText='提交'
           cancelText='下一个问题'
+          width={800}
         >
 
-          <Tabs type='card' activeKey='0' tabBarExtraContent='2019-06-22 16:48'>
-            <TabPane tab='咨询记录' key='0'>
-              <Form {...formItemLayout}>
-                <FormItem label='咨询类型' className={styles.formItem}>
-                  {getFieldDecorator('consultType')(
-                    <div>
-                      <span> 医生出诊</span>
-                      <a style={{ marginLeft: 10 }}>更换</a>
-                    </div>
-                  )}
-                </FormItem>
-                <FormItem label='相关咨询' className={styles.formItem}>
-                  {getFieldDecorator('consult')(
-                    <div>
-                      <a> 预约挂号</a>
-                      <a style={{ marginLeft: 10 }}>专科介绍</a>
-                    </div>
-                  )}
-                </FormItem>
-                <FormItem label='医生选择' className={styles.formItem}>
-                  {getFieldDecorator('doctor')(
-                    <Cascader
-                      placeholder="请选择"
-                      options={options}
-                    />
-                  )}
-                </FormItem>
-                <FormItem label='出诊时间' className={styles.formItem}>
-                  {getFieldDecorator('visit')(
-                    <div>周二上午、周二下午、周四下午</div>
-                  )}
-                </FormItem>
-                <FormItem label='停诊信息' className={styles.formItem}>
-                  {getFieldDecorator('stop')(
-                    <div>无</div>
-                  )}
-                </FormItem>
-                <FormItem label='医生介绍' className={styles.formItem}>
-                  {getFieldDecorator('introduction')(
-                    <div>
-                      外科学副主任医师、硕士研究生导师、医学博士、生物材料博士后。1990年江西省人民医院普外科参加工作，1996年中南大学湘雅医院工作，硕博连读，2001年新加坡国立大学博士后，2005年暨南大学附...
-                      </div>
-                  )}
-                </FormItem>
-                <FormItem label='备注' className={styles.formItem}>
-                  {getFieldDecorator('remark')(
-                    <Input placeholder="请输入" />
-                  )}
-                </FormItem>
-                <FormItem label='快捷操作' className={styles.formItem}>
-                  {getFieldDecorator('quick')(
-                    <Radio.Group defaultValue='2'>
-                      <Radio.Button value='0'>预约挂号</Radio.Button>
-                      <Radio.Button value='1'>发送医生介绍</Radio.Button>
-                      <Radio.Button value='2'>发送医院地址</Radio.Button>
-                    </Radio.Group>
-                  )}
-                </FormItem>
-                <FormItem label='执行操作' className={styles.formItem}>
-                  {getFieldDecorator('action')(
-                    <div>
-                      <p>预约挂号【2019-07-09 上午 9:00-10:00】 专家号  劳学军</p>
-                      <p>电话结束后发生短信到咨询者：医院地址</p>
-                    </div>
-                  )}
-                </FormItem>
-              </Form>
-            </TabPane>
-            <TabPane tab='历史记录' key='1'>
-            </TabPane>
-            <TabPane tab='知识库' key='2'>
-            </TabPane>
-          </Tabs>
+          <Row>
+            <Col span={6}>
+              <Card>
+                <div>通话时间：00:04:32</div>
+                <Checkbox checked>电话录音</Checkbox>
+                <Button>转接</Button>
+                <Button>挂机</Button>
+              </Card>
+            </Col>
+            <Col span={18}>
+              <Tabs type='card' activeKey='0' tabBarExtraContent='2019-06-22 16:48'>
+                <TabPane tab='咨询记录' key='0'>
+                  <Form {...formItemLayout}>
+                    <FormItem label='咨询类型' className={styles.formItem}>
+                      {getFieldDecorator('consultType')(
+                        <div>
+                          <span> 医生出诊</span>
+                          <a style={{ marginLeft: 10 }}>更换</a>
+                        </div>
+                      )}
+                    </FormItem>
+                    <FormItem label='相关咨询' className={styles.formItem}>
+                      {getFieldDecorator('consult')(
+                        <div>
+                          <a> 预约挂号</a>
+                          <a style={{ marginLeft: 10 }}>专科介绍</a>
+                        </div>
+                      )}
+                    </FormItem>
+                    <FormItem label='医生选择' className={styles.formItem}>
+                      {getFieldDecorator('doctor')(
+                        <Cascader
+                          placeholder="请选择"
+                          options={options}
+                        />
+                      )}
+                    </FormItem>
+                    <FormItem label='出诊时间' className={styles.formItem}>
+                      {getFieldDecorator('visit')(
+                        <div>周二上午、周二下午、周四下午</div>
+                      )}
+                    </FormItem>
+                    <FormItem label='停诊信息' className={styles.formItem}>
+                      {getFieldDecorator('stop')(
+                        <div>无</div>
+                      )}
+                    </FormItem>
+                    <FormItem label='医生介绍' className={styles.formItem}>
+                      {getFieldDecorator('introduction')(
+                        <div>
+                          外科学副主任医师、硕士研究生导师、医学博士、生物材料博士后。1990年江西省人民医院普外科参加工作，1996年中南大学湘雅医院工作，硕博连读，2001年新加坡国立大学博士后，2005年暨南大学附...
+                          </div>
+                      )}
+                    </FormItem>
+                    <FormItem label='备注' className={styles.formItem}>
+                      {getFieldDecorator('remark')(
+                        <Input placeholder="请输入" />
+                      )}
+                    </FormItem>
+                    <FormItem label='快捷操作' className={styles.formItem}>
+                      {getFieldDecorator('quick')(
+                        <Radio.Group defaultValue='2'>
+                          <Radio.Button value='0'>预约挂号</Radio.Button>
+                          <Radio.Button value='1'>发送医生介绍</Radio.Button>
+                          <Radio.Button value='2'>发送医院地址</Radio.Button>
+                        </Radio.Group>
+                      )}
+                    </FormItem>
+                    <FormItem label='执行操作' className={styles.formItem}>
+                      {getFieldDecorator('action')(
+                        <div>
+                          <p>预约挂号【2019-07-09 上午 9:00-10:00】 专家号  劳学军</p>
+                          <p>电话结束后发生短信到咨询者：医院地址</p>
+                        </div>
+                      )}
+                    </FormItem>
+                  </Form>
+                </TabPane>
+                <TabPane tab='历史记录' key='1'>
+                </TabPane>
+                <TabPane tab='知识库' key='2'>
+                </TabPane>
+              </Tabs>
+            </Col>
+          </Row>
         </Modal>
       </div>
     );
