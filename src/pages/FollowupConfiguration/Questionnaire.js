@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import router from 'umi/router';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import { Input, Button } from 'antd';
@@ -72,6 +73,7 @@ class Questionnaire extends Component {
       <Button
         type="primary"
         icon="plus"
+        onClick={() => router.push('/followup-management/create')}
       >
         新建
         </Button>

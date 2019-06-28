@@ -7,7 +7,7 @@ export default {
   'menu.patient-management': '患者管理',
   'menu.archives-management': '档案管理',
   'menu.followup-management': '随访管理',
-  'menu.followup-management.task-lists': '随访任务',
+  'menu.followup-management.task-management': '任务管理',
   'menu.followup-management.details-table': '随访任务统计',
   'menu.followup-management.details-chart': '随访任务图表分析',
   'menu.followup-management.create': '新建任务',

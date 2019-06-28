@@ -115,13 +115,37 @@ const salesTypeDataOffline = [
   },
 ];
 
-const offlineData = [];
-for (let i = 0; i < 10; i += 1) {
-  offlineData.push({
-    name: `Stores ${i}`,
-    cvr: Math.ceil(Math.random() * 9) / 10,
-  });
-}
+// const offlineData = [];
+// for (let i = 0; i < 10; i += 1) {
+//   offlineData.push({
+//     name: `Stores ${i}`,
+//     cvr: Math.ceil(Math.random() * 9) / 10,
+//   });
+// }
+
+const offlineData = [
+  {
+    name: '全部',
+    cvr: 0.82
+  },
+  {
+    name: '妊娠高血压复诊管理',
+    cvr: 0.78
+  },
+  {
+    name: '唐筛+羊穿+无创基因...',
+    cvr: 0.45
+  },
+  {
+    name: 'PAC随访',
+    cvr: 0.3
+  },
+  {
+    name: '产后42天复诊管理',
+    cvr: 0.3
+  }
+]
+
 const offlineChartData = [];
 for (let i = 0; i < 20; i += 1) {
   offlineChartData.push({
