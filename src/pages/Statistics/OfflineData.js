@@ -67,8 +67,8 @@ const OfflineData = memo(
                 height={400}
                 data={offlineChartData}
                 titleMap={{
-                  y1: formatMessage({ id: 'app.analysis.traffic' }),
-                  y2: formatMessage({ id: 'app.analysis.payments' }),
+                  y1: '随访量',
+                  y2: '成功量',
                 }}
               />
             </div>

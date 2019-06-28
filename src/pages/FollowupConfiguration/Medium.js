@@ -13,7 +13,7 @@ class Medium extends Component {
   }
 
   componentWillMount() {
-    import(`@/components/FollowupConfiguration/Medium/All`)
+    import(`./Medium/All`)
       .then(module => {
         this.setState({ children: <module.default /> })
       })
@@ -21,7 +21,7 @@ class Medium extends Component {
 
   handleTabChange = tabActiveKey => {
     this.setState({ tabActiveKey });
-    import(`@/components/FollowupConfiguration/Medium/${tabActiveKey}`)
+    import(`./Medium/${tabActiveKey}`)
       .then(module =>
         this.setState({ children: <module.default /> })
       )

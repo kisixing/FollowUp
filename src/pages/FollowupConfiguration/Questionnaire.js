@@ -13,7 +13,7 @@ class Questionnaire extends Component {
   }
 
   componentWillMount() {
-    import(`@/components/FollowupConfiguration/Questionnaire/All`)
+    import(`./Questionnaire/All`)
       .then(module => {
         this.setState({ children: <module.default /> })
       })
@@ -21,7 +21,7 @@ class Questionnaire extends Component {
 
   handleTabChange = tabActiveKey => {
     this.setState({ tabActiveKey });
-    import(`@/components/FollowupConfiguration/Questionnaire/${tabActiveKey}`)
+    import(`./Questionnaire/${tabActiveKey}`)
       .then(module =>
         this.setState({ children: <module.default /> })
       )

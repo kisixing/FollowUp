@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import MissionCareComponent from '@/components/FollowupConfiguration/MissionCare';
+import MissionCareComponent from './MissionCareComponent';
 
 import { Input, Button, Modal, Form, Select, Upload, Icon, Row, Col } from 'antd';
 
