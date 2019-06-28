@@ -26,11 +26,12 @@ export default {
                 id: 3
             }
         ],
-        chattingId: 2
+        chattingId: 2,
+        activeKey: "1"
     },
     reducers: {
         setState(state, { payload }) {
-            
+
             return {
                 ...state, ...payload
             }
@@ -43,14 +44,16 @@ export default {
         *changeChatting({ chattingId }, { call, put, select }) {
             const { onlineService_model } = yield select()
             onlineService_model.chattingList.forEach(_ => {
-                if(_.id === chattingId){
+                if (_.id === chattingId) {
                     _.num = 0
                 }
             });
-            yield put({type:'setState',payload:{
-                chattingId,
-                chattingList:onlineService_model.chattingList
-            }})
+            yield put({
+                type: 'setState', payload: {
+                    chattingId,
+                    chattingList: onlineService_model.chattingList
+                }
+            })
         }
     }
 }

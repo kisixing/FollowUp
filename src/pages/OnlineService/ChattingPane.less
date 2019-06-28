@@ -1,5 +1,47 @@
-.chatTitle {
-    line-height: 60px;
-    text-indent: 20px;
-    border-bottom: 1px solid #ddd;
+.containner {
+    position: relative;
+    height: 100%;
+    .chatTitle {
+        line-height  : 60px;
+        text-indent  : 20px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .time {
+        text-align: center;
+        padding   : 5px 0;
+    }
+
+
+    .rightMessage {
+        overflow: hidden;
+        padding : 5px 10px;
+
+        div {
+            padding      : 10px;
+            border-radius: 2px;
+            max-width    : 200px;
+            float        : right;
+            background   : skyblue;
+        }
+    }
+
+    .leftMessage {
+        overflow: hidden;
+        padding : 5px 10px;
+
+        div {
+            padding      : 10px;
+            border-radius: 2px;
+            max-width    : 200px;
+            float        : left;
+            background   : white;
+        }
+    }
+
+    .inputPane {
+        width: 100%;
+        position: absolute;
+        bottom  : 0;
+    }
 }
