@@ -167,7 +167,7 @@ class BasicLayout extends React.Component {
           </ContainerQuery>
         </DocumentTitle>
         {/* <Suspense fallback={null}>{this.renderSettingDrawer()}</Suspense> */}
-        <Phone online={online} />
+        <Phone online={this.state.online} />
       </React.Fragment>
     );
   }
