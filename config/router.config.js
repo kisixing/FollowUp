@@ -131,6 +131,47 @@ export default [
             icon: 'snippets',
             component: './FollowupConfiguration/Questionnaire',
           },
+          // {
+          //   path: '/followup-configuration/Questionnaire/Create',
+          //   name: 'questionnaire-create',
+          //   icon: 'snippets',
+          //   component: './FollowupConfiguration/QuestionnaireCreate',
+          //   hideInMenu: true
+          // },
+          {
+            path: '/followup-configuration/questionnaire/create',
+            name: 'questionnaire-create',
+            icon: 'edit',
+            component: './FollowupConfiguration/Questionnaire/Create/Layout',
+            hideInMenu: true,
+            routes: [
+              {
+                path: '/followup-configuration/questionnaire/create',
+                redirect: '/followup-configuration/questionnaire/create/step1',
+              },
+              {
+                // 选择任务类型
+                path: '/followup-configuration/questionnaire/create/step1',
+                name: 'questionnaire-create1',
+                component: './FollowupConfiguration/Questionnaire/Create/Step1',
+                hideInMenu: true,
+              },
+              {
+                // 选择对象
+                path: '/followup-configuration/questionnaire/create/step2',
+                name: 'questionnaire-create2',
+                component: './FollowupConfiguration/Questionnaire/Create/Step2',
+                hideInMenu: true,
+              },
+              {
+                // 编辑任务内容
+                path: '/followup-configuration/questionnaire/create/step3',
+                name: 'questionnaire-create3',
+                component: './FollowupConfiguration/Questionnaire/Create/Step3',
+                hideInMenu: true,
+              }
+            ],
+          },
           {
             path: '/followup-configuration/mission-care',
             name: 'mission-care',

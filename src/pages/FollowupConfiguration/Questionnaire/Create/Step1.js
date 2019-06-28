@@ -1,8 +1,4 @@
-/*
- * @Description: 新建随访任务步骤一
- * @Author: zhong jun
- * @Date: 2019-06-20 16:00:45
- */
+
 import React, { Component } from 'react';
 import router from 'umi/router';
 import { connect } from 'dva';
@@ -102,7 +98,7 @@ class Step1 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showTemplate: false,
+      showTemplate: true,
       modalVisible: false,
       currentTemplate: {},
     };
@@ -160,9 +156,9 @@ class Step1 extends Component {
   };
 
   handleSelect = () => {
-    this.handleModalVisible();
+    // this.handleModalVisible();
     // console.log('template handleSelect', currentTemplate);
-    router.push('/followup-management/create/step2');
+    router.push('/followup-configuration/questionnaire/create/step2');
   };
 
   render() {
@@ -308,7 +304,7 @@ class Step1 extends Component {
                     <Card
                       hoverable
                       bodyStyle={{ paddingBottom: 20 }}
-                      onClick={() => this.onTemplateClick(item)}
+                      onClick={() => this.handleSelect()}
                     >
                       <Card.Meta
                         style={{ cursor: 'pointer' }}

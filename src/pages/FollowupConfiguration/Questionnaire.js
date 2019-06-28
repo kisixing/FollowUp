@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import { Input, Button } from 'antd';
+import { router } from 'umi';
 
 class Questionnaire extends Component {
   constructor(props) {
@@ -72,6 +73,7 @@ class Questionnaire extends Component {
       <Button
         type="primary"
         icon="plus"
+        onClick={()=>router.push('/followup-configuration/questionnaire/create')}
       >
         新建
         </Button>
