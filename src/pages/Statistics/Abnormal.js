@@ -48,9 +48,6 @@ class Abnormal extends Component {
               />
             </Card>
           </Col>
-          <Col>
-
-          </Col>
         </Row>
       </Card>
     )
