@@ -41,6 +41,7 @@ export default {
     questionList: [],
     doesNewQuestionPlaceBefore: false,
     questionType: '',
+    hoverTargetQuestionId: '',
   },
 
   effects: {

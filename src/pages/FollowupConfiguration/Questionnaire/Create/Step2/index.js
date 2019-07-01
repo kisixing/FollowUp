@@ -47,6 +47,14 @@ export default connect(mapStateToProps)(props => {
                     onDrag={e => {
                       onDrag(e, type, dispatch);
                     }}
+                    onDragEnd={() => {
+                      dispatch({
+                        type: `${MODEL}/updateState`,
+                        payload: {
+                          hoverTargetQuestionId: '',
+                        },
+                      });
+                    }}
                   >
                     {type}
                   </Button>
