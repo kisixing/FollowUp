@@ -34,6 +34,7 @@ import styles from './index.less';
 //   '妊娠期体重管理与巨大儿',
 //   '妊娠糖尿病产后病情发展',
 // ];
+const DATA_TEST = 'TEST';
 
 @connect(({ global, loading, followupLists }) => ({
   global,
@@ -43,6 +44,7 @@ import styles from './index.less';
   category: followupLists.category,
   secondaryCategory: followupLists.secondaryCategory,
   tabActiveKey: followupLists.tabActiveKey,
+  VALUE_TEST: DATA_TEST,
 }))
 class FollowupManagement extends Component {
   constructor(props) {
