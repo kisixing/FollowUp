@@ -4,7 +4,7 @@ import { Row, Col, Button, Table, Divider, Form, Dropdown, Menu, DatePicker, Ico
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import { Pie } from '@/components/Charts';
-import { getValueOfFirstItem } from "@/utils/utils";
+// import { getValueOfFirstItem } from "@/utils/utils";
 import styles from './detail.less';
 
 const mapStateToProps = ({ global, chart }) => ({
@@ -15,31 +15,8 @@ const mapStateToProps = ({ global, chart }) => ({
 
 
 
-function SearchForm(props) {
-  const [state, setState] = useState({})
+function SearchForm() {
 
-  function getDropDown(type, typeList) {
-    function getMenu(arr, handleMenuClick) {
-      return (
-        <Menu onClick={handleMenuClick}>
-          {arr.map(({ value, label }) => (
-            <Menu.Item key={value}>{label}</Menu.Item>
-          ))}
-        </Menu>
-      );
-    }
-    return (
-      <Dropdown
-        overlay={getMenu(typeList, ({ key }) => {
-          _setFormData({ [type]: key });
-        })}
-      >
-        <Button>
-          {getValueOfFirstItem(a, F_LABEL, '请选择')} <Icon type="down" />
-        </Button>
-      </Dropdown>
-    );
-  }
 
   return (
     <Form layout="inline" style={{ margin: '10px 0' }}>

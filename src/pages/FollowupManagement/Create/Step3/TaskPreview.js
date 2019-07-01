@@ -51,10 +51,10 @@ const Preview = connect(mapStateToProps)(({ visible, onOk, onCancel }) => {
   );
 })
 export default Preview
-function getLabelByValue(arr, value, valueSymbol = F_VALUE, labelSymbol = F_LABEL) {
-  const target = arr.find(_ => _[valueSymbol] === value)
-  if (!target) {
-    return null
-  }
-  return target[labelSymbol]
-}
+// function getLabelByValue(arr, value, valueSymbol = F_VALUE, labelSymbol = F_LABEL) {
+//   const target = arr.find(_ => _[valueSymbol] === value)
+//   if (!target) {
+//     return null
+//   }
+//   return target[labelSymbol]
+// }

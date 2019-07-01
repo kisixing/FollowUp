@@ -1,4 +1,3 @@
-import request from '@/utils/request'
 
 export default {
     namespace: 'onlineService_model',
@@ -42,10 +41,11 @@ export default {
         // *fetchData({ payload }, { call }) {
         //     request()
         // },
-        *changeChatting({ chattingId }, {  put, select }) {
+        *changeChatting({ chattingId }, { put, select }) {
             const { onlineService_model } = yield select()
             onlineService_model.chattingList.forEach(_ => {
                 if (_.id === chattingId) {
+                    // eslint-disable-next-line no-param-reassign
                     _.num = 0
                 }
             });

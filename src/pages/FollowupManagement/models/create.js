@@ -35,7 +35,7 @@ export default {
   },
 
   effects: {
-    *fetchDataset({ payload }, { put, call }) {
+    *fetchDataset(action, { put, call }) {
       const data = yield call(request, '/api/followup/dataset');
       yield put({ type: 'updateState', payload: data });
     },

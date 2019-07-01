@@ -6,7 +6,6 @@
 import React, { Component } from 'react';
 import { Table, Divider } from 'antd';
 import CallIn from '@/components/Phone/CallIn'
-import { thisExpression } from '@babel/types';
 
 
 const data = [
@@ -61,14 +60,6 @@ const data = [
   },
 ];
 class TableForm extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      visible: false
-    }
-  }
-
-
   columns = [
     {
       title: 'No.',
@@ -161,6 +152,16 @@ class TableForm extends Component {
       ),
     },
   ];
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      visible: false
+    }
+  }
+
+
+
 
   showTotal = total => {
     return `共 ${total} 条`;

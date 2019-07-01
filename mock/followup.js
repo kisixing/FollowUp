@@ -116,36 +116,36 @@ export default {
     if (status && !type && !secondaryType) {
       json = {
         decs,
-        data: data.filter(item => item.status.code === status),
+        data: data.filter(_ => _.status.code === status),
       };
     }
     if (status && type && !secondaryType) {
       json = {
         decs,
-        data: data.filter(item => item.status.code === status && item.type === type),
+        data: data.filter(_ => _.status.code === status && _.type === type),
       };
     }
     if (status && type && secondaryType) {
       json = {
         decs,
         data: data.filter(
-          item =>
-            item.status.code === status &&
-            item.type === type &&
-            item.secondaryType === secondaryType
+          _ =>
+            _.status.code === status &&
+            _.type === type &&
+            _.secondaryType === secondaryType
         ),
       };
     }
     if (!status && type && !secondaryType) {
       json = {
         decs,
-        data: data.filter(item => item.type === type),
+        data: data.filter(_ => _.type === type),
       };
     }
     if (!status && !type && secondaryType) {
       json = {
         decs,
-        data: data.filter(item => item.secondaryType === secondaryType),
+        data: data.filter(_ => _.secondaryType === secondaryType),
       };
     }
     return res.json(json);
@@ -161,19 +161,19 @@ export default {
     if (type && !secondaryType) {
       json = {
         decs,
-        data: data.filter(item => item.type === type),
+        data: data.filter(_ => _.type === type),
       };
     }
     if (!type && secondaryType) {
       json = {
         decs,
-        data: data.filter(item => item.secondaryType === secondaryType),
+        data: data.filter(_ => _.secondaryType === secondaryType),
       };
     }
     if (type && secondaryType) {
       json = {
         decs,
-        data: data.filter(item => item.type === type && item.secondaryType === secondaryType),
+        data: data.filter(_ => _.type === type && _.secondaryType === secondaryType),
       };
     }
 

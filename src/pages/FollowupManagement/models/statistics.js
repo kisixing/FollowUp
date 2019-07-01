@@ -37,7 +37,7 @@ export default {
       const { tabActiveKey, selectedTags } = yield select(_ => _.followupLists);
       const types = Object.keys(selectedTags);
       let tags = [];
-      for (let i = 0; i < types.length; i++) {
+      for (let i = 0; i < types.length; i += 1) {
         const array = selectedTags[types[i]];
         const index = array.findIndex(tag => tag === payload);
         if (index > -1) {

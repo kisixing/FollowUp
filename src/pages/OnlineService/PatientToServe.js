@@ -4,11 +4,12 @@
  * @Date: 2019-06-19 23:43:14
  */
 import React, { PureComponent } from 'react';
-import { Table, Divider, Button } from 'antd';
+import { Table, Button } from 'antd';
 
 
 const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
+        // eslint-disable-next-line no-console
         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
     },
     getCheckboxProps: record => ({
@@ -75,13 +76,7 @@ function mapStateToProps({ onlineService_model }) {
 
 @connect(mapStateToProps)
 class TableForm extends PureComponent {
-    serve() {
-        this.props.dispatch({
-            type: 'onlineService_model/setState', payload: {
-                activeKey: '1'
-            }
-        })
-    }
+
 
     columns = [
         // {
@@ -179,13 +174,23 @@ class TableForm extends PureComponent {
         this.state = {};
     }
 
+    showTotal = total => {
+        return `共 ${total} 条`;
+    };
+
+    serve() {
+        const { props } = this
+        props.dispatch({
+            type: 'onlineService_model/setState', payload: {
+                activeKey: '1'
+            }
+        })
+    }
     // onChange = (pagination, filters, sorter) => {
     //   console.log('params', pagination, filters, sorter);
     // };
 
-    showTotal = total => {
-        return `共 ${total} 条`;
-    };
+
 
     // onChange = (page, pageSize) => {
 

@@ -1,6 +1,5 @@
 import {
   Transfer,
-  Tabs,
   Button,
   Dropdown,
   Menu,
@@ -15,11 +14,59 @@ import {
 } from 'antd';
 
 import router from 'umi/router';
-import { lh40, colorC, mRb8 } from './Step3/index.less';
+import { lh40, mRb8 } from './Step3/index.less';
 import { Title } from './Step3/index';
 
+function setMock(arr, labelKey = 'label', valueKey = 'value') {
+  return arr.map(a => {
+    return {
+      [valueKey]:
+        a +
+        Math.random()
+          .toString(16)
+          .slice(2),
+      [labelKey]: a,
+      // description: `description of content${a}`,
+      // chosen:true
+    };
+  });
+}
+function CheckboxList({ list, onChange }) {
+  const [state, setState] = useState({
+    checkedList: [],
+    indeterminate: false,
+    checkAll: false,
+  });
+
+  const _onChange = checkedList => {
+    setState({
+      checkedList,
+      indeterminate: !!checkedList.length && checkedList.length < list.length,
+      checkAll: checkedList.length === list.length,
+    });
+    onChange(checkedList);
+  };
+
+  const onCheckAllChange = e => {
+    const checkedList = e.target.checked ? list.map(_ => _.label) : [];
+    _onChange(checkedList);
+  };
+
+  return (
+    <div>
+      <CheckboxGroup options={list} value={state.checkedList} onChange={_onChange} />
+      <Checkbox
+        indeterminate={state.indeterminate}
+        onChange={onCheckAllChange}
+        checked={state.checkAll}
+      >
+        全选
+      </Checkbox>
+    </div>
+  );
+}
 const CheckboxGroup = Checkbox.Group;
-const { TabPane } = Tabs;
+
 const reservationDateType = ['预约日期', '末次就诊日期'];
 const reservationDuringType = ['之前', '当天', '之后'];
 const filterType = setMock(['复诊预约时间段', '超时天数', '高危等级', '跟踪结果']);
@@ -60,24 +107,8 @@ const statisticTableContent = setMock(
   'key'
 );
 
-function setMock(arr, labelKey = 'label', valueKey = 'value') {
-  return arr.map(a => {
-    return {
-      [valueKey]:
-        a +
-        Math.random()
-          .toString(16)
-          .slice(2),
-      [labelKey]: a,
-      // description: `description of content${a}`,
-      // chosen:true
-    };
-  });
-}
 
-const { useState } = React;
-
-export default function(props) {
+export default function() {
   const [state, setState] = useState({
     dateType: reservationDateType[0],
     duringType: reservationDuringType[0],
@@ -92,21 +123,25 @@ export default function(props) {
     filterCheckedList2: [],
   });
 
+function getMenu(arr, handleMenuClick) {
+  return (
+    <Menu onClick={handleMenuClick}>
+      {arr.map(a => (
+        <Menu.Item key={a}>{a}</Menu.Item>
+      ))}
+    </Menu>
+  );
+}
   function _setState(key, value) {
     setState({ ...state, [key]: value });
   }
   const {
-    dateType,
-    duringType,
-    IsfollowOrder,
     taskVisible,
     statisticVisible,
     statisticTargetKeys,
     _statisticTargetKeys,
     taskTargetKeys,
     _taskTargetKeys,
-    filterCheckedList1,
-    filterCheckedList2,
   } = state;
 
   function getDropDown(type, typeList) {
@@ -119,22 +154,7 @@ export default function(props) {
     );
   }
 
-  function DirtyTransferModal(type) {
-    return (
-      <TransferModal
-        visible={`${type}Visible`}
-        dataSource={taskTableContent}
-        targetKeys={_taskTargetKeys}
-        onOk={() => {
-          setState({ ...state, taskTargetKeys: _taskTargetKeys, taskVisible: false });
-        }}
-        onCancel={() => setState({ ...state, _taskTargetKeys: [], taskVisible: false })}
-        onChange={targetkeys => {
-          setState({ ...state, _taskTargetKeys: targetkeys });
-        }}
-      />
-    );
-  }
+  
 
   return (
     <Form
@@ -270,47 +290,6 @@ function TransferModal({ visible, onOk, onCancel, targetKeys, dataSource, onChan
   );
 }
 
-function getMenu(arr, handleMenuClick) {
-  return (
-    <Menu onClick={handleMenuClick}>
-      {arr.map(a => (
-        <Menu.Item key={a}>{a}</Menu.Item>
-      ))}
-    </Menu>
-  );
-}
 
-function CheckboxList({ list, onChange }) {
-  const [state, setState] = useState({
-    checkedList: [],
-    indeterminate: false,
-    checkAll: false,
-  });
 
-  const _onChange = checkedList => {
-    setState({
-      checkedList,
-      indeterminate: !!checkedList.length && checkedList.length < list.length,
-      checkAll: checkedList.length === list.length,
-    });
-    onChange(checkedList);
-  };
 
-  const onCheckAllChange = e => {
-    const checkedList = e.target.checked ? list.map(_ => _.label) : [];
-    _onChange(checkedList);
-  };
-
-  return (
-    <div>
-      <CheckboxGroup options={list} value={state.checkedList} onChange={_onChange} />
-      <Checkbox
-        indeterminate={state.indeterminate}
-        onChange={onCheckAllChange}
-        checked={state.checkAll}
-      >
-        全选
-      </Checkbox>
-    </div>
-  );
-}

@@ -1,6 +1,6 @@
 import styles from './MessageCard.less';
 
-export default props => {
+export default () => {
   return (
     <div className={styles.wrap}>
       【暨南大学第一附属医院】

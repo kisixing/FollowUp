@@ -1,5 +1,4 @@
 import {
-  Tabs,
   Button,
   Dropdown,
   Menu,
@@ -13,14 +12,14 @@ import {
   Col,
   Row,
 } from 'antd';
-import { lh40, colorC, mRb8 } from './index.less';
+import { lh40, colorC } from './index.less';
 import router from 'umi/router';
 import { getValueOfFirstItem } from '@/utils/utils';
 
 const mapStateToProps = ({ followupCreation_model }) => {
   return { followupCreation_model };
 }
-const Content = connect(mapStateToProps)(function ({ followupCreation_model, index, onUp, onDown }) {
+const Content = connect(mapStateToProps)(function A({ followupCreation_model }) {
   const reservationDateType = followupCreation_model.reservationDateType || [];
   const initDateType = getValueOfFirstItem(reservationDateType, F_VALUE, '');
 
@@ -44,7 +43,7 @@ const Content = connect(mapStateToProps)(function ({ followupCreation_model, ind
     },
   });
 
-  const { previewVisible, formData } = state;
+  const { formData } = state;
   function _setFormData(data) {
     setState({
       ...state,
@@ -117,15 +116,15 @@ const Content = connect(mapStateToProps)(function ({ followupCreation_model, ind
         </Radio.Group>
       </Form.Item>
       <Form.Item label=" " colon={false}>
-        <label style={{ marginRight: 10 }}>
-          选择媒介没发送成功，将按微信>短信>电话的先后顺序依次执行随访任务
-        </label>
+        <span style={{ marginRight: 10 }}>
+          {`选择媒介没发送成功，将按微信>短信>电话的先后顺序依次执行随访任务`}
+        </span>
         <Switch
           checkedChildren="开"
           unCheckedChildren="关"
           checked={IsfollowOrder}
-          onChange={IsfollowOrder => {
-            _setFormData({ IsfollowOrder });
+          onChange={_IsfollowOrder => {
+            _setFormData({ IsfollowOrder: _IsfollowOrder });
           }}
         />
       </Form.Item>
@@ -179,7 +178,7 @@ const Content = connect(mapStateToProps)(function ({ followupCreation_model, ind
           </div>
           <div className={lh40}>
             <Radio> 预约挂号 </Radio>
-            <label className={colorC}>提示：仅微信推送的消息可附加</label>
+            <span className={colorC}>提示：仅微信推送的消息可附加</span>
           </div>
           <div className={lh40}>
             <Radio> 绑定问卷 </Radio>

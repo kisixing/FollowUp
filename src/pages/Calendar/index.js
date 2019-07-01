@@ -30,42 +30,6 @@ class CalendarComponent extends PureComponent {
     });
   }
 
-  renderActivities() {
-    const {
-      activities: { list },
-    } = this.props;
-    return list.map(item => {
-      const events = item.template.split(/@\{([^{}]*)\}/gi).map(key => {
-        if (item[key]) {
-          return (
-            <a href={item[key].link} key={item[key].name}>
-              {item[key].name}
-            </a>
-          );
-        }
-        return key;
-      });
-      return (
-        <List.Item key={item.id}>
-          <List.Item.Meta
-            avatar={<Avatar src={item.user.avatar} />}
-            title={
-              <span>
-                <a className={styles.username}>{item.user.name}</a>
-                &nbsp;
-                <span className={styles.event}>{events}</span>
-              </span>
-            }
-            description={
-              <span className={styles.datetime} title={item.updatedAt}>
-                {moment(item.updatedAt).fromNow()}
-              </span>
-            }
-          />
-        </List.Item>
-      );
-    });
-  }
 
   getListData = value => {
     let listData;
@@ -149,6 +113,43 @@ class CalendarComponent extends PureComponent {
         ))}
       </ul>
     );
+  }
+
+  renderActivities() {
+    const {
+      activities: { list },
+    } = this.props;
+    return list.map(item => {
+      const events = item.template.split(/@\{([^{}]*)\}/gi).map(key => {
+        if (item[key]) {
+          return (
+            <a href={item[key].link} key={item[key].name}>
+              {item[key].name}
+            </a>
+          );
+        }
+        return key;
+      });
+      return (
+        <List.Item key={item.id}>
+          <List.Item.Meta
+            avatar={<Avatar src={item.user.avatar} />}
+            title={
+              <span>
+                <a className={styles.username}>{item.user.name}</a>
+                &nbsp;
+                <span className={styles.event}>{events}</span>
+              </span>
+            }
+            description={
+              <span className={styles.datetime} title={item.updatedAt}>
+                {moment(item.updatedAt).fromNow()}
+              </span>
+            }
+          />
+        </List.Item>
+      );
+    });
   }
 
   render() {

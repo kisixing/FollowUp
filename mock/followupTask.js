@@ -2,7 +2,18 @@ import mockjs from 'mockjs';
 
 const { Random } = mockjs;
 
-
+function setMock(arr, labelKey = 'label', valueKey = 'value') {
+  return arr.map(a => {
+    return {
+      [valueKey]: Math.random()
+        .toString(16)
+        .slice(2),
+      [labelKey]: a,
+      // description: `description of content${a}`,
+      // chosen:true
+    };
+  });
+}
 
 
 const statistic = mockjs.mock({
@@ -10,7 +21,7 @@ const statistic = mockjs.mock({
   'data|30': [
     {
       id: '@id',
-      'title|+1': (a, b, c) => {
+      'title|+1': () => {
         return `统计分析-${Random.natural(1, 50)}`
       },
       avatar: '',
@@ -57,18 +68,7 @@ export default {
   },
 };
 
-function setMock(arr, labelKey = 'label', valueKey = 'value') {
-  return arr.map(a => {
-    return {
-      [valueKey]: Math.random()
-        .toString(16)
-        .slice(2),
-      [labelKey]: a,
-      // description: `description of content${a}`,
-      // chosen:true
-    };
-  });
-}
+
 
 
 

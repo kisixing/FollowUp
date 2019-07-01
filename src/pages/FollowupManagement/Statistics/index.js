@@ -2,16 +2,11 @@
 
 import router from 'umi/router';
 
-import { Form, List, Card, Tooltip, Menu, Input, Dropdown, Icon, Avatar, Button, Tag } from 'antd';
-import { TweenOneGroup } from 'rc-tween-one';
+import { Form, List, Card,Input, } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import TagSelect from '@/components/TagSelect';
-import StandardFormRow from '@/components/StandardFormRow';
-import { objFormatArr } from '@/utils/utils';
 
 import styles from './index.less';
 
-const category = ['科室随访', '专项随访', '关怀类随访', '管理类随访', '科研随访'];
 
 
 @connect(({ global, loading, taskStatistics_model }) => ({
@@ -105,17 +100,7 @@ class FollowupManagement extends React.Component {
       </div>
     );
 
-    const tabBarExtraContent = (
-      <Button
-        type="primary"
-        icon="plus"
-        size="small"
-        onClick={() => router.push('/followup-management/create')}
-      >
-        新建
-      </Button>
-    );
-
+  
     const CardInfo = ({ all, today }) => (
       <div className={styles.cardInfo}>
         <div>
@@ -133,8 +118,7 @@ class FollowupManagement extends React.Component {
 
 
 
-    const { loading, form, selectedTags, lists, tabActiveKey } = this.props;
-    const { getFieldDecorator } = form;
+    const { loading,  lists, tabActiveKey } = this.props;
 
     return (
       <PageHeaderWrapper

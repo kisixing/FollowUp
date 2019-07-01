@@ -1,4 +1,4 @@
-import { Tabs, Menu, Button } from 'antd';
+import { Tabs, Button } from 'antd';
 import router from 'umi/router';
 import { mRb8 } from './index.less'
 import Preview from './TaskPreview';
@@ -13,7 +13,7 @@ export function Title({ label, isTop }) {
     </div>
   );
 }
-export default props => {
+export default () => {
   const [state, setState] = useState({
     activeKey: null,
     panes: [],
@@ -21,24 +21,24 @@ export default props => {
   });
   const { panes, activeKey, previewVisible } = state;
 
-  const onChange = activeKey => {
+  const onChange = _activeKey => {
     // debugger
-    setState({ ...state, activeKey });
+    setState({ ...state, activeKey: _activeKey });
   };
 
-  function setVisible(previewVisible) {
-    setState({ ...state, previewVisible });
+  function setVisible(_previewVisible) {
+    setState({ ...state, previewVisible: _previewVisible });
   }
   function getKey(index) {
     return `${index}newTab`;
   }
   const actions = {
     add() {
-      const {length} = panes;
+      const { length } = panes;
       if (length >= 10) {
         return;
       }
-      const activeKey = getKey(length);
+      const _activeKey = getKey(length);
       panes.push({
         title: `步骤${digits[length]}`,
         content: (
@@ -47,28 +47,28 @@ export default props => {
 
           />
         ),
-        key: activeKey,
+        key: _activeKey,
       });
-      setState({ ...state, panes, activeKey });
+      setState({ ...state, panes, activeKey: _activeKey });
     },
 
     remove(targetKey) {
-      let activeKey = activeKey;
+      let _activeKey = activeKey;
       let lastIndex;
       panes.forEach((pane, i) => {
         if (pane.key === targetKey) {
           lastIndex = i - 1;
         }
       });
-      const panes = panes.filter(pane => pane.key !== targetKey);
+      const _panes = panes.filter(pane => pane.key !== targetKey);
       if (activeKey === targetKey) {
         if (lastIndex >= 0) {
-          activeKey = panes[lastIndex].key;
+          _activeKey = _panes[lastIndex].key;
         } else {
-          activeKey = panes[0].key;
+          _activeKey = _panes[0].key;
         }
       }
-      setState({ ...state, panes, activeKey });
+      setState({ ...state, panes: _panes, activeKey: _activeKey });
     },
   };
 
@@ -106,15 +106,15 @@ export default props => {
           type="primary"
           className={mRb8}
           onClick={() => {
-          const index = parseInt(activeKey)
-          if (index <= 0) {
-            return;
-          }
-          setState({
-            ...state,
-            activeKey: getKey(index - 1),
-          });
-        }}
+            const index = parseInt(activeKey,10)
+            if (index <= 0) {
+              return;
+            }
+            setState({
+              ...state,
+              activeKey: getKey(index - 1),
+            });
+          }}
         >
           {' '}
           上一步{' '}
@@ -123,16 +123,16 @@ export default props => {
           type="primary"
           className={mRb8}
           onClick={() => {
-          const index = parseInt(activeKey)
-          if (index >= panes.length - 1) {
-            return;
-          }
+            const index = parseInt(activeKey,10)
+            if (index >= panes.length - 1) {
+              return;
+            }
 
-          setState({
-            ...state,
-            activeKey: getKey(index + 1),
-          });
-        }}
+            setState({
+              ...state,
+              activeKey: getKey(index + 1),
+            });
+          }}
         >
           {' '}
           下一步{' '}
