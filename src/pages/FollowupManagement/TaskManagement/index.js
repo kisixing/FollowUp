@@ -34,7 +34,6 @@ import styles from './index.less';
 //   '妊娠期体重管理与巨大儿',
 //   '妊娠糖尿病产后病情发展',
 // ];
-const DATA_TEST = 'TEST';
 
 @connect(({ global, loading, followupLists }) => ({
   global,
@@ -44,7 +43,6 @@ const DATA_TEST = 'TEST';
   category: followupLists.category,
   secondaryCategory: followupLists.secondaryCategory,
   tabActiveKey: followupLists.tabActiveKey,
-  VALUE_TEST: DATA_TEST,
 }))
 class FollowupManagement extends Component {
   constructor(props) {
@@ -53,10 +51,14 @@ class FollowupManagement extends Component {
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
+    const { dispatch, selectedTags, tabActiveKey } = this.props;
     dispatch({
       type: 'followupLists/query',
-      payload: {},
+      payload: {
+        status: tabActiveKey,
+        type: selectedTags.category,
+        secondaryType: selectedTags.secondaryCategory,
+      },
     });
   }
 
@@ -71,7 +73,6 @@ class FollowupManagement extends Component {
   };
 
   handleFormSubmit = value => {
-    // eslint-disable-next-line
     console.log(value);
   };
 

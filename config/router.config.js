@@ -38,8 +38,8 @@ export default [
         routes: [
           {
             // 随访任务列表
-            path: '/followup-management/task-management',
-            name: 'task-management',
+            path: '/followup-management/task-lists',
+            name: 'task-lists',
             // icon: 'edit',
             component: './FollowupManagement/TaskManagement/index',
           },
@@ -123,7 +123,7 @@ export default [
         routes: [
           {
             path: '/followup-configuration',
-            redirect: '/followup-configuration/Questionnaire'
+            redirect: '/followup-configuration/Questionnaire',
           },
           {
             path: '/followup-configuration/Questionnaire',
@@ -169,7 +169,7 @@ export default [
                 // name: 'questionnaire-create3',
                 component: './FollowupConfiguration/Questionnaire/Create/Step3',
                 hideInMenu: true,
-              }
+              },
             ],
           },
           {
@@ -190,7 +190,7 @@ export default [
         path: '/online-service',
         name: 'online-service',
         icon: 'book',
-        component: './OnlineService'
+        component: './OnlineService',
       },
       {
         path: '/patient-management',
@@ -202,7 +202,7 @@ export default [
         path: '/archives-management',
         name: 'archives-management',
         icon: 'book',
-        // component: './ArchivesManagement',
+        component: './ArchivesManagement/index',
       },
       {
         path: '/statistics',

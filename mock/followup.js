@@ -1,4 +1,5 @@
 import mockjs from 'mockjs';
+import { delay } from 'roadhog-api-doc';
 
 const { Random } = mockjs;
 const dataSource = mockjs.mock({
@@ -55,17 +56,17 @@ const dataSource = mockjs.mock({
 const item = {
   id: '10000',
   title: `高危妊娠复诊管理`,
-  'type': '科室随访',
-  'secondaryType': '高危妊娠',
+  type: '科室随访',
+  secondaryType: '高危妊娠',
   avatar: '',
-  'status': {
+  status: {
     code: 'running',
     dec: '运行中',
   },
   allFollowup: 55,
   todayFollowup: 22,
-}
-dataSource.data.unshift(item)
+};
+dataSource.data.unshift(item);
 const templates = mockjs.mock({
   decs: '随访任务模板列表',
   'data|30-50': [
@@ -97,86 +98,86 @@ const templates = mockjs.mock({
 });
 
 // 随访项目列表
-export default {
-  'GET /api/followup/tasklists': (req, res) => {
-    const params = req.query;
-    const { status, type, secondaryType } = params;
-    const { decs, data } = dataSource;
-    let json = {};
-    if (
-      Object.keys(params).length === 0 ||
-      (!status && !type && !secondaryType) ||
-      (status === 'all' && !type && !secondaryType)
-    ) {
-      json = {
-        decs,
-        data,
-      };
-    }
-    if (status && !type && !secondaryType) {
-      json = {
-        decs,
-        data: data.filter(_ => _.status.code === status),
-      };
-    }
-    if (status && type && !secondaryType) {
-      json = {
-        decs,
-        data: data.filter(_ => _.status.code === status && _.type === type),
-      };
-    }
-    if (status && type && secondaryType) {
-      json = {
-        decs,
-        data: data.filter(
-          _ =>
-            _.status.code === status &&
-            _.type === type &&
-            _.secondaryType === secondaryType
-        ),
-      };
-    }
-    if (!status && type && !secondaryType) {
-      json = {
-        decs,
-        data: data.filter(_ => _.type === type),
-      };
-    }
-    if (!status && !type && secondaryType) {
-      json = {
-        decs,
-        data: data.filter(_ => _.secondaryType === secondaryType),
-      };
-    }
-    return res.json(json);
-  },
-  'GET /api/followup/tasktemplates': (req, res) => {
-    const params = req.query;
-    const { type, secondaryType } = params;
-    const { decs, data } = templates;
-    let json = {};
-    if (Object.keys(params).length === 0 || (!type && !secondaryType)) {
-      json = templates;
-    }
-    if (type && !secondaryType) {
-      json = {
-        decs,
-        data: data.filter(_ => _.type === type),
-      };
-    }
-    if (!type && secondaryType) {
-      json = {
-        decs,
-        data: data.filter(_ => _.secondaryType === secondaryType),
-      };
-    }
-    if (type && secondaryType) {
-      json = {
-        decs,
-        data: data.filter(_ => _.type === type && _.secondaryType === secondaryType),
-      };
-    }
+export default delay(
+  {
+    'GET /api/followup/tasklists': (req, res) => {
+      const params = req.query;
+      const { status, type, secondaryType } = params;
+      const { decs, data } = dataSource;
+      let json = {};
+      if (
+        Object.keys(params).length === 0 ||
+        (!status && !type && !secondaryType) ||
+        (status === 'all' && !type && !secondaryType)
+      ) {
+        json = {
+          decs,
+          data,
+        };
+      }
+      if (status && !type && !secondaryType) {
+        json = {
+          decs,
+          data: data.filter(_ => _.status.code === status),
+        };
+      }
+      if (status && type && !secondaryType) {
+        json = {
+          decs,
+          data: data.filter(_ => _.status.code === status && _.type === type),
+        };
+      }
+      if (status && type && secondaryType) {
+        json = {
+          decs,
+          data: data.filter(
+            _ => _.status.code === status && _.type === type && _.secondaryType === secondaryType
+          ),
+        };
+      }
+      if (!status && type && !secondaryType) {
+        json = {
+          decs,
+          data: data.filter(_ => _.type === type),
+        };
+      }
+      if (!status && !type && secondaryType) {
+        json = {
+          decs,
+          data: data.filter(_ => _.secondaryType === secondaryType),
+        };
+      }
+      return res.json(json);
+    },
+    'GET /api/followup/tasktemplates': (req, res) => {
+      const params = req.query;
+      const { type, secondaryType } = params;
+      const { decs, data } = templates;
+      let json = {};
+      if (Object.keys(params).length === 0 || (!type && !secondaryType)) {
+        json = templates;
+      }
+      if (type && !secondaryType) {
+        json = {
+          decs,
+          data: data.filter(_ => _.type === type),
+        };
+      }
+      if (!type && secondaryType) {
+        json = {
+          decs,
+          data: data.filter(_ => _.secondaryType === secondaryType),
+        };
+      }
+      if (type && secondaryType) {
+        json = {
+          decs,
+          data: data.filter(_ => _.type === type && _.secondaryType === secondaryType),
+        };
+      }
 
-    return res.json(json);
+      return res.json(json);
+    },
   },
-};
+  1000
+);
