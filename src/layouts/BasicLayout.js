@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { Layout } from 'antd';
 import DocumentTitle from 'react-document-title';
 import { connect } from 'dva';
@@ -10,10 +10,10 @@ import Footer from './Footer';
 import Header from './Header';
 import Context from './MenuContext';
 import SiderMenu from '@/components/SiderMenu';
-import Phone from '@/components/Phone'
+// import Phone from '@/components/Phone'
 import getPageTitle from '@/utils/getPageTitle';
 import styles from './BasicLayout.less';
-import { importNamespaceSpecifier } from '@babel/types';
+// import { importNamespaceSpecifier } from '@babel/types';
 
 // lazy load SettingDrawer
 const SettingDrawer = React.lazy(() => import('@/components/SettingDrawer'));
@@ -47,10 +47,10 @@ const query = {
 
 class BasicLayout extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      online: false
-    }
+      // online: false
+    };
   }
 
   componentDidMount() {
@@ -167,7 +167,7 @@ class BasicLayout extends React.Component {
           </ContainerQuery>
         </DocumentTitle>
         {/* <Suspense fallback={null}>{this.renderSettingDrawer()}</Suspense> */}
-        <Phone online={online} />
+        {/* <Phone online={online} /> */}
       </React.Fragment>
     );
   }
