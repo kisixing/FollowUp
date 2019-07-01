@@ -8,6 +8,15 @@ export const TITLE = 'title';
 export const SCORE = 'score';
 export const TYPE = 'type';
 export const ID = 'id';
+
+export const dispatchCreator = dispatch => {
+  return (actionType, payload) => {
+    dispatch({
+      type: `${MODEL}/${actionType}`,
+      payload,
+    });
+  };
+};
 export default {
   namespace: MODEL,
 
@@ -56,17 +65,25 @@ export default {
     },
 
     *addNewQuestion(action, { put, select }) {
-      const { questionList, doesNewQuestionPlaceBefore, questionType } = yield select(
-        state => state.questionnaire_model
-      );
+      const {
+        questionList,
+        doesNewQuestionPlaceBefore,
+        questionType,
+        hoverTargetQuestionId,
+      } = yield select(state => state.questionnaire_model);
       const newQuestion = {
         [TYPE]: questionType,
         [ID]: Math.random(),
         [TITLE]: '请输入',
       };
-      if (doesNewQuestionPlaceBefore) {
-        questionList.unshift(newQuestion);
+      // 拖拽添加
+      if (hoverTargetQuestionId) {
+        let index = questionList.findIndex(q => q.id === hoverTargetQuestionId);
+        // eslint-disable-next-line no-unused-expressions
+        doesNewQuestionPlaceBefore || (index += 1);
+        questionList.splice(index, 0, newQuestion);
       } else {
+        // 点击添加
         questionList.push(newQuestion);
       }
       yield put({ type: `updateState`, payload: questionList });
