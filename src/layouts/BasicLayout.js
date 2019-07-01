@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Layout } from 'antd';
 import DocumentTitle from 'react-document-title';
 import { connect } from 'dva';
@@ -10,10 +10,9 @@ import Footer from './Footer';
 import Header from './Header';
 import Context from './MenuContext';
 import SiderMenu from '@/components/SiderMenu';
-// import Phone from '@/components/Phone'
+import Phone from '@/components/Phone';
 import getPageTitle from '@/utils/getPageTitle';
 import styles from './BasicLayout.less';
-// import { importNamespaceSpecifier } from '@babel/types';
 
 // lazy load SettingDrawer
 const SettingDrawer = React.lazy(() => import('@/components/SettingDrawer'));
@@ -120,6 +119,7 @@ class BasicLayout extends React.Component {
       breadcrumbNameMap,
       fixedHeader,
     } = this.props;
+    const { online } = this.state;
 
     const isTop = PropsLayout === 'topmenu';
     const contentStyle = !fixedHeader ? { paddingTop: 0 } : {};
@@ -166,8 +166,8 @@ class BasicLayout extends React.Component {
             )}
           </ContainerQuery>
         </DocumentTitle>
-        {/* <Suspense fallback={null}>{this.renderSettingDrawer()}</Suspense> */}
-        {/* <Phone online={online} /> */}
+        <Suspense fallback={null}>{this.renderSettingDrawer()}</Suspense>
+        <Phone online={online} />
       </React.Fragment>
     );
   }
