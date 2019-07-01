@@ -13,18 +13,16 @@ class Questionnaire extends Component {
   }
 
   componentWillMount() {
-    import(`./Questionnaire/All`)
-      .then(module => {
-        this.setState({ children: <module.default /> })
-      })
-  };
+    import(`./Questionnaire/All`).then(module => {
+      this.setState({ children: <module.default /> });
+    });
+  }
 
   handleTabChange = tabActiveKey => {
     this.setState({ tabActiveKey });
-    import(`./Questionnaire/${tabActiveKey}`)
-      .then(module =>
-        this.setState({ children: <module.default /> })
-      )
+    import(`./Questionnaire/${tabActiveKey}`).then(module =>
+      this.setState({ children: <module.default /> })
+    );
   };
 
   // handleFormSubmit = value => {
@@ -74,9 +72,10 @@ class Questionnaire extends Component {
         type="primary"
         icon="plus"
         onClick={() => router.push('/followup-configuration/questionnaire/create')}
-      >        新建
+      >
+        新建
       </Button>
-    )
+    );
 
     return (
       <PageHeaderWrapper

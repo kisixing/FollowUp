@@ -6,14 +6,13 @@ import {
   Icon,
   Form,
   Input,
-
   Checkbox,
   Col,
   Row,
   Modal,
 } from 'antd';
 import router from 'umi/router';
-import { lh40,  mRb8 } from './Step3/index.less';
+import { lh40, mRb8 } from './Step3/index.less';
 import { Title } from './Step3/index';
 
 function getMenu(arr, handleMenuClick) {
@@ -115,8 +114,6 @@ const statisticTableContent = setMock(
   'key'
 );
 
-
-
 export default function() {
   const [state, setState] = useState({
     dateType: reservationDateType[0],
@@ -136,14 +133,12 @@ export default function() {
     setState({ ...state, [key]: value });
   }
   const {
-  
     taskVisible,
     statisticVisible,
     statisticTargetKeys,
     _statisticTargetKeys,
     taskTargetKeys,
     _taskTargetKeys,
-
   } = state;
 
   function getDropDown(type, typeList) {
@@ -155,8 +150,6 @@ export default function() {
       </Dropdown>
     );
   }
-
-  
 
   return (
     <Form
@@ -291,7 +284,3 @@ function TransferModal({ visible, onOk, onCancel, targetKeys, dataSource, onChan
     </Modal>
   );
 }
-
-
-
-

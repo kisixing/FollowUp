@@ -1,6 +1,6 @@
-import { Tabs,  Button } from 'antd';
+import { Tabs, Button } from 'antd';
 import router from 'umi/router';
-import { mRb8 } from './index.less'
+import { mRb8 } from './index.less';
 import Preview from './TaskPreview';
 import Content from './Content';
 
@@ -21,39 +21,31 @@ export default () => {
   });
   const { panes, activeKey, previewVisible } = state;
 
-  
   const onChange = _activeKey => {
     // debugger
-    setState({ ...state, activeKey:_activeKey });
+    setState({ ...state, activeKey: _activeKey });
   };
 
   function setVisible(_previewVisible) {
-    setState({ ...state, previewVisible:_previewVisible });
+    setState({ ...state, previewVisible: _previewVisible });
   }
   function getKey(index) {
     return `${index}newTab`;
   }
   const actions = {
     add() {
-      const {length} = panes;
+      const { length } = panes;
       if (length >= 10) {
         return;
       }
       const _activeKey = getKey(length);
       panes.push({
         title: `步骤${digits[length]}`,
-        content: (
-          <Content
-            index={length}
-
-          />
-        ),
+        content: <Content index={length} />,
         key: _activeKey,
       });
       setState({ ...state, panes, activeKey });
     },
-
-    
   };
 
   const onEdit = (targetKey, action) => {
@@ -79,9 +71,6 @@ export default () => {
         ))}
       </Tabs>
 
-
-
-
       <div style={{ textAlign: 'center' }}>
         <Button className={mRb8} onClick={() => setVisible(true)}>
           预览{' '}
@@ -90,15 +79,15 @@ export default () => {
           type="primary"
           className={mRb8}
           onClick={() => {
-          const index = parseInt(activeKey,10)
-          if (index <= 0) {
-            return;
-          }
-          setState({
-            ...state,
-            activeKey: getKey(index - 1),
-          });
-        }}
+            const index = parseInt(activeKey, 10);
+            if (index <= 0) {
+              return;
+            }
+            setState({
+              ...state,
+              activeKey: getKey(index - 1),
+            });
+          }}
         >
           {' '}
           上一步{' '}
@@ -107,16 +96,16 @@ export default () => {
           type="primary"
           className={mRb8}
           onClick={() => {
-          const index = parseInt(activeKey,10)
-          if (index >= panes.length - 1) {
-            return;
-          }
+            const index = parseInt(activeKey, 10);
+            if (index >= panes.length - 1) {
+              return;
+            }
 
-          setState({
-            ...state,
-            activeKey: getKey(index + 1),
-          });
-        }}
+            setState({
+              ...state,
+              activeKey: getKey(index + 1),
+            });
+          }}
         >
           {' '}
           下一步{' '}

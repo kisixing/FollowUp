@@ -1,6 +1,6 @@
 import { Tabs, Button } from 'antd';
 import router from 'umi/router';
-import { mRb8 } from './index.less'
+import { mRb8 } from './index.less';
 import Preview from './TaskPreview';
 import Content from './Content';
 
@@ -41,12 +41,7 @@ export default () => {
       const _activeKey = getKey(length);
       panes.push({
         title: `步骤${digits[length]}`,
-        content: (
-          <Content
-            index={length}
-
-          />
-        ),
+        content: <Content index={length} />,
         key: _activeKey,
       });
       setState({ ...state, panes, activeKey: _activeKey });
@@ -95,9 +90,6 @@ export default () => {
         ))}
       </Tabs>
 
-
-
-
       <div style={{ textAlign: 'center' }}>
         <Button className={mRb8} onClick={() => setVisible(true)}>
           预览{' '}
@@ -106,7 +98,7 @@ export default () => {
           type="primary"
           className={mRb8}
           onClick={() => {
-            const index = parseInt(activeKey,10)
+            const index = parseInt(activeKey, 10);
             if (index <= 0) {
               return;
             }
@@ -123,7 +115,7 @@ export default () => {
           type="primary"
           className={mRb8}
           onClick={() => {
-            const index = parseInt(activeKey,10)
+            const index = parseInt(activeKey, 10);
             if (index >= panes.length - 1) {
               return;
             }

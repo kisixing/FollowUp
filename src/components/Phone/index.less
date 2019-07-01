@@ -1,11 +1,11 @@
 @import '~antd/lib/style/themes/default.less';
 
-.formItem {
-  margin-bottom: 0
-}
-
 .tabPane {
   padding: 0 20px;
+
+  .formItem {
+    margin-bottom: 0;
+  }
 }
 
 .card {
@@ -19,11 +19,37 @@
 }
 
 .timeline {
-  max-height: 300px;
-  overflow: auto;
+  max-height: 270px;
   padding: 5px 0;
+  overflow: auto;
 
   .timelineItemDate {
     float: right;
   }
+}
+
+.iconCard {
+  position: fixed;
+  right: 10px;
+  bottom: 20px;
+  color: #fff;
+  background-color: rgba(94, 94, 94, 1);
+
+  :global {
+    .ant-card-actions {
+      background-color: rgba(94, 94, 94, 1);
+      // border-top: 0;
+
+      > li {
+        border-right: 0;
+      }
+    }
+  }
+}
+
+.iconPhone {
+  position: fixed;
+  right: 10px;
+  bottom: 20px;
+  font-size: 80px;
 }

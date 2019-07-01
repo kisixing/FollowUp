@@ -9,7 +9,7 @@ const CustomTab = ({ data, currentTabKey: currentKey }) => (
     <Col span={12}>
       <NumberInfo
         title={data.name}
-        subTitle='成功率'
+        subTitle="成功率"
         gap={2}
         total={`${data.cvr * 100}%`}
         theme={currentKey !== data.name && 'light'}
@@ -52,7 +52,7 @@ const { TabPane } = Tabs;
 const OfflineData = memo(
   ({ activeKey, loading, offlineData, offlineChartData, handleTabChange }) => (
     <Card
-      title='人工随访成功率分析'
+      title="人工随访成功率分析"
       loading={loading}
       className={styles.offlineCard}
       bordered={false}

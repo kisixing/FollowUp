@@ -1,10 +1,7 @@
-
 import React, { Component } from 'react';
 import router from 'umi/router';
 import { connect } from 'dva';
-import { Form,List, Card, Input, Icon, Avatar, Button  } from 'antd';
-
-
+import { Form, List, Card, Input, Icon, Avatar, Button } from 'antd';
 
 import styles from './Step1.less';
 
@@ -52,13 +49,9 @@ class Step1 extends Component {
     });
   }
 
-
-
   onSearch = () => {
     // console.log('onSearch', value);
   };
-
-
 
   // 移除tag标签
   handleTagRemove = removedTag => {
@@ -69,8 +62,6 @@ class Step1 extends Component {
     });
   };
 
-
-
   handleSelect = () => {
     // this.handleModalVisible();
     // console.log('template handleSelect', currentTemplate);
@@ -79,11 +70,7 @@ class Step1 extends Component {
 
   render() {
     const { showTemplate } = this.state;
-    const { loading,  lists, templateList,  } = this.props;
-
-
-
-
+    const { loading, lists, templateList } = this.props;
 
     return (
       <div className={styles.step1}>
@@ -99,8 +86,6 @@ class Step1 extends Component {
                   onSearch={this.onSearch}
                 />
               </Form.Item>
-
-
             </Form>
 
             <List
@@ -155,14 +140,17 @@ class Step1 extends Component {
                   </List.Item>
                 ) : (
                   <List.Item>
-                    <Button type="dashed" className={styles.newButton} onClick={()=>this.handleSelect()}>
+                    <Button
+                      type="dashed"
+                      className={styles.newButton}
+                      onClick={() => this.handleSelect()}
+                    >
                       <Icon type="plus" /> 新建模板
                     </Button>
                   </List.Item>
                 )
               }
             />
-            
           </>
         )}
       </div>

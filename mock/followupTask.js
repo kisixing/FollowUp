@@ -15,14 +15,13 @@ function setMock(arr, labelKey = 'label', valueKey = 'value') {
   });
 }
 
-
 const statistic = mockjs.mock({
   decs: '随访任务列表',
   'data|30': [
     {
       id: '@id',
       'title|+1': () => {
-        return `统计分析-${Random.natural(1, 50)}`
+        return `统计分析-${Random.natural(1, 50)}`;
       },
       avatar: '',
       'status|1': [
@@ -33,7 +32,7 @@ const statistic = mockjs.mock({
         {
           code: 'pause',
           dec: '暂停',
-        }
+        },
       ],
       allFollowup: () => Random.natural(90, 150),
       todayFollowup: () => Random.natural(1, 90),
@@ -41,8 +40,8 @@ const statistic = mockjs.mock({
   ],
 });
 const source = {
-  statistic
-}
+  statistic,
+};
 export default {
   // 支持值为 Object 和 Array
   'GET /api/followup/dataset': {
@@ -51,7 +50,7 @@ export default {
     reservationMediaType: setMock(['微信', '短信', '电话']),
   },
   'GET /api/list': (req, res) => {
-    const dataSource = source.statistic
+    const dataSource = source.statistic;
     const params = req.query;
     const { status } = params;
     let json = {};
@@ -67,8 +66,3 @@ export default {
     return res.json(json);
   },
 };
-
-
-
-
-

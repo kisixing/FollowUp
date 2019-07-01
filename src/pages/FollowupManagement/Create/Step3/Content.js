@@ -18,7 +18,7 @@ import { getValueOfFirstItem } from '@/utils/utils';
 
 const mapStateToProps = ({ followupCreation_model }) => {
   return { followupCreation_model };
-}
+};
 const Content = connect(mapStateToProps)(function A({ followupCreation_model }) {
   const reservationDateType = followupCreation_model.reservationDateType || [];
   const initDateType = getValueOfFirstItem(reservationDateType, F_VALUE, '');
@@ -185,12 +185,15 @@ const Content = connect(mapStateToProps)(function A({ followupCreation_model }) 
             <Button type="primary" ghost>
               未及时就诊原因
             </Button>
-            <Button type="link" onClick={() => router.push('/followup-configuration/Questionnaire')}>其他问卷</Button>
+            <Button
+              type="link"
+              onClick={() => router.push('/followup-configuration/Questionnaire')}
+            >
+              其他问卷
+            </Button>
           </div>
         </Col>
       </Row>
-
-
     </Form>
   );
 });

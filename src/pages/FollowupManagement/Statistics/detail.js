@@ -1,4 +1,3 @@
-
 import { connect } from 'dva';
 import { Row, Col, Button, Table, Divider, Form, Dropdown, Menu, DatePicker, Icon } from 'antd';
 
@@ -10,14 +9,9 @@ import styles from './detail.less';
 const mapStateToProps = ({ global, chart }) => ({
   global,
   chart,
-})
-
-
-
+});
 
 function SearchForm() {
-
-
   return (
     <Form layout="inline" style={{ margin: '10px 0' }}>
       <Form.Item label="复诊预约开始时间">
@@ -27,42 +21,35 @@ function SearchForm() {
         <DatePicker />
       </Form.Item>
 
-      <div style={{ lineHeight: '40px',paddingTop:'10px' }}>
+      <div style={{ lineHeight: '40px', paddingTop: '10px' }}>
         <Form.Item label="准时复诊">
-          <Dropdown overlay={(
-            <Menu>
-              <Menu.Item>是</Menu.Item>
-              <Menu.Item>否</Menu.Item>
-            </Menu>
-          )}
+          <Dropdown
+            overlay={
+              <Menu>
+                <Menu.Item>是</Menu.Item>
+                <Menu.Item>否</Menu.Item>
+              </Menu>
+            }
           >
             <Button>
               请选择 <Icon type="down" />
             </Button>
           </Dropdown>
         </Form.Item>
-        <div style={{float:'right'}}>
-          <Button style={{marginRight:'10px'}}>重置</Button>
+        <div style={{ float: 'right' }}>
+          <Button style={{ marginRight: '10px' }}>重置</Button>
           <Button type="primary">开始搜索</Button>
         </div>
       </div>
     </Form>
-  )
+  );
 }
 
-
 const FollowupPatientChart = connect(mapStateToProps)(props => {
-
-
   const { chart } = props;
   const formatLayout = { xs: 24, sm: 24, md: 24, lg: 12, xl: 12 };
   return (
-    <PageHeaderWrapper
-      title="列表搜索"
-      content={(
-        <SearchForm />
-      )}
-    >
+    <PageHeaderWrapper title="列表搜索" content={<SearchForm />}>
       <Row gutter={24} type="flex" style={{ marginBottom: '24px' }}>
         <Col {...formatLayout}>
           <div style={{ background: '#fff' }}>
@@ -105,9 +92,7 @@ const FollowupPatientChart = connect(mapStateToProps)(props => {
       </div>
     </PageHeaderWrapper>
   );
-})
-
-
+});
 
 const data = [
   {
@@ -255,8 +240,6 @@ function TableForm() {
     },
   ];
 
-
-
   // onChange = (pagination, filters, sorter) => {
   //   console.log('params', pagination, filters, sorter);
   // };
@@ -288,6 +271,5 @@ function TableForm() {
     />
   );
 }
-
 
 export default FollowupPatientChart;

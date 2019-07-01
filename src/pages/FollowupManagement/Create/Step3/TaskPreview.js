@@ -6,12 +6,11 @@ import MessageCard from './MessageCard';
 const yellowStyle = { color: 'orange', fontWeight: 'bold' };
 const mapStateToProps = ({ followupCreation_model }) => {
   return { followupCreation_model };
-}
+};
 const Preview = connect(mapStateToProps)(({ visible, onOk, onCancel }) => {
   // const [state,setState] = useState({
   //   visible:false
   // })
-
 
   // const {
   //   followupDateType,
@@ -49,8 +48,8 @@ const Preview = connect(mapStateToProps)(({ visible, onOk, onCancel }) => {
       ,
     </Modal>
   );
-})
-export default Preview
+});
+export default Preview;
 // function getLabelByValue(arr, value, valueSymbol = F_VALUE, labelSymbol = F_LABEL) {
 //   const target = arr.find(_ => _[valueSymbol] === value)
 //   if (!target) {

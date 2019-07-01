@@ -1,20 +1,20 @@
-import { Tabs } from "antd";
-import styles from './index.less'
-import ChattingList from './ChattingList'
-import ChattingPane from './ChattingPane'
-import ChattingInfo from './ChattingInfo'
-import PatientToServe from './PatientToServe'
+import { Tabs } from 'antd';
+import styles from './index.less';
+import ChattingList from './ChattingList';
+import ChattingPane from './ChattingPane';
+import ChattingInfo from './ChattingInfo';
+import PatientToServe from './PatientToServe';
 
-const { TabPane } = Tabs
+const { TabPane } = Tabs;
 function mapStateToProps({ onlineService_model }) {
-  return { onlineService_model }
+  return { onlineService_model };
 }
 
-export default connect(mapStateToProps)((props) => {
+export default connect(mapStateToProps)(props => {
   // const [state, setState] = useState({});
   const { onlineService_model, dispatch } = props;
   // const { } = state;
-  const { activeKey } = onlineService_model
+  const { activeKey } = onlineService_model;
 
   return (
     <div className={styles.container}>
@@ -22,7 +22,7 @@ export default connect(mapStateToProps)((props) => {
         style={{ margin: '0 10px', background: '#fff', borderRadius: '4px' }}
         activeKey={activeKey}
         onChange={_activeKey => {
-          dispatch({ type: 'onlineService_model/setState', payload: { activeKey: _activeKey } })
+          dispatch({ type: 'onlineService_model/setState', payload: { activeKey: _activeKey } });
         }}
       >
         <TabPane tab="待回复（19人）" key="1">
@@ -38,7 +38,6 @@ export default connect(mapStateToProps)((props) => {
             <div className={styles.chatMiddle}>
               <ChattingPane />
             </div>
-
           </div>
         </TabPane>
         <TabPane tab="待接入（119人）" key="2">

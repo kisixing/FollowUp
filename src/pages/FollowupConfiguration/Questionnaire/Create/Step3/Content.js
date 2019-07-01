@@ -18,7 +18,7 @@ import { getValueOfFirstItem } from '@/utils/utils';
 
 const mapStateToProps = ({ followupCreation_model }) => {
   return { followupCreation_model };
-}
+};
 const Content = connect(mapStateToProps)(function A({ followupCreation_model }) {
   const reservationDateType = followupCreation_model.reservationDateType || [];
   const initDateType = getValueOfFirstItem(reservationDateType, F_VALUE, '');
@@ -44,7 +44,7 @@ const Content = connect(mapStateToProps)(function A({ followupCreation_model }) 
   });
 
   const { formData } = state;
-  // eslint-disable-next-line 
+  // eslint-disable-next-line
   function _setFormData(data) {
     setState({
       ...state,
@@ -118,14 +118,14 @@ const Content = connect(mapStateToProps)(function A({ followupCreation_model }) 
       </Form.Item>
       <Form.Item label=" " colon={false}>
         <span style={{ marginRight: 10 }}>
-          {`选择媒介没发送成功，将按微信>短信>电话的先后顺序依次执行随访任务`} 
+          {`选择媒介没发送成功，将按微信>短信>电话的先后顺序依次执行随访任务`}
         </span>
         <Switch
           checkedChildren="开"
           unCheckedChildren="关"
           checked={IsfollowOrder}
-          onChange={_IsfollowOrder=> {
-            _setFormData({ IsfollowOrder:_IsfollowOrder });
+          onChange={_IsfollowOrder => {
+            _setFormData({ IsfollowOrder: _IsfollowOrder });
           }}
         />
       </Form.Item>
@@ -186,12 +186,15 @@ const Content = connect(mapStateToProps)(function A({ followupCreation_model }) 
             <Button type="primary" ghost>
               未及时就诊原因
             </Button>
-            <Button type="link" onClick={() => router.push('/followup-configuration/Questionnaire')}>其他问卷</Button>
+            <Button
+              type="link"
+              onClick={() => router.push('/followup-configuration/Questionnaire')}
+            >
+              其他问卷
+            </Button>
           </div>
         </Col>
       </Row>
-
-
     </Form>
   );
 });

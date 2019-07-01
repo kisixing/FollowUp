@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import { Input, Button, Modal, Form, Select, Upload, Icon  } from 'antd';
+import { Input, Button, Modal, Form, Select, Upload, Icon } from 'antd';
 import MissionCareComponent from './MissionCareComponent';
-
 
 const FormItem = Form.Item;
 const SelectOption = Select.Option;
@@ -37,11 +36,11 @@ class MissionCare extends Component {
   };
 
   coverChange = ({ fileList }) => {
-    this.setState({ fileList })
+    this.setState({ fileList });
   };
 
-  handleOk = (e) => {
-    e.preventDefault()
+  handleOk = e => {
+    e.preventDefault();
     this.setState({ visible: false });
   };
 
@@ -50,14 +49,15 @@ class MissionCare extends Component {
   };
 
   render() {
-    const { form: { getFieldDecorator } } = this.props;
+    const {
+      form: { getFieldDecorator },
+    } = this.props;
     const { visible, fileList, previewVisible, previewImage } = this.state;
 
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 13 },
-    }
-
+    };
 
     const uploadButton = (
       <div>
@@ -85,10 +85,7 @@ class MissionCare extends Component {
           新建材料
         </Button>
         <Modal title="新建素材" visible={visible} footer={null} onCancel={this.handleCancel}>
-          <Form
-            onSubmit={this.handleOk}
-            {...formItemLayout}
-          >
+          <Form onSubmit={this.handleOk} {...formItemLayout}>
             <FormItem label="文字标题">
               {getFieldDecorator('title', {
                 rules: [{ require: true }],
@@ -118,20 +115,14 @@ class MissionCare extends Component {
                 {fileList.length === 0 && uploadButton}
               </Upload>
             </FormItem>
-            <Modal
-              visible={previewVisible}
-              footer={null}
-              onCancel={this.coverCancel}
-            >
+            <Modal visible={previewVisible} footer={null} onCancel={this.coverCancel}>
               <img alt="封面" style={{ width: '100%' }} src={previewImage} />
             </Modal>
 
             <FormItem label="简介">
               {getFieldDecorator('introduction', {
                 rules: [{ require: true }],
-              })(<Input.TextArea
-                autosize={{ minRows: 3 }}
-              />)}
+              })(<Input.TextArea autosize={{ minRows: 3 }} />)}
             </FormItem>
 
             <FormItem wrapperCol={{ offset: 6 }}>

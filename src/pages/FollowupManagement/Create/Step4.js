@@ -6,7 +6,6 @@ import {
   Icon,
   Form,
   Input,
-
   Checkbox,
   Col,
   Row,
@@ -107,7 +106,6 @@ const statisticTableContent = setMock(
   'key'
 );
 
-
 export default function() {
   const [state, setState] = useState({
     dateType: reservationDateType[0],
@@ -123,15 +121,15 @@ export default function() {
     filterCheckedList2: [],
   });
 
-function getMenu(arr, handleMenuClick) {
-  return (
-    <Menu onClick={handleMenuClick}>
-      {arr.map(a => (
-        <Menu.Item key={a}>{a}</Menu.Item>
-      ))}
-    </Menu>
-  );
-}
+  function getMenu(arr, handleMenuClick) {
+    return (
+      <Menu onClick={handleMenuClick}>
+        {arr.map(a => (
+          <Menu.Item key={a}>{a}</Menu.Item>
+        ))}
+      </Menu>
+    );
+  }
   function _setState(key, value) {
     setState({ ...state, [key]: value });
   }
@@ -153,8 +151,6 @@ function getMenu(arr, handleMenuClick) {
       </Dropdown>
     );
   }
-
-  
 
   return (
     <Form
@@ -289,7 +285,3 @@ function TransferModal({ visible, onOk, onCancel, targetKeys, dataSource, onChan
     </Modal>
   );
 }
-
-
-
-

@@ -1,13 +1,9 @@
-
-
 import router from 'umi/router';
 
-import { Form, List, Card,Input, } from 'antd';
+import { Form, List, Card, Input } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 
 import styles from './index.less';
-
-
 
 @connect(({ global, loading, taskStatistics_model }) => ({
   global,
@@ -45,10 +41,6 @@ class FollowupManagement extends React.Component {
     console.log(value);
   };
 
-
-
-
-
   // 选择标签
   handleTags = (target, checkedTags) => {
     const { dispatch } = this.props;
@@ -82,11 +74,8 @@ class FollowupManagement extends React.Component {
       {
         key: 'pause',
         tab: '暂停',
-      }
+      },
     ];
-
-
-
 
     const mainSearch = (
       <div style={{ textAlign: 'center' }}>
@@ -100,7 +89,6 @@ class FollowupManagement extends React.Component {
       </div>
     );
 
-  
     const CardInfo = ({ all, today }) => (
       <div className={styles.cardInfo}>
         <div>
@@ -114,11 +102,7 @@ class FollowupManagement extends React.Component {
       </div>
     );
 
-
-
-
-
-    const { loading,  lists, tabActiveKey } = this.props;
+    const { loading, lists, tabActiveKey } = this.props;
 
     return (
       <PageHeaderWrapper
@@ -138,11 +122,11 @@ class FollowupManagement extends React.Component {
             loading={loading}
             dataSource={lists}
             renderItem={item => (
-              <List.Item key={item.id} onClick={() => router.push(`/followup-management/statistics/detail/${item.id}`)}>
-                <Card
-                  hoverable
-                  bodyStyle={{ paddingBottom: 20 }}
-                >
+              <List.Item
+                key={item.id}
+                onClick={() => router.push(`/followup-management/statistics/detail/${item.id}`)}
+              >
+                <Card hoverable bodyStyle={{ paddingBottom: 20 }}>
                   <Card.Meta
                     style={{ cursor: 'pointer' }}
                     title={

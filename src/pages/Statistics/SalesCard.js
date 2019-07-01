@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { Row, Col, Card, Tabs, DatePicker } from 'antd';
-import { FormattedMessage  } from 'umi-plugin-react/locale';
+import { FormattedMessage } from 'umi-plugin-react/locale';
 import numeral from 'numeral';
 import styles from './Analysis.less';
 import { Bar } from '@/components/Charts';
@@ -11,31 +11,31 @@ const { TabPane } = Tabs;
 const rankingListData = [
   {
     title: '李海红',
-    total: 8201
+    total: 8201,
   },
   {
     title: '孙倩倩',
-    total: 6543
+    total: 6543,
   },
   {
     title: '刘伟',
-    total: 6201
+    total: 6201,
   },
   {
     title: '赖清荣',
-    total: 4786
+    total: 4786,
   },
   {
     title: '张倩茹',
-    total: 3909
+    total: 3909,
   },
   {
     title: '吴青青',
-    total: 3890
+    total: 3890,
   },
   {
     title: '刘思琪',
-    total: 3245
+    total: 3245,
   },
 ];
 
@@ -71,18 +71,11 @@ const SalesCard = memo(
           size="large"
           tabBarStyle={{ marginBottom: 24 }}
         >
-          <TabPane
-            tab='人工随访量'
-            key="follow-up"
-          >
+          <TabPane tab="人工随访量" key="follow-up">
             <Row>
               <Col xl={16} lg={12} md={12} sm={24} xs={24}>
                 <div className={styles.salesBar}>
-                  <Bar
-                    height={295}
-                    title='随访量图示'
-                    data={salesData}
-                  />
+                  <Bar height={295} title="随访量图示" data={salesData} />
                 </div>
               </Col>
               <Col xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -110,10 +103,7 @@ const SalesCard = memo(
             </Row>
           </TabPane>
 
-          <TabPane
-            tab='咨询量'
-            key="consult"
-          >
+          <TabPane tab="咨询量" key="consult">
             <Row>
               <Col xl={16} lg={12} md={12} sm={24} xs={24}>
                 <div className={styles.salesBar}>

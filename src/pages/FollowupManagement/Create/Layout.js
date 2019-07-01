@@ -19,7 +19,7 @@ import styles from './Layout.less';
 }))
 class Layout extends Component {
   constructor(props) {
-    const { dispatch } = props
+    const { dispatch } = props;
     super(props);
     this.state = {};
     dispatch({ type: 'followupCreation_model/fetchDataset', payload: {} });
