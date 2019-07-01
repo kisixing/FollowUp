@@ -30,6 +30,72 @@ class CalendarComponent extends PureComponent {
     });
   }
 
+  getListData = value => {
+    let listData;
+    switch (value.date()) {
+      case 7:
+        listData = [{ type: 'warning', content: '高危复诊管理' }];
+        break;
+      case 8:
+        listData = [
+          { type: 'warning', content: '高危复诊管理' },
+          { type: 'error', content: 'OGTT异常...' },
+        ];
+        break;
+      case 9:
+        listData = [{ type: 'warning', content: '唐筛+羊穿+无...' }];
+        break;
+      case 10:
+        listData = [{ type: 'success', content: '投诉与建议处理' }];
+        break;
+      case 14:
+        listData = [{ type: 'warning', content: '高危复诊管理' }];
+        break;
+      case 15:
+        listData = [
+          { type: 'warning', content: '高危复诊管理' },
+          { type: 'error', content: 'OGTT异常...' },
+        ];
+        break;
+      case 16:
+        listData = [{ type: 'warning', content: '唐筛+羊穿+无...' }];
+        break;
+      case 17:
+        listData = [{ type: 'success', content: '投诉与建议处理' }];
+        break;
+      case 21:
+        listData = [{ type: 'warning', content: '高危复诊管理' }];
+        break;
+      case 22:
+        listData = [
+          { type: 'warning', content: '高危复诊管理' },
+          { type: 'error', content: 'OGTT异常...' },
+        ];
+        break;
+      case 23:
+        listData = [{ type: 'warning', content: '唐筛+羊穿+无...' }];
+        break;
+      case 24:
+        listData = [{ type: 'success', content: '投诉与建议处理' }];
+        break;
+      default:
+    }
+    return listData || [];
+  };
+
+  dateCellRender = value => {
+    const listData = this.getListData(value);
+    return (
+      <ul style={{ padding: 0 }}>
+        {listData.map(item => (
+          <li key={item.content}>
+            <Badge status={item.type} text={item.content} />
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
   renderActivities() {
     const {
       activities: { list },
@@ -65,90 +131,6 @@ class CalendarComponent extends PureComponent {
         </List.Item>
       );
     });
-  }
-
-  getListData = value => {
-    let listData;
-    switch (value.date()) {
-      case 7:
-        listData = [
-          { type: 'warning', content: '高危复诊管理' }
-        ];
-        break;
-      case 8:
-        listData = [
-          { type: 'warning', content: '高危复诊管理' },
-          { type: 'error', content: 'OGTT异常...' }
-        ];
-        break;
-      case 9:
-        listData = [
-          { type: 'warning', content: '唐筛+羊穿+无...' }
-        ];
-        break;
-      case 10:
-        listData = [
-          { type: 'success', content: '投诉与建议处理' }
-        ];
-        break;
-      case 14:
-        listData = [
-          { type: 'warning', content: '高危复诊管理' }
-        ];
-        break;
-      case 15:
-        listData = [
-          { type: 'warning', content: '高危复诊管理' },
-          { type: 'error', content: 'OGTT异常...' }
-        ];
-        break;
-      case 16:
-        listData = [
-          { type: 'warning', content: '唐筛+羊穿+无...' }
-        ];
-        break;
-      case 17:
-        listData = [
-          { type: 'success', content: '投诉与建议处理' }
-        ];
-        break;
-      case 21:
-        listData = [
-          { type: 'warning', content: '高危复诊管理' }
-        ];
-        break;
-      case 22:
-        listData = [
-          { type: 'warning', content: '高危复诊管理' },
-          { type: 'error', content: 'OGTT异常...' }
-        ];
-        break;
-      case 23:
-        listData = [
-          { type: 'warning', content: '唐筛+羊穿+无...' }
-        ];
-        break;
-      case 24:
-        listData = [
-          { type: 'success', content: '投诉与建议处理' }
-        ];
-        break;
-      default:
-    }
-    return listData || [];
-  }
-
-  dateCellRender = value => {
-    const listData = this.getListData(value);
-    return (
-      <ul style={{ padding: 0 }}>
-        {listData.map(item => (
-          <li key={item.content}>
-            <Badge status={item.type} text={item.content} />
-          </li>
-        ))}
-      </ul>
-    );
   }
 
   render() {
@@ -247,8 +229,16 @@ class CalendarComponent extends PureComponent {
                   >
                     <Row>
                       <Col span={12}>
-                        <div style={{ textAlign: 'center', marginBottom: 5, color: '#FF00FF' }}>紧急随访</div>
-                        <div style={{ textAlign: 'center', font: 'bold 20px/20px Georgia,serif', color: '#FF00FF' }}>
+                        <div style={{ textAlign: 'center', marginBottom: 5, color: '#FF00FF' }}>
+                          紧急随访
+                        </div>
+                        <div
+                          style={{
+                            textAlign: 'center',
+                            font: 'bold 20px/20px Georgia,serif',
+                            color: '#FF00FF',
+                          }}
+                        >
                           {item.total}
                         </div>
                       </Col>

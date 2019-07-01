@@ -1,9 +1,8 @@
 import React, { memo } from 'react';
 import { Row, Col, Icon, Tooltip } from 'antd';
-import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
-import styles from './Analysis.less';
-import { ChartCard, MiniArea, MiniBar, MiniProgress, Field } from '@/components/Charts';
+import { FormattedMessage } from 'umi-plugin-react/locale';
 import numeral from 'numeral';
+import { ChartCard, MiniArea, Field } from '@/components/Charts';
 
 const topColResponsiveProps = {
   xs: 24,
@@ -30,10 +29,7 @@ const IntroduceRow = memo(({ loading, visitData }) => (
         loading={loading}
         total={numeral(126560).format('0,0')}
         footer={
-          <Field
-            label={<span>日均随访量 </span>}
-            value={`￥${numeral(12423).format('0,0')}`}
-          />
+          <Field label={<span>日均随访量 </span>} value={`￥${numeral(12423).format('0,0')}`} />
         }
         contentHeight={46}
       >
@@ -54,12 +50,7 @@ const IntroduceRow = memo(({ loading, visitData }) => (
           </Tooltip>
         }
         total={numeral(88846).format('0,0')}
-        footer={
-          <Field
-            label={<span>日随访量</span>}
-            value={numeral(1222).format('0,0')}
-          />
-        }
+        footer={<Field label={<span>日随访量</span>} value={numeral(1222).format('0,0')} />}
         contentHeight={46}
       >
         <MiniArea color="#975FE4" data={visitData} />
@@ -79,12 +70,7 @@ const IntroduceRow = memo(({ loading, visitData }) => (
           </Tooltip>
         }
         total={numeral(37714).format('0,0')}
-        footer={
-          <Field
-            label={<span>日随访量</span>}
-            value={numeral(1222).format('0,0')}
-          />
-        }
+        footer={<Field label={<span>日随访量</span>} value={numeral(1222).format('0,0')} />}
         contentHeight={46}
       >
         <MiniArea color="#975FE4" data={visitData} />
@@ -104,18 +90,12 @@ const IntroduceRow = memo(({ loading, visitData }) => (
           </Tooltip>
         }
         total={numeral(1190).format('0,0')}
-        footer={
-          <Field
-            label={<span>日咨询量</span>}
-            value={numeral(1222).format('0,0')}
-          />
-        }
+        footer={<Field label={<span>日咨询量</span>} value={numeral(1222).format('0,0')} />}
         contentHeight={46}
       >
         <MiniArea color="#975FE4" data={visitData} />
       </ChartCard>
     </Col>
-
   </Row>
 ));
 

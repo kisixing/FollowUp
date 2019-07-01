@@ -108,10 +108,10 @@ class MissionCareComponent extends Component {
     };
 
     const category = [
-      {
-        id: 1,
-        title: '全部',
-      },
+      // {
+      //   id: 1,
+      //   title: '全部',
+      // },
       {
         id: 2,
         title: '健康宣教',
@@ -134,10 +134,10 @@ class MissionCareComponent extends Component {
       },
     ];
     const secondary = [
-      {
-        id: 1,
-        title: '全部',
-      },
+      // {
+      //   id: 1,
+      //   title: '全部',
+      // },
       {
         id: 2,
         title: '已绑定任务',
@@ -181,7 +181,9 @@ class MissionCareComponent extends Component {
             <Link to="#">编辑 </Link>
             <Link to="#">预览 </Link>
             <Link to="#">推送测试 </Link>
-            <Link to="#" className={styles.cancel}>删除</Link>
+            <Link to="#" className={styles.cancel}>
+              删除
+            </Link>
           </div>
         ),
       },

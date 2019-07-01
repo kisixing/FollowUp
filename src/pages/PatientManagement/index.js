@@ -39,7 +39,14 @@ class SearchList extends Component {
     return (
       <PageHeaderWrapper
         title="搜索列表"
-        content={<SearchForm {...searchFormProps} wrappedComponentRef={form => this.form = form} />}
+        content={
+          <SearchForm
+            {...searchFormProps}
+            wrappedComponentRef={form => {
+              this.form = form;
+            }}
+          />
+        }
       >
         <div className={styles.content}>
           <TableForm />

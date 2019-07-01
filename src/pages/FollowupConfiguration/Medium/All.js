@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 import React, { Component } from 'react';
 import Link from 'umi/link';
 
@@ -7,7 +8,7 @@ import styles from '../Questionnaire.less';
 
 class All extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       data: [
         {
@@ -50,59 +51,57 @@ class All extends Component {
           email: false,
           phone: true,
         },
-      ]
-    }
+      ],
+    };
   }
 
   handleSwitch = (e, dataIndex, index) => {
-    const { data } = this.state
+    let { data } = this.state;
     if (index || index === 0) {
-      data[index][dataIndex] = e
+      data[index][dataIndex] = e;
     } else {
-      for (let i in data) {
-        data[i][dataIndex] = e.target.checked
-      }
+      data = data.reduce((total, value) => {
+        return total.concat({ ...value, [dataIndex]: e.target.checked });
+      }, []);
     }
-    this.setState(data)
-  }
+    this.setState({ data });
+  };
 
   calMainSwitch = () => {
-    const { data } = this.state
+    const { data } = this.state;
     const initialValue = {
       wechat: 0,
       sms: 0,
       email: 0,
       phone: 0,
-    }
+    };
 
     const numsSwitch = data.reduce((total, currentValue) => {
-      const { key, task, ...channels } = currentValue
-      for (let channel in channels) {
-        total[channel] = channels[channel] ? ++total[channel] : total[channel]
-      }
-      return total
-    }, initialValue
-    )
+      const { key, task, ...channels } = currentValue;
+      const t = total;
+      Object.entries(channels).forEach(v => v[1] && ++t[v[0]]);
+      return t;
+    }, initialValue);
 
-    let mainSwitch = initialValue
-    const length = data.length
-    for (let channel in numsSwitch) {
-      if (numsSwitch[channel] === length) {
-        mainSwitch[channel] = 1
-      } else if (numsSwitch[channel] === 0) {
-        mainSwitch[channel] = 0
+    const mainSwitch = initialValue;
+    const { length } = data;
+    Object.entries(numsSwitch).forEach(ele => {
+      if (ele[1] === length) {
+        mainSwitch[ele[0]] = 1;
+      } else if (ele[1] === 0) {
+        mainSwitch[ele[0]] = 0;
       } else {
-        mainSwitch[channel] = -1
+        mainSwitch[ele[0]] = -1;
       }
-    }
+    });
 
-    return mainSwitch
-  }
+    return mainSwitch;
+  };
 
   render() {
-    const { data } = this.state
+    const { data } = this.state;
 
-    const mainSwitch = this.calMainSwitch()
+    const mainSwitch = this.calMainSwitch();
 
     const columns = [
       {
@@ -116,46 +115,50 @@ class All extends Component {
       {
         title: '微信渠道',
         dataIndex: 'wechat',
-        render: (text, record, index) =>
+        render: (text, record, index) => (
           <Switch
             checkedChildren="开"
             unCheckedChildren="关"
             checked={text}
             onClick={checked => this.handleSwitch(checked, 'wechat', index)}
-          />,
+          />
+        ),
       },
       {
         title: '短信渠道',
         dataIndex: 'sms',
-        render: (text, record, index) =>
+        render: (text, record, index) => (
           <Switch
             checkedChildren="开"
             unCheckedChildren="关"
             checked={text}
             onClick={checked => this.handleSwitch(checked, 'sms', index)}
-          />,
+          />
+        ),
       },
       {
         title: '邮件渠道',
         dataIndex: 'email',
-        render: (text, record, index) =>
+        render: (text, record, index) => (
           <Switch
             checkedChildren="开"
             unCheckedChildren="关"
             checked={text}
             onClick={checked => this.handleSwitch(checked, 'email', index)}
-          />,
+          />
+        ),
       },
       {
         title: '电话渠道',
         dataIndex: 'phone',
-        render: (text, record, index) =>
+        render: (text, record, index) => (
           <Switch
             checkedChildren="开"
             unCheckedChildren="关"
             checked={text}
             onClick={checked => this.handleSwitch(checked, 'phone', index)}
-          />,
+          />
+        ),
       },
       {
         title: '人工管理设置',
@@ -170,34 +173,34 @@ class All extends Component {
           <Row type="flex" justify="space-around">
             <Col>
               微信渠道:&nbsp;&nbsp;&nbsp;
-            <Checkbox
-                indeterminate={mainSwitch['wechat'] !== 1 && mainSwitch['wechat'] !== 0}
-                checked={mainSwitch['wechat'] === 1}
+              <Checkbox
+                indeterminate={mainSwitch.wechat !== 1 && mainSwitch.wechat !== 0}
+                checked={mainSwitch.wechat === 1}
                 onChange={checked => this.handleSwitch(checked, 'wechat')}
               />
             </Col>
             <Col>
               短信渠道:&nbsp;&nbsp;&nbsp;
-            <Checkbox
-                indeterminate={mainSwitch['sms'] !== 1 && mainSwitch['sms'] !== 0}
-                checked={mainSwitch['sms'] === 1}
+              <Checkbox
+                indeterminate={mainSwitch.sms !== 1 && mainSwitch.sms !== 0}
+                checked={mainSwitch.sms === 1}
                 onChange={checked => this.handleSwitch(checked, 'sms')}
               />
             </Col>
             <Col>
               邮件渠道:&nbsp;&nbsp;&nbsp;
-            <Checkbox
-                indeterminate={mainSwitch['email'] !== 1 && mainSwitch['email'] !== 0}
-                checked={mainSwitch['email'] === 1}
+              <Checkbox
+                indeterminate={mainSwitch.email !== 1 && mainSwitch.email !== 0}
+                checked={mainSwitch.email === 1}
                 onChange={checked => this.handleSwitch(checked, 'email')}
               />
             </Col>
             <Col>
               电话渠道:&nbsp;&nbsp;&nbsp;
-            <Checkbox
-                indeterminate={mainSwitch['phone'] !== 1 && mainSwitch['phone'] !== 0}
-                checked={mainSwitch['phone'] === 1}
-                onChange={checked => this.handleSwitch(checked, 'wecphonehat')}
+              <Checkbox
+                indeterminate={mainSwitch.phone !== 1 && mainSwitch.phone !== 0}
+                checked={mainSwitch.phone === 1}
+                onChange={checked => this.handleSwitch(checked, 'phone')}
               />
             </Col>
           </Row>

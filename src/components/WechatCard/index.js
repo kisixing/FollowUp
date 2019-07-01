@@ -1,6 +1,7 @@
-import styles from './index.less';
 import { Icon } from 'antd';
-export default props => {
+import styles from './index.less';
+
+export default () => {
   return (
     <div className={styles.wrap}>
       <div className={styles.title}>

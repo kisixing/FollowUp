@@ -55,17 +55,17 @@ const dataSource = mockjs.mock({
 const item = {
   id: '10000',
   title: `高危妊娠复诊管理`,
-  'type': '科室随访',
-  'secondaryType': '高危妊娠',
+  type: '科室随访',
+  secondaryType: '高危妊娠',
   avatar: '',
-  'status': {
+  status: {
     code: 'running',
     dec: '运行中',
   },
   allFollowup: 55,
   todayFollowup: 22,
-}
-dataSource.data.unshift(item)
+};
+dataSource.data.unshift(item);
 const templates = mockjs.mock({
   decs: '随访任务模板列表',
   'data|30-50': [
@@ -116,36 +116,33 @@ export default {
     if (status && !type && !secondaryType) {
       json = {
         decs,
-        data: data.filter(item => item.status.code === status),
+        data: data.filter(_ => _.status.code === status),
       };
     }
     if (status && type && !secondaryType) {
       json = {
         decs,
-        data: data.filter(item => item.status.code === status && item.type === type),
+        data: data.filter(_ => _.status.code === status && _.type === type),
       };
     }
     if (status && type && secondaryType) {
       json = {
         decs,
         data: data.filter(
-          item =>
-            item.status.code === status &&
-            item.type === type &&
-            item.secondaryType === secondaryType
+          _ => _.status.code === status && _.type === type && _.secondaryType === secondaryType
         ),
       };
     }
     if (!status && type && !secondaryType) {
       json = {
         decs,
-        data: data.filter(item => item.type === type),
+        data: data.filter(_ => _.type === type),
       };
     }
     if (!status && !type && secondaryType) {
       json = {
         decs,
-        data: data.filter(item => item.secondaryType === secondaryType),
+        data: data.filter(_ => _.secondaryType === secondaryType),
       };
     }
     return res.json(json);
@@ -161,19 +158,19 @@ export default {
     if (type && !secondaryType) {
       json = {
         decs,
-        data: data.filter(item => item.type === type),
+        data: data.filter(_ => _.type === type),
       };
     }
     if (!type && secondaryType) {
       json = {
         decs,
-        data: data.filter(item => item.secondaryType === secondaryType),
+        data: data.filter(_ => _.secondaryType === secondaryType),
       };
     }
     if (type && secondaryType) {
       json = {
         decs,
-        data: data.filter(item => item.type === type && item.secondaryType === secondaryType),
+        data: data.filter(_ => _.type === type && _.secondaryType === secondaryType),
       };
     }
 

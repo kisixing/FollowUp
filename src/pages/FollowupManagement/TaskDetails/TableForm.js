@@ -5,9 +5,7 @@
  */
 import React, { Component } from 'react';
 import { Table, Divider } from 'antd';
-import CallIn from '@/components/Phone/CallIn'
-import { thisExpression } from '@babel/types';
-
+import CallIn from '@/components/Phone/CallIn';
 
 const data = [
   {
@@ -62,128 +60,126 @@ const data = [
 ];
 class TableForm extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      visible: false
-    }
+      visible: false,
+    };
   }
-
-
-  columns = [
-    {
-      title: 'No.',
-      dataIndex: 'key',
-      width: 59,
-      sorter: (a, b) => a.key - b.key,
-      sortDirections: ['ascend'],
-      defaultSortOrder: 'ascend',
-    },
-    {
-      title: '产妇姓名',
-      dataIndex: 'name',
-      width: 93,
-      // specify the condition of filtering result
-      // here is that finding the name started with `value`
-      onFilter: (value, record) => record.name.indexOf(value) === 0,
-      sorter: (a, b) => a.name.length - b.name.length,
-      sortDirections: ['descend'],
-    },
-    {
-      title: '就诊卡号',
-      dataIndex: 'cardID',
-      width: 93,
-      defaultSortOrder: 'descend',
-      sorter: (a, b) => a.cardID - b.cardID,
-    },
-    {
-      title: '手机号码',
-      dataIndex: 'mobile',
-      width: 101,
-      filterMultiple: false,
-      onFilter: (value, record) => record.address.indexOf(value) === 0,
-      sorter: (a, b) => a.address.length - b.address.length,
-      sortDirections: ['descend', 'ascend'],
-    },
-    {
-      title: '末次产检时间',
-      dataIndex: 'Last_labor_inspection_time',
-      width: 101,
-      defaultSortOrder: 'descend',
-      // sorter: (a, b) => a.age - b.age,
-    },
-    {
-      title: '复诊预约时间',
-      dataIndex: 'Appointment_time_for_followup_visit',
-      width: 101,
-      defaultSortOrder: 'descend',
-    },
-    {
-      title: '孕周',
-      dataIndex: 'estational_weeks',
-      width: 45,
-      defaultSortOrder: 'descend',
-    },
-    {
-      title: '超时天数',
-      dataIndex: 'overtime ',
-      width: 74,
-      defaultSortOrder: 'descend',
-    },
-    {
-      title: '高危等级',
-      dataIndex: 'High_risk_level ',
-      width: 74,
-      defaultSortOrder: 'descend',
-    },
-    {
-      title: '高危等级',
-      dataIndex: 'High_risk_level',
-      width: 74,
-      defaultSortOrder: 'descend',
-    },
-    {
-      title: '短信回执',
-      dataIndex: 'SMS_receipt',
-      width: 74,
-      defaultSortOrder: 'descend',
-    },
-    {
-      title: '操作',
-      dataIndex: 'action',
-      width: 92,
-      align: 'center',
-      render: () => (
-        <span>
-          <a onClick={() => this.setState({ visible: true })}>电话</a>
-          <Divider type="vertical" />
-          <a>短信</a>
-        </span>
-      ),
-    },
-  ];
 
   showTotal = total => {
     return `共 ${total} 条`;
   };
 
   handleOk = () => {
-    this.setState({ visible: false })
-  }
+    this.setState({ visible: false });
+  };
 
   handleNext = () => {
-    this.setState({ visible: false })
-  }
-
+    this.setState({ visible: false });
+  };
 
   render() {
-    const { visible } = this.state
+    const { visible } = this.state;
+
+    const columns = [
+      {
+        title: 'No.',
+        dataIndex: 'key',
+        width: 59,
+        sorter: (a, b) => a.key - b.key,
+        sortDirections: ['ascend'],
+        defaultSortOrder: 'ascend',
+      },
+      {
+        title: '产妇姓名',
+        dataIndex: 'name',
+        width: 93,
+        // specify the condition of filtering result
+        // here is that finding the name started with `value`
+        onFilter: (value, record) => record.name.indexOf(value) === 0,
+        sorter: (a, b) => a.name.length - b.name.length,
+        sortDirections: ['descend'],
+      },
+      {
+        title: '就诊卡号',
+        dataIndex: 'cardID',
+        width: 93,
+        defaultSortOrder: 'descend',
+        sorter: (a, b) => a.cardID - b.cardID,
+      },
+      {
+        title: '手机号码',
+        dataIndex: 'mobile',
+        width: 101,
+        filterMultiple: false,
+        onFilter: (value, record) => record.address.indexOf(value) === 0,
+        sorter: (a, b) => a.address.length - b.address.length,
+        sortDirections: ['descend', 'ascend'],
+      },
+      {
+        title: '末次产检时间',
+        dataIndex: 'Last_labor_inspection_time',
+        width: 101,
+        defaultSortOrder: 'descend',
+        // sorter: (a, b) => a.age - b.age,
+      },
+      {
+        title: '复诊预约时间',
+        dataIndex: 'Appointment_time_for_followup_visit',
+        width: 101,
+        defaultSortOrder: 'descend',
+      },
+      {
+        title: '孕周',
+        dataIndex: 'estational_weeks',
+        width: 45,
+        defaultSortOrder: 'descend',
+      },
+      {
+        title: '超时天数',
+        dataIndex: 'overtime ',
+        width: 74,
+        defaultSortOrder: 'descend',
+      },
+      {
+        title: '高危等级',
+        dataIndex: 'High_risk_level ',
+        width: 74,
+        defaultSortOrder: 'descend',
+      },
+      {
+        title: '高危等级',
+        dataIndex: 'High_risk_level',
+        width: 74,
+        defaultSortOrder: 'descend',
+      },
+      {
+        title: '短信回执',
+        dataIndex: 'SMS_receipt',
+        width: 74,
+        defaultSortOrder: 'descend',
+      },
+      {
+        title: '操作',
+        dataIndex: 'action',
+        width: 92,
+        align: 'center',
+        render: () => (
+          <span>
+            <a onClick={() => this.setState({ visible: true })}>电话</a>
+            <Divider type="vertical" />
+            <a>短信</a>
+          </span>
+        ),
+      },
+    ];
 
     return (
       <div>
         <Table
           size="middle"
           scroll={{ x: '997px' }}
-          columns={this.columns}
+          columns={columns}
           dataSource={data}
           pagination={{
             size: 'small',
@@ -200,7 +196,7 @@ class TableForm extends Component {
           visible={visible}
           onOk={this.handleOk}
           onNext={this.handleNext}
-          onCancel={() => { this.setState({ visible: false }) }}
+          onCancel={() => this.setState({ visible: false })}
         />
       </div>
     );

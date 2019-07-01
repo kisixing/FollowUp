@@ -94,6 +94,12 @@ class All extends Component {
             {tag}
           </Tag>
         );
+      case '预防':
+        return (
+          <Tag className={styles.tag} color="magenta">
+            {tag}
+          </Tag>
+        );
       case '科研项目':
         return (
           <Tag className={styles.tag} color="green">
@@ -106,7 +112,9 @@ class All extends Component {
   };
 
   render() {
-    const { form: { getFieldDecorator } } = this.props;
+    const {
+      form: { getFieldDecorator },
+    } = this.props;
 
     const actionsTextMap = {
       expandText: <FormattedMessage id="component.tagSelect.expand" defaultMessage="Expand" />,
@@ -252,7 +260,6 @@ class All extends Component {
                 extra={<p style={{ color: '#0096FA' }}>{item.state}</p>}
                 title={item.title}
               >
-
                 <CardInfo answer={formatWan(item.answer)} date={item.date} />
                 {this.createTag(item.tag)}
               </Card>
