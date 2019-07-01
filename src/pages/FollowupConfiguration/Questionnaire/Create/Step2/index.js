@@ -57,10 +57,6 @@ export default connect(mapStateToProps)(props => {
             </div>
           );
         })}
-
-        <Button type="ghost" className={questionBtn}>
-          选择题
-        </Button>
       </Col>
 
       <Col span={12}>
