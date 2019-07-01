@@ -12,6 +12,12 @@ module.exports = {
   globals: {
     ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION: true, // preview.pro.ant.design only do not use in your production ; preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
     page: true,
+    useState: true,
+    React: true,
+    connect: true,
+    F_VALUE: true,
+    F_LABEL: true,
+    arguments: true,
   },
   rules: {
     'react/jsx-filename-extension': [1, { extensions: ['.js'] }],
@@ -33,6 +39,8 @@ module.exports = {
     'jsx-a11y/no-static-element-interactions': 0,
     'jsx-a11y/anchor-is-valid': 0,
     'linebreak-style': 0,
+    camelcase: 'off',
+    'no-underscore-dangle': 'off',
   },
   settings: {
     polyfills: ['fetch', 'promises', 'url', 'object-assign'],

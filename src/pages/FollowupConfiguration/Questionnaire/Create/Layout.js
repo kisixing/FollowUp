@@ -1,3 +1,4 @@
+/* eslint-disable prefer-rest-params */
 
 import React, { Component } from 'react';
 import { connect } from 'dva';

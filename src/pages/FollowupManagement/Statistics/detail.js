@@ -1,45 +1,17 @@
-
 import { connect } from 'dva';
 import { Row, Col, Button, Table, Divider, Form, Dropdown, Menu, DatePicker, Icon } from 'antd';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import { Pie } from '@/components/Charts';
-import { getValueOfFirstItem } from "@/utils/utils";
+// import { getValueOfFirstItem } from "@/utils/utils";
 import styles from './detail.less';
+
 const mapStateToProps = ({ global, chart }) => ({
   global,
   chart,
-})
+});
 
-
-
-
-function SearchForm(props) {
-  const [state, setState] = useState({})
-
-  function getDropDown(type, typeList) {
-    function getMenu(arr, handleMenuClick) {
-      return (
-        <Menu onClick={handleMenuClick}>
-          {arr.map(({ value, label }) => (
-            <Menu.Item key={value}>{label}</Menu.Item>
-          ))}
-        </Menu>
-      );
-    }
-    return (
-      <Dropdown
-        overlay={getMenu(typeList, ({ key }) => {
-          _setFormData({ [type]: key });
-        })}
-      >
-        <Button>
-          {getValueOfFirstItem(a, F_LABEL, '请选择')} <Icon type="down" />
-        </Button>
-      </Dropdown>
-    );
-  }
-
+function SearchForm() {
   return (
     <Form layout="inline" style={{ margin: '10px 0' }}>
       <Form.Item label="复诊预约开始时间">
@@ -49,41 +21,35 @@ function SearchForm(props) {
         <DatePicker />
       </Form.Item>
 
-      <div style={{ lineHeight: '40px',paddingTop:'10px' }}>
+      <div style={{ lineHeight: '40px', paddingTop: '10px' }}>
         <Form.Item label="准时复诊">
-          <Dropdown overlay={(
-            <Menu>
-              <Menu.Item>是</Menu.Item>
-              <Menu.Item>否</Menu.Item>
-            </Menu>
-          )}>
+          <Dropdown
+            overlay={
+              <Menu>
+                <Menu.Item>是</Menu.Item>
+                <Menu.Item>否</Menu.Item>
+              </Menu>
+            }
+          >
             <Button>
               请选择 <Icon type="down" />
             </Button>
           </Dropdown>
         </Form.Item>
-        <div style={{float:'right'}}>
-          <Button  style={{marginRight:'10px'}}>重置</Button>
-          <Button type="primary" >开始搜索</Button>
+        <div style={{ float: 'right' }}>
+          <Button style={{ marginRight: '10px' }}>重置</Button>
+          <Button type="primary">开始搜索</Button>
         </div>
       </div>
     </Form>
-  )
+  );
 }
 
-
 const FollowupPatientChart = connect(mapStateToProps)(props => {
-
-
   const { chart } = props;
   const formatLayout = { xs: 24, sm: 24, md: 24, lg: 12, xl: 12 };
   return (
-    <PageHeaderWrapper
-      title="列表搜索"
-      content={(
-        <SearchForm></SearchForm>
-      )}
-    >
+    <PageHeaderWrapper title="列表搜索" content={<SearchForm />}>
       <Row gutter={24} type="flex" style={{ marginBottom: '24px' }}>
         <Col {...formatLayout}>
           <div style={{ background: '#fff' }}>
@@ -126,9 +92,7 @@ const FollowupPatientChart = connect(mapStateToProps)(props => {
       </div>
     </PageHeaderWrapper>
   );
-})
-
-
+});
 
 const data = [
   {
@@ -276,8 +240,6 @@ function TableForm() {
     },
   ];
 
-
-
   // onChange = (pagination, filters, sorter) => {
   //   console.log('params', pagination, filters, sorter);
   // };
@@ -303,12 +265,11 @@ function TableForm() {
         showSizeChanger: true,
         showQuickJumper: true,
         pageSizeOptions: ['5', '10', '20', '30', '40'],
-        showTotal: showTotal,
+        showTotal,
         // onChange: this.onChange,
       }}
     />
   );
 }
-
 
 export default FollowupPatientChart;

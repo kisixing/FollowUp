@@ -18,8 +18,9 @@ import styles from './Layout.less';
   steps: newFollowupLayout.steps,
 }))
 class Layout extends Component {
-  constructor({ dispatch }) {
-    super(...arguments);
+  constructor(props) {
+    const { dispatch } = props;
+    super(props);
     this.state = {};
     dispatch({ type: 'followupCreation_model/fetchDataset', payload: {} });
   }
