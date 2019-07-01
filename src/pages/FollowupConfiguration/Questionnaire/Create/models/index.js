@@ -73,18 +73,20 @@ export default {
     *updateQuestion({ payload }, { put, select }) {
       const { id } = payload;
       const { questionList } = yield select(state => state.questionnaire_model);
+      // debugger
       const newQuestionList = questionList.map(_ => {
         if (_.id === id) {
           return payload;
         }
         return _;
       });
-      yield put({ type: `updateState`, payload: newQuestionList });
+      yield put({ type: `updateState`, payload: { questionList: newQuestionList } });
     },
   },
 
   reducers: {
     updateState(state, { payload }) {
+      // console.log(payload)
       return {
         ...state,
         ...payload,
