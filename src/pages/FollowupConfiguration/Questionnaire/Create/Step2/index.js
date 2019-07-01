@@ -47,6 +47,14 @@ export default connect(mapStateToProps)(props => {
                     onDrag={e => {
                       onDrag(e, type, dispatch);
                     }}
+                    onDragEnd={() => {
+                      dispatch({
+                        type: `${MODEL}/updateState`,
+                        payload: {
+                          hoverTargetQuestionId: '',
+                        },
+                      });
+                    }}
                   >
                     {type}
                   </Button>
@@ -57,10 +65,6 @@ export default connect(mapStateToProps)(props => {
             </div>
           );
         })}
-
-        <Button type="ghost" className={questionBtn}>
-          选择题
-        </Button>
       </Col>
 
       <Col span={12}>
