@@ -2,7 +2,7 @@ import { title } from './index.less';
 import { container, wrap, tragStart } from './EditArea.less';
 
 import { MODEL, ID } from '../models/index';
-// import RenderQestion from './QestionStrategy';
+import RenderQestion from './QestionStrategy';
 
 function mapStateToProps({ questionnaire_model }) {
   return { questionnaire_model };
@@ -26,8 +26,7 @@ export default connect(mapStateToProps)(props => {
         questionList.map(question => {
           return (
             <div key={question[ID]}>
-              {/* <RenderQestion question={question} /> */}
-              {question.type}
+              <RenderQestion question={question} />
             </div>
           );
         })
