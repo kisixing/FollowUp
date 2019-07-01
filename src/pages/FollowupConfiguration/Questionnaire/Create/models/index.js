@@ -2,13 +2,16 @@
 
 import { queryTaskTemplates } from '../service';
 
-
-
+export const MODEL = 'questionnaire_model';
+export const DATASET = 'dataset';
+export const TITLE = 'title';
+export const SCORE = 'score';
+export const TYPE = 'type';
+export const ID = 'id';
 export default {
-  namespace: 'questionnaire_model',
+  namespace: MODEL,
 
   state: {
-    
     templateList: [
       {
         id: '11211132221',
@@ -35,7 +38,9 @@ export default {
         description: '自动发送复诊提醒 · 管理复诊结果',
       },
     ],
-    questionList: []
+    questionList: [],
+    doesNewQuestionPlaceBefore: false,
+    questionType: '',
   },
 
   effects: {
@@ -48,8 +53,34 @@ export default {
         },
       });
     },
-    
-    
+
+    *addNewQuestion(action, { put, select }) {
+      const { questionList, doesNewQuestionPlaceBefore, questionType } = yield select(
+        state => state.questionnaire_model
+      );
+      const newQuestion = {
+        [TYPE]: questionType,
+        [ID]: Math.random(),
+        [TITLE]: '请输入',
+      };
+      if (doesNewQuestionPlaceBefore) {
+        questionList.unshift(newQuestion);
+      } else {
+        questionList.push(newQuestion);
+      }
+      yield put({ type: `updateState`, payload: questionList });
+    },
+    *updateQuestion({ payload }, { put, select }) {
+      const { id } = payload;
+      const { questionList } = yield select(state => state.questionnaire_model);
+      const newQuestionList = questionList.map(_ => {
+        if (_.id === id) {
+          return payload;
+        }
+        return _;
+      });
+      yield put({ type: `updateState`, payload: newQuestionList });
+    },
   },
 
   reducers: {
@@ -59,7 +90,5 @@ export default {
         ...payload,
       };
     },
-
-
   },
 };
