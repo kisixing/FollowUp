@@ -74,9 +74,8 @@ class Questionnaire extends Component {
         type="primary"
         icon="plus"
         onClick={() => router.push('/followup-configuration/questionnaire/create')}
-      >
-        新建
-        </Button>
+      >        新建
+      </Button>
     )
 
     return (

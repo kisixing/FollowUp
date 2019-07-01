@@ -1,4 +1,5 @@
 import request from '@/utils/request';
+
 export default {
   namespace: 'followupCreation_model',
 

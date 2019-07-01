@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import { Input, Button, Modal, Form, Select, Upload, Icon  } from 'antd';
 import MissionCareComponent from './MissionCareComponent';
 
-import { Input, Button, Modal, Form, Select, Upload, Icon, Row, Col } from 'antd';
 
 const FormItem = Form.Item;
 const SelectOption = Select.Option;
@@ -118,7 +118,9 @@ class MissionCare extends Component {
                 {fileList.length === 0 && uploadButton}
               </Upload>
             </FormItem>
-            <Modal visible={previewVisible} footer={null}
+            <Modal
+              visible={previewVisible}
+              footer={null}
               onCancel={this.coverCancel}
             >
               <img alt="封面" style={{ width: '100%' }} src={previewImage} />
@@ -135,14 +137,14 @@ class MissionCare extends Component {
             <FormItem wrapperCol={{ offset: 6 }}>
               <Button type="primary" onClick={this.handleCancel}>
                 取消
-                  </Button>
+              </Button>
               <Button htmlType="submit" type="primary" style={{ marginLeft: 20 }}>
                 确定
-                  </Button>
+              </Button>
             </FormItem>
           </Form>
         </Modal>
-      </div >
+      </div>
     );
 
     return (

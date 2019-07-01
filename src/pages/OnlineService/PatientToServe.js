@@ -82,6 +82,7 @@ class TableForm extends PureComponent {
             }
         })
     }
+
     columns = [
         // {
         //     title: 'No.',
@@ -166,9 +167,9 @@ class TableForm extends PureComponent {
             width: 92,
             align: 'center',
             render: () => (
-                <span onClick={() => this.serve()}>
-                    <a href="#">接入</a>
-                </span>
+              <span onClick={() => this.serve()}>
+                <a href="#">接入</a>
+              </span>
             ),
         },
     ];
@@ -192,14 +193,14 @@ class TableForm extends PureComponent {
 
     render() {
         return (
-            <div>
-                <Table
-                    rowSelection={rowSelection}
-                    size="middle"
-                    scroll={{ x: '997px' }}
-                    columns={this.columns}
-                    dataSource={data}
-                    pagination={{
+          <div>
+            <Table
+              rowSelection={rowSelection}
+              size="middle"
+              scroll={{ x: '997px' }}
+              columns={this.columns}
+              dataSource={data}
+              pagination={{
                         size: 'small',
                         total: 7,
                         pageSize: 5,
@@ -209,11 +210,11 @@ class TableForm extends PureComponent {
                         showTotal: this.showTotal,
                         // onChange: this.onChange,
                     }}
-                />
-                <Button type="primary" onClick={() => this.serve()}>
+            />
+            <Button type="primary" onClick={() => this.serve()}>
                     接入
-                </Button>
-            </div>
+            </Button>
+          </div>
         );
     }
 }

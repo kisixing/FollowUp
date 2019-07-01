@@ -1,4 +1,5 @@
 import styles from './MessageCard.less';
+
 export default props => {
   return (
     <div className={styles.wrap}>

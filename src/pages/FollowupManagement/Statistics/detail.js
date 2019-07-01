@@ -6,6 +6,7 @@ import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import { Pie } from '@/components/Charts';
 import { getValueOfFirstItem } from "@/utils/utils";
 import styles from './detail.less';
+
 const mapStateToProps = ({ global, chart }) => ({
   global,
   chart,
@@ -56,15 +57,16 @@ function SearchForm(props) {
               <Menu.Item>是</Menu.Item>
               <Menu.Item>否</Menu.Item>
             </Menu>
-          )}>
+          )}
+          >
             <Button>
               请选择 <Icon type="down" />
             </Button>
           </Dropdown>
         </Form.Item>
         <div style={{float:'right'}}>
-          <Button  style={{marginRight:'10px'}}>重置</Button>
-          <Button type="primary" >开始搜索</Button>
+          <Button style={{marginRight:'10px'}}>重置</Button>
+          <Button type="primary">开始搜索</Button>
         </div>
       </div>
     </Form>
@@ -81,7 +83,7 @@ const FollowupPatientChart = connect(mapStateToProps)(props => {
     <PageHeaderWrapper
       title="列表搜索"
       content={(
-        <SearchForm></SearchForm>
+        <SearchForm />
       )}
     >
       <Row gutter={24} type="flex" style={{ marginBottom: '24px' }}>
@@ -303,7 +305,7 @@ function TableForm() {
         showSizeChanger: true,
         showQuickJumper: true,
         pageSizeOptions: ['5', '10', '20', '30', '40'],
-        showTotal: showTotal,
+        showTotal,
         // onChange: this.onChange,
       }}
     />

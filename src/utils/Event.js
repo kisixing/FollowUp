@@ -1,7 +1,9 @@
+/* eslint-disable no-multi-assign */
 class Event {
   constructor() {
     this.events = {};
   }
+
   on(name, fn) {
     let exists = this.events[name];
     if (!exists) {
@@ -9,11 +11,12 @@ class Event {
     }
     exists.push(fn);
   }
+
   off(name, fn) {
-    let exists = this.events[name] || [];
+    const exists = this.events[name] || [];
     if (!exists) return;
     if (fn) {
-      let index = exists.indexOf(fn);
+      const index = exists.indexOf(fn);
       if (index > -1) {
         exists.splice(index, 1);
       }
@@ -21,11 +24,13 @@ class Event {
     }
     delete this.events[name];
   }
+
   once(name, fn) {
     this.on(name, () => {
       this.off(name, fn);
     });
   }
+
   emit(name, ...args) {
     const exists = this.events[name];
     if (!exists) return;

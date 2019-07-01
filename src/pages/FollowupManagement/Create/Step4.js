@@ -7,18 +7,18 @@ import {
   Icon,
   Form,
   Input,
-  TimePicker,
-  Radio,
-  Switch,
+
   Checkbox,
   Col,
   Row,
   Modal,
 } from 'antd';
-const CheckboxGroup = Checkbox.Group;
 
-import { lh40, colorC, mRb8 } from './Step3/index.less';
 import router from 'umi/router';
+import { lh40, colorC, mRb8 } from './Step3/index.less';
+import { Title } from './Step3/index';
+
+const CheckboxGroup = Checkbox.Group;
 const { TabPane } = Tabs;
 const reservationDateType = ['预约日期', '末次就诊日期'];
 const reservationDuringType = ['之前', '当天', '之后'];
@@ -76,7 +76,6 @@ function setMock(arr, labelKey = 'label', valueKey = 'value') {
 }
 
 const { useState } = React;
-import { Title } from './Step3/index';
 
 export default function(props) {
   const [state, setState] = useState({
@@ -250,7 +249,7 @@ export default function(props) {
           className={mRb8}
           onClick={() => router.push('/followup-management/task-lists')}
         >
-          <Icon type="upload"></Icon>
+          <Icon type="upload" />
           发布
         </Button>
       </div>
@@ -266,7 +265,7 @@ function TransferModal({ visible, onOk, onCancel, targetKeys, dataSource, onChan
         dataSource={dataSource}
         render={item => item.title}
         onChange={onChange}
-      ></Transfer>
+      />
     </Modal>
   );
 }

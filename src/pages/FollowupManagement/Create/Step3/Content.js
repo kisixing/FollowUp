@@ -57,7 +57,7 @@ const Content = connect(mapStateToProps)(function ({ followupCreation_model, ind
   const { followupDay, judgeDay, mediaType, IsfollowOrder, text } = formData;
 
   function getDropDown(type, typeList) {
-    let a = typeList.filter(_ => _.value === formData[type]);
+    const a = typeList.filter(_ => _.value === formData[type]);
     function getMenu(arr, handleMenuClick) {
       return (
         <Menu onClick={handleMenuClick}>
@@ -127,7 +127,7 @@ const Content = connect(mapStateToProps)(function ({ followupCreation_model, ind
           onChange={IsfollowOrder => {
             _setFormData({ IsfollowOrder });
           }}
-        ></Switch>
+        />
       </Form.Item>
 
       <Title label="判断条件" />

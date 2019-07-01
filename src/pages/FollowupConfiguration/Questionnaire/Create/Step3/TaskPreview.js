@@ -2,17 +2,17 @@ import { Modal, Timeline } from 'antd';
 import WechatCard from '@/components/WechatCard';
 import MessageCard from './MessageCard';
 
-//预览
+// 预览
 const yellowStyle = { color: 'orange', fontWeight: 'bold' };
 const mapStateToProps = ({ followupCreation_model }) => {
   return { followupCreation_model };
 }
-const Preview = connect(mapStateToProps)(({ visible, onOk, onCancel, formData, followupCreation_model }) => {
+const Preview = connect(mapStateToProps)(({ visible, onOk, onCancel, }) => {
   // const [state,setState] = useState({
   //   visible:false
   // })
 
-  const { reservationDateType, reservationDuringType, reservationMediaType } = followupCreation_model
+  // const { reservationDateType, reservationDuringType, reservationMediaType } = followupCreation_model
 
   // const {
   //   followupDateType,
@@ -27,7 +27,7 @@ const Preview = connect(mapStateToProps)(({ visible, onOk, onCancel, formData, f
   // } = formData
 
   return (
-    <Modal visible={visible} onOk={onOk} onCancel={onCancel} >
+    <Modal visible={visible} onOk={onOk} onCancel={onCancel}>
       <Timeline>
         <Timeline.Item color="green">
           {'预约日期'} 之后 1天 发送微信
@@ -52,10 +52,10 @@ const Preview = connect(mapStateToProps)(({ visible, onOk, onCancel, formData, f
   );
 })
 export default Preview
-function getLabelByValue(arr, value, valueSymbol = F_VALUE, labelSymbol = F_LABEL) {
-  const target = arr.find(_ => _[valueSymbol] === value)
-  if (!target) {
-    return null
-  }
-  return target[labelSymbol]
-}
+// function getLabelByValue(arr, value, valueSymbol = F_VALUE, labelSymbol = F_LABEL) {
+//   const target = arr.find(_ => _[valueSymbol] === value)
+//   if (!target) {
+//     return null
+//   }
+//   return target[labelSymbol]
+// }

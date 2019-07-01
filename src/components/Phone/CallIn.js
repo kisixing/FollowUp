@@ -101,7 +101,8 @@ class CallIn extends Component {
             <Card className={styles.card}>
               <Row>
                 姓名：
-                <b>张珊珊</b></Row>
+                <b>张珊珊</b>
+              </Row>
               <Row>年龄： 28</Row>
               <Row>
                 <Col span={8}>标签：</Col>
@@ -115,7 +116,7 @@ class CallIn extends Component {
             </Card>
             <Card className={styles.card}>
               <Timeline className={styles.timeline}>
-                <TimelineItem >
+                <TimelineItem>
                   <div>
                     12+3周
                     <span className={styles.timelineItemDate}>2019.03.12</span>
@@ -178,7 +179,7 @@ class CallIn extends Component {
               <p>通话时间：00:04:32</p>
               <p><Checkbox checked>电话录音</Checkbox></p>
               <Row type='flex' justify='space-around'>
-                <Col><Button >转接</Button></Col>
+                <Col><Button>转接</Button></Col>
                 <Col><Button>挂机</Button></Col>
               </Row>
             </Card>
@@ -230,7 +231,7 @@ class CallIn extends Component {
                   <FormItem label='医生介绍' className={styles.formItem}>
                     <div>
                       外科学副主任医师、硕士研究生导师、医学博士、生物材料博士后。1990年江西省人民医院普外科参加工作，1996年中南大学湘雅医院工作，硕博连读，2001年新加坡国立大学博士后，2005年暨南大学附...
-                          </div>
+                    </div>
                   </FormItem>
                   <FormItem label='备注' className={styles.formItem}>
                     {getFieldDecorator('remark')(
@@ -257,7 +258,7 @@ class CallIn extends Component {
                       <div>电话结束后发生短信到咨询者：医院地址</div>
                     </div>
                   </FormItem>
-                  <FormItem wrapperCol={24} >
+                  <FormItem wrapperCol={24}>
                     <span>接听人：黄思雨</span>
                     <Button
                       type='primary'
@@ -265,21 +266,19 @@ class CallIn extends Component {
                       style={{ float: 'right', marginLeft: 10 }}
                     >
                       提交
-                      </Button>
+                    </Button>
                     <Button
                       type='primary'
                       style={{ float: 'right' }}
                       onClick={onNext}
                     >
                       下一个问题
-                      </Button>
+                    </Button>
                   </FormItem>
                 </Form>
               </TabPane>
-              <TabPane tab='历史记录' key='1' className={styles.tabPane}>
-              </TabPane>
-              <TabPane tab='知识库' key='2' className={styles.tabPane}>
-              </TabPane>
+              <TabPane tab='历史记录' key='1' className={styles.tabPane} />
+              <TabPane tab='知识库' key='2' className={styles.tabPane} />
             </Tabs>
           </Col>
         </Row>

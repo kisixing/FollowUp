@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+
 export default {
     namespace: 'onlineService_model',
     state: {
@@ -38,10 +39,10 @@ export default {
         }
     },
     effects: {
-        *fetchData({ payload }, { call }) {
-            request()
-        },
-        *changeChatting({ chattingId }, { call, put, select }) {
+        // *fetchData({ payload }, { call }) {
+        //     request()
+        // },
+        *changeChatting({ chattingId }, {  put, select }) {
             const { onlineService_model } = yield select()
             onlineService_model.chattingList.forEach(_ => {
                 if (_.id === chattingId) {

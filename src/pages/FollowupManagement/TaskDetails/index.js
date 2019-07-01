@@ -16,16 +16,13 @@ class FollowupPatientLists extends Component {
       <PageHeaderWrapper
         title="随访任务列表"
         content={
-          <SearchForm
-          // wrappedComponentRef={form => (this.searchForm = form)}
-          // onSearch={this.onSearch}
-          />
+          <SearchForm />
         }
       >
         <div className={styles.tableForm}>
           <TableForm />
         </div>
-      </PageHeaderWrapper >
+      </PageHeaderWrapper>
     );
   }
 }

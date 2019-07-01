@@ -1,3 +1,7 @@
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-plusplus */
+/* eslint-disable no-param-reassign */
 import React, { Component } from 'react';
 import Link from 'umi/link';
 
@@ -59,10 +63,11 @@ class All extends Component {
     if (index || index === 0) {
       data[index][dataIndex] = e
     } else {
-      for (let i in data) {
+      Object.key(data).forEach(i => {
         data[i][dataIndex] = e.target.checked
-      }
+      })
     }
+
     this.setState(data)
   }
 
@@ -77,16 +82,16 @@ class All extends Component {
 
     const numsSwitch = data.reduce((total, currentValue) => {
       const { key, task, ...channels } = currentValue
-      for (let channel in channels) {
+      for (const channel in channels) {
         total[channel] = channels[channel] ? ++total[channel] : total[channel]
       }
       return total
     }, initialValue
     )
 
-    let mainSwitch = initialValue
-    const length = data.length
-    for (let channel in numsSwitch) {
+    const mainSwitch = initialValue
+    const { length } = data
+    for (const channel in numsSwitch) {
       if (numsSwitch[channel] === length) {
         mainSwitch[channel] = 1
       } else if (numsSwitch[channel] === 0) {
@@ -170,33 +175,33 @@ class All extends Component {
           <Row type="flex" justify="space-around">
             <Col>
               微信渠道:&nbsp;&nbsp;&nbsp;
-            <Checkbox
-                indeterminate={mainSwitch['wechat'] !== 1 && mainSwitch['wechat'] !== 0}
-                checked={mainSwitch['wechat'] === 1}
+              <Checkbox
+                indeterminate={mainSwitch.wechat !== 1 && mainSwitch.wechat !== 0}
+                checked={mainSwitch.wechat === 1}
                 onChange={checked => this.handleSwitch(checked, 'wechat')}
               />
             </Col>
             <Col>
               短信渠道:&nbsp;&nbsp;&nbsp;
-            <Checkbox
-                indeterminate={mainSwitch['sms'] !== 1 && mainSwitch['sms'] !== 0}
-                checked={mainSwitch['sms'] === 1}
+              <Checkbox
+                indeterminate={mainSwitch.sms !== 1 && mainSwitch.sms !== 0}
+                checked={mainSwitch.sms === 1}
                 onChange={checked => this.handleSwitch(checked, 'sms')}
               />
             </Col>
             <Col>
               邮件渠道:&nbsp;&nbsp;&nbsp;
-            <Checkbox
-                indeterminate={mainSwitch['email'] !== 1 && mainSwitch['email'] !== 0}
-                checked={mainSwitch['email'] === 1}
+              <Checkbox
+                indeterminate={mainSwitch.email !== 1 && mainSwitch.email !== 0}
+                checked={mainSwitch.email === 1}
                 onChange={checked => this.handleSwitch(checked, 'email')}
               />
             </Col>
             <Col>
               电话渠道:&nbsp;&nbsp;&nbsp;
-            <Checkbox
-                indeterminate={mainSwitch['phone'] !== 1 && mainSwitch['phone'] !== 0}
-                checked={mainSwitch['phone'] === 1}
+              <Checkbox
+                indeterminate={mainSwitch.phone !== 1 && mainSwitch.phone !== 0}
+                checked={mainSwitch.phone === 1}
                 onChange={checked => this.handleSwitch(checked, 'wecphonehat')}
               />
             </Col>

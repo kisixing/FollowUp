@@ -146,7 +146,7 @@ class FollowupManagement extends React.Component {
         tabActiveKey={tabActiveKey}
         onTabChange={this.handleTabChange}
       >
-        <div >
+        <div>
           <List
             rowKey="id"
             style={{ marginTop: 24 }}

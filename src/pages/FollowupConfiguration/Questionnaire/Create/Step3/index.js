@@ -1,8 +1,9 @@
-import { Tabs, Menu, Button } from 'antd';
+import { Tabs,  Button } from 'antd';
 import router from 'umi/router';
 import { mRb8 } from './index.less'
 import Preview from './TaskPreview';
 import Content from './Content';
+
 const { TabPane } = Tabs;
 const digits = '一二三四五六七八九十';
 export function Title({ label, isTop }) {
@@ -12,7 +13,7 @@ export function Title({ label, isTop }) {
     </div>
   );
 }
-export default props => {
+export default () => {
   const [state, setState] = useState({
     activeKey: null,
     panes: [],
@@ -20,24 +21,25 @@ export default props => {
   });
   const { panes, activeKey, previewVisible } = state;
 
-  const onChange = activeKey => {
+  
+  const onChange = _activeKey => {
     // debugger
-    setState({ ...state, activeKey });
+    setState({ ...state, activeKey:_activeKey });
   };
 
-  function setVisible(previewVisible) {
-    setState({ ...state, previewVisible });
+  function setVisible(_previewVisible) {
+    setState({ ...state, previewVisible:_previewVisible });
   }
   function getKey(index) {
     return `${index}newTab`;
   }
   const actions = {
     add() {
-      const length = panes.length;
+      const {length} = panes;
       if (length >= 10) {
         return;
       }
-      const activeKey = getKey(length);
+      const _activeKey = getKey(length);
       panes.push({
         title: `步骤${digits[length]}`,
         content: (
@@ -46,29 +48,12 @@ export default props => {
 
           />
         ),
-        key: activeKey,
+        key: _activeKey,
       });
       setState({ ...state, panes, activeKey });
     },
 
-    remove(targetKey) {
-      let activeKey = activeKey;
-      let lastIndex;
-      panes.forEach((pane, i) => {
-        if (pane.key === targetKey) {
-          lastIndex = i - 1;
-        }
-      });
-      const panes = panes.filter(pane => pane.key !== targetKey);
-      if (activeKey === targetKey) {
-        if (lastIndex >= 0) {
-          activeKey = panes[lastIndex].key;
-        } else {
-          activeKey = panes[0].key;
-        }
-      }
-      setState({ ...state, panes, activeKey });
-    },
+    
   };
 
   const onEdit = (targetKey, action) => {
@@ -101,8 +86,11 @@ export default props => {
         <Button className={mRb8} onClick={() => setVisible(true)}>
           预览{' '}
         </Button>
-        <Button type="primary" className={mRb8} onClick={() => {
-          const index = parseInt(activeKey)
+        <Button
+          type="primary"
+          className={mRb8}
+          onClick={() => {
+          const index = parseInt(activeKey,10)
           if (index <= 0) {
             return;
           }
@@ -110,12 +98,16 @@ export default props => {
             ...state,
             activeKey: getKey(index - 1),
           });
-        }}>
+        }}
+        >
           {' '}
           上一步{' '}
         </Button>
-        <Button type="primary" className={mRb8} onClick={() => {
-          const index = parseInt(activeKey)
+        <Button
+          type="primary"
+          className={mRb8}
+          onClick={() => {
+          const index = parseInt(activeKey,10)
           if (index >= panes.length - 1) {
             return;
           }
@@ -124,7 +116,8 @@ export default props => {
             ...state,
             activeKey: getKey(index + 1),
           });
-        }}>
+        }}
+        >
           {' '}
           下一步{' '}
         </Button>
@@ -140,7 +133,7 @@ export default props => {
         onOk={() => {
           setVisible(false);
         }}
-      ></Preview>
+      />
     </div>
   );
 };

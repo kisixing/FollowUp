@@ -1,6 +1,7 @@
 import { objFormatArr } from '@/utils/utils';
 import request from "@/utils/request";
 import { stringify } from "qs";
+
 export default {
   namespace: 'taskStatistics_model',
 

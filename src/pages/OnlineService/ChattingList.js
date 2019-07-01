@@ -1,5 +1,5 @@
-import styles from './ChattingList.less'
 import { Badge } from 'antd';
+import styles from './ChattingList.less'
 
 function mapStateToProps({ onlineService_model }) {
     return { onlineService_model }
@@ -19,35 +19,34 @@ export default connect(mapStateToProps)((props) => {
         })
     }
     return (
-        <div>
-            {
+      <div>
+        {
                 chattingList.map(({ id, name, text, date, num }) => {
                     return (
-                        <div className={styles.container} onClick={() => changeChatting(id)} key={id} style={{ background: id === chattingId ? 'rgba(245,245,245)' : 'white' }}>
-                            <div className={styles.name}>
+                      <div className={styles.container} onClick={() => changeChatting(id)} key={id} style={{ background: id === chattingId ? 'rgba(245,245,245)' : 'white' }}>
+                        <div className={styles.name}>
 
-                                <Badge count={num} className={styles.floatRight}>
-                                </Badge>
-                                <div className={styles.name}>{name}</div>
+                          <Badge count={num} className={styles.floatRight} />
+                          <div className={styles.name}>{name}</div>
 
 
-                            </div>
-                            <div className={styles.text}>
-                                <div className={styles.floatRight}>
-                                    {new Date(date).toLocaleDateString()}
+                        </div>
+                        <div className={styles.text}>
+                          <div className={styles.floatRight}>
+                            {new Date(date).toLocaleDateString()}
 
-                                </div>
-                                <div>
-                                    {
+                          </div>
+                          <div>
+                            {
                                         text
                                     }
-                                </div>
+                          </div>
 
-                            </div>
                         </div>
+                      </div>
                     )
                 })
             }
-        </div>
+      </div>
     );
 });

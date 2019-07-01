@@ -3,6 +3,7 @@ import router from 'umi/router';
 import { mRb8 } from './index.less'
 import Preview from './TaskPreview';
 import Content from './Content';
+
 const { TabPane } = Tabs;
 const digits = '一二三四五六七八九十';
 export function Title({ label, isTop }) {
@@ -33,7 +34,7 @@ export default props => {
   }
   const actions = {
     add() {
-      const length = panes.length;
+      const {length} = panes;
       if (length >= 10) {
         return;
       }
@@ -101,7 +102,10 @@ export default props => {
         <Button className={mRb8} onClick={() => setVisible(true)}>
           预览{' '}
         </Button>
-        <Button type="primary" className={mRb8} onClick={() => {
+        <Button
+          type="primary"
+          className={mRb8}
+          onClick={() => {
           const index = parseInt(activeKey)
           if (index <= 0) {
             return;
@@ -110,11 +114,15 @@ export default props => {
             ...state,
             activeKey: getKey(index - 1),
           });
-        }}>
+        }}
+        >
           {' '}
           上一步{' '}
         </Button>
-        <Button type="primary" className={mRb8} onClick={() => {
+        <Button
+          type="primary"
+          className={mRb8}
+          onClick={() => {
           const index = parseInt(activeKey)
           if (index >= panes.length - 1) {
             return;
@@ -124,7 +132,8 @@ export default props => {
             ...state,
             activeKey: getKey(index + 1),
           });
-        }}>
+        }}
+        >
           {' '}
           下一步{' '}
         </Button>
@@ -140,7 +149,7 @@ export default props => {
         onOk={() => {
           setVisible(false);
         }}
-      ></Preview>
+      />
     </div>
   );
 };
