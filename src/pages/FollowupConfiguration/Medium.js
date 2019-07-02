@@ -13,18 +13,16 @@ class Medium extends Component {
   }
 
   componentWillMount() {
-    import(`./Medium/All`)
-      .then(module => {
-        this.setState({ children: <module.default /> })
-      })
-  };
+    import(`./Medium/All`).then(module => {
+      this.setState({ children: <module.default /> });
+    });
+  }
 
   handleTabChange = tabActiveKey => {
     this.setState({ tabActiveKey });
-    import(`./Medium/${tabActiveKey}`)
-      .then(module =>
-        this.setState({ children: <module.default /> })
-      )
+    import(`./Medium/${tabActiveKey}`).then(module =>
+      this.setState({ children: <module.default /> })
+    );
   };
 
   handleFormSubmit = value => {
@@ -80,7 +78,7 @@ class Medium extends Component {
         content={mainSearch}
         tabList={tabList}
         tabActiveKey={tabActiveKey}
-      // onTabChange={this.handleTabChange}
+        // onTabChange={this.handleTabChange}
       >
         {children}
       </PageHeaderWrapper>
