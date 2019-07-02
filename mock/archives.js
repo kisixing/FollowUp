@@ -46,28 +46,31 @@ const TREATMENT = mockjs.mock({
   ],
 });
 
-const HISTORY = [
-  {
-    marker: '住院',
-    date: '2019-06-28',
-  },
-  {
-    marker: '手术',
-    date: '2019-06-27',
-  },
-  {
-    marker: '门诊',
-    date: '2019-06-10',
-  },
-  {
-    marker: '门诊',
-    date: '2019-06-01',
-  },
-  {
-    marker: '门诊',
-    date: '2019-0-22',
-  },
-];
+const HISTORY = {
+  desc: '档案简史',
+  data: [
+    {
+      marker: '住院',
+      date: '2019-06-28',
+    },
+    {
+      marker: '手术',
+      date: '2019-06-27',
+    },
+    {
+      marker: '门诊',
+      date: '2019-06-10',
+    },
+    {
+      marker: '门诊',
+      date: '2019-06-01',
+    },
+    {
+      marker: '门诊',
+      date: '2019-05-22',
+    },
+  ],
+};
 
 export default delay(
   {

@@ -27,6 +27,7 @@ const columns = [
     title: '治疗师',
     dataIndex: 'therapist',
     align: 'center',
+    width: 120,
   },
 ];
 
@@ -65,7 +66,7 @@ class TreatmentRecord extends Component {
                   size="small"
                   pagination={false}
                   scroll={{ y: 190 }}
-                  rowKey="number"
+                  rowKey="date"
                   columns={columns}
                   dataSource={item.record}
                 />
