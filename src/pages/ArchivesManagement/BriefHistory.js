@@ -4,12 +4,24 @@
  * @Date: 2019-07-02 18:06:49
  */
 import React, { Component } from 'react';
+import { connect } from 'dva';
 import { Timeline, Icon, Avatar } from 'antd';
 
 import styles from './style.less';
 
+@connect(({ archivesManagement }) => ({
+  history: archivesManagement.briefHistory,
+}))
 class BriefHistory extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'archivesManagement/fetchBriefHistory',
+      payload: {
+        id: '201810100089',
+      },
+    });
+  }
 
   render() {
     return (

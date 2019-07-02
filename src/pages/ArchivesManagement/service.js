@@ -1,8 +1,12 @@
 import { stringify } from 'qs';
-import request from '@/utils/request';
+import request from '@/utils/request'; //
 
 export async function queryPatient(params) {
   return request(`/api/archives/patient?${stringify(params)}`);
+}
+
+export async function queryBriefHistory(params) {
+  return request(`/api/archives/briefHistory?${stringify(params)}`);
 }
 
 export async function queryTreatmentRecord(params) {
