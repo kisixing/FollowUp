@@ -1,6 +1,6 @@
 import { Input, Button, Icon } from 'antd';
 import { MODEL, DATASET, TITLE, ID, TYPE, dispatchCreator } from '../models';
-// import styles from './QuestionItem.less';
+import styles from './QuestionItem.less';
 
 function mapStateToProps(rootState) {
   return { [MODEL]: rootState[MODEL] };
@@ -49,6 +49,7 @@ export default connect(mapStateToProps)(props => {
   const isTarget = hoverTargetQuestionId === id;
   return (
     <div
+      className={styles.container}
       style={{
         [`border${doesNewQuestionPlaceBefore ? 'Top' : 'Bottom'}`]: `5px solid ${
           isTarget ? 'red' : 'transparent'
@@ -56,7 +57,7 @@ export default connect(mapStateToProps)(props => {
       }}
     >
       <div
-        style={{ background: 'white', padding: '5px', margin: '10px 0' }}
+        style={{ background: 'white', padding: '5px' }}
         onDrop={e => {
           e.preventDefault();
           // e.stopPropagation()

@@ -13,12 +13,11 @@ const types = {
 };
 
 function onDrag(e, questionType, dispatch) {
-  dispatch({
-    type: `${MODEL}/updateState`,
-    payload: {
-      questionType,
-    },
-  });
+  dispatch('updateState', { questionType });
+}
+function onClick(e, questionType, dispatch) {
+  dispatch('updateState', { questionType });
+  dispatch('addNewQuestion');
 }
 // function onDragEnd(e, dispatch) {
 //   // dispatch({
@@ -31,7 +30,7 @@ function onDrag(e, questionType, dispatch) {
 
 const { questionBtn } = styles;
 function mapStateToProps(rootState) {
-  return { rootState };
+  return { [MODEL]: rootState[MODEL] };
 }
 
 export default connect(mapStateToProps)(props => {
@@ -53,9 +52,9 @@ export default connect(mapStateToProps)(props => {
                     className={questionBtn}
                     key={index2}
                     draggable
-                    onDrag={e => onDrag(e, type, dispatch)}
+                    onDrag={e => onDrag(e, type, _dispatch)}
                     // onDragEnd={e => onDragEnd(e, dispatch)}
-                    onClick={() => _dispatch('addNewQuestion')}
+                    onClick={e => onClick(e, type, _dispatch)}
                   >
                     {type}
                   </Button>

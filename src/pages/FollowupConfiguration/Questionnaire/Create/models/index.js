@@ -86,7 +86,7 @@ export default {
         // 点击添加
         questionList.push(newQuestion);
       }
-      yield put({ type: `updateState`, payload: questionList });
+      yield put({ type: `updateState`, payload: { questionList, hoverTargetQuestionId: '' } });
     },
     *updateQuestion({ payload }, { put, select }) {
       const { id } = payload;
