@@ -28,6 +28,7 @@ class BriefHistory extends Component {
     const item = e => {
       return (
         <Timeline.Item
+          key={e.date}
           dot={
             <div className={styles.dot}>
               <Avatar size="small" style={{ backgroundColor: '#fde3cf' }}>
