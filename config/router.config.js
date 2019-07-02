@@ -32,6 +32,46 @@ export default [
         component: './Calendar',
       },
       {
+        path: '/patient-management',
+        name: 'patient-management',
+        icon: 'user',
+        component: './PatientManagement',
+      },
+      {
+        path: '/archives-management',
+        name: 'archives-management',
+        icon: 'book',
+        component: './ArchivesManagement/index',
+      },
+      {
+        path: '/satisfaction-management',
+        name: 'satisfaction-management',
+        icon: 'book',
+        routes: [
+          {
+            // 投诉建议
+            path: '/satisfaction-management/complaint-lists',
+            name: 'complaint-lists',
+            // icon: 'edit',
+            component: './FollowupManagement/TaskManagement/index',
+          },
+          {
+            // 表扬
+            path: '/satisfaction-management/praise-lists',
+            name: 'praise-lists',
+            // icon: 'edit',
+            component: './FollowupManagement/TaskManagement/index',
+          },
+          {
+            // 满意度
+            path: '/satisfaction-management/satisfaction-lists',
+            name: 'satisfaction-lists',
+            // icon: 'edit',
+            component: './FollowupManagement/TaskManagement/index',
+          }
+        ] 
+      },
+      {
         path: '/followup-management',
         name: 'followup-management',
         icon: 'file-text',
@@ -117,6 +157,52 @@ export default [
         ],
       },
       {
+        path: '/appointment-tracking',
+        name: 'appointment-tracking',
+        icon: 'book',
+        component: './ArchivesManagement/index',
+      },
+      {
+        path: '/nursing-tracking',
+        name: 'nursing-tracking',
+        icon: 'book',
+        component: './ArchivesManagement/index',
+      },
+      {
+        path: '/concern-management',
+        name: 'concern-management',
+        icon: 'book',
+        routes: [
+          {
+            // 节日问候
+            path: '/concern-management/festival-concern',
+            name: 'festival-concern',
+            // icon: 'edit',
+            component: './FollowupManagement/TaskManagement/index',
+          },
+          {
+            // 生日问候
+            path: '/concern-management/birthday-concern',
+            name: 'birthday-concern',
+            // icon: 'edit',
+            component: './FollowupManagement/TaskManagement/index',
+          },
+          {
+            // 市场活动
+            path: '/concern-management/market',
+            name: 'market',
+            // icon: 'edit',
+            component: './FollowupManagement/TaskManagement/index',
+          }
+        ]
+      },
+      {
+        path: '/online-service',
+        name: 'online-service',
+        icon: 'book',
+        component: './OnlineService',
+      },
+      {
         path: '/followup-configuration',
         name: 'followup-configuration',
         icon: 'tool',
@@ -187,22 +273,26 @@ export default [
         ],
       },
       {
-        path: '/online-service',
-        name: 'online-service',
-        icon: 'book',
-        component: './OnlineService',
-      },
-      {
-        path: '/patient-management',
-        name: 'patient-management',
-        icon: 'user',
-        component: './PatientManagement',
-      },
-      {
-        path: '/archives-management',
-        name: 'archives-management',
-        icon: 'book',
-        component: './ArchivesManagement/index',
+        path: '/knowledge',
+        name: 'knowledge',
+        icon: 'bar-chart',
+        routes: [
+          {
+            path: '/knowledge/medicine',
+            name: 'medicine',
+            redirect: '/followup-configuration/questionnaire/create/step1',
+          },
+          {
+            path: '/knowledge/nursing',
+            name: 'nursing',
+            redirect: '/followup-configuration/questionnaire/create/step1',
+          },
+          {
+            path: '/knowledge/faq',
+            name: 'faq',
+            redirect: '/followup-configuration/questionnaire/create/step1',
+          }
+        ]
       },
       {
         path: '/statistics',
@@ -262,13 +352,6 @@ export default [
           },
         ],
       },
-      {
-        path: '/monitor',
-        name: 'monitor',
-        icon: 'desktop',
-        // component:'./Monitor'
-      },
-
       {
         name: 'exception',
         icon: 'warning',
