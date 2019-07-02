@@ -93,12 +93,15 @@ class Analysis extends Component {
       visitData2,
       salesData,
       searchData,
-      offlineData,
       offlineChartData,
       salesTypeData,
       salesTypeDataOnline,
       salesTypeDataOffline,
     } = chart;
+
+    let { offlineData } = chart;
+    offlineData = offlineData || [];
+
     let salesPieData;
     if (salesType === 'all') {
       salesPieData = salesTypeData;
@@ -120,7 +123,7 @@ class Analysis extends Component {
       </span>
     );
 
-    const activeKey = currentTabKey || (offlineData && offlineData[0] && offlineData[0].name);
+    const activeKey = currentTabKey || (offlineData[0] && offlineData[0].name);
 
     return (
       <GridContent>

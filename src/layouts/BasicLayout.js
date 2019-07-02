@@ -47,9 +47,7 @@ const query = {
 class BasicLayout extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      // online: false
-    };
+    this.state = {};
   }
 
   componentDidMount() {
@@ -119,7 +117,6 @@ class BasicLayout extends React.Component {
       breadcrumbNameMap,
       fixedHeader,
     } = this.props;
-    const { online } = this.state;
 
     const isTop = PropsLayout === 'topmenu';
     const contentStyle = !fixedHeader ? { paddingTop: 0 } : {};
@@ -138,6 +135,7 @@ class BasicLayout extends React.Component {
         <Layout
           style={{
             ...this.getLayoutStyle(),
+
             minHeight: '100vh',
           }}
         >
@@ -167,7 +165,7 @@ class BasicLayout extends React.Component {
           </ContainerQuery>
         </DocumentTitle>
         {/* <Suspense fallback={null}>{this.renderSettingDrawer()}</Suspense> */}
-        <Phone online={online} />
+        <Phone />
       </React.Fragment>
     );
   }

@@ -1,15 +1,17 @@
 import React from 'react';
-import { Icon, Card, Tag, Avatar } from 'antd';
+import { Card, Tag, Avatar, Divider } from 'antd';
 import styles from './index.less';
 import svgAnswer from '@/assets/Phone/u4876.svg';
 import svgTransfer from '@/assets/Phone/u4878.svg';
+import pngOnline from '@/assets/Phone/u4546.png';
+import pngOffline from '@/assets/Phone/u4547.png';
 import CallIn from '@/components/Phone/CallIn';
 
 class Phone extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      theme: 'outlined',
+      ifOnline: false,
       onCall: false,
       visible: false,
     };
@@ -23,20 +25,38 @@ class Phone extends React.Component {
     this.setState({ visible: false });
   };
 
-  handleTheme = () => {
-    let { theme } = this.state;
-    theme = theme === 'outlined' ? 'twoTone' : 'outlined';
-    this.setState({ theme });
+  handleOnline = () => {
+    const { ifOnline } = this.state;
+    this.setState({ ifOnline: !ifOnline });
 
-    setTimeout(() => this.setState({ onCall: true }), 5000);
+    // eslint-disable-next-line no-unused-expressions
+    !ifOnline &&
+      setTimeout(() => {
+        // eslint-disable-next-line no-shadow
+        const { ifOnline } = this.state;
+        // eslint-disable-next-line no-unused-expressions
+        ifOnline && this.setState({ onCall: true });
+      }, 3000);
   };
 
   render() {
     // const { online } = this.props
-    const { theme, onCall, visible } = this.state;
+    const { ifOnline, onCall, visible } = this.state;
 
-    const iconPhone = (
-      <Icon type="phone" className={styles.iconPhone} onClick={this.handleTheme} theme={theme} />
+    const iconPhone = ifOnline ? (
+      <Avatar
+        src={pngOnline}
+        className={styles.iconPhone}
+        onClick={this.handleOnline}
+        style={{ height: '100px', width: '100px' }}
+      />
+    ) : (
+      <Avatar
+        src={pngOffline}
+        className={styles.iconPhone}
+        onClick={this.handleOnline}
+        style={{ height: '75px', width: '100px' }}
+      />
     );
 
     const iconCard = (
@@ -45,7 +65,7 @@ class Phone extends React.Component {
         title="有一通咨询电话待接入. . ."
         headStyle={{
           color: '#FFFFFF',
-          // borderBottom: 0
+          borderBottom: 0,
         }}
         actions={[
           <Avatar
@@ -53,15 +73,17 @@ class Phone extends React.Component {
             onClick={() => {
               this.setState({ visible: true, onCall: false });
             }}
+            size={64}
           />,
-          <Avatar src={svgTransfer} />,
+          <Avatar src={svgTransfer} size={64} onClick={() => this.setState({ onCall: false })} />,
         ]}
       >
         <div>
-          <p>咨询者： 张自强</p>
-          <div>
+          <span>咨询者： 张自强</span>
+          <Divider type="vertical" style={{ margin: '0 20px' }} />
+          <span>
             随访标签： <Tag color="blue">粤语</Tag>
-          </div>
+          </span>
         </div>
       </Card>
     );
@@ -74,6 +96,7 @@ class Phone extends React.Component {
           onOk={this.handleOk}
           onNext={this.handleNext}
           onCancel={() => this.setState({ visible: false })}
+          detail="callin"
         />
       </div>
     );
