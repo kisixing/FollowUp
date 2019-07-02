@@ -197,6 +197,7 @@ class TableForm extends Component {
           onOk={this.handleOk}
           onNext={this.handleNext}
           onCancel={() => this.setState({ visible: false })}
+          detail="callout"
         />
       </div>
     );

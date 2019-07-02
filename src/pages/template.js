@@ -1,4 +1,4 @@
-// import { MODEL } from "../models";
+// import { MODEL,dispatchCreator } from "../models";
 
 // function mapStateToProps(rootState) {
 //     return rootState[MODEL];
@@ -6,12 +6,7 @@
 
 // export default connect(mapStateToProps)(props => {
 //     const { dispatch } = props;
-//     const _dispatch = (type, payload) => {
-//         dispatch({
-//             type: `${MODEL}/${type}`,
-//             payload
-//         })
-//     }
+//     const _dispatch = dispatchCreator(dispatch)
 //     // const [state, setState] = useState({});
 //     // const { } = state;
 //     return (

@@ -37,6 +37,7 @@ class CallIn extends Component {
       onOk,
       onNext,
       onCancel,
+      detail,
     } = this.props;
 
     const formItemLayout = {
@@ -105,6 +106,127 @@ class CallIn extends Component {
       },
     ];
 
+    let detailForm;
+    switch (detail) {
+      case 'callin':
+        detailForm = (
+          <Form {...formItemLayout} className={styles.form}>
+            <FormItem label="咨询类型" className={styles.formItem}>
+              {getFieldDecorator('consultType', {
+                initialValue: '0',
+              })(
+                <Select size="small" style={{ width: 120 }}>
+                  <Option value="0">医生出诊</Option>
+                </Select>
+              )}
+              <span style={{ float: 'right' }}>
+                <span>相关咨询:</span>
+                <a> 预约挂号</a>
+                <a style={{ marginLeft: 10 }}>专科介绍</a>
+              </span>
+            </FormItem>
+            <FormItem label="医生选择" className={styles.formItem}>
+              {getFieldDecorator('doctor')(
+                <Cascader
+                  size="small"
+                  expandTrigger="hover"
+                  placeholder="请选择"
+                  options={options}
+                />
+              )}
+            </FormItem>
+            <FormItem label="出诊时间" className={styles.formItem}>
+              <div>周二上午、周二下午、周四下午</div>
+            </FormItem>
+            <FormItem label="停诊信息" className={styles.formItem}>
+              <div>无</div>
+            </FormItem>
+            <FormItem label="医生介绍" className={styles.formItem}>
+              <div>
+                外科学副主任医师、硕士研究生导师、医学博士、生物材料博士后。1990年江西省人民医院普外科参加工作，1996年中南大学湘雅医院工作，硕博连读，2001年新加坡国立大学博士后，2005年暨南大学附...
+              </div>
+            </FormItem>
+            <FormItem label="备注" className={styles.formItem}>
+              {getFieldDecorator('remark')(<Input.TextArea autosize placeholder="请输入" />)}
+            </FormItem>
+            <FormItem label="快捷操作" className={styles.formItem}>
+              {getFieldDecorator('quick', {
+                initialValue: '2',
+              })(
+                <Radio.Group size="small">
+                  <Radio.Button value="0">预约挂号</Radio.Button>
+                  <Radio.Button value="1">发送医生介绍</Radio.Button>
+                  <Radio.Button value="2">发送医院地址</Radio.Button>
+                </Radio.Group>
+              )}
+            </FormItem>
+            <Divider />
+            <FormItem label="执行操作" className={styles.formItem}>
+              <div>
+                <div>预约挂号【2019-07-09 上午 9:00-10:00】 专家号 劳学军</div>
+                <div>电话结束后发生短信到咨询者：医院地址</div>
+              </div>
+            </FormItem>
+            <FormItem wrapperCol={{ span: 24 }} className={styles.formItem}>
+              <span>接听人：黄思雨</span>
+              <Button type="primary" onClick={onOk} style={{ float: 'right', marginLeft: 10 }}>
+                提交
+              </Button>
+              <Button type="primary" style={{ float: 'right' }} onClick={onNext}>
+                下一个问题
+              </Button>
+            </FormItem>
+          </Form>
+        );
+        break;
+      case 'callout':
+        detailForm = (
+          <Form className={styles.form}>
+            <FormItem label="电话状态" className={styles.formItem} {...formItemLayout}>
+              {getFieldDecorator('status', {
+                rules: [{ required: true }],
+              })(
+                <Radio.Group>
+                  <Radio value={0}>成功</Radio>
+                  <Radio value={1}>未接听</Radio>
+                  <Radio value={2}>电话错误</Radio>
+                </Radio.Group>
+              )}
+            </FormItem>
+            <Divider />
+            <h2 style={{ textAlign: 'center' }}>高危复诊超时随访记录</h2>
+            <FormItem label="1. 复诊超时原因" className={styles.formItem}>
+              {getFieldDecorator('reason')(
+                <Radio.Group style={{ marginLeft: 20 }}>
+                  <Radio value={0}>住院</Radio>
+                  <Radio value={1}>转院</Radio>
+                  <Radio value={2}>已分娩</Radio>
+                  <Radio value={3}>妊娠终止</Radio>
+                  <Radio value={4}>
+                    其他
+                    <Input style={{ marginLeft: 10 }} />
+                  </Radio>
+                </Radio.Group>
+              )}
+            </FormItem>
+            <FormItem label="2. 备注" className={styles.formItem}>
+              {getFieldDecorator('remark')(
+                <Input.TextArea autosize placeholder="请输入" style={{ marginLeft: 20 }} />
+              )}
+            </FormItem>
+            <Divider />
+            <FormItem className={styles.formItem}>
+              <span>接听人：黄思雨</span>
+              <Button type="primary" onClick={onOk} style={{ float: 'right', marginLeft: 10 }}>
+                提交
+              </Button>
+            </FormItem>
+          </Form>
+        );
+        break;
+      default:
+        detailForm = <div />;
+    }
     return (
       <Modal
         visible={visible}
@@ -112,7 +234,7 @@ class CallIn extends Component {
         width={800}
         onCancel={onCancel}
         style={{ top: 15 }}
-        bodyStyle={{ backgroundColor: '#f0f2f5', maxHeight: 700, overflow: 'auto' }}
+        bodyStyle={{ backgroundColor: '#f0f2f5', maxHeight: 685, overflow: 'auto' }}
       >
         <Row gutter={8}>
           <Col span={6}>
@@ -132,7 +254,7 @@ class CallIn extends Component {
               <Row>孕周： 28+3</Row>
               <Row>高危等级： IV级</Row>
             </Card>
-            <Card className={styles.card}>
+            <Card className={styles.card2}>
               <Timeline className={styles.timeline}>
                 <TimelineItem>
                   <div>
@@ -217,77 +339,7 @@ class CallIn extends Component {
               tabBarStyle={{ backgroundColor: '#f0f2f5' }}
             >
               <TabPane tab="咨询记录" key="0" className={styles.tabPane}>
-                <Form {...formItemLayout}>
-                  <FormItem label="咨询类型" className={styles.formItem}>
-                    {getFieldDecorator('consultType', {
-                      initialValue: '0',
-                    })(
-                      <Select size="small" style={{ width: 120 }}>
-                        <Option value="0">医生出诊</Option>
-                      </Select>
-                    )}
-                    <span style={{ float: 'right' }}>
-                      <span>相关咨询:</span>
-                      <a> 预约挂号</a>
-                      <a style={{ marginLeft: 10 }}>专科介绍</a>
-                    </span>
-                  </FormItem>
-                  <FormItem label="医生选择" className={styles.formItem}>
-                    {getFieldDecorator('doctor')(
-                      <Cascader
-                        size="small"
-                        expandTrigger="hover"
-                        placeholder="请选择"
-                        options={options}
-                      />
-                    )}
-                  </FormItem>
-                  <FormItem label="出诊时间" className={styles.formItem}>
-                    <div>周二上午、周二下午、周四下午</div>
-                  </FormItem>
-                  <FormItem label="停诊信息" className={styles.formItem}>
-                    <div>无</div>
-                  </FormItem>
-                  <FormItem label="医生介绍" className={styles.formItem}>
-                    <div>
-                      外科学副主任医师、硕士研究生导师、医学博士、生物材料博士后。1990年江西省人民医院普外科参加工作，1996年中南大学湘雅医院工作，硕博连读，2001年新加坡国立大学博士后，2005年暨南大学附...
-                    </div>
-                  </FormItem>
-                  <FormItem label="备注" className={styles.formItem}>
-                    {getFieldDecorator('remark')(<Input.TextArea autosize placeholder="请输入" />)}
-                  </FormItem>
-                  <FormItem label="快捷操作" className={styles.formItem}>
-                    {getFieldDecorator('quick', {
-                      initialValue: '2',
-                    })(
-                      <Radio.Group size="small">
-                        <Radio.Button value="0">预约挂号</Radio.Button>
-                        <Radio.Button value="1">发送医生介绍</Radio.Button>
-                        <Radio.Button value="2">发送医院地址</Radio.Button>
-                      </Radio.Group>
-                    )}
-                  </FormItem>
-                  <Divider dashed />
-                  <FormItem label="执行操作" className={styles.formItem}>
-                    <div>
-                      <div>预约挂号【2019-07-09 上午 9:00-10:00】 专家号 劳学军</div>
-                      <div>电话结束后发生短信到咨询者：医院地址</div>
-                    </div>
-                  </FormItem>
-                  <FormItem wrapperCol={24} lassName={styles.formItem}>
-                    <span>接听人：黄思雨</span>
-                    <Button
-                      type="primary"
-                      onClick={onOk}
-                      style={{ float: 'right', marginLeft: 10 }}
-                    >
-                      提交
-                    </Button>
-                    <Button type="primary" style={{ float: 'right' }} onClick={onNext}>
-                      下一个问题
-                    </Button>
-                  </FormItem>
-                </Form>
+                {detailForm}
               </TabPane>
               <TabPane tab="历史记录" key="1" className={styles.tabPane} />
               <TabPane tab="知识库" key="2" className={styles.tabPane} />

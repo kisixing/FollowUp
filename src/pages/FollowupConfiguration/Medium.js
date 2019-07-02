@@ -28,6 +28,7 @@ class Medium extends Component {
   };
 
   handleFormSubmit = value => {
+    // eslint-disable-next-line no-console
     console.log(value);
   };
 

@@ -3,8 +3,10 @@
 .tabPane {
   padding: 0 20px;
 
-  .formItem {
-    margin-bottom: 0;
+  .form {
+    .formItem {
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -18,13 +20,23 @@
   }
 }
 
-.timeline {
-  max-height: 270px;
-  padding: 5px 0;
-  overflow: auto;
+.card2 {
+  margin-bottom: 10px;
 
-  .timelineItemDate {
-    float: right;
+  :global {
+    .ant-card-body {
+      padding: 0;
+    }
+  }
+
+  .timeline {
+    max-height: 330px;
+    padding: 10px 0 0 5px;
+    overflow: auto;
+
+    .timelineItemDate {
+      float: right;
+    }
   }
 }
 
@@ -37,8 +49,8 @@
 
   :global {
     .ant-card-actions {
-      background-color: rgba(94, 94, 94, 1);
-      // border-top: 0;
+      background-color: rgba(107, 107, 107, 1);
+      border-top: 0;
 
       > li {
         border-right: 0;
@@ -52,4 +64,5 @@
   right: 10px;
   bottom: 20px;
   font-size: 80px;
+  cursor: pointer;
 }

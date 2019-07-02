@@ -1,0 +1,24 @@
+.container {
+  padding: 5px 0;
+  input {
+    margin: 0 10px;
+    display: inline-block;
+    width: 80%;
+    border: none;
+    &:focus {
+      outline: transparent auto 1px;
+    }
+  }
+  .delete {
+    visibility: hidden;
+    cursor: pointer;
+  }
+  border: 1px solid transparent;
+
+  &:hover {
+    border: 1px dotted skyblue;
+    .delete {
+      visibility: visible;
+    }
+  }
+}

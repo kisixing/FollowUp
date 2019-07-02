@@ -1,0 +1,20 @@
+// @borderStyle: 5px solid transparent;
+
+.container {
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+
+  .content {
+    background: white;
+    padding: 20px;
+  }
+  .delete {
+    visibility: hidden;
+    float: right;
+  }
+  &:hover {
+    .delete {
+      visibility: visible;
+    }
+  }
+}

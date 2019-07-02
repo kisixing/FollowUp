@@ -27,7 +27,7 @@ export default {
         description: '发布问卷',
         icon: '',
         status: 'wait',
-      }
+      },
     ],
   },
 
@@ -65,7 +65,10 @@ export default {
   subscriptions: {
     setupHistory({ dispatch, history }) {
       history.listen(({ pathname }) => {
-        const isMatch = pathMatchRegexp('/followup-configuration/questionnaire/create/:step', pathname);
+        const isMatch = pathMatchRegexp(
+          '/followup-configuration/questionnaire/create/:step',
+          pathname
+        );
         if (isMatch) {
           const step = isMatch[1];
           dispatch({

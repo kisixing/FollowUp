@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 
+import BraftEditor from 'braft-editor';
+import 'braft-editor/dist/index.css';
+
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import { Input, Button, Modal, Form, Select, Upload, Icon } from 'antd';
+import { Input, Button, Modal, Form, Select, Upload, Icon, Row, Col } from 'antd';
 import MissionCareComponent from './MissionCareComponent';
 
 const FormItem = Form.Item;
@@ -16,13 +19,14 @@ class MissionCare extends Component {
       previewVisible: false,
       previewImage: '',
       fileList: [
-        {
-          uid: '-1',
-          name: 'xxx.png',
-          status: 'done',
-          url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        },
+        // {
+        //   uid: '-1',
+        //   name: 'xxx.png',
+        //   status: 'done',
+        //   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+        // },
       ],
+      editorState: BraftEditor.createEditorState(null),
     };
   }
 
@@ -48,15 +52,28 @@ class MissionCare extends Component {
     this.setState({ visible: false });
   };
 
+  submitContent = async () => {
+    // const htmlContent = this.state.editorState.toHTML()
+  };
+
+  handleEditorChange = editorState => {
+    this.setState({ editorState });
+  };
+
   render() {
     const {
       form: { getFieldDecorator },
     } = this.props;
-    const { visible, fileList, previewVisible, previewImage } = this.state;
+    const { visible, fileList, previewVisible, previewImage, editorState } = this.state;
 
-    const formItemLayout = {
-      labelCol: { span: 6 },
-      wrapperCol: { span: 13 },
+    const formItemLayout1 = {
+      labelCol: { span: 8 },
+      wrapperCol: { span: 16 },
+    };
+
+    const formItemLayout2 = {
+      labelCol: { span: 5 },
+      wrapperCol: { span: 19 },
     };
 
     const uploadButton = (
@@ -84,48 +101,84 @@ class MissionCare extends Component {
         >
           新建材料
         </Button>
-        <Modal title="新建素材" visible={visible} footer={null} onCancel={this.handleCancel}>
-          <Form onSubmit={this.handleOk} {...formItemLayout}>
-            <FormItem label="文字标题">
-              {getFieldDecorator('title', {
-                rules: [{ require: true }],
-              })(<Input placeholder="请输入" />)}
-            </FormItem>
+        <Modal
+          title="新建素材"
+          visible={visible}
+          footer={null}
+          onCancel={this.handleCancel}
+          width={800}
+          style={{ top: 15 }}
+        >
+          <Form onSubmit={this.handleOk} {...formItemLayout1}>
+            <Row gutter={48}>
+              <Col span={16}>
+                <FormItem label="文字标题">
+                  {getFieldDecorator('title', {
+                    rules: [
+                      {
+                        required: true,
+                        message: '请输入标题 !',
+                      },
+                    ],
+                  })(<Input placeholder="请输入" />)}
+                </FormItem>
 
-            <FormItem label="类型">
-              {getFieldDecorator('type', {
-                rules: [{ require: true }],
-              })(
-                <Select placeholder="请输入">
-                  <SelectOption value="select1">Option 1</SelectOption>
-                  <SelectOption value="select2">Option 2</SelectOption>
-                  <SelectOption value="select3">Option 3</SelectOption>
-                </Select>
-              )}
-            </FormItem>
+                <FormItem label="类型">
+                  {getFieldDecorator('type', {
+                    rules: [
+                      {
+                        required: true,
+                        message: '请选择类型 !',
+                      },
+                    ],
+                  })(
+                    <Select placeholder="请输入">
+                      <SelectOption value="select1">Option 1</SelectOption>
+                      <SelectOption value="select2">Option 2</SelectOption>
+                      <SelectOption value="select3">Option 3</SelectOption>
+                    </Select>
+                  )}
+                </FormItem>
+              </Col>
 
-            <FormItem label="选择封面">
-              <Upload
-                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                listType="picture-card"
-                fileList={fileList}
-                onPreview={this.coverPreview}
-                onChange={this.coverChange}
-              >
-                {fileList.length === 0 && uploadButton}
-              </Upload>
-            </FormItem>
-            <Modal visible={previewVisible} footer={null} onCancel={this.coverCancel}>
-              <img alt="封面" style={{ width: '100%' }} src={previewImage} />
-            </Modal>
+              <Col span={8}>
+                <FormItem label="选择封面">
+                  <Upload
+                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    listType="picture-card"
+                    fileList={fileList}
+                    onPreview={this.coverPreview}
+                    onChange={this.coverChange}
+                  >
+                    {fileList.length === 0 && uploadButton}
+                  </Upload>
+                </FormItem>
+                <Modal visible={previewVisible} footer={null} onCancel={this.coverCancel}>
+                  <img alt="封面" style={{ width: '100%' }} src={previewImage} />
+                </Modal>
+              </Col>
+            </Row>
 
-            <FormItem label="简介">
-              {getFieldDecorator('introduction', {
-                rules: [{ require: true }],
-              })(<Input.TextArea autosize={{ minRows: 3 }} />)}
-            </FormItem>
+            <Row>
+              <FormItem label="简介" {...formItemLayout2}>
+                {getFieldDecorator('introduction', {
+                  rules: [
+                    {
+                      required: true,
+                      message: '请填写简介 !',
+                    },
+                  ],
+                  initialValue: editorState,
+                })(
+                  <BraftEditor
+                    onChange={this.handleEditorChange}
+                    style={{ border: '2px ridge ' }}
+                  />
+                )}
+              </FormItem>
+            </Row>
 
-            <FormItem wrapperCol={{ offset: 6 }}>
+            <FormItem wrapperCol={{ offset: 10 }}>
               <Button type="primary" onClick={this.handleCancel}>
                 取消
               </Button>

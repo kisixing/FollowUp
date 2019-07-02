@@ -1,4 +1,5 @@
 import mockjs from 'mockjs';
+// eslint-disable-next-line import/no-unresolved
 import { delay } from 'roadhog-api-doc';
 
 const { Random } = mockjs;
