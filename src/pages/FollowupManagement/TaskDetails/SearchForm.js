@@ -12,7 +12,6 @@ const SearchForm = Form.create()(props => {
   const validate = () => {
     validateFields((err, fieldsValue) => {
       if (err) return;
-      // resetFields();
       onSearch(fieldsValue);
     });
   };

@@ -51,10 +51,14 @@ class FollowupManagement extends Component {
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
+    const { dispatch, selectedTags, tabActiveKey } = this.props;
     dispatch({
       type: 'followupLists/query',
-      payload: {},
+      payload: {
+        status: tabActiveKey,
+        type: selectedTags.category,
+        secondaryType: selectedTags.secondaryCategory,
+      },
     });
   }
 
@@ -69,7 +73,6 @@ class FollowupManagement extends Component {
   };
 
   handleFormSubmit = value => {
-    // eslint-disable-next-line
     console.log(value);
   };
 

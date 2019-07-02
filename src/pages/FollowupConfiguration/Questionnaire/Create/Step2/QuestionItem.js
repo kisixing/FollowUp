@@ -1,5 +1,6 @@
 import { Input, Button, Icon } from 'antd';
-import { MODEL, DATASET, TITLE, ID, TYPE } from '../models';
+import { MODEL, DATASET, TITLE, ID, TYPE, dispatchCreator } from '../models';
+import styles from './QuestionItem.less';
 
 function mapStateToProps(rootState) {
   return { [MODEL]: rootState[MODEL] };
@@ -13,12 +14,7 @@ function mapStateToProps(rootState) {
 
 export default connect(mapStateToProps)(props => {
   const { dispatch, question } = props;
-  const _dispatch = (actionType, payload) => {
-    dispatch({
-      type: `${MODEL}/${actionType}`,
-      payload,
-    });
-  };
+  const _dispatch = dispatchCreator(dispatch);
   const { hoverTargetQuestionId, doesNewQuestionPlaceBefore } = props[MODEL];
   const type = question[TYPE];
   const title = question[TITLE];
@@ -52,12 +48,16 @@ export default connect(mapStateToProps)(props => {
   // const { } = state;
   const isTarget = hoverTargetQuestionId === id;
   return (
-    <div>
-      {isTarget && doesNewQuestionPlaceBefore && (
-        <div style={{ background: 'red', height: '10px', margin: '5px 0' }} />
-      )}
+    <div
+      className={styles.container}
+      style={{
+        [`border${doesNewQuestionPlaceBefore ? 'Top' : 'Bottom'}`]: `5px solid ${
+          isTarget ? 'red' : 'transparent'
+        }`,
+      }}
+    >
       <div
-        style={{ background: 'white', padding: '5px', margin: '10px 0' }}
+        style={{ background: 'white', padding: '5px' }}
         onDrop={e => {
           e.preventDefault();
           // e.stopPropagation()
@@ -73,6 +73,9 @@ export default connect(mapStateToProps)(props => {
             doesNewQuestionPlaceBefore: _doesNewQuestionPlaceBefore,
             hoverTargetQuestionId: question.id,
           });
+        }}
+        onDragLeave={() => {
+          _dispatch('updateState', { hoverTargetQuestionId: '' });
         }}
       >
         <div>{question.type}</div>
@@ -155,9 +158,6 @@ export default connect(mapStateToProps)(props => {
           }[type]
         }
       </div>
-      {isTarget && !doesNewQuestionPlaceBefore && (
-        <div style={{ background: 'red', height: '10px', margin: '5px 0' }} />
-      )}
     </div>
   );
 });

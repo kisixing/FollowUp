@@ -4,7 +4,7 @@ import router from 'umi/router';
 import { Button, Row, Col } from 'antd';
 import styles from './index.less';
 import EditArea from './EditArea';
-import { MODEL } from '../models';
+import { MODEL, dispatchCreator } from '../models';
 
 const types = {
   选择填空: [{ type: '单选题' }, { type: '多选题' }, { type: '填空题' }, { type: '下拉题' }],
@@ -13,22 +13,30 @@ const types = {
 };
 
 function onDrag(e, questionType, dispatch) {
-  // e.dataTransfer.setData('text/plain',123)
-  dispatch({
-    type: `${MODEL}/updateState`,
-    payload: {
-      questionType,
-    },
-  });
+  dispatch('updateState', { questionType });
 }
+function onClick(e, questionType, dispatch) {
+  dispatch('updateState', { questionType });
+  dispatch('addNewQuestion');
+}
+// function onDragEnd(e, dispatch) {
+//   // dispatch({
+//   //   type: `${MODEL}/updateState`,
+//   //   payload: {
+//   //     hoverTargetQuestionId: '',
+//   //   },
+//   // });
+// }
+
 const { questionBtn } = styles;
 function mapStateToProps(rootState) {
-  return { rootState };
+  return { [MODEL]: rootState[MODEL] };
 }
 
 export default connect(mapStateToProps)(props => {
   // const [state, setState] = useState({});
   const { dispatch } = props;
+  const _dispatch = dispatchCreator(dispatch);
   // const { } = state;
   return (
     <Row>
@@ -44,17 +52,9 @@ export default connect(mapStateToProps)(props => {
                     className={questionBtn}
                     key={index2}
                     draggable
-                    onDrag={e => {
-                      onDrag(e, type, dispatch);
-                    }}
-                    onDragEnd={() => {
-                      dispatch({
-                        type: `${MODEL}/updateState`,
-                        payload: {
-                          hoverTargetQuestionId: '',
-                        },
-                      });
-                    }}
+                    onDrag={e => onDrag(e, type, _dispatch)}
+                    // onDragEnd={e => onDragEnd(e, dispatch)}
+                    onClick={e => onClick(e, type, _dispatch)}
                   >
                     {type}
                   </Button>
