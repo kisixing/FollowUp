@@ -1,10 +1,11 @@
 /* eslint-disable react/no-array-index-key */
 
 import router from 'umi/router';
-import { Button, Row, Col } from 'antd';
+import { Button, Row, Col, Icon } from 'antd';
 import styles from './index.less';
 import EditArea from './EditArea';
-import { MODEL, dispatchCreator } from '../models';
+import { MODEL, dispatchCreator } from '../../models/questionnaireModel';
+import QuestionSetting from './QuestionSetting';
 
 const types = {
   选择填空: [{ type: '单选题' }, { type: '多选题' }, { type: '填空题' }, { type: '下拉题' }],
@@ -39,45 +40,58 @@ export default connect(mapStateToProps)(props => {
   const _dispatch = dispatchCreator(dispatch);
   // const { } = state;
   return (
-    <Row>
+    <Row gutter={6}>
       <Col span={6}>
-        {Object.keys(types).map((typeKey, index1) => {
-          return (
-            <div key={index1}>
-              <Title>{typeKey}</Title>
-              {types[typeKey].map(({ type }, index2) => {
-                return (
-                  <Button
-                    type="ghost"
-                    className={questionBtn}
-                    key={index2}
-                    draggable
-                    onDrag={e => onDrag(e, type, _dispatch)}
-                    // onDragEnd={e => onDragEnd(e, dispatch)}
-                    onClick={e => onClick(e, type, _dispatch)}
-                  >
-                    {type}
-                  </Button>
-                );
-              })}
-              <br />
-              <br />
-            </div>
-          );
-        })}
+        <div style={{ float: 'left' }}>
+          {Object.keys(types).map((typeKey, index1) => {
+            return (
+              <div key={index1}>
+                <Title>{typeKey}</Title>
+                {types[typeKey].map(({ type }, index2) => {
+                  return (
+                    <Button
+                      type="ghost"
+                      className={questionBtn}
+                      key={index2}
+                      draggable
+                      onDrag={e => onDrag(e, type, _dispatch)}
+                      // onDragEnd={e => onDragEnd(e, dispatch)}
+                      onClick={e => onClick(e, type, _dispatch)}
+                    >
+                      {type}
+                    </Button>
+                  );
+                })}
+                <br />
+                <br />
+              </div>
+            );
+          })}
+        </div>
       </Col>
 
       <Col span={12}>
         <div>
           <EditArea />
-          <Button onClick={() => router.push('/followup-configuration/questionnaire/create/step3')}>
-            提交
-          </Button>
+          <div className={styles.submit}>
+            <p style={{ textAlign: 'center' }}>完成时显示</p>
+            <Icon type="setting" style={{ float: 'right' }} />
+            <p>（当 0≤ 分数 ≤ 59时显示）</p>
+            <p contentEditable>测试结束，你的得分是[Score]分. 您需要加强饮食管理：</p>
+            <p>（当 60≤ 分数 ≤ 99时显示）</p>
+            <p contentEditable>
+              {' '}
+              测试结束，你的得分是[Score]分. 您很注重饮食管理，如果再做到以下.{' '}
+            </p>
+            <Button onClick={() => router.push('/followup-configuration/Questionnaire')}>
+              确定
+            </Button>
+          </div>
         </div>
       </Col>
 
       <Col span={6}>
-        <div />
+        <QuestionSetting />
       </Col>
     </Row>
   );

@@ -1,8 +1,9 @@
 import { title } from './index.less';
 import { container, wrap, tragStart } from './EditArea.less';
 
-import { MODEL, ID } from '../models/index';
+import { ID, dispatchCreator } from '../../models/questionnaireModel';
 import QuestionItem from './QuestionItem';
+import MyInput from './MyInput';
 
 function mapStateToProps({ questionnaire_model }) {
   return { questionnaire_model };
@@ -11,22 +12,30 @@ function mapStateToProps({ questionnaire_model }) {
 export default connect(mapStateToProps)(props => {
   // const [state, setState] = useState({});
   const { dispatch, questionnaire_model } = props;
-  const { questionList } = questionnaire_model;
+  const { questionList, questionnaireTitle } = questionnaire_model;
   // const { } = state;
-  function _dispatch(type, payload) {
-    dispatch({ type: `${MODEL}/${type}`, payload });
-  }
+
+  const _dispatch = dispatchCreator(dispatch);
   return (
     <div className={container}>
       <div className={wrap}>
-        <div className={title}>OGTT异常随访</div>
-        <div>感谢您能抽出几分钟时间来参加本次答题，现在我们就马上开始吧！</div>
+        <div className={title}>
+          <MyInput
+            value={questionnaireTitle}
+            onChange={_questionnaireTitle => {
+              _dispatch('updateState', {
+                questionnaireTitle: _questionnaireTitle,
+              });
+            }}
+          />
+        </div>
+        <MyInput value="感谢您能抽出几分钟时间来参加本次答题，现在我们就马上开始吧！" />
       </div>
       {questionList.length > 0 ? (
-        questionList.map(question => {
+        questionList.map((question, index) => {
           return (
             <div key={question[ID]}>
-              <QuestionItem question={question} />
+              <QuestionItem question={question} index={index} />
             </div>
           );
         })

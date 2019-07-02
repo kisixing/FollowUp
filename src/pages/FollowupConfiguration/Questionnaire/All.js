@@ -114,6 +114,7 @@ class All extends Component {
   render() {
     const {
       form: { getFieldDecorator },
+      dispatch,
     } = this.props;
 
     const actionsTextMap = {
@@ -259,6 +260,14 @@ class All extends Component {
                 ]}
                 extra={<p style={{ color: '#0096FA' }}>{item.state}</p>}
                 title={item.title}
+                onClick={() =>
+                  dispatch({
+                    type: 'questionnaire_model/editQuestionnaire',
+                    payload: {
+                      questionnaireTitle: item.title,
+                    },
+                  })
+                }
               >
                 <CardInfo answer={formatWan(item.answer)} date={item.date} />
                 {this.createTag(item.tag)}
@@ -271,4 +280,4 @@ class All extends Component {
   }
 }
 
-export default All;
+export default connect()(All);

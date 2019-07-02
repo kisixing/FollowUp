@@ -1,6 +1,7 @@
-import { Input, Button, Icon } from 'antd';
-import { MODEL, DATASET, TITLE, ID, TYPE, dispatchCreator } from '../models';
+import { Icon } from 'antd';
+import { MODEL, DATASET, TITLE, ID, TYPE, dispatchCreator } from '../../models/questionnaireModel';
 import styles from './QuestionItem.less';
+import QuestionStategies from './QuestionStategies';
 
 function mapStateToProps(rootState) {
   return { [MODEL]: rootState[MODEL] };
@@ -13,9 +14,9 @@ function mapStateToProps(rootState) {
 // }
 
 export default connect(mapStateToProps)(props => {
-  const { dispatch, question } = props;
+  const { dispatch, question, index } = props;
   const _dispatch = dispatchCreator(dispatch);
-  const { hoverTargetQuestionId, doesNewQuestionPlaceBefore } = props[MODEL];
+  const { hoverTargetQuestionId, doesNewQuestionPlaceBefore, clickTargetQuestionId } = props[MODEL];
   const type = question[TYPE];
   const title = question[TITLE];
   const id = question[ID];
@@ -23,9 +24,10 @@ export default connect(mapStateToProps)(props => {
   function updateTitle(value) {
     _dispatch(`updateQuestion`, { ...question, [TITLE]: value });
   }
+
   function updateDataset(datasetId, label) {
     const newDataset = dataset.map(d => {
-      if (d[ID] === d) {
+      if (d[ID] === datasetId) {
         return { ...d, [F_LABEL]: label };
       }
       return d;
@@ -33,37 +35,45 @@ export default connect(mapStateToProps)(props => {
 
     _dispatch(`updateQuestion`, { ...question, [DATASET]: newDataset });
   }
+
   function addNewDataset() {
     const oldDataset = Array.isArray(dataset) ? dataset : [];
     oldDataset.push({
       [ID]: Math.random(),
-      [F_LABEL]: '',
+      [F_LABEL]: `选项${oldDataset.length + 1}`,
     });
     _dispatch(`updateQuestion`, {
       ...question,
       dataset: oldDataset,
     });
   }
+
   // const [state, setState] = useState({});
   // const { } = state;
-  const isTarget = hoverTargetQuestionId === id;
+  const isHoverTarget = hoverTargetQuestionId === id;
+  const isClickTarget = clickTargetQuestionId === id;
+
   return (
     <div
       className={styles.container}
       style={{
         [`border${doesNewQuestionPlaceBefore ? 'Top' : 'Bottom'}`]: `5px solid ${
-          isTarget ? 'red' : 'transparent'
+          isHoverTarget ? 'red' : 'transparent'
         }`,
       }}
     >
       <div
-        style={{ background: 'white', padding: '5px' }}
+        style={{ border: `2px solid ${isClickTarget ? 'skyblue' : 'transparent'}` }}
+        className={styles.content}
         onDrop={e => {
           e.preventDefault();
           // e.stopPropagation()
           // debugger
           _dispatch('addNewQuestion');
         }}
+        onClick={() =>
+          _dispatch('updateState', { clickTargetQuestionId: id, clickTargetQuestionIndex: index })
+        }
         onDragOver={e => {
           e.preventDefault();
           const { target, clientY } = e;
@@ -78,85 +88,24 @@ export default connect(mapStateToProps)(props => {
           _dispatch('updateState', { hoverTargetQuestionId: '' });
         }}
       >
-        <div>{question.type}</div>
-        {
-          {
-            单选题: (
-              <div>
-                <Input value={title} onChange={e => updateTitle(e.target.value)} />
-                {dataset &&
-                  dataset.map(d => {
-                    return (
-                      <div key={id}>
-                        <div>圈</div>
-                        <Input onChange={e => updateDataset(d[ID], e.target.value)} />
-                      </div>
-                    );
-                  })}
-                <Button onClick={() => addNewDataset()}>添加选项</Button>
-              </div>
-            ),
-            多选题: (
-              <div>
-                <Input value={title} onChange={e => updateTitle(e.target.value)} />
-                {dataset &&
-                  dataset.map(d => {
-                    return (
-                      <div key={id}>
-                        <div>圈</div>
-                        <Input onChange={e => updateDataset(d[ID], e.target.value)} />
-                      </div>
-                    );
-                  })}
-                <Button onClick={() => addNewDataset()}>添加选项</Button>
-              </div>
-            ),
-            下拉题: (
-              <div>
-                <Input value={title} onChange={e => updateTitle(e.target.value)} />
-                {dataset &&
-                  dataset.map(d => {
-                    return (
-                      <div key={id}>
-                        <div>圈</div>
-                        <Input onChange={e => updateDataset(d[ID], e.target.value)} />
-                      </div>
-                    );
-                  })}
-                <Button onClick={() => addNewDataset()}>添加选项</Button>
-              </div>
-            ),
-            填空题: (
-              <div>
-                <Input value={title} onChange={e => updateTitle(e.target.value)} />
-              </div>
-            ),
-            打分题: (
-              <div>
-                <Input value={title} onChange={e => updateTitle(e.target.value)} />
-                <Icon type="star" />
-                <Icon type="star" />
-                <Icon type="star" />
-                <Icon type="star" />
-                <Icon type="star" />
-              </div>
-            ),
-            段落说明: (
-              <div>
-                <Input value={title} onChange={e => updateTitle(e.target.value)} />
-                {dataset &&
-                  dataset.map(d => {
-                    return (
-                      <div key={id}>
-                        <div>圈</div>
-                        <Input onChange={e => updateDataset(d[ID], e.target.value)} />
-                      </div>
-                    );
-                  })}
-              </div>
-            ),
-          }[type]
-        }
+        <div>
+          {`${index + 1}. ${question.type}`}
+          <Icon
+            type="delete"
+            onClick={() => _dispatch('removeQuestion', { questionId: id })}
+            className={styles.delete}
+          />
+        </div>
+        <QuestionStategies
+          questionType={type}
+          title={title}
+          updateTitle={updateTitle}
+          dataset={dataset}
+          id={id}
+          addNewDataset={addNewDataset}
+          updateDataset={updateDataset}
+          isClickTarget={isClickTarget}
+        />
       </div>
     </div>
   );
