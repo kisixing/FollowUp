@@ -1,47 +1,52 @@
 .containner {
-    position: relative;
-    height: 100%;
-    .chatTitle {
-        line-height  : 60px;
-        text-indent  : 20px;
-        border-bottom: 1px solid #ddd;
+  position: relative;
+  height: 100%;
+  .chatTitle {
+    line-height: 60px;
+    text-indent: 20px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .time {
+    padding: 5px 0;
+    text-align: center;
+  }
+
+  .rightMessage {
+    padding: 5px 10px;
+    overflow: hidden;
+
+    div {
+      float: right;
+      max-width: 200px;
+      padding: 10px;
+      background: skyblue;
+      border-radius: 2px;
     }
+  }
 
-    .time {
-        text-align: center;
-        padding   : 5px 0;
+  .leftMessage {
+    padding: 5px 10px;
+    overflow: hidden;
+
+    div {
+      float: left;
+      max-width: 200px;
+      padding: 10px;
+      background: white;
+      border-radius: 2px;
     }
+  }
 
-
-    .rightMessage {
-        overflow: hidden;
-        padding : 5px 10px;
-
-        div {
-            padding      : 10px;
-            border-radius: 2px;
-            max-width    : 200px;
-            float        : right;
-            background   : skyblue;
-        }
+  .inputPane {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    .sendBtn {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      z-index: 9;
     }
-
-    .leftMessage {
-        overflow: hidden;
-        padding : 5px 10px;
-
-        div {
-            padding      : 10px;
-            border-radius: 2px;
-            max-width    : 200px;
-            float        : left;
-            background   : white;
-        }
-    }
-
-    .inputPane {
-        width: 100%;
-        position: absolute;
-        bottom  : 0;
-    }
+  }
 }

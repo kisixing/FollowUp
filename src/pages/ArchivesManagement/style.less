@@ -16,23 +16,19 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 300px;
+    width: 240px;
     height: 100%;
     border-right: 1px solid #e8e8e8;
   }
 
   .content {
     height: 100%;
-    padding-left: 300px;
+    padding-left: 240px;
 
     .tabs {
       :global {
         .ant-tabs-content {
           height: calc(~'100vh - 312px');
-        }
-
-        .ant-tabs-tabpane {
-          overflow-y: auto;
         }
       }
     }
@@ -47,6 +43,9 @@
 }
 
 .treatmentRecord {
+  height: 100%;
+  overflow-y: auto;
+
   :global {
     .ant-card {
       margin-bottom: 24px;
@@ -65,11 +64,16 @@
 
   .right {
     flex: 1;
-    padding: 0 24px;
+    padding-left: 24px;
   }
 }
 
 .briefHistory {
+  height: 100%;
+  padding-top: 14px;
+  padding-left: 220px;
+  overflow: auto;
+
   .dot {
     position: relative;
 
@@ -78,6 +82,20 @@
       top: 28px;
       left: -35px;
       width: 100px;
+    }
+  }
+
+  .dotContent {
+    position: relative;
+    min-height: 68px;
+
+    .left {
+      position: absolute;
+      top: -6px;
+      left: -220px;
+      width: 160px;
+      min-height: 36px;
+      background-color: #fcf;
     }
   }
 }

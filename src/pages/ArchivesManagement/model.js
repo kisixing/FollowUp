@@ -28,7 +28,7 @@ export default {
       yield put({
         type: 'updateState',
         payload: {
-          treatmentRecord: res.data,
+          briefHistory: res.data,
         },
       });
     },

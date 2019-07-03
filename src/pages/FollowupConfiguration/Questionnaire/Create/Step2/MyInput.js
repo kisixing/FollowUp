@@ -6,7 +6,7 @@ function removeActive() {
   eventEmitter.emit('removeInputFocus');
 }
 if (flag) {
-//   console.log('effect');
+  //   console.log('effect');
   document.addEventListener('click', removeActive, true);
   flag = false;
 }

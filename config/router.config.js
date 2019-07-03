@@ -68,8 +68,8 @@ export default [
             name: 'satisfaction-lists',
             // icon: 'edit',
             component: './FollowupManagement/TaskManagement/index',
-          }
-        ] 
+          },
+        ],
       },
       {
         path: '/followup-management',
@@ -193,8 +193,8 @@ export default [
             name: 'market',
             // icon: 'edit',
             component: './FollowupManagement/TaskManagement/index',
-          }
-        ]
+          },
+        ],
       },
       {
         path: '/online-service',
@@ -291,8 +291,8 @@ export default [
             path: '/knowledge/faq',
             name: 'faq',
             redirect: '/followup-configuration/questionnaire/create/step1',
-          }
-        ]
+          },
+        ],
       },
       {
         path: '/statistics',

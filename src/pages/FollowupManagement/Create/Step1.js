@@ -320,7 +320,11 @@ class Step1 extends Component {
                   </List.Item>
                 ) : (
                   <List.Item>
-                    <Button type="dashed" className={styles.newButton} onClick={()=>this.handleSelect()}>
+                    <Button
+                      type="dashed"
+                      className={styles.newButton}
+                      onClick={() => this.handleSelect()}
+                    >
                       <Icon type="plus" /> 新建模板
                     </Button>
                   </List.Item>
