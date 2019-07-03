@@ -23,6 +23,89 @@ const FormItem = Form.Item;
 const { Option } = Select;
 const TimelineItem = Timeline.Item;
 
+export function PatientInfo({ name }) {
+  return (
+    <div>
+      <Card className={styles.card}>
+        <Row>
+          姓名：
+          <b>{name}</b>
+        </Row>
+        <Row>年龄： 28</Row>
+        <Row>
+          <Col span={8}>标签：</Col>
+          <Col span={16}>
+            <Tag color="magenta">双胎</Tag>
+            <Tag color="volcano">妊娠糖尿病</Tag>
+          </Col>
+        </Row>
+        <Row>孕周： 28+3</Row>
+        <Row>高危等级： IV级</Row>
+      </Card>
+      <Card className={styles.card2}>
+        <Timeline className={styles.timeline}>
+          <TimelineItem>
+            <div>
+              12+3周
+              <span className={styles.timelineItemDate}>2019.03.12</span>
+            </div>
+            <div>
+              <Tag color="blue">诊</Tag>
+              轻度贫血、早期妊娠...
+            </div>
+            <div>
+              <Tag color="blue">检</Tag>
+              <a>血常规</a>
+              <a>B超</a>
+            </div>
+            <div>
+              <Tag color="blue">药</Tag>
+              钙维生素D软胶囊
+            </div>
+          </TimelineItem>
+          <TimelineItem color="red">
+            <div>
+              23+1周
+              <span className={styles.timelineItemDate}>2019.05.15</span>
+            </div>
+            <div>
+              <Tag color="blue">诊</Tag>
+              轻度贫血、早期妊娠...
+            </div>
+            <div>
+              <Tag color="blue">检</Tag>
+              <a>血常规</a>
+              <a>B超</a>
+            </div>
+            <div>
+              <Tag color="blue">药</Tag>
+              硫酸亚铁片
+            </div>
+          </TimelineItem>
+          <TimelineItem color="green">
+            <div>
+              23+1周
+              <span className={styles.timelineItemDate}>2019.06.15</span>
+            </div>
+            <div>
+              <Tag color="blue">诊</Tag>
+              健康
+            </div>
+            <div>
+              <Tag color="blue">检</Tag>
+              <a>血常规</a>
+              <a>B超</a>
+            </div>
+            <div>
+              <Tag color="blue">药</Tag>无
+            </div>
+          </TimelineItem>
+        </Timeline>
+      </Card>
+    </div>
+  );
+}
+
 @Form.create()
 class CallIn extends Component {
   constructor(props) {
@@ -238,82 +321,7 @@ class CallIn extends Component {
       >
         <Row gutter={8}>
           <Col span={6}>
-            <Card className={styles.card}>
-              <Row>
-                姓名：
-                <b>张珊珊</b>
-              </Row>
-              <Row>年龄： 28</Row>
-              <Row>
-                <Col span={8}>标签：</Col>
-                <Col span={16}>
-                  <Tag color="magenta">双胎</Tag>
-                  <Tag color="volcano">妊娠糖尿病</Tag>
-                </Col>
-              </Row>
-              <Row>孕周： 28+3</Row>
-              <Row>高危等级： IV级</Row>
-            </Card>
-            <Card className={styles.card2}>
-              <Timeline className={styles.timeline}>
-                <TimelineItem>
-                  <div>
-                    12+3周
-                    <span className={styles.timelineItemDate}>2019.03.12</span>
-                  </div>
-                  <div>
-                    <Tag color="blue">诊</Tag>
-                    轻度贫血、早期妊娠...
-                  </div>
-                  <div>
-                    <Tag color="blue">检</Tag>
-                    <a>血常规</a>
-                    <a>B超</a>
-                  </div>
-                  <div>
-                    <Tag color="blue">药</Tag>
-                    钙维生素D软胶囊
-                  </div>
-                </TimelineItem>
-                <TimelineItem color="red">
-                  <div>
-                    23+1周
-                    <span className={styles.timelineItemDate}>2019.05.15</span>
-                  </div>
-                  <div>
-                    <Tag color="blue">诊</Tag>
-                    轻度贫血、早期妊娠...
-                  </div>
-                  <div>
-                    <Tag color="blue">检</Tag>
-                    <a>血常规</a>
-                    <a>B超</a>
-                  </div>
-                  <div>
-                    <Tag color="blue">药</Tag>
-                    硫酸亚铁片
-                  </div>
-                </TimelineItem>
-                <TimelineItem color="green">
-                  <div>
-                    23+1周
-                    <span className={styles.timelineItemDate}>2019.06.15</span>
-                  </div>
-                  <div>
-                    <Tag color="blue">诊</Tag>
-                    健康
-                  </div>
-                  <div>
-                    <Tag color="blue">检</Tag>
-                    <a>血常规</a>
-                    <a>B超</a>
-                  </div>
-                  <div>
-                    <Tag color="blue">药</Tag>无
-                  </div>
-                </TimelineItem>
-              </Timeline>
-            </Card>
+            <PatientInfo name="张珊珊" />
             <Card className={styles.card}>
               <p>通话时间：00:04:32</p>
               <p>

@@ -1,30 +1,30 @@
 .togglePane {
-    div {
-        padding   : 10px;
-        box-sizing: border-box;
-        width     : 50%;
-        display   : inline-block;
-        text-align: center;
-        background: rgb(245, 245, 245);
-        cursor    : pointer;
-    }
+  div {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 50%;
+    padding: 10px;
+    text-align: center;
+    background: rgb(245, 245, 245);
+    cursor: pointer;
+  }
 }
 
 .leftContent {
-    border: 1px solid #ddd;
+  border: 1px solid #ddd;
 
-    .patientInfo {
-        padding: 10px;
+  .patientInfo {
+    padding: 10px;
+  }
+
+  .treatmentInfo {
+    padding: 10px;
+    background: rgb(245, 245, 245);
+
+    & > div {
+      padding: 10px;
+      background: white;
+      border-radius: 4px;
     }
-
-    .treatmentInfo {
-        background: rgb(245, 245, 245);
-        padding   : 10px;
-
-        &>div {
-            background: white;
-            border-radius: 4px;
-            padding: 10px;
-        }
-    }
+  }
 }

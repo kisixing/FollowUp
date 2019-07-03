@@ -1,6 +1,7 @@
 /* eslint-disable no-plusplus */
 
-import { queryTaskTemplates } from '../service';
+import router from 'umi/router';
+import { queryTaskTemplates } from '../Create/service';
 
 export const MODEL = 'questionnaire_model';
 export const DATASET = 'dataset';
@@ -17,6 +18,7 @@ export const dispatchCreator = dispatch => {
     });
   };
 };
+
 export default {
   namespace: MODEL,
 
@@ -51,6 +53,9 @@ export default {
     doesNewQuestionPlaceBefore: false,
     questionType: '',
     hoverTargetQuestionId: '',
+    clickTargetQuestionId: '',
+    clickTargetQuestionIndex: '',
+    questionnaireTitle: '',
   },
 
   effects: {
@@ -74,7 +79,17 @@ export default {
       const newQuestion = {
         [TYPE]: questionType,
         [ID]: Math.random(),
-        [TITLE]: '请输入',
+        [TITLE]: '请输入题目标题',
+        [DATASET]: [
+          {
+            [F_LABEL]: '选项1',
+            [ID]: Math.random(),
+          },
+          {
+            [F_LABEL]: '选项2',
+            [ID]: Math.random(),
+          },
+        ],
       };
       // 拖拽添加
       if (hoverTargetQuestionId) {
@@ -88,6 +103,18 @@ export default {
       }
       yield put({ type: `updateState`, payload: { questionList, hoverTargetQuestionId: '' } });
     },
+    *removeQuestion({ payload }, { select, put }) {
+      const { questionId } = payload;
+      const { questionList } = yield select(state => state.questionnaire_model);
+      const delIndex = questionList.findIndex(_ => _[ID] === questionId);
+      questionList.splice(delIndex, 1);
+      yield put({
+        type: `updateState`,
+        payload: {
+          questionList,
+        },
+      });
+    },
     *updateQuestion({ payload }, { put, select }) {
       const { id } = payload;
       const { questionList } = yield select(state => state.questionnaire_model);
@@ -99,6 +126,46 @@ export default {
         return _;
       });
       yield put({ type: `updateState`, payload: { questionList: newQuestionList } });
+    },
+    *removeDatasetItem({ payload }, { put, select }) {
+      const { questionId, datasetId } = payload;
+      const { questionList } = yield select(state => state.questionnaire_model);
+      const question = questionList.find(q => q[ID] === questionId);
+      const dataset = question && question[DATASET];
+      if (dataset) {
+        const delIndex = dataset.findIndex(d => d[ID] === datasetId);
+        dataset.splice(delIndex, 1);
+        yield put({
+          type: `updateQuestion`,
+          payload: {
+            ...question,
+            dataset,
+          },
+        });
+      }
+    },
+    *editQuestionnaire({ payload }, { put }) {
+      const { questionnaireTitle } = payload;
+      yield put({
+        type: 'updateState',
+        payload: {
+          questionList: [
+            {
+              type: '单选题',
+              dataset: [
+                {
+                  label: '选项1',
+                  id: Math.random(),
+                },
+              ],
+              id: Math.random(),
+              title: '测试单选题',
+            },
+          ],
+          questionnaireTitle,
+        },
+      });
+      router.push('/followup-configuration/questionnaire/create/step2');
     },
   },
 

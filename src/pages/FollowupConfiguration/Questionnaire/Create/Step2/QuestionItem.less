@@ -3,4 +3,20 @@
 .container {
   border-top: 5px solid transparent;
   border-bottom: 5px solid transparent;
+
+  .content {
+    padding: 20px;
+    background: white;
+  }
+
+  .delete {
+    float: right;
+    visibility: hidden;
+  }
+
+  &:hover {
+    .delete {
+      visibility: visible;
+    }
+  }
 }

@@ -261,4 +261,4 @@ class All extends Component {
   }
 }
 
-export default All;
+export default connect()(All);
