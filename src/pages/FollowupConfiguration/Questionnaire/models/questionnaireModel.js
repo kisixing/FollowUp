@@ -154,7 +154,7 @@ export default {
               type: '单选题',
               dataset: [
                 {
-                  label: '标签',
+                  label: '选项1',
                   id: Math.random(),
                 },
               ],
