@@ -202,7 +202,14 @@ export default [
         path: '/appointment-tracking',
         name: 'appointment-tracking',
         icon: 'book',
-        component: './ArchivesManagement/index',
+        component: './AppointmentTracking/List',
+      },
+      {
+        path: '/appointment-tracking/edit',
+        name: 'appointment-tracking-edit',
+        icon: 'book',
+        component: './AppointmentTracking/Edit',
+        hideInMenu: true,
       },
       {
         path: '/nursing-tracking',
