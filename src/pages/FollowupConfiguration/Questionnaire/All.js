@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
-
-import { Card, Form, List, Tooltip, Icon, Dropdown, Menu, Tag } from 'antd';
-import { FormattedMessage } from 'umi-plugin-react/locale';
-
-import StandardFormRow from '@/components/StandardFormRow';
-import TagSelect from '@/components/TagSelect';
+import router from 'umi/router';
+import {
+  Card,
+  Button,
+  List,
+  Tooltip,
+  Icon,
+  Dropdown,
+  Menu,
+  Tag,
+  Select,
+  Row,
+  Col,
+  Input,
+} from 'antd';
 import { formatWan } from '@/utils/utils';
-
 import styles from '../Questionnaire.less';
+
+const SelectOption = Select.Option;
 
 const list = [
   {
@@ -30,7 +40,7 @@ const list = [
     id: 2,
     tag: '预防',
     title: '无创基因检后随访',
-    state: '运行中',
+    state: '草稿',
     answer: 0,
     date: '19-05-24',
   },
@@ -38,12 +48,12 @@ const list = [
     id: 3,
     tag: '科研项目',
     title: 'GDM孕期体重指数控...',
-    state: '运行中',
+    state: '已暂停',
     answer: 2000,
     date: '18-06-31',
   },
   {
-    id: 0,
+    id: 4,
     tag: '随访',
     title: '超时复诊短信回执',
     state: '运行中',
@@ -51,7 +61,7 @@ const list = [
     date: '19-03-24',
   },
   {
-    id: 1,
+    id: 5,
     tag: '报名登记',
     title: '孕妇学校回执',
     state: '运行中',
@@ -59,26 +69,23 @@ const list = [
     date: '19-05-24',
   },
   {
-    id: 2,
+    id: 6,
     tag: '预防',
     title: '无创基因检后随访',
-    state: '运行中',
+    state: '草稿',
     answer: 0,
     date: '19-05-24',
   },
   {
-    id: 3,
+    id: 7,
     tag: '科研项目',
     title: 'GDM孕期体重指数控...',
-    state: '运行中',
+    state: '已暂停',
     answer: 2000,
     date: '18-06-31',
   },
 ];
 
-const FormItem = Form.Item;
-
-@Form.create()
 class All extends Component {
   createTag = tag => {
     switch (tag) {
@@ -112,18 +119,6 @@ class All extends Component {
   };
 
   render() {
-    const {
-      form: { getFieldDecorator },
-      dispatch,
-    } = this.props;
-
-    const actionsTextMap = {
-      expandText: <FormattedMessage id="component.tagSelect.expand" defaultMessage="Expand" />,
-      collapseText: (
-        <FormattedMessage id="component.tagSelect.collapse" defaultMessage="Collapse" />
-      ),
-    };
-
     const itemMenu = (
       <Menu>
         <Menu.Item>
@@ -154,126 +149,85 @@ class All extends Component {
       </div>
     );
 
-    const category = [
-      {
-        id: 1,
-        title: '全部',
-      },
-      {
-        id: 2,
-        title: '随访问卷',
-      },
-      {
-        id: 3,
-        title: '满意度调查',
-      },
-      {
-        id: 4,
-        title: '报名登记',
-      },
-      {
-        id: 5,
-        title: '分数测评',
-      },
-      {
-        id: 6,
-        title: '科研项目',
-      },
-    ];
-    const patient = [
-      {
-        id: 1,
-        title: '不限',
-      },
-      {
-        id: 2,
-        title: '高危孕产妇',
-      },
-      {
-        id: 3,
-        title: 'GDM孕产妇',
-      },
-      {
-        id: 4,
-        title: '妊娠高血压孕产妇',
-      },
-      {
-        id: 5,
-        title: '双/多胎孕产妇',
-      },
-    ];
-
     return (
       <div className={styles.filterCardList}>
-        <Card bordered={false}>
-          <Form layout="inline">
-            <StandardFormRow title="所属类目" block style={{ paddingBottom: 11 }}>
-              <FormItem>
-                {getFieldDecorator('category')(
-                  <TagSelect expandable actionsText={actionsTextMap}>
-                    {category.map(item => (
-                      <TagSelect.Option key={item.id} value={item.id}>
-                        {item.title}
-                      </TagSelect.Option>
-                    ))}
-                  </TagSelect>
-                )}
-              </FormItem>
-            </StandardFormRow>
-            <StandardFormRow title="患者分类" block last>
-              <FormItem>
-                {getFieldDecorator('patient')(
-                  <TagSelect expandable actionsText={actionsTextMap}>
-                    {patient.map(item => (
-                      <TagSelect.Option key={item.id} value={item.id}>
-                        {item.title}
-                      </TagSelect.Option>
-                    ))}
-                  </TagSelect>
-                )}
-              </FormItem>
-            </StandardFormRow>
-          </Form>
+        <Card>
+          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+            <Col md={8} sm={24}>
+              问卷标题 ： <Input placeholder="请输入" style={{ width: '60%' }} />
+            </Col>
+            <Col md={8} sm={24}>
+              分类选择 ：
+              <Select placeholder="请选择" style={{ width: '60%' }}>
+                <SelectOption value={0}>产科</SelectOption>
+                <SelectOption value={1}>妇科</SelectOption>
+                <SelectOption value={2}>急诊</SelectOption>
+              </Select>
+            </Col>
+            <Col md={8} sm={24}>
+              运行状态 ：
+              <Select placeholder="请选择" style={{ width: '60%' }}>
+                <SelectOption value={0}>运行中</SelectOption>
+                <SelectOption value={1}>草稿</SelectOption>
+                <SelectOption value={2}>已暂停</SelectOption>
+              </Select>
+            </Col>
+          </Row>
         </Card>
+
         <List
           style={{ marginTop: 24 }}
           grid={{ gutter: 24, xl: 4, lg: 3, md: 3, sm: 2, xs: 1 }}
-          dataSource={list}
-          renderItem={item => (
-            <List.Item key={item.id}>
-              <Card
-                hoverable
-                bodyStyle={{ padding: 0 }}
-                actions={[
-                  <Tooltip title="随访人员统计">
-                    <Icon type="ordered-list" />
-                  </Tooltip>,
-                  <Tooltip title="图表分析">
-                    <Icon type="line-chart" />
-                  </Tooltip>,
-                  <Tooltip title="分享">
-                    <Icon type="share-alt" />
-                  </Tooltip>,
-                  <Dropdown overlay={itemMenu}>
-                    <Icon type="ellipsis" />
-                  </Dropdown>,
-                ]}
-                extra={<p style={{ color: '#0096FA' }}>{item.state}</p>}
-                title={item.title}
-                onClick={() =>
-                  dispatch({
-                    type: 'questionnaire_model/editQuestionnaire',
-                    payload: {
-                      questionnaireTitle: item.title,
-                    },
-                  })
-                }
-              >
-                <CardInfo answer={formatWan(item.answer)} date={item.date} />
-                {this.createTag(item.tag)}
-              </Card>
-            </List.Item>
-          )}
+          dataSource={['', ...list]}
+          renderItem={item =>
+            item ? (
+              <List.Item key={item.id}>
+                <Card
+                  hoverable
+                  bodyStyle={{ padding: 0 }}
+                  actions={[
+                    <Tooltip title="随访人员统计">
+                      <Icon type="ordered-list" />
+                    </Tooltip>,
+                    <Tooltip title="图表分析">
+                      <Icon type="line-chart" />
+                    </Tooltip>,
+                    <Tooltip title="分享">
+                      <Icon type="share-alt" />
+                    </Tooltip>,
+                    <Dropdown overlay={itemMenu}>
+                      <Icon type="ellipsis" />
+                    </Dropdown>,
+                  ]}
+                  extra={
+                    item.state === '运行中' ? (
+                      <p style={{ color: '#0096FA' }}>{item.state}</p>
+                    ) : (
+                      <p>{item.state}</p>
+                    )
+                  }
+                  title={item.title}
+                >
+                  <CardInfo answer={formatWan(item.answer)} date={item.date} />
+                  {this.createTag(item.tag)}
+                </Card>
+              </List.Item>
+            ) : (
+              <List.Item>
+                <Button
+                  type="dashed"
+                  style={{
+                    width: '100%',
+                    height: 200,
+                    fontSize: 20,
+                  }}
+                  onClick={() => router.push('/followup-configuration/questionnaire/create')}
+                >
+                  <Icon type="plus" /> 新建
+                </Button>
+              </List.Item>
+            )
+          }
         />
       </div>
     );

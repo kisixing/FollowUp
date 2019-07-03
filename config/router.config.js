@@ -68,6 +68,12 @@ export default [
             name: 'satisfaction-lists',
             // icon: 'edit',
             component: './SatisfactionManagement/TaskManagement/index',
+            routes: [
+              {
+                path: '/satisfaction-management/satisfaction-lists/manual-followup',
+                component: './SatisfactionManagement/TaskManagement/ManualFollowUp',
+              },
+            ],
           },
           {
             path: '/satisfaction-management/satisfaction-lists/create',
@@ -379,19 +385,25 @@ export default [
             path: '/system-settings/user',
             name: 'user-add',
             icon: 'edit',
-            // component: './ScheduleReminder/Create',
+            component: './Management/User',
+          },
+          {
+            path: '/system-settings/role',
+            name: 'role',
+            icon: 'aliwangwang',
+            component: './Management/Role',
           },
           {
             path: '/system-settings/permission',
             name: 'permission',
             icon: 'check',
-            // component: './ScheduleReminder/Management',
+            component: './Management/Permission',
           },
           {
-            path: '/system-settings/record',
-            name: 'record',
+            path: '/system-settings/monitor-logs',
+            name: 'monitor-logs',
             icon: 'read',
-            // component: './ScheduleReminder/Management',
+            component: './Management/MonitorLogs',
           },
           {
             path: '/system-settings/monitor ',

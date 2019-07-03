@@ -5,6 +5,7 @@ import { Input } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import Wrapper from './Wrapper';
 import Error from './Error';
+import CreateForm from './CreateForm';
 
 import styles from './style.less';
 
@@ -14,13 +15,32 @@ class ArchivesManagement extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showResult: true,
+      isResult: false,
+      isError: false,
       size: 'large',
     };
   }
 
+  onSearch = value => {
+    if (value) {
+      this.setState({
+        isResult: true,
+        isError: false,
+      });
+    } else {
+      this.setState({
+        isResult: false,
+        isError: true,
+      });
+    }
+  };
+
+  onSubmit = values => {
+    console.log('onSubmit', values);
+  };
+
   render() {
-    const { showResult, size } = this.state;
+    const { isResult, isError, size } = this.state;
     return (
       <PageHeaderWrapper>
         <div className={styles.search}>
@@ -28,11 +48,14 @@ class ArchivesManagement extends Component {
             size={size}
             placeholder="请输入就诊卡号或手机号"
             enterButton="搜索"
-            onSearch={value => console.log(value)}
+            onSearch={this.onSearch}
             style={{ width: '360px' }}
           />
         </div>
-        <div className={styles.wrapper}>{showResult ? <Wrapper /> : <Error />}</div>
+        <div className={styles.wrapper}>
+          {isError ? <Error /> : null}
+          {isResult ? <Wrapper /> : <CreateForm onSubmit={this.onSubmit} />}
+        </div>
       </PageHeaderWrapper>
     );
   }
