@@ -4,8 +4,8 @@ import MessageCard from './MessageCard';
 
 // 预览
 const yellowStyle = { color: 'orange', fontWeight: 'bold' };
-const mapStateToProps = ({ followupCreation_model }) => {
-  return { followupCreation_model };
+const mapStateToProps = ({ satisfactionCreation_model }) => {
+  return { satisfactionCreation_model };
 };
 const Preview = connect(mapStateToProps)(({ visible, onOk, onCancel }) => {
   // const [state,setState] = useState({

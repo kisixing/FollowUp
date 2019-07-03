@@ -22,7 +22,7 @@ class Layout extends Component {
     const { dispatch } = props;
     super(props);
     this.state = {};
-    dispatch({ type: 'followupCreation_model/fetchDataset', payload: {} });
+    dispatch({ type: 'satisfactionCreation_model/fetchDataset', payload: {} });
   }
 
   render() {

@@ -1,7 +1,7 @@
 import request from '@/utils/request';
 
 export default {
-  namespace: 'followupCreation_model',
+  namespace: 'satisfactionCreation_model',
 
   state: {
     step: 0, // 当前步骤

@@ -1,32 +1,19 @@
-import {
-  Button,
-  Dropdown,
-  Menu,
-  Icon,
-  Form,
-  Input,
-  TimePicker,
-  Radio,
-  Switch,
-  Checkbox,
-  Col,
-  Row,
-} from 'antd';
-import { lh40, colorC } from './index.less';
+import { Button, Dropdown, Menu, Icon, Form, Input, Radio, Switch, Checkbox, Col, Row } from 'antd';
+import { lh40 } from './index.less';
 import router from 'umi/router';
 import { getValueOfFirstItem } from '@/utils/utils';
 
-const mapStateToProps = ({ followupCreation_model }) => {
-  return { followupCreation_model };
+const mapStateToProps = ({ satisfactionCreation_model }) => {
+  return { satisfactionCreation_model };
 };
-const Content = connect(mapStateToProps)(function A({ followupCreation_model }) {
-  const reservationDateType = followupCreation_model.reservationDateType || [];
+const Content = connect(mapStateToProps)(function A({ satisfactionCreation_model }) {
+  const reservationDateType = satisfactionCreation_model.reservationDateType || [];
   const initDateType = getValueOfFirstItem(reservationDateType, F_VALUE, '');
 
-  const reservationDuringType = followupCreation_model.reservationDuringType || [];
+  const reservationDuringType = satisfactionCreation_model.reservationDuringType || [];
   const initDuringType = getValueOfFirstItem(reservationDuringType, F_VALUE, '');
 
-  const reservationMediaType = followupCreation_model.reservationMediaType || [];
+  const reservationMediaType = satisfactionCreation_model.reservationMediaType || [];
   const initMediaType = getValueOfFirstItem(reservationMediaType, F_VALUE, '');
 
   const [state, setState] = useState({
@@ -89,15 +76,15 @@ const Content = connect(mapStateToProps)(function A({ followupCreation_model }) 
       <Form.Item label="时间">
         <Input.Group compact style={{ lineHeight: '32px' }}>
           {getDropDown('followupDateType', reservationDateType)}
-          {getDropDown('followupDuringType', reservationDuringType)}
+          {` `}之后{` `}
           <Input
             style={{ width: '60px' }}
             value={followupDay}
             onChange={({ target }) => {
               _setFormData({ followupDay: target.value });
             }}
-          />{' '}
-          天 <TimePicker />
+          />
+          {getDropDown('followupDuringType', reservationDuringType)}
         </Input.Group>
       </Form.Item>
 
@@ -129,22 +116,7 @@ const Content = connect(mapStateToProps)(function A({ followupCreation_model }) 
         />
       </Form.Item>
 
-      <Title label="判断条件" />
-
-      <Form.Item label="条件">
-        <Input.Group compact style={{ lineHeight: '32px' }}>
-          {getDropDown('judgeDateType', reservationDateType)}
-          {getDropDown('judgeDuringType', reservationDuringType)}
-          <Input
-            style={{ width: '60px' }}
-            value={judgeDay}
-            onChange={({ target }) => _setFormData({ judgeDay: target.value })}
-          />{' '}
-          天 至 随访当天仍未复诊患者
-        </Input.Group>
-      </Form.Item>
-
-      <Title label="随访内容" />
+      <Title label="消息提示" />
 
       <Form.Item label="提示文字">
         <Input.TextArea
@@ -171,26 +143,40 @@ const Content = connect(mapStateToProps)(function A({ followupCreation_model }) 
           })}
         </div>
       </Form.Item>
+
+      <Form.Item label="满意度问卷">
+        <Button type="primary" ghost>
+          未及时就诊原因
+        </Button>
+        <Button
+          type="link"
+          onClick={() => router.push('/satisfaction-configuration/Questionnaire')}
+        >
+          其他问卷
+        </Button>
+      </Form.Item>
+
+      <Title label="人工管理" />
+
       <Row>
         <Col offset={1}>
           <div className={lh40}>
-            <Checkbox> 附加链接 </Checkbox>
+            <Checkbox>
+              {' '}
+              <span>问卷分数</span>
+            </Checkbox>
+            <Input.Group compact style={{ lineHeight: '32px', display: 'inline-block' }}>
+              {getDropDown('judgeDuringType', ['<', '=', '>'].map(_ => ({ value: _, label: _ })))}
+              <Input
+                style={{ width: '60px' }}
+                value={judgeDay}
+                onChange={({ target }) => _setFormData({ judgeDay: target.value })}
+              />{' '}
+              分
+            </Input.Group>
           </div>
           <div className={lh40}>
-            <Radio> 预约挂号 </Radio>
-            <span className={colorC}>提示：仅微信推送的消息可附加</span>
-          </div>
-          <div className={lh40}>
-            <Radio> 绑定问卷 </Radio>
-            <Button type="primary" ghost>
-              未及时就诊原因
-            </Button>
-            <Button
-              type="link"
-              onClick={() => router.push('/satisfaction-configuration/Questionnaire')}
-            >
-              其他问卷
-            </Button>
+            <Checkbox> 未填问卷 </Checkbox>
           </div>
         </Col>
       </Row>

@@ -6,21 +6,49 @@
 import React, { Component } from 'react';
 import router from 'umi/router';
 import { connect } from 'dva';
-import { Form, DatePicker, Input, Checkbox, Radio, Button, Upload, Icon } from 'antd';
-import moment from 'moment';
+import { Form, Input, Radio, Button, TreeSelect, Checkbox } from 'antd';
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
 import styles from './Step2.less';
 
+const { SHOW_PARENT } = TreeSelect;
+
 const FormItem = Form.Item;
 const InputGroup = Input.Group;
-const { RangePicker } = DatePicker;
-const levelOptions = [
-  { label: '低风险', value: '低风险' },
-  { label: '一般风险', value: '一般风险' },
-  { label: '较高风险', value: '较高风险' },
-  { label: '高风险', value: '高风险' },
-  { label: '极高风险', value: '极高风险' },
-  { label: '全选', value: '全选' },
+const treeData = [
+  {
+    title: 'Node1',
+    value: '0-0',
+    key: '0-0',
+    children: [
+      {
+        title: 'Child Node1',
+        value: '0-0-0',
+        key: '0-0-0',
+      },
+    ],
+  },
+  {
+    title: 'Node2',
+    value: '0-1',
+    key: '0-1',
+    children: [
+      {
+        title: 'Child Node3',
+        value: '0-1-0',
+        key: '0-1-0',
+      },
+      {
+        title: 'Child Node4',
+        value: '0-1-1',
+        key: '0-1-1',
+      },
+      {
+        title: 'Child Node5',
+        value: '0-1-2',
+        key: '0-1-2',
+      },
+    ],
+  },
 ];
 const genderOptions = [
   { label: '男', value: '男' },
@@ -58,6 +86,16 @@ class Step2 extends Component {
   };
 
   render() {
+    const tProps = {
+      treeData,
+      treeCheckable: true,
+      showCheckedStrategy: SHOW_PARENT,
+      searchPlaceholder: 'Please select',
+      style: {
+        width: 300,
+      },
+    };
+
     const {
       submitting,
       form: { getFieldDecorator },
@@ -77,11 +115,16 @@ class Step2 extends Component {
     };
 
     return (
-      <Form hideRequiredMark onSubmit={this.handleSubmit} className={styles.step2}>
-        <FormItem {...formItemLayout} className={styles.title}>
+      <Form
+        hideRequiredMark
+        onSubmit={this.handleSubmit}
+        className={styles.step2}
+        {...formItemLayout}
+      >
+        <FormItem className={styles.title}>
           <h3>任务名字</h3>
         </FormItem>
-        <FormItem {...formItemLayout} label={<FormattedMessage id="step2.task-title" />}>
+        <FormItem label={<FormattedMessage id="step2.task-title" />}>
           {getFieldDecorator('title', {
             rules: [
               {
@@ -96,73 +139,17 @@ class Step2 extends Component {
             />
           )}
         </FormItem>
-        <FormItem {...formItemLayout} className={styles.title}>
+        <FormItem className={styles.title}>
           <h3>选定对象范围</h3>
         </FormItem>
 
-        <FormItem {...formItemLayout} className={styles.subTitle}>
+        <FormItem className={styles.subTitle}>
           <h4>系统内用户范围：</h4>
         </FormItem>
 
-        <FormItem {...formItemLayout} label={<FormattedMessage id="step2.high-risk-level" />}>
-          {getFieldDecorator('level', {
-            initValue: ['低风险'],
-            rules: [
-              {
-                required: true,
-                message: formatMessage({ id: 'validation.title.required' }),
-              },
-            ],
-          })(<Checkbox.Group options={levelOptions} />)}
-        </FormItem>
-        <FormItem {...formItemLayout} label={<FormattedMessage id="step2.diagnose" />}>
-          {getFieldDecorator('diagnose', {
-            rules: [
-              {
-                required: true,
-                message: formatMessage({ id: 'validation.title.required' }),
-              },
-            ],
-          })(
-            <Input
-              placeholder={formatMessage({ id: 'form.title.placeholder' })}
-              style={{ width: '350px' }}
-            />
-          )}
-        </FormItem>
-        <FormItem {...formItemLayout} label={<FormattedMessage id="step2.previous-visitdate" />}>
-          {getFieldDecorator('previousVisitDate', {
-            rules: [
-              {
-                required: true,
-                message: formatMessage({ id: 'validation.title.required' }),
-              },
-            ],
-          })(
-            <RangePicker
-              ranges={{ 今天: [moment(), moment()] }}
-              showTime
-              format="YYYY/MM/DD HH:mm:ss"
-            />
-          )}
-        </FormItem>
-        <FormItem {...formItemLayout} label={<FormattedMessage id="step2.appointment-date" />}>
-          {getFieldDecorator('appointmentDate', {
-            rules: [
-              {
-                required: true,
-                message: formatMessage({ id: 'validation.title.required' }),
-              },
-            ],
-          })(
-            <RangePicker
-              ranges={{ 今天: [moment(), moment()] }}
-              showTime
-              format="YYYY/MM/DD HH:mm:ss"
-            />
-          )}
-        </FormItem>
-        <FormItem {...formItemLayout} label={<FormattedMessage id="step2.age" />}>
+        <FormItem label="科室">{getFieldDecorator('office')(<TreeSelect {...tProps} />)}</FormItem>
+
+        <FormItem label={<FormattedMessage id="step2.age" />}>
           {getFieldDecorator('age', {
             rules: [
               {
@@ -190,35 +177,8 @@ class Step2 extends Component {
             </InputGroup>
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label={<FormattedMessage id="step2.gestational-weeks" />}>
-          {getFieldDecorator('gestationalWeeks', {
-            rules: [
-              {
-                required: true,
-                message: formatMessage({ id: 'validation.title.required' }),
-              },
-            ],
-          })(
-            <InputGroup compact>
-              <Input style={{ width: 100, textAlign: 'center' }} placeholder="Minimum" />
-              <Input
-                style={{
-                  width: 30,
-                  borderLeft: 0,
-                  pointerEvents: 'none',
-                  backgroundColor: '#fff',
-                }}
-                placeholder="~"
-                disabled
-              />
-              <Input
-                style={{ width: 100, textAlign: 'center', borderLeft: 0 }}
-                placeholder="Maximum"
-              />
-            </InputGroup>
-          )}
-        </FormItem>
-        <FormItem {...formItemLayout} label={<FormattedMessage id="step2.gender" />}>
+
+        <FormItem label={<FormattedMessage id="step2.gender" />}>
           {getFieldDecorator('gender', {
             rules: [
               {
@@ -228,31 +188,16 @@ class Step2 extends Component {
             ],
           })(<Radio.Group options={genderOptions} />)}
         </FormItem>
-        <FormItem {...formItemLayout} className={styles.subTitle}>
+        <FormItem className={styles.subTitle}>
           <h4>外部用户：</h4>
         </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label={<FormattedMessage id="step2.upload" />}
-          extra="支持扩展名：.xls .xlsm .xml .mdb .accdb .mdf..."
-        >
+        <FormItem label="外部用户">
           {getFieldDecorator('upload', {
             valuePropName: 'fileList',
             getValueFromEvent: this.normFile,
-          })(
-            <div style={{ display: 'flex' }}>
-              <Upload name="logo" action="/upload.do" listType="picture">
-                <Button>
-                  <Icon type="upload" /> Click to upload
-                </Button>
-              </Upload>
-              <Button style={{ height: '40px' }} type="link">
-                模板下载
-              </Button>
-            </div>
-          )}
+          })(<Checkbox>生成二维码</Checkbox>)}
         </FormItem>
-        <FormItem style={{ marginTop: 32, textAlign: 'center' }}>
+        <FormItem style={{ marginTop: 32, textAlign: 'center' }} wrapperCol={{ md: 24 }}>
           <Button type="primary" htmlType="submit" loading={submitting}>
             <FormattedMessage id="form.confirm" />
           </Button>
