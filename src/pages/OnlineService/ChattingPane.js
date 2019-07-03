@@ -25,7 +25,7 @@ export default connect(mapStateToProps)(() => {
         ref={el => {
           contentRef = el;
         }}
-        style={{ height: '340px', overflowY: 'scroll' }}
+        className={styles.messages}
       >
         <div className={styles.time}>12:00</div>
         <div className={styles.leftMessage}>
