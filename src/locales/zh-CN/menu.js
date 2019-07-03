@@ -31,8 +31,9 @@ export default {
   'menu.schedule-reminder.management': '日历管理',
   'menu.system-settings': '系统设置',
   'menu.system-settings.user-add': '用户管理',
+  'menu.system-settings.role': '角色管理',
   'menu.system-settings.permission': '权限管理',
-  'menu.system-settings.record': '操作日记',
+  'menu.system-settings.monitor-logs': '操作日记',
   'menu.system-settings.monitor': '监控台',
 
   'menu.satisfaction-management': '满意度管理',

@@ -1,0 +1,49 @@
+@import '~antd/lib/style/themes/default.less';
+@auto-overflow: calc(~'100vh - 314px');
+
+.wrapper {
+  height: calc(~'100vh - 183px');
+  padding: 24px;
+  background-color: #fff;
+}
+
+.top {
+  margin-bottom: 24px;
+
+  & > button {
+    margin-left: 12px;
+  }
+}
+
+.main {
+  display: flex;
+
+  .left {
+    flex: 1;
+    margin-right: 12px;
+  }
+
+  .right {
+    width: 360px;
+    margin-left: 12px;
+
+    :global {
+      .ant-card-body {
+        max-height: @auto-overflow;
+        overflow: auto;
+      }
+    }
+  }
+}
+
+.actionButton {
+  button {
+    margin-right: 6px;
+  }
+}
+
+.tips {
+  margin-left: 24px;
+  color: @red-6;
+  font-size: 12px;
+}
