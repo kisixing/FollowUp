@@ -48,7 +48,7 @@ export default {
   'menu.satisfaction-management.create.step4': '步骤4',
 
   'menu.appointment-tracking': '预约跟踪',
-  'menu.nursing-tracking': '预约跟踪',
+  'menu.nursing-tracking': '延续护理跟踪',
 
   'menu.concern-management': '客户关怀',
   'menu.concern-management.festival-concern': '节日关怀',
