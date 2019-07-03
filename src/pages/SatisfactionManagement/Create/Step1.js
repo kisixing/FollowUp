@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import router from 'umi/router';
 import { connect } from 'dva';
-import { Form, Modal, List, Card, Input, Icon, Avatar, Button, Tag, Timeline } from 'antd';
+import { Form, Modal, List, Card, Input, Icon, Avatar, Button, Tag } from 'antd';
 import { TweenOneGroup } from 'rc-tween-one';
 
 import TagSelect from '@/components/TagSelect';
 import StandardFormRow from '@/components/StandardFormRow';
-import WechatCard from '@/components/WechatCard';
 import { getObjectValues } from '@/utils/utils';
 
 import styles from './Step1.less';
@@ -14,7 +13,7 @@ import styles from './Step1.less';
 /**
  * 预览弹窗modal
  */
-const PreviewModal = props => {
+export const PreviewModal = props => {
   const { dataSource, modalVisible, handleSelect, handleModalVisible } = props;
   return (
     <Modal
@@ -29,38 +28,27 @@ const PreviewModal = props => {
       okText="使用该模板"
       onCancel={() => handleModalVisible()}
     >
-      <Timeline style={{ paddingLeft: '24px' }}>
-        <Timeline.Item color="green">
-          <p>预约日期 之后 1天 发送微信</p>
-          <WechatCard />
-          <div>
-            点击转链接:
-            <Button type="link" style={{ fontSize: '12px' }}>
-              预约挂号页面
-            </Button>
-          </div>
-        </Timeline.Item>
-        <Timeline.Item color="green">
-          <p>预约日期 之后 5天 发送短信</p>
-          <div className={styles.sms}>
-            【暨南大学第一附属医院】
-            张女士，您好！距离约定的产检时间已经过去4天了，为了您与宝宝的健康，请尽快来院产检，并点击t.cn/Aj9IqeTy填写回执，谢谢！
-          </div>
-          <div>
-            点击转链接:
-            <Button type="link" style={{ fontSize: '12px' }}>
-              复诊超时回执问卷
-            </Button>
-          </div>
-        </Timeline.Item>
-        <Timeline.Item color="red">
-          <p>预约日期之后 7天</p>
-          <div>进入人工管理模式，可通过电话随访并记录随访内容</div>
-        </Timeline.Item>
-        <Timeline.Item>
-          <p>随访统计</p>
-        </Timeline.Item>
-      </Timeline>
+      <Form layout="horizontal" labelCol={{ xs: 4 }} wrapperCol={{ xs: 20 }}>
+        <Form.Item label="满意度调查问卷">
+          <Button>科室满意度调查问卷</Button>
+        </Form.Item>
+        <Form.Item label="发送时间">
+          <u>诊疗结束后</u> 之后 <u>2</u> 分钟
+        </Form.Item>
+        <Form.Item label="发送科室">
+          <u>肝胆外科、神经外科、胃肠外科、泌尿外科、心胸外科</u>
+        </Form.Item>
+        <Form.Item label="发送对象">
+          年龄： <u>不限</u>
+          性别： <u>女</u>
+        </Form.Item>
+        <Form.Item label="发送媒介">
+          发送媒介： <u>微信</u>
+        </Form.Item>
+        <Form.Item label="人工管理范围">
+          <u>问卷分数</u> {`<=`} <u>60分</u>
+        </Form.Item>
+      </Form>
     </Modal>
   );
 };

@@ -67,7 +67,7 @@ function CheckboxList({ list, onChange }) {
 const CheckboxGroup = Checkbox.Group;
 
 const reservationDateType = ['预约日期', '末次就诊日期'];
-const reservationDuringType = ['之前', '当天', '之后'];
+const reservationDuringType = ['分钟', '小时'];
 const filterType = setMock(['复诊预约时间段', '超时天数', '高危等级', '跟踪结果']);
 const taskTableContent = setMock(
   [

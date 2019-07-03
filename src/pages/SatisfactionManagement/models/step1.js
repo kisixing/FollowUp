@@ -15,15 +15,42 @@ export default {
     lists: [],
     category,
     secondaryCategory: secondaryCategoryData,
+    templateList: [
+      {
+        id: '11211132221',
+        title: '妊娠高血压产后复诊提醒',
+        hospital: '华侨医院',
+        description: '自动发送复诊提醒 · 管理复诊结果',
+      },
+      {
+        id: '11211142221',
+        title: '高危复诊提醒',
+        hospital: '华侨医院',
+        description: '自动发送复诊提醒 · 管理复诊结果',
+      },
+      {
+        id: '11216112221',
+        title: '产后42天复诊复诊提醒',
+        hospital: '华侨医院',
+        description: '自动发送复诊提醒 · 管理复诊结果',
+      },
+      {
+        id: '11211712221',
+        title: '妊娠糖尿病产后复诊提醒',
+        hospital: '华侨医院',
+        description: '自动发送复诊提醒 · 管理复诊结果',
+      },
+    ],
   },
 
   effects: {
     *query(action, { call, put }) {
       const res = yield call(queryTaskTemplates);
+      // debugger
       yield put({
         type: 'updateState',
         payload: {
-          lists: res.data.map(_ => ({ ..._, title: _.title.repalce('随访', 'aa') })),
+          lists: res.data.map(_ => ({ ..._, title: _.title.replace('随访', '满意度') })),
         },
       });
     },
