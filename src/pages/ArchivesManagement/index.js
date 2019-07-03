@@ -21,6 +21,18 @@ class ArchivesManagement extends Component {
     };
   }
 
+  componentWillMount() {
+    const {
+      location: { query },
+    } = this.props;
+    if (query.who) {
+      this.setState({
+        isResult: true,
+        isError: false,
+      });
+    }
+  }
+
   onSearch = value => {
     if (value) {
       this.setState({

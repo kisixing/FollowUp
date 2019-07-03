@@ -103,8 +103,7 @@ class TableForm extends PureComponent {
       title: '操作',
       render: () => (
         <div>
-          <Link to="#">随访记录</Link>
-          <Link to="#">档案管理</Link>
+          <Link to="/archives-management?who=1">档案管理</Link>
         </div>
       ),
     },
