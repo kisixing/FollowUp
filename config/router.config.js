@@ -53,21 +53,69 @@ export default [
             path: '/satisfaction-management/complaint-lists',
             name: 'complaint-lists',
             // icon: 'edit',
-            component: './FollowupManagement/TaskManagement/index',
+            component: './SatisfactionManagement/TaskManagement/index',
           },
           {
             // 表扬
             path: '/satisfaction-management/praise-lists',
             name: 'praise-lists',
             // icon: 'edit',
-            component: './FollowupManagement/TaskManagement/index',
+            component: './SatisfactionManagement/TaskManagement/index',
           },
           {
             // 满意度
             path: '/satisfaction-management/satisfaction-lists',
             name: 'satisfaction-lists',
             // icon: 'edit',
-            component: './FollowupManagement/TaskManagement/index',
+            component: './SatisfactionManagement/TaskManagement/index',
+            routes: [
+              {
+                path: '/satisfaction-management/satisfaction-lists/manual-followup',
+                component: './SatisfactionManagement/TaskManagement/ManualFollowUp',
+              },
+            ],
+          },
+          {
+            path: '/satisfaction-management/satisfaction-lists/create',
+            name: 'create',
+            // icon: 'edit',
+            component: './SatisfactionManagement/Create/Layout',
+            hideInMenu: true,
+
+            routes: [
+              {
+                path: '/satisfaction-management/satisfaction-lists/create',
+                redirect: '/satisfaction-management/satisfaction-lists/create/step1',
+              },
+              {
+                // 选择任务类型
+                path: '/satisfaction-management/satisfaction-lists/create/step1',
+                name: 'stpe1',
+                component: './SatisfactionManagement/Create/Step1',
+                hideInMenu: true,
+              },
+              {
+                // 选择对象
+                path: '/satisfaction-management/satisfaction-lists/create/step2',
+                name: 'step2',
+                component: './SatisfactionManagement/Create/Step2',
+                hideInMenu: true,
+              },
+              {
+                // 编辑任务内容
+                path: '/satisfaction-management/satisfaction-lists/create/step3',
+                name: 'step3',
+                component: './SatisfactionManagement/Create/Step3',
+                hideInMenu: true,
+              },
+              {
+                // 发布statistics
+                path: '/satisfaction-management/satisfaction-lists/create/step4',
+                name: 'step4',
+                component: './SatisfactionManagement/Create/Step4',
+                hideInMenu: true,
+              },
+            ],
           },
         ],
       },

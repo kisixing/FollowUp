@@ -5,7 +5,7 @@
  */
 import React, { Component } from 'react';
 import { Table, Divider } from 'antd';
-import Call from '@/components/Phone/Call';
+import CallIn from '@/components/Phone/Call';
 
 const data = [
   {
@@ -192,7 +192,7 @@ class TableForm extends Component {
             // onChange: this.onChange,
           }}
         />
-        <Call
+        <CallIn
           visible={visible}
           onOk={this.handleOk}
           onNext={this.handleNext}

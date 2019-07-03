@@ -1,6 +1,6 @@
 import { Input } from 'antd';
 import styles from './ChattingInfo.less';
-import { PatientInfo } from '@/components/Phone/CallIn';
+import { PatientInfo } from '@/components/Phone/Call';
 
 function mapStateToProps(rootState) {
   return { rootState };
