@@ -40,6 +40,12 @@ export default {
   'menu.satisfaction-management.praise-lists': '表扬感谢',
   'menu.satisfaction-management.satisfaction-lists': '专项管理',
 
+  'menu.satisfaction-management.create': '新建满意度任务',
+  'menu.satisfaction-management.create.step1': '步骤1',
+  'menu.satisfaction-management.create.step2': '步骤2',
+  'menu.satisfaction-management.create.step3': '步骤3',
+  'menu.satisfaction-management.create.step4': '步骤4',
+
   'menu.appointment-tracking': '预约跟踪',
   'menu.nursing-tracking': '预约跟踪',
 
