@@ -9,7 +9,6 @@ import {
   Dropdown,
   Menu,
   Tag,
-  Form,
   Select,
   Row,
   Col,
@@ -19,7 +18,6 @@ import { formatWan } from '@/utils/utils';
 import styles from '../Questionnaire.less';
 
 const SelectOption = Select.Option;
-const FormItem = Form.Item;
 
 const list = [
   {
@@ -87,7 +85,7 @@ const list = [
     date: '18-06-31',
   },
 ];
-@Form.create()
+
 class All extends Component {
   createTag = tag => {
     switch (tag) {
@@ -121,21 +119,6 @@ class All extends Component {
   };
 
   render() {
-    const {
-      form: { getFieldDecorator },
-    } = this.props;
-
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 8 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 },
-      },
-    };
-
     const itemMenu = (
       <Menu>
         <Menu.Item>
@@ -169,37 +152,27 @@ class All extends Component {
     return (
       <div className={styles.filterCardList}>
         <Card>
-          <Form {...formItemLayout}>
-            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-              <Col md={8} sm={24}>
-                <FormItem label="问卷标题">
-                  {getFieldDecorator('title')(<Input placeholder="请输入" />)}
-                </FormItem>
-              </Col>
-              <Col md={8} sm={24}>
-                <FormItem label="分类选择">
-                  {getFieldDecorator('title')(
-                    <Select>
-                      <SelectOption value={0}>产科</SelectOption>
-                      <SelectOption value={1}>妇科</SelectOption>
-                      <SelectOption value={2}>急诊</SelectOption>
-                    </Select>
-                  )}
-                </FormItem>
-              </Col>
-              <Col md={8} sm={24}>
-                <FormItem label="运行状态">
-                  {getFieldDecorator('title')(
-                    <Select>
-                      <SelectOption value={0}>运行中</SelectOption>
-                      <SelectOption value={1}>草稿</SelectOption>
-                      <SelectOption value={2}>已暂停</SelectOption>
-                    </Select>
-                  )}
-                </FormItem>
-              </Col>
-            </Row>
-          </Form>
+          <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+            <Col md={8} sm={24}>
+              问卷标题 ： <Input placeholder="请输入" style={{ width: '60%' }} />
+            </Col>
+            <Col md={8} sm={24}>
+              分类选择 ：
+              <Select placeholder="请选择" style={{ width: '60%' }}>
+                <SelectOption value={0}>产科</SelectOption>
+                <SelectOption value={1}>妇科</SelectOption>
+                <SelectOption value={2}>急诊</SelectOption>
+              </Select>
+            </Col>
+            <Col md={8} sm={24}>
+              运行状态 ：
+              <Select placeholder="请选择" style={{ width: '60%' }}>
+                <SelectOption value={0}>运行中</SelectOption>
+                <SelectOption value={1}>草稿</SelectOption>
+                <SelectOption value={2}>已暂停</SelectOption>
+              </Select>
+            </Col>
+          </Row>
         </Card>
 
         <List

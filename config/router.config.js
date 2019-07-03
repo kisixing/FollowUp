@@ -68,6 +68,12 @@ export default [
             name: 'satisfaction-lists',
             // icon: 'edit',
             component: './SatisfactionManagement/TaskManagement/index',
+            routes: [
+              {
+                path: '/satisfaction-management/satisfaction-lists/manual-followup',
+                component: './SatisfactionManagement/TaskManagement/ManualFollowUp',
+              },
+            ],
           },
           {
             path: '/satisfaction-management/satisfaction-lists/create',

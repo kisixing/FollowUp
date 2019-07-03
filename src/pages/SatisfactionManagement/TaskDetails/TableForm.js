@@ -5,7 +5,7 @@
  */
 import React, { Component } from 'react';
 import { Table, Divider } from 'antd';
-import CallIn from '@/components/Phone/CallIn';
+import CallIn from '@/components/Phone/Call';
 
 const data = [
   {

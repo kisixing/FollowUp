@@ -5,7 +5,7 @@ import svgAnswer from '@/assets/Phone/u4876.svg';
 import svgTransfer from '@/assets/Phone/u4878.svg';
 import pngOnline from '@/assets/Phone/u4546.png';
 import pngOffline from '@/assets/Phone/u4547.png';
-import CallIn from '@/components/Phone/CallIn';
+import Call from '@/components/Phone/Call';
 
 class Phone extends React.Component {
   constructor(props) {
@@ -91,7 +91,7 @@ class Phone extends React.Component {
     return (
       <div>
         {onCall ? iconCard : iconPhone}
-        <CallIn
+        <Call
           visible={visible}
           onOk={this.handleOk}
           onNext={this.handleNext}
