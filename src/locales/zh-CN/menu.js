@@ -56,7 +56,7 @@ export default {
   'menu.concern-management.market': '市场活动',
 
   'menu.knowledge': '知识库',
-  'menu.knowledge.medicine': '用药指导',
+  'menu.knowledge.medication': '用药指导',
   'menu.knowledge.faq': '常见问题',
   'menu.knowledge.nursing': '护理知识',
 

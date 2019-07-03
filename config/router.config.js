@@ -90,7 +90,7 @@ export default [
               {
                 // 选择任务类型
                 path: '/satisfaction-management/satisfaction-lists/create/step1',
-                name: 'stpe1',
+                name: 'step1',
                 component: './SatisfactionManagement/Create/Step1',
                 hideInMenu: true,
               },
@@ -326,19 +326,22 @@ export default [
         icon: 'bar-chart',
         routes: [
           {
-            path: '/knowledge/medicine',
-            name: 'medicine',
-            redirect: '/followup-configuration/questionnaire/create/step1',
+            path: '/knowledge/medication',
+            name: 'medication',
+            icon: 'bar-chart',
+            component: './KnowledgeBase/MedicationGuide',
           },
           {
             path: '/knowledge/nursing',
             name: 'nursing',
-            redirect: '/followup-configuration/questionnaire/create/step1',
+            icon: 'bar-chart',
+            component: './KnowledgeBase/NursingKnowledge',
           },
           {
             path: '/knowledge/faq',
             name: 'faq',
-            redirect: '/followup-configuration/questionnaire/create/step1',
+            icon: 'bar-chart',
+            component: './KnowledgeBase/CommonProblem',
           },
         ],
       },
