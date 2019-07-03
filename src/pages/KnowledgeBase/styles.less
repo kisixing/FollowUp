@@ -1,3 +1,75 @@
-.iframe {
-  width: 100%;
+@import '~antd/lib/style/themes/default.less';
+
+.wrapper {
+  display: flex;
+  height: calc(~'100vh - 182px');
+  background-color: #fff;
+
+  .tree {
+    width: 240px;
+    border-right: 1px solid #e8e8e8;
+
+    .titleBar {
+      position: relative;
+      height: 38px;
+      padding: 8px 12px 8px 36px;
+      border-bottom: 1px solid #e8e8e8;
+
+      .menu {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        cursor: pointer;
+        &:hover {
+          color: @primary-color;
+        }
+      }
+
+      .setting {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        cursor: pointer;
+        &:hover {
+          color: @primary-color;
+        }
+      }
+    }
+
+    .content {
+      padding: 24px;
+    }
+  }
+
+  .content {
+    flex: 1;
+
+    .bar {
+      position: relative;
+      height: 38px;
+      padding: 8px 24px;
+      border-bottom: 1px solid #e8e8e8;
+
+      .navigation {
+        text-align: left;
+      }
+
+      .actions {
+        position: absolute;
+        top: 2px;
+        right: 12px;
+
+        button {
+          color: @text-color;
+          &:hover {
+            color: @primary-color;
+          }
+        }
+      }
+    }
+
+    .textbox {
+      display: block;
+    }
+  }
 }

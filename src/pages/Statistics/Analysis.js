@@ -6,9 +6,10 @@ import GridContent from '@/components/PageHeaderWrapper/GridContent';
 import { getTimeDistance } from '@/utils/utils';
 import styles from './Analysis.less';
 import PageLoading from '@/components/PageLoading';
+import SalesCard from './SalesCard';
 
 const IntroduceRow = React.lazy(() => import('./IntroduceRow'));
-const SalesCard = React.lazy(() => import('./SalesCard'));
+// const SalesCard = React.lazy(() => import('./SalesCard'));
 const OfflineData = React.lazy(() => import('./OfflineData'));
 const Abnormal = React.lazy(() => import('./Abnormal'));
 
@@ -124,7 +125,6 @@ class Analysis extends Component {
     );
 
     const activeKey = currentTabKey || (offlineData[0] && offlineData[0].name);
-
     return (
       <GridContent>
         <Suspense fallback={<PageLoading />}>

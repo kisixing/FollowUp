@@ -40,6 +40,7 @@ class SearchForm extends Component {
   render() {
     const {
       form: { getFieldDecorator },
+      style,
     } = this.props;
     const { checkedList, checkAll, indeterminate } = this.state;
 
@@ -53,7 +54,7 @@ class SearchForm extends Component {
     };
 
     return (
-      <Card>
+      <Card style={style}>
         <Form>
           <Row>
             <FormItem label="时间" {...formItemLayout1}>

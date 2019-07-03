@@ -1,4 +1,4 @@
-import { Button, Form, Input, Radio, Switch, Checkbox, Col, Row, DatePicker } from 'antd';
+import { Button, Form, Input, Radio, Switch, Col, Row, DatePicker, Table } from 'antd';
 import { lh40 } from './index.less';
 // import router from 'umi/router';
 import { getValueOfFirstItem } from '@/utils/utils';
@@ -35,7 +35,7 @@ const Content = connect(mapStateToProps)(function A({ satisfactionCreation_model
       },
     });
   }
-  const { followupDay, judgeDay, mediaType, IsfollowOrder, text } = formData;
+  const { followupDay, mediaType, IsfollowOrder, text } = formData;
 
   return (
     <Form
@@ -103,7 +103,7 @@ const Content = connect(mapStateToProps)(function A({ satisfactionCreation_model
         </Button>
         <div>
           您可以在提示文字中插入：
-          {['孕妇姓名', '复诊预约时间', '超时天数'].map(_ => {
+          {['医院名称', '患者姓名', '预约时间', '预约检查项目'].map(_ => {
             return (
               <Button
                 type="link"
@@ -117,35 +117,40 @@ const Content = connect(mapStateToProps)(function A({ satisfactionCreation_model
         </div>
       </Form.Item>
 
-      <Form.Item label=" " colon={false}>
-        <Button type="primary" ghost>
-          未及时就诊原因
-        </Button>
-        <span>
-          提示：可分别针对不同科室、不同检查项目等发送不同的文字，不在定制范围内的通知对象按上方提示文字发送
-        </span>
-      </Form.Item>
-
-      <Title label="人工管理" />
+      <Form.Item colon={false}></Form.Item>
 
       <Row>
         <Col offset={1}>
           <div className={lh40}>
-            <Checkbox>
-              {' '}
-              <span>问卷分数</span>
-            </Checkbox>
-            <Input.Group compact style={{ lineHeight: '32px', display: 'inline-block' }}>
-              <Input
-                style={{ width: '60px' }}
-                value={judgeDay}
-                onChange={({ target }) => _setFormData({ judgeDay: target.value })}
-              />{' '}
-              分
-            </Input.Group>
-          </div>
-          <div className={lh40}>
-            <Checkbox> 未填问卷 </Checkbox>
+            <Button type="primary" ghost style={{ margin: '10px' }}>
+              增加定制提醒
+            </Button>
+            <span>
+              提示：可分别针对不同科室、不同检查项目等发送不同的文字，不在定制范围内的通知对象按上方提示文字发送
+            </span>
+            <Table
+              style={{ width: '800px' }}
+              bordered
+              size="small"
+              pagination={false}
+              columns={[
+                {
+                  title: '对象设定',
+                  dataIndex: 'setting',
+                  width: '200px',
+                },
+                {
+                  title: '提示文字',
+                  dataIndex: 'text',
+                },
+              ]}
+              dataSource={[
+                {
+                  setting: '产科，孕周>20',
+                  text: '',
+                },
+              ]}
+            />
           </div>
         </Col>
       </Row>

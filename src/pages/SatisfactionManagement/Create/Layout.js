@@ -37,7 +37,7 @@ class Layout extends Component {
     );
 
     return (
-      <PageHeaderWrapper title="新建随访任务" content={mainSteps}>
+      <PageHeaderWrapper title="新建满意度管理任务" content={mainSteps}>
         <div className={styles.content}>{children}</div>
       </PageHeaderWrapper>
     );

@@ -57,13 +57,13 @@ class FollowupManagement extends Component {
     console.log(value);
   };
 
-  onDetailClick = e => {
+  onDetailClick = () => {
     // const { match } = this.props;
-    router.push(`/satisfaction-management/satisfaction-lists/table/${e.id}`);
+    router.push(`/satisfaction-management/praise-lists`);
   };
 
-  onChartClick = e => {
-    router.push(`/satisfaction-management/satisfaction-lists/chart/${e.id}`);
+  onChartClick = () => {
+    router.push(`/satisfaction-management/satisfaction-lists/statistics`);
   };
 
   // 选择标签
@@ -203,7 +203,7 @@ class FollowupManagement extends Component {
     return (
       <PageHeaderWrapper
         wrapperClassName={styles.wrapper}
-        title="随访任务列表"
+        title="满意度管理列表"
         content={mainSearch}
         tabList={tabList}
         tabBarExtraContent={tabBarExtraContent}
@@ -281,7 +281,12 @@ class FollowupManagement extends Component {
                       <Icon type="line-chart" onClick={() => this.onChartClick(item)} />
                     </Tooltip>,
                     <Tooltip title="编辑">
-                      <Icon type="edit" />
+                      <Icon
+                        type="edit"
+                        onClick={() =>
+                          router.push('/satisfaction-management/satisfaction-lists/create/step2')
+                        }
+                      />
                     </Tooltip>,
                     <Dropdown overlay={itemMenu}>
                       <Icon type="ellipsis" />
