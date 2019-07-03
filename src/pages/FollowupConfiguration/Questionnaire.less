@@ -3,17 +3,21 @@
 
 .filterCardList {
   margin-bottom: -24px;
+
   :global {
     .ant-card-meta-content {
       margin-top: 0;
     }
+
     // disabled white space
     .ant-card-meta-avatar {
       font-size: 0;
     }
+
     .ant-card-actions {
       background: #f7f9fa;
     }
+
     .ant-list .ant-list-item-content-single {
       max-width: 100%;
     }
@@ -25,17 +29,20 @@
     min-height: 68px;
     margin-top: 16px;
     margin-left: 40px;
+
     & > div {
       position: relative;
       float: left;
       width: 50%;
       text-align: left;
+
       p {
         margin: 0;
         font-weight: bold;
         font-size: 24px;
         line-height: 40px;
       }
+
       p:first-child {
         margin-bottom: 4px;
         color: @text-color-secondary;
@@ -66,8 +73,17 @@
       margin-right: 10px;
     }
 
-    .cancel {
-      color: rgba(255, 0, 0, 0.647058823529412);
+    .actions {
+      color: #1890ff;
+      cursor: pointer;
+
+      span {
+        margin-right: 10px;
+      }
+
+      .cancel {
+        color: rgba(255, 0, 0, 0.647058823529412);
+      }
     }
 
     :global {

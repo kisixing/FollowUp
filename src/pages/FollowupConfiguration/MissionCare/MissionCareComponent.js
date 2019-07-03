@@ -6,8 +6,10 @@ import { FormattedMessage } from 'umi-plugin-react/locale';
 
 import StandardFormRow from '@/components/StandardFormRow';
 import TagSelect from '@/components/TagSelect';
+import Material from './Material';
+import Preview from './Preview';
 
-import styles from './Questionnaire.less';
+import styles from '../Questionnaire.less';
 
 const data = [
   {
@@ -96,22 +98,46 @@ const FormItem = Form.Item;
 
 @Form.create()
 class MissionCareComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false,
+      previewVisible: false,
+    };
+  }
+
+  handleOk = e => {
+    e.preventDefault();
+    this.setState({ visible: false });
+  };
+
+  handleCancel = type => {
+    switch (type) {
+      case 'material':
+        this.setState({ visible: false });
+        break;
+      case 'preview':
+        this.setState({ previewVisible: false });
+        break;
+      default:
+    }
+  };
+
   render() {
-    const { form } = this.props;
-    const { getFieldDecorator } = form;
+    const {
+      form: { getFieldDecorator },
+    } = this.props;
+    const { visible, previewVisible, type, name } = this.state;
 
     const actionsTextMap = {
       expandText: <FormattedMessage id="component.tagSelect.expand" defaultMessage="Expand" />,
       collapseText: (
         <FormattedMessage id="component.tagSelect.collapse" defaultMessage="Collapse" />
       ),
+      selectAllText: <FormattedMessage id="component.tagSelect.all" defaultMessage="All" />,
     };
 
     const category = [
-      // {
-      //   id: 1,
-      //   title: '全部',
-      // },
       {
         id: 2,
         title: '健康宣教',
@@ -134,10 +160,6 @@ class MissionCareComponent extends Component {
       },
     ];
     const secondary = [
-      // {
-      //   id: 1,
-      //   title: '全部',
-      // },
       {
         id: 2,
         title: '已绑定任务',
@@ -176,10 +198,20 @@ class MissionCareComponent extends Component {
       },
       {
         title: '操作',
-        render: () => (
-          <div>
-            <Link to="#">编辑 </Link>
-            <Link to="#">预览 </Link>
+        render: (text, record) => (
+          <div className={styles.actions}>
+            <span
+              onClick={() =>
+                this.setState({
+                  visible: true,
+                  type: record.type,
+                  name: record.name,
+                })
+              }
+            >
+              编辑
+            </span>
+            <span onClick={() => this.setState({ previewVisible: true })}>预览 </span>
             <Link to="#">推送测试 </Link>
             <Link to="#" className={styles.cancel}>
               删除
@@ -236,6 +268,14 @@ class MissionCareComponent extends Component {
             showTotal: total => `总记录数${total}/总页数:${Math.ceil(total / 10)}`,
           }}
         />
+        <Material
+          visible={visible}
+          handleCancel={() => this.handleCancel('material')}
+          handleOk={this.handleOk}
+          type={type}
+          name={name}
+        />
+        <Preview visible={previewVisible} handleCancel={() => this.handleCancel('preview')} />
       </div>
     );
   }
