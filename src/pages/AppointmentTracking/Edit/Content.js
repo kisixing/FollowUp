@@ -132,6 +132,7 @@ const Content = connect(mapStateToProps)(function A({ satisfactionCreation_model
               style={{ width: '800px' }}
               bordered
               size="small"
+              pagination={false}
               columns={[
                 {
                   title: '对象设定',

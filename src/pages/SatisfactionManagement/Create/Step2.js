@@ -126,6 +126,7 @@ class Step2 extends Component {
         </FormItem>
         <FormItem label={<FormattedMessage id="step2.task-title" />}>
           {getFieldDecorator('title', {
+            initialValue: '全科诊后满意度调查',
             rules: [
               {
                 required: true,

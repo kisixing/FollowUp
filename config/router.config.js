@@ -68,14 +68,14 @@ export default [
             path: '/satisfaction-management/complaint-lists',
             name: 'complaint-lists',
             // icon: 'edit',
-            component: './SatisfactionManagement/TaskManagement/index',
+            component: './SatisfactionManagement/TaskManagement/ManualFollowUp',
           },
           {
             // 表扬
             path: '/satisfaction-management/praise-lists',
             name: 'praise-lists',
             // icon: 'edit',
-            component: './SatisfactionManagement/TaskManagement/index',
+            component: './SatisfactionManagement/TaskManagement/ManualFollowUp',
           },
           {
             // 满意度
@@ -88,6 +88,10 @@ export default [
           {
             path: '/satisfaction-management/satisfaction-lists/manual-followup',
             component: './SatisfactionManagement/TaskManagement/ManualFollowUp',
+          },
+          {
+            path: '/satisfaction-management/satisfaction-lists/statistics',
+            component: './SatisfactionManagement/Statistics',
           },
           {
             path: '/satisfaction-management/satisfaction-lists/create',

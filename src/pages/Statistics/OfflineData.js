@@ -4,12 +4,12 @@ import styles from './Analysis.less';
 import { TimelineChart, Pie } from '@/components/Charts';
 import NumberInfo from '@/components/NumberInfo';
 
-const CustomTab = ({ data, currentTabKey: currentKey }) => (
+const CustomTab = ({ data, currentTabKey: currentKey, subTitle = '成功率' }) => (
   <Row gutter={8} style={{ width: 138, margin: '8px 0' }}>
     <Col span={12}>
       <NumberInfo
         title={data.name}
-        subTitle="成功率"
+        subTitle={subTitle}
         gap={2}
         total={`${data.cvr * 100}%`}
         theme={currentKey !== data.name && 'light'}
@@ -50,32 +50,37 @@ const CustomTab = ({ data, currentTabKey: currentKey }) => (
 const { TabPane } = Tabs;
 
 const OfflineData = memo(
-  ({ activeKey, loading, offlineData, offlineChartData, handleTabChange }) => (
-    <Card
-      title="人工随访成功率分析"
-      loading={loading}
-      className={styles.offlineCard}
-      bordered={false}
-      style={{ marginTop: 32 }}
-    >
-      <Tabs activeKey={activeKey} onChange={handleTabChange}>
-        {offlineData.map(shop => (
-          <TabPane tab={<CustomTab data={shop} currentTabKey={activeKey} />} key={shop.name}>
-            <div style={{ padding: '0 24px' }}>
-              <TimelineChart
-                height={400}
-                data={offlineChartData}
-                titleMap={{
-                  y1: '随访量',
-                  y2: '成功量',
-                }}
-              />
-            </div>
-          </TabPane>
-        ))}
-      </Tabs>
-    </Card>
-  )
+  ({ activeKey, loading, offlineData, offlineChartData, handleTabChange, children }) => {
+    const _children = children || (
+      <div style={{ padding: '0 24px' }}>
+        <TimelineChart
+          height={400}
+          data={offlineChartData}
+          titleMap={{
+            y1: '随访量',
+            y2: '成功量',
+          }}
+        />
+      </div>
+    );
+    return (
+      <Card
+        title="人工随访成功率分析"
+        loading={loading}
+        className={styles.offlineCard}
+        bordered={false}
+        style={{ marginTop: 32 }}
+      >
+        <Tabs activeKey={activeKey} onChange={handleTabChange}>
+          {offlineData.map(shop => (
+            <TabPane tab={<CustomTab data={shop} currentTabKey={activeKey} />} key={shop.name}>
+              {_children}
+            </TabPane>
+          ))}
+        </Tabs>
+      </Card>
+    );
+  }
 );
 
 export default OfflineData;

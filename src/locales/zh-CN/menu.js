@@ -40,7 +40,7 @@ export default {
   'menu.satisfaction-management.complaint-lists': '投诉建议',
   'menu.satisfaction-management.praise-lists': '表扬感谢',
   'menu.satisfaction-management.satisfaction-lists': '专项管理',
-
+  'menu.appointment-tracking-edit': '编辑',
   'menu.satisfaction-management.create': '新建满意度任务',
   'menu.satisfaction-management.create.step1': '步骤1',
   'menu.satisfaction-management.create.step2': '步骤2',
