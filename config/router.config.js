@@ -4,9 +4,20 @@ export default [
     path: '/user',
     component: '../layouts/UserLayout',
     routes: [
-      { path: '/user', redirect: '/user/login' },
-      { path: '/user/login', name: 'login', component: './User/Login' },
-      { path: '/user/register', name: 'register', component: './User/Register' },
+      {
+        path: '/user',
+        redirect: '/user/login',
+      },
+      {
+        path: '/user/login',
+        name: 'login',
+        component: './User/Login',
+      },
+      {
+        path: '/user/register',
+        name: 'register',
+        component: './User/Register',
+      },
       {
         path: '/user/register-result',
         name: 'register.result',
@@ -24,7 +35,11 @@ export default [
     Routes: ['src/pages/Authorized'],
     routes: [
       // dashboard
-      { path: '/', redirect: '/calendar', authority: ['admin', 'user'] },
+      {
+        path: '/',
+        redirect: '/calendar',
+        authority: ['admin', 'user'],
+      },
       {
         path: '/calendar',
         name: 'calendar',
@@ -68,12 +83,11 @@ export default [
             name: 'satisfaction-lists',
             // icon: 'edit',
             component: './SatisfactionManagement/TaskManagement/index',
-            routes: [
-              {
-                path: '/satisfaction-management/satisfaction-lists/manual-followup',
-                component: './SatisfactionManagement/TaskManagement/ManualFollowUp',
-              },
-            ],
+          },
+          // 人工随访列表
+          {
+            path: '/satisfaction-management/satisfaction-lists/manual-followup',
+            component: './SatisfactionManagement/TaskManagement/ManualFollowUp',
           },
           {
             path: '/satisfaction-management/satisfaction-lists/create',
