@@ -90,7 +90,7 @@ export default [
               {
                 // 选择任务类型
                 path: '/satisfaction-management/satisfaction-lists/create/step1',
-                name: 'stpe1',
+                name: 'step1',
                 component: './SatisfactionManagement/Create/Step1',
                 hideInMenu: true,
               },
@@ -208,7 +208,7 @@ export default [
         path: '/appointment-tracking',
         name: 'appointment-tracking',
         icon: 'book',
-        component: './ArchivesManagement/index',
+        component: './AppointmentTracking/List',
       },
       {
         path: '/nursing-tracking',
@@ -326,19 +326,22 @@ export default [
         icon: 'bar-chart',
         routes: [
           {
-            path: '/knowledge/medicine',
-            name: 'medicine',
-            redirect: '/followup-configuration/questionnaire/create/step1',
+            path: '/knowledge/medication',
+            name: 'medication',
+            icon: 'bar-chart',
+            component: './KnowledgeBase/MedicationGuide',
           },
           {
             path: '/knowledge/nursing',
             name: 'nursing',
-            redirect: '/followup-configuration/questionnaire/create/step1',
+            icon: 'bar-chart',
+            component: './KnowledgeBase/NursingKnowledge',
           },
           {
             path: '/knowledge/faq',
             name: 'faq',
-            redirect: '/followup-configuration/questionnaire/create/step1',
+            icon: 'bar-chart',
+            component: './KnowledgeBase/CommonProblem',
           },
         ],
       },
@@ -378,19 +381,25 @@ export default [
             path: '/system-settings/user',
             name: 'user-add',
             icon: 'edit',
-            // component: './ScheduleReminder/Create',
+            component: './Management/User',
+          },
+          {
+            path: '/system-settings/role',
+            name: 'role',
+            icon: 'aliwangwang',
+            component: './Management/Role',
           },
           {
             path: '/system-settings/permission',
             name: 'permission',
             icon: 'check',
-            // component: './ScheduleReminder/Management',
+            component: './Management/Permission',
           },
           {
-            path: '/system-settings/record',
-            name: 'record',
+            path: '/system-settings/monitor-logs',
+            name: 'monitor-logs',
             icon: 'read',
-            // component: './ScheduleReminder/Management',
+            component: './Management/MonitorLogs',
           },
           {
             path: '/system-settings/monitor ',

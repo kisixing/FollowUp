@@ -288,7 +288,7 @@ class FollowupManagement extends Component {
                   hoverable
                   bodyStyle={{ paddingBottom: 20 }}
                   actions={[
-                    <Tooltip title="随访人员统计">
+                    <Tooltip title="随访列表">
                       <Icon type="ordered-list" onClick={() => this.onDetailClick(item)} />
                     </Tooltip>,
                     <Tooltip title="图表分析">

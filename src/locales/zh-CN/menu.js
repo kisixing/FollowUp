@@ -31,8 +31,9 @@ export default {
   'menu.schedule-reminder.management': '日历管理',
   'menu.system-settings': '系统设置',
   'menu.system-settings.user-add': '用户管理',
+  'menu.system-settings.role': '角色管理',
   'menu.system-settings.permission': '权限管理',
-  'menu.system-settings.record': '操作日记',
+  'menu.system-settings.monitor-logs': '操作日记',
   'menu.system-settings.monitor': '监控台',
 
   'menu.satisfaction-management': '满意度管理',
@@ -47,7 +48,7 @@ export default {
   'menu.satisfaction-management.create.step4': '步骤4',
 
   'menu.appointment-tracking': '预约跟踪',
-  'menu.nursing-tracking': '预约跟踪',
+  'menu.nursing-tracking': '延续护理跟踪',
 
   'menu.concern-management': '客户关怀',
   'menu.concern-management.festival-concern': '节日关怀',
@@ -55,7 +56,7 @@ export default {
   'menu.concern-management.market': '市场活动',
 
   'menu.knowledge': '知识库',
-  'menu.knowledge.medicine': '用药指导',
+  'menu.knowledge.medication': '用药指导',
   'menu.knowledge.faq': '常见问题',
   'menu.knowledge.nursing': '护理知识',
 
