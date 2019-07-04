@@ -75,6 +75,7 @@ const HISTORY = {
 export default delay(
   {
     'GET /api/archives/patient': (req, res) => {
+      console.log(1111111111);
       return res.json(PATIENT);
     },
     'GET /api/archives/briefHistory': (req, res) => {
