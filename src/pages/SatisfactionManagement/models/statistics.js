@@ -34,7 +34,7 @@ export default {
       });
     },
     *removeTag({ payload }, { put, select }) {
-      const { tabActiveKey, selectedTags } = yield select(_ => _.followupLists);
+      const { tabActiveKey, selectedTags } = yield select(_ => _.satisfactionList);
       const types = Object.keys(selectedTags);
       let tags = [];
       for (let i = 0; i < types.length; i += 1) {
@@ -65,7 +65,7 @@ export default {
       });
     },
     *updateTags({ payload }, { put, select }) {
-      const { tabActiveKey, selectedTags } = yield select(_ => _.followupLists);
+      const { tabActiveKey, selectedTags } = yield select(_ => _.satisfactionList);
       const { target, checkedTags } = payload;
       const tags = {
         ...selectedTags,

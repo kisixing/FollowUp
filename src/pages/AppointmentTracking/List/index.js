@@ -9,29 +9,25 @@ import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 
 import styles from './index.less';
 
-@connect(({ global, loading }) => ({
+@connect(({ global }) => ({
   global,
-  loading: loading.effects['followupLists/query'],
 }))
 class FollowupManagement extends Component {
   constructor(props) {
     super(props);
     this.state = {
       tabActiveKey: 'all',
-      lists: Array(4)
-        .fill({
-          title: '预约挂号跟踪',
-          status: {
-            dec: '进行中',
-          },
-        })
-        .map(_ => ({
-          ..._,
-          all: +Math.random()
-            .toString()
-            .slice(12),
-          id: Math.random(),
-        })),
+      lists: ['预约挂号跟踪', '住院预约跟踪', 'B超预约跟踪', '住院预约跟踪'].map(_ => ({
+        title: _,
+        status: {
+          dec: '进行中',
+          code: 'running',
+        },
+        all: +Math.random()
+          .toString()
+          .slice(12),
+        id: Math.random(),
+      })),
     };
   }
 
@@ -47,7 +43,10 @@ class FollowupManagement extends Component {
   }
 
   handleTabChange = key => {
-    this.setState({ tabActiveKey: key });
+    this.setState({ tabActiveKey: key, loading: true });
+    setTimeout(() => {
+      this.setState({ loading: false });
+    }, 500);
     const { dispatch } = this.props;
     dispatch({
       type: 'followupLists/query',
@@ -124,13 +123,12 @@ class FollowupManagement extends Component {
       </div>
     );
 
-    const { loading } = this.props;
-    const { tabActiveKey, lists } = this.state;
-
+    const { tabActiveKey, lists, loading } = this.state;
+    const dataSource = lists.filter(_ => tabActiveKey === 'all' || _.status.code === tabActiveKey);
     return (
       <PageHeaderWrapper
         wrapperClassName={styles.wrapper}
-        title="预约跟踪列表"
+        title="列表搜索"
         content={mainSearch}
         tabList={tabList}
         // tabBarExtraContent={tabBarExtraContent}
@@ -143,7 +141,7 @@ class FollowupManagement extends Component {
             style={{ marginTop: 24 }}
             grid={{ gutter: 24, xxl: 4, xl: 3, lg: 2, md: 2, sm: 1 }}
             loading={loading}
-            dataSource={lists}
+            dataSource={dataSource}
             renderItem={item => (
               <List.Item key={item.id}>
                 <Card
