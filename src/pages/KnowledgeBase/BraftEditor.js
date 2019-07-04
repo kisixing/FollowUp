@@ -9,14 +9,14 @@ import 'braft-editor/dist/index.css';
 
 class BraftEditor extends Component {
   state = {
-    editorState: Editor.createEditorState('<p>Hello <b>World!</b></p>'), // 设置编辑器初始内容
+    editorState: Editor.createEditorState(''), // 设置编辑器初始内容
     outputHTML: '<p></p>',
   };
 
   componentDidMount() {
     this.isLivinig = true;
     // 3秒后更改编辑器内容
-    setTimeout(this.setEditorContentAsync, 3000);
+    setTimeout(this.setEditorContentAsync, 1500);
   }
 
   componentWillUnmount() {
@@ -31,9 +31,10 @@ class BraftEditor extends Component {
   };
 
   setEditorContentAsync = () => {
+    const { html } = this.props;
     if (this.isLivinig) {
       this.setState({
-        editorState: Editor.createEditorState('<p>你好，<b>世界!</b><p>'),
+        editorState: Editor.createEditorState(html),
       });
     }
   };

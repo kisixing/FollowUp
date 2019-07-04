@@ -368,6 +368,12 @@ export default [
             icon: 'bar-chart',
             component: './KnowledgeBase/CommonProblem',
           },
+          {
+            path: '/knowledge/nursing/update',
+            name: 'update',
+            hideInMenu: true,
+            component: './KnowledgeBase/UpdatePage',
+          },
         ],
       },
       {
