@@ -89,11 +89,14 @@ class CalendarComponent extends PureComponent {
     return (
       <ul style={{ padding: 0 }}>
         {listData.map(item => (
-          <li
-            key={item.content}
-            onClick-={() => router.push('/followup-management/task-lists/table/220000197207104257')}
-          >
-            <Badge status={item.type} text={item.content} />
+          <li key={item.content}>
+            <Badge
+              status={item.type}
+              text={item.content}
+              onClick={() =>
+                router.push('/followup-management/task-lists/table/220000197207104257')
+              }
+            />
           </li>
         ))}
       </ul>
