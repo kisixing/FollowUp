@@ -4,6 +4,7 @@ import { connect } from 'dva';
 import Link from 'umi/link';
 import { Row, Col, Card, List, Avatar, Icon, Calendar, Badge } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import router from 'umi/router';
 import styles from './index.less';
 
 @connect(({ user, project, activities, loading }) => ({
@@ -88,7 +89,10 @@ class CalendarComponent extends PureComponent {
     return (
       <ul style={{ padding: 0 }}>
         {listData.map(item => (
-          <li key={item.content}>
+          <li
+            key={item.content}
+            onClick-={() => router.push('/followup-management/task-lists/table/220000197207104257')}
+          >
             <Badge status={item.type} text={item.content} />
           </li>
         ))}
