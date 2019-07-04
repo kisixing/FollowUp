@@ -211,6 +211,13 @@ export default [
         component: './AppointmentTracking/List',
       },
       {
+        path: '/appointment-tracking/edit',
+        name: 'appointment-tracking-edit',
+        icon: 'book',
+        component: './AppointmentTracking/Edit',
+        hideInMenu: true,
+      },
+      {
         path: '/nursing-tracking',
         name: 'nursing-tracking',
         icon: 'book',
