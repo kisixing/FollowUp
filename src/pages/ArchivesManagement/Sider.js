@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import { Avatar } from 'antd';
-import avatar from '../../assets/default-avatar.png';
 
 import styles from './Sider.less';
 
@@ -25,11 +24,7 @@ class Sider extends Component {
     return (
       <div className={styles.sider}>
         <div className={styles.avatar}>
-          <Avatar
-            shape="square"
-            style={{ width: '60px', height: '60px' }}
-            src={patient.avatar || avatar}
-          />
+          <Avatar src={patient.avatar}>{patient.name && patient.name.slice(-2)}</Avatar>
           <div>
             <h2>{patient.name}</h2>
             <div>{patient.cardID}</div>
