@@ -203,7 +203,7 @@ class FollowupManagement extends Component {
     return (
       <PageHeaderWrapper
         wrapperClassName={styles.wrapper}
-        title="随访任务列表"
+        title="满意度管理列表"
         content={mainSearch}
         tabList={tabList}
         tabBarExtraContent={tabBarExtraContent}

@@ -120,7 +120,7 @@ class FollowupManagement extends Component {
 
     const CardInfo = ({ all }) => (
       <div className={styles.cardInfo}>
-        <Statistic title="Active Users" value={all} />
+        <Statistic title="今日跟踪任务" value={all} />
       </div>
     );
 
@@ -130,7 +130,7 @@ class FollowupManagement extends Component {
     return (
       <PageHeaderWrapper
         wrapperClassName={styles.wrapper}
-        title="随访任务列表"
+        title="预约跟踪列表"
         content={mainSearch}
         tabList={tabList}
         // tabBarExtraContent={tabBarExtraContent}
@@ -146,7 +146,11 @@ class FollowupManagement extends Component {
             dataSource={lists}
             renderItem={item => (
               <List.Item key={item.id}>
-                <Card hoverable bodyStyle={{ paddingBottom: 20 }} onClick={() => router.push()}>
+                <Card
+                  hoverable
+                  bodyStyle={{ paddingBottom: 20 }}
+                  onClick={() => router.push('/appointment-tracking/edit')}
+                >
                   <Card.Meta
                     style={{ cursor: 'pointer' }}
                     avatar={<Avatar size="small" src={item.avatar} />}
