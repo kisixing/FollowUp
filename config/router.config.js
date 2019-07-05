@@ -344,7 +344,13 @@ export default [
           },
           {
             path: '/knowledge/nursing/update',
-            name: 'update',
+            name: 'nursing-update',
+            hideInMenu: true,
+            component: './KnowledgeBase/UpdatePage',
+          },
+          {
+            path: '/knowledge/faq/update',
+            name: 'faq-update',
             hideInMenu: true,
             component: './KnowledgeBase/UpdatePage',
           },

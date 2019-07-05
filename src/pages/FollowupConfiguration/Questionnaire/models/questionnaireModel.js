@@ -1,7 +1,5 @@
-/* eslint-disable no-plusplus */
-
-import router from 'umi/router';
 import { queryTaskTemplates } from '../Create/service';
+import { fakeQuestionnarieData } from '@/services/api';
 
 export const MODEL = 'questionnaire_model';
 export const DATASET = 'dataset';
@@ -59,6 +57,25 @@ export default {
   },
 
   effects: {
+    *fetch({ payload }, { call, put }) {
+      const response = yield call(fakeQuestionnarieData);
+      const { edit } = payload;
+      yield put(
+        edit
+          ? {
+              type: 'updateState',
+              payload: response,
+            }
+          : {
+              type: 'updateState',
+              payload: {
+                questionnaireTitle: '',
+                questionList: [],
+              },
+            }
+      );
+    },
+
     *query({ payload }, { call, put }) {
       const res = yield call(queryTaskTemplates, payload);
       yield put({
@@ -143,29 +160,6 @@ export default {
           },
         });
       }
-    },
-    *editQuestionnaire({ payload }, { put }) {
-      const { questionnaireTitle } = payload;
-      yield put({
-        type: 'updateState',
-        payload: {
-          questionList: [
-            {
-              type: '单选题',
-              dataset: [
-                {
-                  label: '选项1',
-                  id: Math.random(),
-                },
-              ],
-              id: Math.random(),
-              title: '测试单选题',
-            },
-          ],
-          questionnaireTitle,
-        },
-      });
-      router.push('/followup-configuration/questionnaire/create/step2');
     },
   },
 
