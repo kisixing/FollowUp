@@ -88,8 +88,10 @@ class CommonProblem extends PureComponent {
   }
 
   onClick = item => {
+    if (!item || (item && !item.uuid)) {
+      return;
+    }
     const { dispatch } = this.props;
-    console.log('4444', item);
     dispatch({
       type: 'knowledge/fetchArticle',
       payload: {

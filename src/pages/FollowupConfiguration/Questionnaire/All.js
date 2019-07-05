@@ -181,7 +181,7 @@ class All extends Component {
           dataSource={['', ...list]}
           renderItem={item =>
             item ? (
-              <List.Item key={item.id}>
+              <List.Item key={item.id} style={{ height: '202px' }}>
                 <Card
                   hoverable
                   bodyStyle={{ padding: 0 }}

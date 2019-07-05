@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /*
  * @Description: 富文本编辑器组建
  * @Author: Zhong Jun
@@ -42,7 +43,7 @@ class BraftEditor extends Component {
 
   render() {
     const { editorState, outputHTML } = this.state;
-    const { onSave = () => {}, onBack = () => {} } = this.props;
+    const { onSave = e => console.log(e), onBack = () => {} } = this.props;
 
     const extendControls = [
       {
