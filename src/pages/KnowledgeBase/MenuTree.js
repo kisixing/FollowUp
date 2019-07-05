@@ -37,8 +37,7 @@ class MenuTree extends Component {
   generateList = (data, result = []) => {
     for (let i = 0; i < data.length; i++) {
       const node = data[i];
-      const { key, title } = node;
-      result.push({ key, title });
+      result.push(node);
       if (node.children) {
         this.generateList(node.children, result);
       }
@@ -73,6 +72,13 @@ class MenuTree extends Component {
     });
   };
 
+  onSelect = id => {
+    const { onClick, dataSource } = this.props;
+    const dataList = this.generateList(dataSource);
+    const selectItem = dataList.filter(e => e.key === id)[0];
+    onClick(selectItem);
+  };
+
   render() {
     const { searchValue, expandedKeys, autoExpandParent } = this.state;
     const { dataSource } = this.props;
@@ -105,11 +111,11 @@ class MenuTree extends Component {
       <div>
         <Search style={{ marginBottom: 8 }} placeholder="搜索..." onChange={this.onChange} />
         <Tree
-          // showIcon
           blockNode
           onExpand={this.onExpand}
           expandedKeys={expandedKeys}
           autoExpandParent={autoExpandParent}
+          onSelect={selectedKeys => this.onSelect(selectedKeys[0])}
         >
           {loop(dataSource)}
         </Tree>
@@ -120,10 +126,12 @@ class MenuTree extends Component {
 
 MenuTree.propTypes = {
   dataSource: PropTypes.array,
+  onClick: PropTypes.func,
 };
 
 MenuTree.defaultProps = {
   dataSource: [],
+  onClick: () => {},
 };
 
 export default MenuTree;

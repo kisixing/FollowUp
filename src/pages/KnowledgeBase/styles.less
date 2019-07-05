@@ -2,7 +2,7 @@
 
 .wrapper {
   display: flex;
-  height: calc(~'100vh - 182px');
+  height: calc(~'100vh - 183px');
   background-color: #fff;
 
   .tree {
@@ -69,7 +69,32 @@
     }
 
     .textbox {
-      display: block;
+      position: relative;
+      padding: 48px;
+
+      .icon {
+        position: absolute;
+        top: 0;
+        right: 5px;
+        font-size: 21px;
+        cursor: pointer;
+
+        &:hover {
+          color: @primary-color;
+        }
+      }
+
+      .innerTextbox {
+        h2 {
+          margin-bottom: 6px;
+          font-weight: bold;
+        }
+      }
+
+      .centerTextbox {
+        width: 702px;
+        margin: 0 auto;
+      }
     }
   }
 }

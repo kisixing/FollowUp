@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chart, Tooltip, Geom, Legend, Axis } from 'bizcharts';
+import { Chart, Tooltip, Geom, Legend } from 'bizcharts';
 import DataSet from '@antv/data-set';
 import Slider from 'bizcharts-plugin-slider';
 import autoHeight from '../autoHeight';
@@ -103,7 +103,7 @@ class TimelineChart extends React.Component {
         <div>
           {title && <h4>{title}</h4>}
           <Chart height={height} padding={padding} data={dv} scale={cols} forceFit>
-            <Axis name="x" />
+            {/* <Axis name="x" /> */}
             <Tooltip />
             <Legend name="key" position="top" />
             <Geom type="line" position="x*value" size={borderWidth} color="key" />

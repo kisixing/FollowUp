@@ -13,13 +13,13 @@ import { getObjectValues } from '@/utils/utils';
 
 import styles from './index.less';
 
-@connect(({ global, loading, followupLists }) => ({
+@connect(({ global, loading, satisfactionList }) => ({
   global,
-  loading: loading.effects['followupLists/query'],
-  selectedTags: followupLists.selectedTags,
-  lists: followupLists.lists,
-  category: followupLists.category,
-  secondaryCategory: followupLists.secondaryCategory,
+  loading: loading.effects['satisfactionList/query'],
+  selectedTags: satisfactionList.selectedTags,
+  lists: satisfactionList.lists,
+  category: satisfactionList.category,
+  secondaryCategory: satisfactionList.secondaryCategory,
 }))
 class FollowupManagement extends Component {
   constructor(props) {
@@ -33,7 +33,7 @@ class FollowupManagement extends Component {
     const { dispatch, selectedTags } = this.props;
     const { tabActiveKey } = this.state;
     dispatch({
-      type: 'followupLists/query',
+      type: 'satisfactionList/query',
       payload: {
         status: tabActiveKey,
         type: selectedTags.category,
@@ -46,7 +46,7 @@ class FollowupManagement extends Component {
     this.setState({ tabActiveKey: key });
     const { dispatch } = this.props;
     dispatch({
-      type: 'followupLists/query',
+      type: 'satisfactionList/query',
       payload: {
         status: key,
       },
@@ -70,7 +70,7 @@ class FollowupManagement extends Component {
   handleTags = (target, checkedTag) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'followupLists/updateTags',
+      type: 'satisfactionList/updateTags',
       payload: {
         target,
         checkedTag,
@@ -81,7 +81,7 @@ class FollowupManagement extends Component {
   handleTagClose = removedTag => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'followupLists/removeTag',
+      type: 'satisfactionList/removeTag',
       payload: removedTag,
     });
   };
@@ -203,7 +203,7 @@ class FollowupManagement extends Component {
     return (
       <PageHeaderWrapper
         wrapperClassName={styles.wrapper}
-        title="满意度管理列表"
+        title="列表搜索"
         content={mainSearch}
         tabList={tabList}
         tabBarExtraContent={tabBarExtraContent}

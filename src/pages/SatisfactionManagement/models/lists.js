@@ -23,7 +23,7 @@ export const category = [
   },
 ].map(_ => ({ ..._, subType: secondaryCategoryData }));
 export default {
-  namespace: 'followupLists',
+  namespace: 'satisfactionList',
 
   state: {
     selectedTags: {
@@ -48,7 +48,7 @@ export default {
       });
     },
     *removeTag({ payload }, { put, select }) {
-      const { tabActiveKey, selectedTags } = yield select(_ => _.followupLists);
+      const { tabActiveKey, selectedTags } = yield select(_ => _.satisfactionList);
       const types = Object.keys(selectedTags);
       let tags = [];
       for (let i = 0; i < types.length; i++) {
@@ -89,7 +89,7 @@ export default {
       });
     },
     *updateTags({ payload }, { put, select }) {
-      const { tabActiveKey, selectedTags, category } = yield select(_ => _.followupLists);
+      const { tabActiveKey, selectedTags, category } = yield select(_ => _.satisfactionList);
       const { target, checkedTag } = payload;
       const tags = {
         ...selectedTags,
