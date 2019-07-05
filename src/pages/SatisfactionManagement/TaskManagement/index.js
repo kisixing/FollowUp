@@ -200,7 +200,6 @@ class FollowupManagement extends Component {
 
     const { loading, selectedTags, lists, category, secondaryCategory } = this.props;
     const { tabActiveKey } = this.state;
-
     return (
       <PageHeaderWrapper
         wrapperClassName={styles.wrapper}
