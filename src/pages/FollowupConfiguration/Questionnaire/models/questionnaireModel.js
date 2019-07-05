@@ -2,6 +2,7 @@
 
 import router from 'umi/router';
 import { queryTaskTemplates } from '../Create/service';
+import { fakeQuestionnarieData } from '@/services/api';
 
 export const MODEL = 'questionnaire_model';
 export const DATASET = 'dataset';
@@ -59,6 +60,25 @@ export default {
   },
 
   effects: {
+    *fetch({ payload }, { call, put }) {
+      const response = yield call(fakeQuestionnarieData);
+      const { edit } = payload;
+      yield put(
+        edit
+          ? {
+              type: 'updateState',
+              payload: response,
+            }
+          : {
+              type: 'updateState',
+              payload: {
+                questionnaireTitle: '',
+                questionList: [],
+              },
+            }
+      );
+    },
+
     *query({ payload }, { call, put }) {
       const res = yield call(queryTaskTemplates, payload);
       yield put({

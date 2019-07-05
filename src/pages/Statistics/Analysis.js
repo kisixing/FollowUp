@@ -6,16 +6,15 @@ import GridContent from '@/components/PageHeaderWrapper/GridContent';
 import { getTimeDistance } from '@/utils/utils';
 import styles from './Analysis.less';
 import PageLoading from '@/components/PageLoading';
-import SalesCard from './SalesCard';
 
 const IntroduceRow = React.lazy(() => import('./IntroduceRow'));
-// const SalesCard = React.lazy(() => import('./SalesCard'));
+const SalesCard = React.lazy(() => import('./SalesCard'));
 const OfflineData = React.lazy(() => import('./OfflineData'));
 const Abnormal = React.lazy(() => import('./Abnormal'));
 
-@connect(({ chart, loading }) => ({
-  chart,
-  loading: loading.effects['chart/fetch'],
+@connect(({ chartAnalysis, loading }) => ({
+  chartAnalysis,
+  loading: loading.effects['chartAnalysis/fetch'],
 }))
 class Analysis extends Component {
   state = {
@@ -26,16 +25,16 @@ class Analysis extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    this.reqRef = requestAnimationFrame(() => {
-      dispatch({
-        type: 'chart/fetch',
-      });
+    // this.reqRef = requestAnimationFrame(() => {
+    dispatch({
+      type: 'chartAnalysis/fetch',
     });
+    // });
   }
 
-  componentWillUnmount() {
-    cancelAnimationFrame(this.reqRef);
-  }
+  // componentWillUnmount() {
+  //   cancelAnimationFrame(this.reqRef);
+  // }
 
   handleChangeSalesType = e => {
     this.setState({
@@ -56,7 +55,7 @@ class Analysis extends Component {
     });
 
     dispatch({
-      type: 'chart/fetchSalesData',
+      type: 'chartAnalysis/fetchSalesData',
     });
   };
 
@@ -67,7 +66,7 @@ class Analysis extends Component {
     });
 
     dispatch({
-      type: 'chart/fetchSalesData',
+      type: 'chartAnalysis/fetchSalesData',
     });
   };
 
@@ -88,7 +87,7 @@ class Analysis extends Component {
 
   render() {
     const { rangePickerValue, salesType, currentTabKey } = this.state;
-    const { chart, loading } = this.props;
+    const { chartAnalysis, loading } = this.props;
     const {
       visitData,
       visitData2,
@@ -98,9 +97,9 @@ class Analysis extends Component {
       salesTypeData,
       salesTypeDataOnline,
       salesTypeDataOffline,
-    } = chart;
+    } = chartAnalysis;
 
-    let { offlineData } = chart;
+    let { offlineData } = chartAnalysis;
     offlineData = offlineData || [];
 
     let salesPieData;
