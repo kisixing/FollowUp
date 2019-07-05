@@ -1,13 +1,9 @@
-/*
- * @Description: 步骤二 选择对象
- * @Author: zhong jun
- * @Date: 2019-06-20 17:30:45
- */
 import React, { Component } from 'react';
 import router from 'umi/router';
 import { connect } from 'dva';
 import { Form, Input, Radio, Button, TreeSelect, Checkbox } from 'antd';
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
+import MyDropdown from '@/components/MyDropdown';
 import styles from './Step2.less';
 
 const { SHOW_PARENT } = TreeSelect;
@@ -56,9 +52,8 @@ const genderOptions = [
   { label: '不限', value: '不限' },
 ];
 
-@connect(({ loading, global, step2 }) => ({
+@connect(({ loading, global }) => ({
   global,
-  step2,
   submitting: loading.effects['form/submitRegularForm'],
 }))
 class Step2 extends Component {
@@ -122,11 +117,11 @@ class Step2 extends Component {
         {...formItemLayout}
       >
         <FormItem className={styles.title}>
-          <h3>任务名字</h3>
+          <h3>频率时间{`&`}媒介</h3>
         </FormItem>
-        <FormItem label={<FormattedMessage id="step2.task-title" />}>
+        <FormItem label="选择节日">
           {getFieldDecorator('title', {
-            initialValue: '全科诊后满意度调查',
+            initialValue: '11',
             rules: [
               {
                 required: true,
@@ -134,14 +129,10 @@ class Step2 extends Component {
               },
             ],
           })(
-            <Input
-              placeholder={formatMessage({ id: 'form.title.placeholder' })}
-              style={{ width: '350px' }}
+            <MyDropdown
+              dataset={[{ value: '11', label: '春节' }, { value: '22', label: '中秋' }]}
             />
           )}
-        </FormItem>
-        <FormItem className={styles.title}>
-          <h3>选定对象范围</h3>
         </FormItem>
 
         <FormItem className={styles.subTitle}>
@@ -189,6 +180,10 @@ class Step2 extends Component {
             ],
           })(<Radio.Group options={genderOptions} />)}
         </FormItem>
+        <FormItem className={styles.title}>
+          <h3>编辑消息</h3>
+        </FormItem>
+
         <FormItem className={styles.subTitle}>
           <h4>外部用户：</h4>
         </FormItem>

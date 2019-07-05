@@ -15,22 +15,15 @@ export default {
         // 可选：wait process finish error
       },
       {
-        title: '选择对象',
-        step: 'step2',
-        description: '选择对象',
-        icon: '',
-        status: 'wait',
-      },
-      {
         title: '编辑任务内容',
-        step: 'step3',
+        step: 'step2',
         description: '任务内容',
         icon: '',
         status: 'wait',
       },
       {
         title: '发布',
-        step: 'step4',
+        step: 'step3',
         description: '发布',
         icon: '',
         status: 'wait',
