@@ -54,6 +54,8 @@ export async function fakeChartData() {
   return request('/api/fake_chart_data');
 }
 
+export const fakeQuestionnarieData = async () => request('/api/fake_questionnaire');
+
 export async function queryTags() {
   return request('/api/tags');
 }
