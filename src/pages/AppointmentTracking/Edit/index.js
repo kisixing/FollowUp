@@ -27,7 +27,7 @@ export default () => {
     <div style={{ background: '#fff', padding: '20px' }}>
       <Content />
 
-      <div style={{ textAlign: 'center' }}>
+      <div style={{ textAlign: 'center', marginTop: 20 }}>
         <Button className={mRb8} onClick={() => setVisible(true)}>
           预览{' '}
         </Button>

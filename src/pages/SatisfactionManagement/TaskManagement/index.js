@@ -150,6 +150,7 @@ class FollowupManagement extends Component {
 
     const tabBarExtraContent = (
       <Button
+        size="small"
         type="primary"
         icon="plus"
         onClick={() => router.push('/satisfaction-management/satisfaction-lists/create')}

@@ -1,3 +1,4 @@
+import concern from './routers/concern';
 export default [
   // user
   {
@@ -241,34 +242,7 @@ export default [
         icon: 'book',
         component: './ArchivesManagement/index',
       },
-      {
-        path: '/concern-management',
-        name: 'concern-management',
-        icon: 'book',
-        routes: [
-          {
-            // 节日问候
-            path: '/concern-management/festival-concern',
-            name: 'festival-concern',
-            // icon: 'edit',
-            component: './FollowupManagement/TaskManagement/index',
-          },
-          {
-            // 生日问候
-            path: '/concern-management/birthday-concern',
-            name: 'birthday-concern',
-            // icon: 'edit',
-            component: './FollowupManagement/TaskManagement/index',
-          },
-          {
-            // 市场活动
-            path: '/concern-management/market',
-            name: 'market',
-            // icon: 'edit',
-            component: './FollowupManagement/TaskManagement/index',
-          },
-        ],
-      },
+      concern,
       {
         path: '/online-service',
         name: 'online-service',
