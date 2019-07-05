@@ -66,13 +66,7 @@ const PageHeaderWrapper = ({
                     !title ? null : (
                       <>
                         {logo && <span className={styles.logo}>{logo}</span>}
-                        <Title
-                          level={4}
-                          style={{
-                            marginBottom: 0,
-                            display: 'inline-block',
-                          }}
-                        >
+                        <Title level={4} style={{ display: 'inline-block' }}>
                           {title}
                         </Title>
                       </>

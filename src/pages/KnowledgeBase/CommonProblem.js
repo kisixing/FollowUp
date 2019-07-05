@@ -12,28 +12,26 @@ import styles from './styles.less';
 
 const gData = [
   {
-    key: '000',
-    title: '家庭护理',
-    isLeaf: true,
-    icon: 'book',
-  },
-  {
     key: '001',
+    uuid: '2019-05-05-001',
     title: '家庭护理',
     isLeaf: false,
     children: [
       {
         key: '001-001',
-        title: '产后护理',
+        uuid: '2019-05-05-002',
+        title: '极低出生体重儿',
         isLeaf: true,
       },
       {
         key: '001-002',
+        uuid: '2019-05-05-003',
         title: '婴儿护理',
         isLeaf: true,
       },
       {
         key: '001-003',
+        uuid: '2019-05-05-004',
         title: '皮肤护理',
         isLeaf: true,
       },
@@ -41,35 +39,17 @@ const gData = [
   },
   {
     key: '002',
+    uuid: '2019-05-05-005',
     title: '护理注意事项',
     isLeaf: false,
     children: [
       {
         key: '002-001',
+        uuid: '2019-05-05-006',
         title: '造口护理',
         isLeaf: true,
       },
-      {
-        key: '002-002',
-        title: '透析护理',
-        isLeaf: true,
-      },
-      {
-        key: '002-003',
-        title: '皮肤护理',
-        isLeaf: true,
-      },
     ],
-  },
-  {
-    key: '003',
-    title: '糖尿病护理',
-    isLeaf: true,
-  },
-  {
-    key: '004',
-    title: '高血压护理',
-    isLeaf: true,
   },
 ];
 
