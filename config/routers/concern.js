@@ -34,16 +34,16 @@ export default {
           // 选择对象
           path: '/concern-management/festival-concern/create/step2',
           name: 'step2',
-          component: './ConcernManagement/FestivalConcern/Create/Step3',
+          component: './ConcernManagement/FestivalConcern/Create/Step2',
           hideInMenu: true,
         },
-        {
-          // 编辑任务内容
-          path: '/concern-management/festival-concern/create/step3',
-          name: 'step3',
-          component: './ConcernManagement/FestivalConcern/Create/Step3',
-          hideInMenu: true,
-        },
+        // {
+        //   // 编辑任务内容
+        //   path: '/concern-management/festival-concern/create/step3',
+        //   name: 'step3',
+        //   component: './ConcernManagement/FestivalConcern/Create/Step3',
+        //   hideInMenu: true,
+        // },
       ],
     },
 

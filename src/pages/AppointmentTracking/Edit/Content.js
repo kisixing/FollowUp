@@ -2,6 +2,7 @@ import { Button, Form, Input, Radio, Switch, Col, Row, Table, TimePicker } from 
 import { lh40 } from './index.less';
 // import router from 'umi/router';
 import { getValueOfFirstItem } from '@/utils/utils';
+import ImportableTextarea from '@/components/ImportableTextarea';
 
 const mapStateToProps = () => {
   return { satisfactionCreation_model: {} };
@@ -92,29 +93,12 @@ const Content = connect(mapStateToProps)(function A({ satisfactionCreation_model
       <Title label="消息提示" />
 
       <Form.Item label="提示文字">
-        <Input.TextArea
-          style={{ width: '80%' }}
+        <ImportableTextarea
+          dataset={['医院名称', '患者姓名', '预约时间', '预约检查项目'].map(_ => ({ text: _ }))}
+          onChange={_text => _setFormData({ text: _text })}
+          onInsert={_text => _setFormData({ text: formData.text.concat('[', _text, ']') })}
           value={text}
-          autosize={{ minRows: 2, maxRows: 6 }}
-          onChange={e => _setFormData({ text: e.target.value })}
         />
-        <Button type="link" style={{ float: 'none' }}>
-          导入模板
-        </Button>
-        <div>
-          您可以在提示文字中插入：
-          {['医院名称', '患者姓名', '预约时间', '预约检查项目'].map(_ => {
-            return (
-              <Button
-                type="link"
-                key={_}
-                onClick={() => _setFormData({ text: formData.text.concat(' ', _, ' ') })}
-              >
-                {_}
-              </Button>
-            );
-          })}
-        </div>
       </Form.Item>
 
       <Form.Item colon={false}></Form.Item>

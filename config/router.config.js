@@ -296,13 +296,6 @@ export default [
                 component: './FollowupConfiguration/Questionnaire/Create/Step2',
                 hideInMenu: true,
               },
-              {
-                // 编辑任务内容
-                path: '/followup-configuration/questionnaire/create/step3',
-                // name: 'questionnaire-create3',
-                component: './FollowupConfiguration/Questionnaire/Create/Step3',
-                hideInMenu: true,
-              },
             ],
           },
           {

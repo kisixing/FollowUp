@@ -1,7 +1,8 @@
-import { Button, Form, Input, Radio, DatePicker } from 'antd';
+import { Form, Input, Radio, TimePicker } from 'antd';
 // import router from 'umi/router';
 import { getValueOfFirstItem } from '@/utils/utils';
 import MyDropdown from '@/components/MyDropdown';
+import ImportableTextarea from '@/components/ImportableTextarea';
 
 const mapStateToProps = ({ satisfactionCreation_model }) => {
   return { satisfactionCreation_model };
@@ -75,7 +76,7 @@ const Content = connect(mapStateToProps)(() => {
             }}
           />
           {` `}天{` `}
-          <DatePicker value={date} />
+          <TimePicker value={date} />
         </Input.Group>
       </Form.Item>
 
@@ -117,29 +118,12 @@ const Content = connect(mapStateToProps)(() => {
       <Title label="编辑消息" />
 
       <Form.Item label="提示文字">
-        <Input.TextArea
-          style={{ width: '80%' }}
+        <ImportableTextarea
+          dataset={['患者姓名', '医院名称', '节日名称'].map(_ => ({ text: _ }))}
+          onChange={_text => _setFormData({ text: _text })}
+          onInsert={_text => _setFormData({ text: formData.text.concat('[', _text, ']') })}
           value={text}
-          autosize={{ minRows: 2, maxRows: 6 }}
-          onChange={e => _setFormData({ text: e.target.value })}
         />
-        <Button type="link" style={{ float: 'none' }}>
-          导入模板
-        </Button>
-        <div>
-          您可以在提示文字中插入：
-          {['患者姓名', '医院名称', '节日名称'].map(_ => {
-            return (
-              <Button
-                type="link"
-                key={_}
-                onClick={() => _setFormData({ text: formData.text.concat(' ', _, ' ') })}
-              >
-                {_}
-              </Button>
-            );
-          })}
-        </div>
       </Form.Item>
     </Form>
   );
