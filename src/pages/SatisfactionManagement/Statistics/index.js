@@ -28,9 +28,10 @@ function InnerTabs() {
   const data1 = [['5分', 132], ['4分', 145], ['3分', 65], ['2分', 12], ['1分', 24]].map(
     ([x, y]) => ({ x, y })
   );
-  const data3 = [['妇科', 132], ['产科', 145], ['胎儿医学', 65], ['生殖医学', 12]].map(
-    ([x, y]) => ({ x, y })
-  );
+  const data3 = [['妇科', 3.9], ['产科', 3], ['胎儿医学', 4], ['生殖医学', 3.9]].map(([x, y]) => ({
+    x,
+    y,
+  }));
   return (
     <Tabs activeKey={state.activeKey} onChange={key => setState({ ...state, activeKey: key })}>
       <Tabs.TabPane tab="问卷分析" key="0">
@@ -89,7 +90,7 @@ function InnerTabs() {
           ]}
         />
       </Tabs.TabPane>
-      <Tabs.TabPane tab="交叉分析" key="2">
+      <Tabs.TabPane tab="交叉对比" key="2">
         <Bar data={data3} height={400} title="平均分" />
         <Table
           size="small"
@@ -99,9 +100,7 @@ function InnerTabs() {
             key: _,
             dataIndex: _,
           }))}
-          dataSource={[
-            { 科室: '比例人数', 妇科: '6%', 产科: '3%', 胎儿医学: '17%', 生殖医学: '38%' },
-          ]}
+          dataSource={[{ 科室: '平均分', 妇科: '3.9', 产科: '3', 胎儿医学: '4', 生殖医学: '3.9' }]}
         />
       </Tabs.TabPane>
     </Tabs>
@@ -114,19 +113,19 @@ const offlineData = [
     cvr: 0.82,
   },
   {
-    name: '妊娠高血压复诊管理',
+    name: '妇科',
     cvr: 0.78,
   },
   {
-    name: '唐筛+羊穿+无创基因...',
+    name: '产科',
     cvr: 0.45,
   },
   {
-    name: 'PAC随访',
+    name: '胎儿医学科',
     cvr: 0.3,
   },
   {
-    name: '产后42天复诊管理',
+    name: '生殖医学科',
     cvr: 0.3,
   },
 ];
@@ -173,6 +172,7 @@ class SearchList extends Component {
       <PageHeaderWrapper title="搜索列表" content={<SearchForm style={{ border: '0' }} />}>
         <div className={styles.content}>
           <OfflineData
+            subTitle="平均满意度"
             activeKey={activeKey}
             loading={false}
             offlineData={offlineData}

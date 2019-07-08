@@ -13,7 +13,7 @@ export default {
     {
       // 节日问候-新建
       path: '/concern-management/festival-concern/create',
-      name: 'festival-concern',
+      name: 'festival-concern-create',
       // icon: 'edit',
       component: './ConcernManagement/FestivalConcern/Create/Layout',
       hideInMenu: true,
