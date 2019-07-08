@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
-
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 
-class Questionnaire extends Component {
+class Questionnaire extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
