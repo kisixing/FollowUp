@@ -1,15 +1,29 @@
-import { Button, Dropdown, Menu, Icon, Form, Input, Radio, Switch, Checkbox, Col, Row } from 'antd';
+import {
+  Button,
+  Dropdown,
+  Menu,
+  Icon,
+  Form,
+  Input,
+  Radio,
+  Switch,
+  Checkbox,
+  Col,
+  Row,
+  DatePicker,
+} from 'antd';
 import { lh40 } from './index.less';
 import router from 'umi/router';
 import { getValueOfFirstItem } from '@/utils/utils';
+import MyDropdown from '@/components/MyDropdown';
 
 const mapStateToProps = ({ satisfactionCreation_model }) => {
   return { satisfactionCreation_model };
 };
-const Content = connect(mapStateToProps)(function A({ satisfactionCreation_model }) {
-  const reservationDateType = satisfactionCreation_model.reservationDateType || [];
-  const initDateType = getValueOfFirstItem(reservationDateType, F_VALUE, '');
+const dataset1 = ['春节', '中秋'].map(_ => ({ label: _, value: Math.random().toString() }));
+const dataset2 = ['当天', '之前'].map(_ => ({ label: _, value: Math.random().toString() }));
 
+const Content = connect(mapStateToProps)(function A({ satisfactionCreation_model }) {
   const reservationDuringType = satisfactionCreation_model.reservationDuringType || [];
   const initDuringType = getValueOfFirstItem(reservationDuringType, F_VALUE, '');
 
@@ -18,15 +32,15 @@ const Content = connect(mapStateToProps)(function A({ satisfactionCreation_model
 
   const [state, setState] = useState({
     formData: {
-      followupDateType: initDateType,
-      followupDuringType: initDuringType,
+      value1: getValueOfFirstItem(dataset1, F_VALUE, ''),
+      value2: getValueOfFirstItem(dataset2, F_VALUE, ''),
       followupDay: 5,
       mediaType: initMediaType,
       IsfollowOrder: false,
       text: '',
-      judgeDateType: initDateType,
       judgeDuringType: initDuringType,
       judgeDay: 7,
+      date: '',
     },
   });
 
@@ -40,7 +54,7 @@ const Content = connect(mapStateToProps)(function A({ satisfactionCreation_model
       },
     });
   }
-  const { followupDay, judgeDay, mediaType, IsfollowOrder, text } = formData;
+  const { followupDay, judgeDay, mediaType, IsfollowOrder, text, value1, value2, date } = formData;
 
   function getDropDown(type, typeList) {
     const a = typeList.filter(_ => _.value === formData[type]);
@@ -73,10 +87,19 @@ const Content = connect(mapStateToProps)(function A({ satisfactionCreation_model
       labelAlign="left"
     >
       <Title label="随访时间&媒介" isTop />
-      <Form.Item label="时间">
+      <Form.Item label="关怀推送时间">
         <Input.Group compact style={{ lineHeight: '32px' }}>
-          {getDropDown('followupDateType', reservationDateType)}
-          {` `}之后{` `}
+          节日
+          <MyDropdown
+            dataset={dataset2}
+            value={value2}
+            onChange={value => _setFormData({ value2: value })}
+          />
+          <MyDropdown
+            dataset={dataset1}
+            value={value1}
+            onChange={value => _setFormData({ value1: value })}
+          />
           <Input
             style={{ width: '60px' }}
             value={followupDay}
@@ -84,7 +107,8 @@ const Content = connect(mapStateToProps)(function A({ satisfactionCreation_model
               _setFormData({ followupDay: target.value });
             }}
           />
-          {getDropDown('followupDuringType', reservationDuringType)}
+          {` `}天{` `}
+          <DatePicker value={date} />
         </Input.Group>
       </Form.Item>
 

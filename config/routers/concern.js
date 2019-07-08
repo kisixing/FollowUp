@@ -34,7 +34,7 @@ export default {
           // 选择对象
           path: '/concern-management/festival-concern/create/step2',
           name: 'step2',
-          component: './ConcernManagement/FestivalConcern/Create/Step2',
+          component: './ConcernManagement/FestivalConcern/Create/Step3',
           hideInMenu: true,
         },
         {
@@ -42,13 +42,6 @@ export default {
           path: '/concern-management/festival-concern/create/step3',
           name: 'step3',
           component: './ConcernManagement/FestivalConcern/Create/Step3',
-          hideInMenu: true,
-        },
-        {
-          // 发布statistics
-          path: '/concern-management/festival-concern/create/step4',
-          name: 'step4',
-          component: './ConcernManagement/FestivalConcern/Create/Step4',
           hideInMenu: true,
         },
       ],
