@@ -9,7 +9,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import router from 'umi/router';
 import { Button, Icon } from 'antd';
-import moment from 'moment';
+// import moment from 'moment';
 import classNames from 'classnames';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import PageLoading from '@/components/PageLoading';
@@ -21,14 +21,14 @@ import styles from './styles.less';
 const gData = [
   {
     key: '000',
-    uuid: '2019-05-05-000',
+    uuid: '2019-05-05-001',
     title: '延续护理中心',
     isLeaf: true,
     icon: 'book',
   },
   {
     key: '001',
-    uuid: '2019-05-05-001',
+    uuid: '2019-05-05-002',
     title: '家庭护理',
     isLeaf: false,
     children: [
@@ -38,56 +38,32 @@ const gData = [
         title: '产后护理',
         isLeaf: true,
       },
-      {
-        key: '001-002',
-        uuid: '2019-05-05-004',
-        title: '婴儿护理',
-        isLeaf: true,
-      },
-      {
-        key: '001-003',
-        uuid: '2019-05-05-005',
-        title: '皮肤护理',
-        isLeaf: true,
-      },
     ],
   },
   {
     key: '002',
-    uuid: '2019-05-05-006',
+    uuid: '2019-05-05-004',
     title: '护理注意事项',
     isLeaf: false,
     children: [
       {
         key: '002-001',
-        uuid: '2019-05-05-007',
+        uuid: '2019-05-05-005',
         title: '造口护理',
         isLeaf: true,
       },
       {
         key: '002-002',
-        uuid: '2019-05-05-008',
+        uuid: '2019-05-05-006',
         title: '透析护理',
-        isLeaf: true,
-      },
-      {
-        key: '002-003',
-        uuid: '2019-05-05-009',
-        title: '皮肤护理',
         isLeaf: true,
       },
     ],
   },
   {
     key: '003',
-    uuid: '2019-05-05-0010',
+    uuid: '2019-05-05-007',
     title: '糖尿病护理',
-    isLeaf: true,
-  },
-  {
-    key: '004',
-    uuid: '2019-05-05-0011',
-    title: '高血压护理',
     isLeaf: true,
   },
 ];
@@ -112,8 +88,10 @@ class CommonProblem extends PureComponent {
   }
 
   onClick = item => {
+    if (!item || (item && !item.uuid)) {
+      return;
+    }
     const { dispatch } = this.props;
-    console.log('4444', item);
     dispatch({
       type: 'knowledge/fetchArticle',
       payload: {
@@ -185,7 +163,8 @@ class CommonProblem extends PureComponent {
                 >
                   <h2>{article.title}</h2>
                   {article.updated_time && (
-                    <p>于 {moment(article.updated_time).format('YYYY-MM-DD HH:mm:ss')} 修改</p>
+                    // <p>于 {moment(article.updated_time).format('YYYY-MM-DD HH:mm:ss')} 修改</p>
+                    <p>于 {article.updated_time.toLocaleString()} 修改</p>
                   )}
                   <div dangerouslySetInnerHTML={{ __html: article.content }} />
                 </div>

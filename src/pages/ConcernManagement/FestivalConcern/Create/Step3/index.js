@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import router from 'umi/router';
 import { mRb8 } from './index.less';
-import { PreviewModal } from '@/pages/SatisfactionManagement/Create/Step1';
+import { PreviewModal } from '../Step1';
 import Content from './Content';
 
 export function Title({ label, isTop }) {
@@ -24,10 +24,10 @@ export default () => {
   }
 
   return (
-    <div style={{ background: '#fff', padding: '20px' }}>
+    <div>
       <Content />
 
-      <div style={{ textAlign: 'center', marginTop: 20 }}>
+      <div style={{ textAlign: 'center' }}>
         <Button className={mRb8} onClick={() => setVisible(true)}>
           预览{' '}
         </Button>
@@ -35,7 +35,7 @@ export default () => {
         <Button
           type="primary"
           className={mRb8}
-          onClick={() => router.push('/satisfaction-management/satisfaction-lists')}
+          onClick={() => router.push('/concern-management/festival-concern')}
         >
           {' '}
           确定{' '}

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /*
  * @Description: 富文本编辑器组建
  * @Author: Zhong Jun
@@ -5,6 +6,7 @@
  */
 import React, { Component } from 'react';
 import Editor from 'braft-editor';
+import styles from './BraftEditor.less';
 import 'braft-editor/dist/index.css';
 
 class BraftEditor extends Component {
@@ -16,7 +18,7 @@ class BraftEditor extends Component {
   componentDidMount() {
     this.isLivinig = true;
     // 3秒后更改编辑器内容
-    setTimeout(this.setEditorContentAsync, 1500);
+    setTimeout(this.setEditorContentAsync, 1000);
   }
 
   componentWillUnmount() {
@@ -41,14 +43,32 @@ class BraftEditor extends Component {
 
   render() {
     const { editorState, outputHTML } = this.state;
+    const { onSave = e => console.log(e), onBack = () => {} } = this.props;
+
+    const extendControls = [
+      {
+        key: 'goback',
+        type: 'button',
+        text: '返回',
+        onClick: onBack,
+      },
+      {
+        key: 'onSave',
+        type: 'button',
+        className: 'ant-btn ant-btn-primary ant-btn-sm',
+        text: '保存',
+        onClick: () => onSave(outputHTML),
+      },
+    ];
 
     return (
-      <div>
-        <div className="editor-wrapper">
-          <Editor value={editorState} onChange={this.handleChange} />
-        </div>
-        <h5>输出内容</h5>
-        <div className="output-content">{outputHTML}</div>
+      <div className={styles.wrapper}>
+        <Editor
+          extendControls={extendControls}
+          value={editorState}
+          onChange={this.handleChange}
+          onSave={() => onSave(outputHTML)}
+        />
       </div>
     );
   }

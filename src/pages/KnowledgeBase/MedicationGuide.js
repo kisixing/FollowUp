@@ -20,9 +20,11 @@ class MedicationGuide extends PureComponent {
       <PageHeaderWrapper>
         <div style={{ overflow: 'hidden' }}>
           <Iframe
-            url="http://drugs.dxy.cn/index.htm"
+            url="http://drugs.dxy.cn/"
             id="iframe"
             display="initial"
+            security="restricted"
+            sandbox="allow-scripts allow-same-origin allow-popups"
             styles={{
               width: '100%',
               height: 'calc(100vh - 82px)',

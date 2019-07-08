@@ -1,9 +1,11 @@
+/* eslint-disable no-console */
 /*
  * @Description: 富文本修改页面
  * @Author: Zhong Jun
  * @Date: 2019-07-04 18:43:43
  */
 import React, { PureComponent } from 'react';
+import router from 'umi/router';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './styles.less';
 
@@ -24,12 +26,24 @@ class UpdatePage extends PureComponent {
     });
   }
 
+  onBack = () => {
+    const {
+      location: { pathname },
+    } = this.props;
+    const page = pathname.split('/').slice(-2, -1)[0];
+    router.push(`/knowledge/${page}`);
+  };
+
+  onSave = value => {
+    console.log('update', value);
+  };
+
   render() {
     const { html } = this.state;
     return (
       <PageHeaderWrapper>
         <div className={styles.wrapper}>
-          <BraftEditor html={html} />
+          <BraftEditor html={html} onBack={this.onBack} onSave={this.onSave} />
         </div>
       </PageHeaderWrapper>
     );

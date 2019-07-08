@@ -2,7 +2,7 @@
 
 .wrapper {
   display: flex;
-  height: calc(~'100vh - 183px');
+  height: calc(~'100vh - 204px');
   background-color: #fff;
 
   .tree {
@@ -70,7 +70,9 @@
 
     .textbox {
       position: relative;
-      padding: 48px;
+      height: calc(~'100% - 38px');
+      padding: 0 48px;
+      overflow-y: auto;
 
       .icon {
         position: absolute;
@@ -85,6 +87,8 @@
       }
 
       .innerTextbox {
+        padding: 36px 0;
+
         h2 {
           margin-bottom: 6px;
           font-weight: bold;

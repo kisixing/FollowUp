@@ -1,56 +1,53 @@
 /* eslint-disable no-console */
 
-import React, { Component } from 'react';
 import router from 'umi/router';
-import { connect } from 'dva';
 
 import { Form, List, Card, Tooltip, Menu, Input, Dropdown, Icon, Avatar, Button, Tag } from 'antd';
 import { TweenOneGroup } from 'rc-tween-one';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import TagSelect from '@/components/TagSelect';
 import StandardFormRow from '@/components/StandardFormRow';
-import { getObjectValues } from '@/utils/utils';
 
 import styles from './index.less';
 
-@connect(({ global, loading, satisfactionList }) => ({
-  global,
-  loading: loading.effects['satisfactionList/query'],
-  selectedTags: satisfactionList.selectedTags,
-  lists: satisfactionList.lists,
-  category: satisfactionList.category,
-  secondaryCategory: satisfactionList.secondaryCategory,
-}))
-class FollowupManagement extends Component {
+// const hierarchical = false
+// const multiple = false
+//
+const list = ['情人节', '端午', '中秋'].map(_ => {
+  const time = Math.round(Math.random() * 366);
+  return {
+    title: _,
+    id: Math.random(),
+    all: new Date(+new Date() + 1000 * 60 * 60 * 24 * time).toLocaleDateString(),
+    time,
+    status: { dec: '运行中', code: 'running' },
+    avatar: '',
+  };
+});
+
+const category1 = Array(12)
+  .fill('月')
+  .map((_, index) => `${index + 1}${_}`);
+const category2 = ['中国传统节日', '24节气', '公众/国际节日'];
+
+class FollowupManagement extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       tabActiveKey: 'all',
+      loading: false,
+      selectedCategory1: [],
+      selectedCategory2: [],
     };
   }
 
   componentDidMount() {
-    const { dispatch, selectedTags } = this.props;
-    const { tabActiveKey } = this.state;
-    dispatch({
-      type: 'satisfactionList/query',
-      payload: {
-        status: tabActiveKey,
-        type: selectedTags.category,
-        secondaryType: selectedTags.secondaryCategory,
-      },
-    });
+    // const { dispatch,  } = this.props;
+    // const { tabActiveKey ,selectedTags} = this.state;
   }
 
   handleTabChange = key => {
     this.setState({ tabActiveKey: key });
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'satisfactionList/query',
-      payload: {
-        status: key,
-      },
-    });
   };
 
   handleFormSubmit = value => {
@@ -59,31 +56,37 @@ class FollowupManagement extends Component {
 
   onDetailClick = () => {
     // const { match } = this.props;
-    router.push(`/satisfaction-management/praise-lists`);
+    router.push(`/concern-management/praise-lists`);
   };
 
   onChartClick = () => {
-    router.push(`/satisfaction-management/satisfaction-lists/statistics`);
+    router.push(`/concern-management/festival-concern/statistics`);
   };
 
   // 选择标签
   handleTags = (target, checkedTag) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'satisfactionList/updateTags',
-      payload: {
-        target,
-        checkedTag,
-      },
+    this.setState({
+      [target]: Array.isArray(checkedTag) ? checkedTag : [checkedTag],
+      loading: true,
     });
+    setTimeout(() => {
+      this.setState({ loading: false });
+    }, 400);
   };
 
   handleTagClose = removedTag => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'satisfactionList/removeTag',
-      payload: removedTag,
-    });
+    const { selectedCategory1, selectedCategory2 } = this.state;
+    const index1 = selectedCategory1.indexOf(removedTag);
+    const index2 = selectedCategory2.indexOf(removedTag);
+    // const res = []
+    if (index1 >= 0) {
+      selectedCategory1.splice(index1, 1);
+      this.setState({ selectedCategory1 });
+    }
+    if (index2 >= 0) {
+      selectedCategory2.splice(index2, 1);
+      this.setState({ selectedCategory2 });
+    }
   };
 
   render() {
@@ -153,7 +156,7 @@ class FollowupManagement extends Component {
         size="small"
         type="primary"
         icon="plus"
-        onClick={() => router.push('/satisfaction-management/satisfaction-lists/create')}
+        onClick={() => router.push('/concern-management/festival-concern/create')}
       >
         新建
       </Button>
@@ -162,11 +165,11 @@ class FollowupManagement extends Component {
     const CardInfo = ({ all, today }) => (
       <div className={styles.cardInfo}>
         <div>
-          <p>调查患者</p>
+          <p>下次节日日期</p>
           <p>{all}</p>
         </div>
         <div>
-          <p>今日完成</p>
+          <p>倒计时</p>
           <p>{today}</p>
         </div>
       </div>
@@ -198,8 +201,8 @@ class FollowupManagement extends Component {
       return tagChild;
     };
 
-    const { loading, selectedTags, lists, category, secondaryCategory } = this.props;
-    const { tabActiveKey } = this.state;
+    const { tabActiveKey, loading, selectedCategory1, selectedCategory2 } = this.state;
+    const selectedItems = selectedCategory1.concat(selectedCategory2).filter(_ => _ !== '');
     return (
       <PageHeaderWrapper
         wrapperClassName={styles.wrapper}
@@ -228,7 +231,7 @@ class FollowupManagement extends Component {
                     leave={{ opacity: 0, width: 0, scale: 0, duration: 200 }}
                     appear={false}
                   >
-                    {tagsMap(getObjectValues(selectedTags).filter(e => e !== ''))}
+                    {tagsMap(selectedItems)}
                   </TweenOneGroup>
                 </div>
               </StandardFormRow>
@@ -237,12 +240,12 @@ class FollowupManagement extends Component {
                   <TagSelect
                     radio
                     expandable
-                    hideCheckAll
-                    value={[selectedTags.category]}
-                    onChange={tags => this.handleTags('category', tags)}
+                    // hideCheckAll
+                    value={selectedCategory1}
+                    onChange={tags => this.handleTags('selectedCategory1', tags)}
                     actionsText={actionsTextMap}
                   >
-                    {tagOptionsMap(category.map(e => e.name))}
+                    {tagOptionsMap(category1)}
                   </TagSelect>
                 </Form.Item>
               </StandardFormRow>
@@ -251,12 +254,12 @@ class FollowupManagement extends Component {
                   <TagSelect
                     radio
                     expandable
-                    hideCheckAll
-                    value={[selectedTags.secondaryCategory]}
-                    onChange={tags => this.handleTags('secondaryCategory', tags)}
+                    // hideCheckAll
+                    value={selectedCategory2}
+                    onChange={tags => this.handleTags('selectedCategory2', tags)}
                     actionsText={actionsTextMap}
                   >
-                    {tagOptionsMap(secondaryCategory)}
+                    {tagOptionsMap(category2)}
                   </TagSelect>
                 </Form.Item>
               </StandardFormRow>
@@ -267,7 +270,7 @@ class FollowupManagement extends Component {
             style={{ marginTop: 24 }}
             grid={{ gutter: 24, xxl: 4, xl: 3, lg: 2, md: 2, sm: 1 }}
             loading={loading}
-            dataSource={lists}
+            dataSource={list}
             renderItem={item => (
               <List.Item key={item.id}>
                 <Card
@@ -284,7 +287,7 @@ class FollowupManagement extends Component {
                       <Icon
                         type="edit"
                         onClick={() =>
-                          router.push('/satisfaction-management/satisfaction-lists/create/step2')
+                          router.push('/concern-management/festival-concern/create/step2')
                         }
                       />
                     </Tooltip>,
@@ -303,7 +306,7 @@ class FollowupManagement extends Component {
                     }
                   />
                   <div className={styles.cardItemContent}>
-                    <CardInfo all={item.allFollowup} today={item.todayFollowup} />
+                    <CardInfo all={item.all} today={item.time} />
                   </div>
                 </Card>
               </List.Item>

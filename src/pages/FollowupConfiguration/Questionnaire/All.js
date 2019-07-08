@@ -181,16 +181,31 @@ class All extends Component {
           dataSource={['', ...list]}
           renderItem={item =>
             item ? (
-              <List.Item key={item.id}>
+              <List.Item key={item.id} style={{ height: '202px' }}>
                 <Card
                   hoverable
                   bodyStyle={{ padding: 0 }}
                   actions={[
-                    <Tooltip title="随访人员统计">
-                      <Icon type="ordered-list" />
+                    <Tooltip title="编辑问卷">
+                      <Icon
+                        type="ordered-list"
+                        onClick={() =>
+                          router.push({
+                            pathname: '/followup-configuration/questionnaire/create/step2',
+                            query: {
+                              edit: true,
+                            },
+                          })
+                        }
+                      />
                     </Tooltip>,
                     <Tooltip title="图表分析">
-                      <Icon type="line-chart" />
+                      <Icon
+                        type="line-chart"
+                        onClick={() =>
+                          router.push('/followup-management/task-lists/chart/330000197902212175')
+                        }
+                      />
                     </Tooltip>,
                     <Tooltip title="分享">
                       <Icon type="share-alt" />
