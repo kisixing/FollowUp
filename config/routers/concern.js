@@ -66,7 +66,7 @@ export default {
       path: '/concern-management/market',
       name: 'market',
       // icon: 'edit',
-      component: './FollowupManagement/TaskManagement/index',
+      component: './ConcernManagement/Market/index',
     },
   ],
 };
