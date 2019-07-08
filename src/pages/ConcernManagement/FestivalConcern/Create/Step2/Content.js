@@ -41,7 +41,7 @@ const Content = connect(mapStateToProps)(() => {
       },
     });
   }
-  const { followupDay, value4, value3, text, value1, value2, date } = formData;
+  const { followupDay, value4, value3, text, value1, value2 } = formData;
 
   return (
     <Form
@@ -76,7 +76,7 @@ const Content = connect(mapStateToProps)(() => {
             }}
           />
           {` `}天{` `}
-          <TimePicker value={date} />
+          <TimePicker />
         </Input.Group>
       </Form.Item>
 
