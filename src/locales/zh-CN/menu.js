@@ -63,6 +63,12 @@ export default {
 
   'menu.monitor': '监控台（仅管理员）',
   'menu.statistics': '统计管理',
+  'menu.statistics.base': '全局统计',
+  'menu.statistics.work': '工作量统计',
+  'menu.statistics.action': '行为分析',
+  'menu.statistics.satisfaction': '满意度分析',
+  'menu.statistics.followup': '随访分析',
+  'menu.statistics.research': '科研分析',
 
   'menu.result': '结果页',
   'menu.result.success': '成功页',
