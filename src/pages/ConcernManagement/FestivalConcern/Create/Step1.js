@@ -50,7 +50,7 @@ const templateList = [
   },
 ];
 export const PreviewModal = props => {
-  const { dataSource, modalVisible, handleSelect, handleModalVisible } = props;
+  const { dataSource, modalVisible, handleSelect, handleModalVisible, okText } = props;
   return (
     <Modal
       centered
@@ -60,8 +60,8 @@ export const PreviewModal = props => {
       className={styles.modal}
       maskStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.25)' }}
       visible={modalVisible}
-      onOk={() => handleSelect(dataSource)}
-      okText="使用该模板"
+      onOk={() => (handleSelect && handleSelect(dataSource)) || handleModalVisible()}
+      okText={okText}
       onCancel={() => handleModalVisible()}
     >
       <Form layout="horizontal" labelCol={{ xs: 4 }} wrapperCol={{ xs: 20 }}>
@@ -233,6 +233,7 @@ class Step1 extends Component {
               }
             />
             <PreviewModal
+              okText="使用该模板"
               modalVisible={modalVisible}
               dataSource={currentTemplate}
               handleSelect={this.handleSelect}

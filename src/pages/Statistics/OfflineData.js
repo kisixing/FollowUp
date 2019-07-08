@@ -5,7 +5,7 @@ import { TimelineChart, Pie } from '@/components/Charts';
 import NumberInfo from '@/components/NumberInfo';
 
 const CustomTab = ({ data, currentTabKey: currentKey, subTitle = '成功率' }) => (
-  <Row gutter={8} style={{ width: 138, margin: '8px 0' }}>
+  <Row gutter={8} style={{ width: 158, margin: '8px 0' }}>
     <Col span={12}>
       <NumberInfo
         title={data.name}
@@ -50,7 +50,7 @@ const CustomTab = ({ data, currentTabKey: currentKey, subTitle = '成功率' }) 
 const { TabPane } = Tabs;
 
 const OfflineData = memo(
-  ({ activeKey, loading, offlineData, offlineChartData, handleTabChange, children }) => {
+  ({ activeKey, loading, offlineData, offlineChartData, handleTabChange, children, subTitle }) => {
     const _children = children || (
       <div style={{ padding: '0 24px' }}>
         <TimelineChart
@@ -73,7 +73,10 @@ const OfflineData = memo(
       >
         <Tabs activeKey={activeKey} onChange={handleTabChange}>
           {offlineData.map(shop => (
-            <TabPane tab={<CustomTab data={shop} currentTabKey={activeKey} />} key={shop.name}>
+            <TabPane
+              tab={<CustomTab subTitle={subTitle} data={shop} currentTabKey={activeKey} />}
+              key={shop.name}
+            >
               {_children}
             </TabPane>
           ))}

@@ -52,6 +52,10 @@ export default {
 
   'menu.concern-management': '客户关怀',
   'menu.concern-management.festival-concern': '节日关怀',
+  'menu.concern-management.festival-concern-create': '创建',
+  'menu.concern-management.festival-concern-create.step1': '步骤1',
+  'menu.concern-management.festival-concern-create.step2': '步骤2',
+  'menu.concern-management.festival-concern-create.step3': '步骤3',
   'menu.concern-management.birthday-concern': '生日关怀',
   'menu.concern-management.market': '市场活动',
 

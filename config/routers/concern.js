@@ -13,7 +13,7 @@ export default {
     {
       // 节日问候-新建
       path: '/concern-management/festival-concern/create',
-      name: 'festival-concern',
+      name: 'festival-concern-create',
       // icon: 'edit',
       component: './ConcernManagement/FestivalConcern/Create/Layout',
       hideInMenu: true,
@@ -34,16 +34,16 @@ export default {
           // 选择对象
           path: '/concern-management/festival-concern/create/step2',
           name: 'step2',
-          component: './ConcernManagement/FestivalConcern/Create/Step3',
+          component: './ConcernManagement/FestivalConcern/Create/Step2',
           hideInMenu: true,
         },
-        {
-          // 编辑任务内容
-          path: '/concern-management/festival-concern/create/step3',
-          name: 'step3',
-          component: './ConcernManagement/FestivalConcern/Create/Step3',
-          hideInMenu: true,
-        },
+        // {
+        //   // 编辑任务内容
+        //   path: '/concern-management/festival-concern/create/step3',
+        //   name: 'step3',
+        //   component: './ConcernManagement/FestivalConcern/Create/Step3',
+        //   hideInMenu: true,
+        // },
       ],
     },
 

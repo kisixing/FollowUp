@@ -85,6 +85,10 @@ class FollowupManagement extends Component {
     router.push(`/followup-management/task-lists/chart/${e.id}`);
   };
 
+  onEdit = () => {
+    router.push(`/followup-management/create/step3`);
+  };
+
   // 选择标签
   handleTags = (target, checkedTag) => {
     const { dispatch } = this.props;
@@ -295,7 +299,7 @@ class FollowupManagement extends Component {
                       <Icon type="line-chart" onClick={() => this.onChartClick(item)} />
                     </Tooltip>,
                     <Tooltip title="编辑">
-                      <Icon type="edit" />
+                      <Icon type="edit" onClick={() => this.onEdit(item)} />
                     </Tooltip>,
                     <Dropdown overlay={itemMenu}>
                       <Icon type="ellipsis" />

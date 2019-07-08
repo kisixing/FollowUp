@@ -15,6 +15,7 @@ import {
 import { lh40, colorC } from './index.less';
 import router from 'umi/router';
 import { getValueOfFirstItem } from '@/utils/utils';
+import ImportableTextarea from '@/components/ImportableTextarea';
 
 const mapStateToProps = ({ followupCreation_model }) => {
   return { followupCreation_model };
@@ -147,29 +148,12 @@ const Content = connect(mapStateToProps)(function A({ followupCreation_model }) 
       <Title label="随访内容" />
 
       <Form.Item label="提示文字">
-        <Input.TextArea
-          style={{ width: '80%' }}
+        <ImportableTextarea
+          dataset={['孕妇姓名', '复诊预约时间', '超时天数'].map(_ => ({ text: _ }))}
+          onChange={_text => _setFormData({ text: _text })}
+          onInsert={_text => _setFormData({ text: formData.text.concat('[', _text, ']') })}
           value={text}
-          autosize={{ minRows: 2, maxRows: 6 }}
-          onChange={e => _setFormData({ text: e.target.value })}
         />
-        <Button type="link" style={{ float: 'none' }}>
-          导入模板
-        </Button>
-        <div>
-          您可以在提示文字中插入：
-          {['孕妇姓名', '复诊预约时间', '超时天数'].map(_ => {
-            return (
-              <Button
-                type="link"
-                key={_}
-                onClick={() => _setFormData({ text: formData.text.concat(' ', _, ' ') })}
-              >
-                {_}
-              </Button>
-            );
-          })}
-        </div>
       </Form.Item>
       <Row>
         <Col offset={1}>
