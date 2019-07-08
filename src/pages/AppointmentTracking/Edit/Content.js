@@ -1,4 +1,4 @@
-import { Button, Form, Input, Radio, Switch, Col, Row, DatePicker, Table } from 'antd';
+import { Button, Form, Input, Radio, Switch, Col, Row, Table, TimePicker } from 'antd';
 import { lh40 } from './index.less';
 // import router from 'umi/router';
 import { getValueOfFirstItem } from '@/utils/utils';
@@ -57,7 +57,7 @@ const Content = connect(mapStateToProps)(function A({ satisfactionCreation_model
             }}
           />
           {` `}天{` `}
-          <DatePicker />
+          <TimePicker />
         </Input.Group>
       </Form.Item>
 

@@ -130,7 +130,7 @@ const Content = connect(mapStateToProps)(function A({ satisfactionCreation_model
         </Button>
         <div>
           您可以在提示文字中插入：
-          {['孕妇姓名', '复诊预约时间', '超时天数'].map(_ => {
+          {['医院名称', '科室名称', '孕妇姓名'].map(_ => {
             return (
               <Button
                 type="link"
@@ -146,7 +146,7 @@ const Content = connect(mapStateToProps)(function A({ satisfactionCreation_model
 
       <Form.Item label="满意度问卷">
         <Button type="primary" ghost>
-          未及时就诊原因
+          科室症后满意度调查
         </Button>
         <Button
           type="link"
