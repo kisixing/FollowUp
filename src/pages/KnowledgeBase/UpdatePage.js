@@ -27,7 +27,11 @@ class UpdatePage extends PureComponent {
   }
 
   onBack = () => {
-    router.push('/knowledge/nursing');
+    const {
+      location: { pathname },
+    } = this.props;
+    const page = pathname.split('/').slice(-2, -1)[0];
+    router.push(`/knowledge/${page}`);
   };
 
   onSave = value => {

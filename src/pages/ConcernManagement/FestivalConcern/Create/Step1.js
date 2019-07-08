@@ -50,7 +50,7 @@ const templateList = [
   },
 ];
 export const PreviewModal = props => {
-  const { dataSource, modalVisible, handleSelect, handleModalVisible } = props;
+  const { dataSource, modalVisible, handleSelect, handleModalVisible, okText } = props;
   return (
     <Modal
       centered
@@ -60,29 +60,25 @@ export const PreviewModal = props => {
       className={styles.modal}
       maskStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.25)' }}
       visible={modalVisible}
-      onOk={() => handleSelect(dataSource)}
-      okText="使用该模板"
+      onOk={() => (handleSelect && handleSelect(dataSource)) || handleModalVisible()}
+      okText={okText}
       onCancel={() => handleModalVisible()}
     >
       <Form layout="horizontal" labelCol={{ xs: 4 }} wrapperCol={{ xs: 20 }}>
-        <Form.Item label="满意度调查问卷">
-          <Button>科室满意度调查问卷</Button>
+        <Form.Item label="传统假日">
+          <u>春节</u>
         </Form.Item>
-        <Form.Item label="发送时间">
-          <u>诊疗结束后</u> 之后 <u>2</u> 分钟
+        <Form.Item label="关怀推送时间">
+          节日<u>当天</u>
         </Form.Item>
-        <Form.Item label="发送科室">
-          <u>肝胆外科、神经外科、胃肠外科、泌尿外科、心胸外科</u>
+        <Form.Item label="是否重复">
+          <u>仅一次，不重复发送</u>
         </Form.Item>
-        <Form.Item label="发送对象">
-          年龄： <u>不限</u>
-          性别： <u>女</u>
+        <Form.Item label="提示文字">
+          <u>祝您节日快乐</u>
         </Form.Item>
         <Form.Item label="发送媒介">
-          发送媒介： <u>微信</u>
-        </Form.Item>
-        <Form.Item label="人工管理范围">
-          <u>问卷分数</u> {`<=`} <u>60分</u>
+          <u>微信</u>
         </Form.Item>
       </Form>
     </Modal>
@@ -237,6 +233,7 @@ class Step1 extends Component {
               }
             />
             <PreviewModal
+              okText="使用该模板"
               modalVisible={modalVisible}
               dataSource={currentTemplate}
               handleSelect={this.handleSelect}

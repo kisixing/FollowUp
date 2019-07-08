@@ -38,7 +38,7 @@ class EditArea extends Component {
     const { dispatch, questionnaire_model } = this.props;
     const { questionList, questionnaireTitle } = questionnaire_model;
     // const { } = state;
-    console.log(questionList);
+
     const _dispatch = dispatchCreator(dispatch);
     return (
       <div className={container}>

@@ -277,11 +277,8 @@ class FollowupManagement extends React.Component {
                   hoverable
                   bodyStyle={{ paddingBottom: 20 }}
                   actions={[
-                    <Tooltip title="随访人员统计">
-                      <Icon type="ordered-list" onClick={() => this.onDetailClick(item)} />
-                    </Tooltip>,
-                    <Tooltip title="图表分析">
-                      <Icon type="line-chart" onClick={() => this.onChartClick(item)} />
+                    <Tooltip title="暂停">
+                      <Icon type="pause" />
                     </Tooltip>,
                     <Tooltip title="编辑">
                       <Icon
@@ -290,6 +287,9 @@ class FollowupManagement extends React.Component {
                           router.push('/concern-management/festival-concern/create/step2')
                         }
                       />
+                    </Tooltip>,
+                    <Tooltip title="统计">
+                      <Icon type="line-chart" onClick={() => this.onChartClick(item)} />
                     </Tooltip>,
                     <Dropdown overlay={itemMenu}>
                       <Icon type="ellipsis" />

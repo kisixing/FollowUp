@@ -52,6 +52,10 @@ export default {
 
   'menu.concern-management': '客户关怀',
   'menu.concern-management.festival-concern': '节日关怀',
+  'menu.concern-management.festival-concern-create': '创建',
+  'menu.concern-management.festival-concern-create.step1': '步骤1',
+  'menu.concern-management.festival-concern-create.step2': '步骤2',
+  'menu.concern-management.festival-concern-create.step3': '步骤3',
   'menu.concern-management.birthday-concern': '生日关怀',
   'menu.concern-management.market': '市场活动',
 
@@ -59,7 +63,8 @@ export default {
   'menu.knowledge.medication': '用药指导',
   'menu.knowledge.faq': '常见问题',
   'menu.knowledge.nursing': '护理知识',
-  'menu.knowledge.update': '编辑',
+  'menu.knowledge.nursing-update': '编辑',
+  'menu.knowledge.faq-update': '编辑',
 
   'menu.monitor': '监控台（仅管理员）',
   'menu.statistics': '统计管理',
