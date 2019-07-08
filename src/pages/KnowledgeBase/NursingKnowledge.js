@@ -8,7 +8,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import router from 'umi/router';
-import { Button, Icon } from 'antd';
+import { Button, Icon, Menu, Dropdown } from 'antd';
 // import moment from 'moment';
 import classNames from 'classnames';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
@@ -117,6 +117,23 @@ class CommonProblem extends PureComponent {
     });
   };
 
+  moreMenu = () => (
+    <Menu>
+      <Menu.Item key="0">
+        <a href="#">查看页面历史</a>
+      </Menu.Item>
+      <Menu.Item key="1">
+        <a href="#">导出到word</a>
+      </Menu.Item>
+      <Menu.Item key="1">
+        <a href="#">添加到页面模板</a>
+      </Menu.Item>
+      <Menu.Item key="1">
+        <a href="#">复制页面</a>
+      </Menu.Item>
+    </Menu>
+  );
+
   render() {
     const { fullScreen } = this.state;
     const { article, loading } = this.props;
@@ -144,9 +161,11 @@ class CommonProblem extends PureComponent {
                 <Button type="link" icon="bell" ghost>
                   已关注
                 </Button>
-                <Button type="link" icon="ellipsis" ghost>
-                  更多
-                </Button>
+                <Dropdown overlay={this.moreMenu()} trigger={['click']}>
+                  <Button type="link" icon="ellipsis" ghost>
+                    更多
+                  </Button>
+                </Dropdown>
               </div>
             </div>
             {loading ? (
