@@ -53,7 +53,7 @@ export default {
       path: '/concern-management/birthday-concern',
       name: 'birthday-concern',
       // icon: 'edit',
-      component: './FollowupManagement/TaskManagement/index',
+      component: `${MODLE}/BirthdayConcern`,
     },
     {
       // 市场活动
