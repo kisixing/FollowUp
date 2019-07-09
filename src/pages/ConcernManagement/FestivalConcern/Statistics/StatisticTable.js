@@ -90,9 +90,17 @@ export default () => {
     columns,
     dataSource,
     rowSelection,
+    pagination: {
+      showSizeChanger: true,
+      showQuickJumper: true,
+      total: 50,
+    },
   };
   return (
     <div style={{ background: '#fff' }}>
+      <Button type="primary" style={{ marginBottom: 16 }}>
+        发送短信
+      </Button>
       <Table {...propsData} />
     </div>
   );
