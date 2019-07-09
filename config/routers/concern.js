@@ -1,3 +1,4 @@
+const MODLE = 'ConcernManagement';
 export default {
   path: '/concern-management',
   name: 'concern-management',
@@ -5,61 +6,54 @@ export default {
   routes: [
     {
       // 节日问候
-      path: '/concern-management/festival-concern',
+      path: '/concern-management/festival-concern/',
       name: 'festival-concern',
       // icon: 'edit',
-      component: './ConcernManagement/FestivalConcern/index',
-    },
-    {
-      // 节日问候-新建
-      path: '/concern-management/festival-concern/create',
-      name: 'festival-concern-create',
-      // icon: 'edit',
-      component: './ConcernManagement/FestivalConcern/Create/Layout',
-      hideInMenu: true,
-
       routes: [
         {
-          path: '/concern-management/festival-concern/create',
-          redirect: '/concern-management/festival-concern/create/step1',
+          path: '/concern-management/festival-concern/',
+          redirect: 'index',
         },
         {
-          // 选择任务类型
-          path: '/concern-management/festival-concern/create/step1',
-          name: 'step1',
-          component: './ConcernManagement/FestivalConcern/Create/Step1',
+          path: 'index',
+          component: `${MODLE}/FestivalConcern/index`,
+        },
+        {
+          path: 'statistics',
+          name: 'statistics',
+          component: `${MODLE}/FestivalConcern/Statistics/index`,
           hideInMenu: true,
         },
         {
-          // 选择对象
-          path: '/concern-management/festival-concern/create/step2',
-          name: 'step2',
-          component: './ConcernManagement/FestivalConcern/Create/Step2',
+          // 节日问候-新建
+          path: 'create',
+          name: 'create',
+          component: `${MODLE}/FestivalConcern/Create/Layout`,
           hideInMenu: true,
+
+          routes: [
+            {
+              path: 'step1',
+              name: 'step1',
+              component: `${MODLE}/FestivalConcern/Create/Step1`,
+              hideInMenu: true,
+            },
+            {
+              path: 'step2',
+              name: 'step2',
+              component: `${MODLE}/FestivalConcern/Create/Step2`,
+              hideInMenu: true,
+            },
+          ],
         },
-        // {
-        //   // 编辑任务内容
-        //   path: '/concern-management/festival-concern/create/step3',
-        //   name: 'step3',
-        //   component: './ConcernManagement/FestivalConcern/Create/Step3',
-        //   hideInMenu: true,
-        // },
       ],
     },
-
-    //   {
-    //     // 节日问候-统计
-    //     path: '/concern-management/festival-concern/statistics',
-    //     name: 'festival-concern',
-    //     // icon: 'edit',
-    //     component: './ConcernManagement/FestivalConcern/Statistics',
-    //   },
     {
       // 生日问候
       path: '/concern-management/birthday-concern',
       name: 'birthday-concern',
       // icon: 'edit',
-      component: './FollowupManagement/TaskManagement/index',
+      component: `${MODLE}/BirthdayConcern`,
     },
     {
       // 市场活动

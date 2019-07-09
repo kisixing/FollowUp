@@ -2,20 +2,28 @@ import { Dropdown, Button, Menu, Icon } from 'antd';
 
 export default function MyDropdown({
   value,
+  placeholder = '',
   onChange = () => {},
   dataset = [],
   labelKey = F_LABEL,
   valueKey = F_VALUE,
 }) {
+  const [state, setState] = useState({
+    _value: '',
+  });
   // debugger
-  const target = dataset.find(_ => _[valueKey] === value);
-  const label = (target && target[labelKey]) || 'Error Value';
+  let target = dataset.find(_ => _[valueKey] === value);
+  if (!target) {
+    target = dataset.find(_ => _[valueKey] === state._value);
+  }
+  const label = (target && target[labelKey]) || placeholder;
   return (
     <div>
       <Dropdown
         overlay={
           <Menu
             onClick={({ key }) => {
+              setState({ _value: key });
               onChange(key);
             }}
           >

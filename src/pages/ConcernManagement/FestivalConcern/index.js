@@ -60,7 +60,7 @@ class FollowupManagement extends React.Component {
   };
 
   onChartClick = () => {
-    router.push(`/concern-management/festival-concern/statistics`);
+    router.push(`statistics`);
   };
 
   // 选择标签
@@ -156,7 +156,7 @@ class FollowupManagement extends React.Component {
         size="small"
         type="primary"
         icon="plus"
-        onClick={() => router.push('/concern-management/festival-concern/create')}
+        onClick={() => router.push('/concern-management/festival-concern/create/step1')}
       >
         新建
       </Button>

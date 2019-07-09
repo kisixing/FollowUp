@@ -353,7 +353,45 @@ export default [
         path: '/statistics',
         name: 'statistics',
         icon: 'bar-chart',
-        component: './Statistics/Analysis',
+        routes: [
+          {
+            path: '/statistics/1',
+            name: 'base',
+            icon: 'area-chart',
+            component: './Statistics/Analysis',
+          },
+          {
+            name: 'satisfaction',
+
+            icon: 'area-chart',
+            path: '/statistics/2',
+            component: './SatisfactionManagement/Statistics',
+          },
+          {
+            path: '/statistics/3',
+            name: 'followup',
+            icon: 'area-chart',
+            component: './FollowupManagement/TaskDetailsChart/index',
+          },
+          {
+            path: '/statistics/4',
+            name: 'work',
+            icon: 'area-chart',
+            component: './FollowupManagement/TaskDetailsChart/index',
+          },
+          {
+            path: '/statistics/5',
+            name: 'action',
+            icon: 'area-chart',
+            component: './FollowupManagement/TaskDetailsChart/index',
+          },
+          {
+            path: '/statistics/6',
+            name: 'research',
+            icon: 'area-chart',
+            component: './FollowupManagement/TaskDetailsChart/index',
+          },
+        ],
       },
 
       // {

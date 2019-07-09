@@ -52,10 +52,11 @@ export default {
 
   'menu.concern-management': '客户关怀',
   'menu.concern-management.festival-concern': '节日关怀',
-  'menu.concern-management.festival-concern-create': '创建',
-  'menu.concern-management.festival-concern-create.step1': '步骤1',
-  'menu.concern-management.festival-concern-create.step2': '步骤2',
-  'menu.concern-management.festival-concern-create.step3': '步骤3',
+  'menu.concern-management.festival-concern.statistics': '统计',
+  'menu.concern-management.festival-concern.create': '创建',
+  'menu.concern-management.festival-concern.create.step1': '步骤1',
+  'menu.concern-management.festival-concern.create.step2': '步骤2',
+  'menu.concern-management.festival-concern.create.step3': '步骤3',
   'menu.concern-management.birthday-concern': '生日关怀',
   'menu.concern-management.market': '市场活动',
 
@@ -68,6 +69,12 @@ export default {
 
   'menu.monitor': '监控台（仅管理员）',
   'menu.statistics': '统计管理',
+  'menu.statistics.base': '全局统计',
+  'menu.statistics.work': '工作量统计',
+  'menu.statistics.action': '行为分析',
+  'menu.statistics.satisfaction': '满意度分析',
+  'menu.statistics.followup': '随访分析',
+  'menu.statistics.research': '科研分析',
 
   'menu.result': '结果页',
   'menu.result.success': '成功页',
