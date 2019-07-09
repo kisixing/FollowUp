@@ -12,71 +12,44 @@ const columns = [
 const dataSource = [
   {
     name: '李依伊',
-    card: Math.random()
-      .toString()
-      .slice(10),
-    phone: `130${Math.random()
-      .toString()
-      .slice(10)}`,
-    date: new Date().toLocaleDateString(),
+
     status: '成功',
   },
   {
     name: '李思思',
-    card: Math.random()
-      .toString()
-      .slice(10),
-    phone: `130${Math.random()
-      .toString()
-      .slice(10)}`,
-    date: new Date().toLocaleDateString(),
+
     status: '成功',
   },
   {
     name: '张丹丹',
-    card: Math.random()
-      .toString()
-      .slice(10),
-    phone: `130${Math.random()
-      .toString()
-      .slice(10)}`,
-    date: new Date().toLocaleDateString(),
+
     status: '成功',
   },
   {
     name: '陈甜甜',
-    card: Math.random()
-      .toString()
-      .slice(10),
-    phone: `130${Math.random()
-      .toString()
-      .slice(10)}`,
-    date: new Date().toLocaleDateString(),
+
     status: '成功',
   },
   {
     name: '黄海峰',
-    card: Math.random()
-      .toString()
-      .slice(10),
-    phone: `130${Math.random()
-      .toString()
-      .slice(10)}`,
-    date: new Date().toLocaleDateString(),
+
     status: '成功',
   },
   {
     name: '郭子仪',
-    card: Math.random()
-      .toString()
-      .slice(10),
-    phone: `130${Math.random()
-      .toString()
-      .slice(10)}`,
-    date: new Date().toLocaleDateString(),
+
     status: '成功',
   },
-];
+].map(_ => ({
+  ..._,
+  card: Math.random()
+    .toString()
+    .slice(10),
+  phone: `130${Math.random()
+    .toString()
+    .slice(10)}`,
+  date: new Date().toLocaleDateString(),
+}));
 export default () => {
   const [state, setState] = useState({
     selectedRowKeys: [],
@@ -95,12 +68,10 @@ export default () => {
       showQuickJumper: true,
       total: 50,
     },
+    footer: () => <Button type="primary">发送短信</Button>,
   };
   return (
     <div style={{ background: '#fff' }}>
-      <Button type="primary" style={{ marginBottom: 16 }}>
-        发送短信
-      </Button>
       <Table {...propsData} />
     </div>
   );

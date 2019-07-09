@@ -1,6 +1,7 @@
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import { Row, Card, Col, Form } from 'antd';
 import StatisticTable from '../FestivalConcern/Statistics/StatisticTable';
+import StatisticSearch from '../FestivalConcern/Statistics/StatisticSearch';
 
 const { Item } = Form;
 export default () => {
@@ -46,6 +47,7 @@ export default () => {
         </Col>
       </Row>
       <Card title="生日关怀配置" style={{ marginTop: '20px' }}>
+        <StatisticSearch />
         <StatisticTable />
       </Card>
     </PageHeaderWrapper>

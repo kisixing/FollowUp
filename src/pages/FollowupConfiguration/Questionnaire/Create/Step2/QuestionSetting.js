@@ -1,4 +1,4 @@
-import { Switch, Button, Modal, Dropdown, Menu, Icon } from 'antd';
+import { Switch, Button, Modal, Dropdown, Menu, Icon, Input } from 'antd';
 import { MODEL, dispatchCreator } from '../../models/questionnaireModel';
 import styles from './QuestionSetting.less';
 
@@ -15,7 +15,9 @@ const itemMenu = (
 export default connect(mapStateToProps)(props => {
   const { dispatch } = props;
   const _dispatch = dispatchCreator(dispatch);
-  const { clickTargetQuestionIndex, clickTargetQuestionId } = props;
+  const { clickTargetQuestionId, questionList } = props;
+  const clickTargetQuestionIndex = questionList.findIndex(({ id }) => id === clickTargetQuestionId);
+  const target = questionList.find(_ => _.id === clickTargetQuestionId);
   const [state, setState] = useState({ visible: false });
   const { visible } = state;
   const onCancel = () => {
@@ -60,6 +62,26 @@ export default connect(mapStateToProps)(props => {
             </Button>
           </span>
         </div>
+        {target &&
+          target.dataset &&
+          target.dataset.map(_ => {
+            return (
+              <div className={styles.item} key={_.id}>
+                <span>{_.label}</span>
+                <span>
+                  <Input placeholder="请输入分值" style={{ width: '100px' }} />
+                </span>
+              </div>
+            );
+          })}
+        {target && !target.dataset && (
+          <div className={styles.item}>
+            <span>分值设置</span>
+            <span>
+              <Input placeholder="请输入分值" style={{ width: '100px' }} />
+            </span>
+          </div>
+        )}
         <Modal visible={visible} onCancel={onCancel} onOk={onOk} title="跳转逻辑">
           <div>
             <span>共有1条跳转逻辑</span>

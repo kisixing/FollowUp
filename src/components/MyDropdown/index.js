@@ -11,7 +11,7 @@ export default function MyDropdown({
   const [state, setState] = useState({
     _value: '',
   });
-  // debugger
+
   let target = dataset.find(_ => _[valueKey] === value);
   if (!target) {
     target = dataset.find(_ => _[valueKey] === state._value);
