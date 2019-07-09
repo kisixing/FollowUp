@@ -65,8 +65,12 @@ export default {
       // 市场活动
       path: '/concern-management/market',
       name: 'market',
-      // icon: 'edit',
       component: './ConcernManagement/Market/index',
+    },
+    {
+      // 市场活动-统计
+      path: '/concern-management/market/statistics/:id',
+      component: './ConcernManagement/Market/Statistics',
     },
   ],
 };

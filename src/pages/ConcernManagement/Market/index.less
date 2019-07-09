@@ -15,10 +15,15 @@
   margin-left: 40px;
 
   & > div {
-    position: relative;
-    float: left;
-    width: 50%;
-    text-align: left;
+    float: right;
+    padding: 0 20px;
+    text-align: right;
+
+    &:first-child {
+      float: left;
+      padding: 0;
+      text-align: left;
+    }
 
     p {
       margin: 0;

@@ -8,7 +8,7 @@ import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './index.less';
 
 @connect(({ loading, marketLists }) => ({
-  loading: loading.models.marketLists,
+  loading: loading.effects['marketLists/query'],
   lists: marketLists.lists,
   tabActiveKey: marketLists.tabActiveKey,
 }))
@@ -36,12 +36,12 @@ class FollowupManagement extends Component {
     console.log(value);
   };
 
-  onDetailClick = e => {
-    router.push(`/followup-management/task-lists/table/${e.id}`);
+  onDetailClick = id => {
+    router.push(`/concern-management/market/statistics/${id}`);
   };
 
-  onChartClick = e => {
-    router.push(`/followup-management/task-lists/chart/${e.id}`);
+  onChartClick = id => {
+    router.push(`/concern-management/market/statistics/${id}`);
   };
 
   // 选择标签
@@ -134,7 +134,6 @@ class FollowupManagement extends Component {
     );
 
     const { loading, lists, tabActiveKey } = this.props;
-    console.log({ loading, lists, tabActiveKey });
 
     return (
       <PageHeaderWrapper
@@ -159,7 +158,7 @@ class FollowupManagement extends Component {
                 bodyStyle={{ padding: 0 }}
                 actions={[
                   <Tooltip title="编辑">
-                    <Icon type="edit" onClick={() => this.onDetailClick(item)} />
+                    <Icon type="edit" onClick={() => this.onDetailClick(item.id)} />
                   </Tooltip>,
                   <Tooltip title="统计">
                     <Icon type="line-chart" onClick={() => this.onChartClick(item)} />
@@ -172,10 +171,10 @@ class FollowupManagement extends Component {
                   </Dropdown>,
                 ]}
                 extra={
-                  item.state.code === 'running' ? (
-                    <p style={{ color: '#0096FA' }}>{item.state.dec}</p>
+                  item.status.code === 'running' ? (
+                    <p style={{ color: '#0096FA' }}>{item.status.dec}</p>
                   ) : (
-                    <p>{item.state.dec}</p>
+                    <p>{item.status.dec}</p>
                   )
                 }
                 title={item.title}
