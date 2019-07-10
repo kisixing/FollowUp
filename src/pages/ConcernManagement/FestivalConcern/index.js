@@ -289,7 +289,7 @@ class FollowupManagement extends React.Component {
                       />
                     </Tooltip>,
                     <Tooltip title="统计">
-                      <Icon type="line-chart" onClick={() => this.onChartClick(item)} />
+                      <Icon type="ordered-list" onClick={() => this.onChartClick(item)} />
                     </Tooltip>,
                     <Dropdown overlay={itemMenu}>
                       <Icon type="ellipsis" />

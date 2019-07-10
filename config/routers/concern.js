@@ -2,7 +2,7 @@ const MODLE = 'ConcernManagement';
 export default {
   path: '/concern-management',
   name: 'concern-management',
-  icon: 'book',
+  icon: 'heart',
   routes: [
     {
       // 节日问候
@@ -52,8 +52,23 @@ export default {
       // 生日问候
       path: '/concern-management/birthday-concern',
       name: 'birthday-concern',
-      // icon: 'edit',
-      component: `${MODLE}/BirthdayConcern`,
+      routes: [
+        {
+          path: '/concern-management/birthday-concern/',
+          redirect: 'index',
+        },
+        {
+          path: 'index',
+          component: `${MODLE}/BirthdayConcern/index`,
+        },
+        {
+          // 节日问候-新建
+          path: 'edit',
+          name: 'edit',
+          component: `${MODLE}/BirthdayConcern/Edit/index`,
+          hideInMenu: true,
+        },
+      ],
     },
     {
       // 市场活动

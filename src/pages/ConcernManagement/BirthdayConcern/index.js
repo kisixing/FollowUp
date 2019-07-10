@@ -1,7 +1,8 @@
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import { Row, Card, Col, Form } from 'antd';
+import { Row, Card, Col, Form, Button } from 'antd';
 import StatisticTable from '../FestivalConcern/Statistics/StatisticTable';
 import StatisticSearch from '../FestivalConcern/Statistics/StatisticSearch';
+import { router } from 'umi';
 
 const { Item } = Form;
 export default () => {
@@ -19,7 +20,14 @@ export default () => {
     <PageHeaderWrapper>
       <Row gutter={20}>
         <Col span={18}>
-          <Card title="生日关怀配置">
+          <Card
+            title="生日关怀配置"
+            extra={
+              <Button type="link" onClick={() => router.push('edit')}>
+                编辑
+              </Button>
+            }
+          >
             <Form {...formItemLayout}>
               <Item label="发送时间">
                 <u>{new Date().toLocaleDateString()}</u>

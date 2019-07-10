@@ -10,16 +10,16 @@ export default {
         id: 1,
       },
       {
-        name: '李志斌',
-        text: '胡志勇主任什么时候出诊',
-        num: 1,
+        name: '黄庆仁',
+        text: '医院有停车场吗？',
+        num: 0,
         date: +new Date() - 5 * 60 * 1000,
         id: 2,
       },
 
       {
-        name: '李志斌',
-        text: '胡志勇主任什么时候出诊',
+        name: '刘志',
+        text: '吴医生下午还有号嘛？',
         num: 2,
         date: +new Date() - 5 * 60 * 1000,
         id: 3,

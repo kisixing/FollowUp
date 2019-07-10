@@ -40,7 +40,6 @@ export default {
   'menu.satisfaction-management.complaint-lists': '投诉建议',
   'menu.satisfaction-management.praise-lists': '表扬感谢',
   'menu.satisfaction-management.satisfaction-lists': '专项管理',
-  'menu.appointment-tracking-edit': '编辑',
   'menu.satisfaction-management.create': '新建满意度任务',
   'menu.satisfaction-management.create.step1': '步骤1',
   'menu.satisfaction-management.create.step2': '步骤2',
@@ -48,7 +47,14 @@ export default {
   'menu.satisfaction-management.create.step4': '步骤4',
 
   'menu.appointment-tracking': '预约跟踪',
+  'menu.appointment-tracking.list': '列表',
+  'menu.appointment-tracking.edit': '编辑',
+  'menu.appointment-tracking.detail': '详情',
+
   'menu.nursing-tracking': '延续护理跟踪',
+  'menu.nursing-tracking.list': '列表',
+  'menu.nursing-tracking.edit': '编辑',
+  'menu.nursing-tracking.detail': '详情',
 
   'menu.concern-management': '客户关怀',
   'menu.concern-management.festival-concern': '节日关怀',
@@ -58,6 +64,8 @@ export default {
   'menu.concern-management.festival-concern.create.step2': '步骤2',
   'menu.concern-management.festival-concern.create.step3': '步骤3',
   'menu.concern-management.birthday-concern': '生日关怀',
+  // 'menu.concern-management.birthday-concern.index': '列表',
+  'menu.concern-management.birthday-concern.edit': '编辑',
   'menu.concern-management.market': '市场活动',
 
   'menu.knowledge': '知识库',

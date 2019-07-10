@@ -12,9 +12,14 @@ import {
   Modal,
 } from 'antd';
 import router from 'umi/router';
-import { lh40, mRb8 } from './Step3/index.less';
-import { Title } from './Step3/index';
 
+function Title({ label, isTop }) {
+  return (
+    <div style={{ fontWeight: 'bold', marginTop: isTop || '30px', marginBottom: '10px' }}>
+      {label}
+    </div>
+  );
+}
 function getMenu(arr, handleMenuClick) {
   return (
     <Menu onClick={handleMenuClick}>
@@ -161,7 +166,7 @@ export default function() {
       <Title label="任务管理" isTop />
       <Row style={{ marginBottom: '20px' }}>
         <Col offset={1}>
-          <div className={lh40}>
+          <div style={{ lineHeight: '40px' }}>
             <Checkbox>人工管理</Checkbox>
           </div>
         </Col>
@@ -258,10 +263,10 @@ export default function() {
       </Form.Item>
 
       <div style={{ textAlign: 'center' }}>
-        <Button className={mRb8}>预览</Button>
+        <Button style={{ marginRight: 8, marginBottom: 8 }}>预览</Button>
         <Button
           type="primary"
-          className={mRb8}
+          style={{ marginRight: 8, marginBottom: 8 }}
           onClick={() => router.push('/followup-configuration/Questionnaire')}
         >
           <Icon type="upload" />

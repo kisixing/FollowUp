@@ -17,7 +17,7 @@ class FollowupManagement extends Component {
     super(props);
     this.state = {
       tabActiveKey: 'all',
-      lists: ['预约挂号跟踪', '住院预约跟踪', 'B超预约跟踪', '住院预约跟踪'].map(_ => ({
+      lists: ['护理跟踪'].map(_ => ({
         title: _,
         status: {
           dec: '进行中',

@@ -38,12 +38,28 @@ export default {
 
   effects: {
     *query({ payload }, { call, put }) {
-      const res = yield call(queryLists, payload);
+      yield call(queryLists, payload);
       yield put({
         type: 'updateState',
         payload: {
           tabActiveKey: payload.status || 'all',
-          lists: res.data.map(_ => ({ ..._, title: '全科诊后满意度调查' })),
+          lists: [
+            '门诊复诊满意度',
+            '门诊手术满意度',
+            '医院服务满意度',
+            '妇科满意度调查',
+            '产科满意度调查',
+            '内科满意度调查',
+            '外科满意度调查',
+          ].map(_ => ({
+            title: _,
+            status: {
+              dec: '运行中',
+              code: 'running',
+            },
+            todayFollowup: Math.round(Math.random() * 200),
+            allFollowup: Math.round(Math.random() * 1000) + 200,
+          })),
         },
       });
     },
