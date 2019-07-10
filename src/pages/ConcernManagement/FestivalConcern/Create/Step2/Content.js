@@ -50,7 +50,7 @@ const Content = connect(mapStateToProps)(() => {
       wrapperCol={{ span: 14 }}
       labelAlign="left"
     >
-      <Title label="随访时间&媒介" isTop />
+      <Title label="规则配置" isTop />
 
       <Form.Item label="选择传统节日">
         <MyDropdown
