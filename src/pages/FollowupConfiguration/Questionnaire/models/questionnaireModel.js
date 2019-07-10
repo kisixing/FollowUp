@@ -52,7 +52,6 @@ export default {
     questionType: '',
     hoverTargetQuestionId: '',
     clickTargetQuestionId: '',
-    clickTargetQuestionIndex: '',
     questionnaireTitle: '',
   },
 
@@ -69,7 +68,7 @@ export default {
           : {
               type: 'updateState',
               payload: {
-                questionnaireTitle: '',
+                questionnaireTitle: '请填写问卷标题',
                 questionList: [],
               },
             }
@@ -86,18 +85,16 @@ export default {
       });
     },
 
-    *addNewQuestion(action, { put, select }) {
-      const {
-        questionList,
-        doesNewQuestionPlaceBefore,
-        questionType,
-        hoverTargetQuestionId,
-      } = yield select(state => state.questionnaire_model);
+    *addNewQuestion({ payload = {} }, { put, select }) {
+      const { doesNewQuestionPlaceBefore } = payload;
+      const { questionList, questionType, hoverTargetQuestionId } = yield select(
+        state => state.questionnaire_model
+      );
       const newQuestion = {
         [TYPE]: questionType,
         [ID]: Math.random(),
         [TITLE]: '请输入题目标题',
-        [DATASET]: [
+        [DATASET]: ['单选题', '多选题', '下拉提'].includes(questionType) && [
           {
             [F_LABEL]: '选项1',
             [ID]: Math.random(),
@@ -135,10 +132,10 @@ export default {
     *updateQuestion({ payload }, { put, select }) {
       const { id } = payload;
       const { questionList } = yield select(state => state.questionnaire_model);
-      // debugger
+
       const newQuestionList = questionList.map(_ => {
         if (_.id === id) {
-          return payload;
+          return { ..._, ...payload };
         }
         return _;
       });
@@ -155,7 +152,7 @@ export default {
         yield put({
           type: `updateQuestion`,
           payload: {
-            ...question,
+            id: question[ID],
             dataset,
           },
         });

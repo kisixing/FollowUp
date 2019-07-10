@@ -46,7 +46,7 @@ export default {
   effects: {
     *query(action, { call, put }) {
       const res = yield call(queryTaskTemplates);
-      // debugger
+
       yield put({
         type: 'updateState',
         payload: {

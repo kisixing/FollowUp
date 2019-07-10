@@ -14,6 +14,7 @@ const types = {
 };
 
 function onDrag(e, questionType, dispatch) {
+  // console.log({...e},e.clientX)
   dispatch('updateState', { questionType });
 }
 function onClick(e, questionType, dispatch) {
@@ -42,7 +43,7 @@ export default connect(mapStateToProps)(props => {
   return (
     <Row gutter={6}>
       <Col span={6}>
-        <div style={{ float: 'left' }}>
+        <div style={{ width: '15%', position: 'fixed' }}>
           {Object.keys(types).map((typeKey, index1) => {
             return (
               <div key={index1}>
@@ -54,7 +55,10 @@ export default connect(mapStateToProps)(props => {
                       className={questionBtn}
                       key={index2}
                       draggable
-                      onDrag={e => onDrag(e, type, _dispatch)}
+                      onDragEnd={() => {
+                        _dispatch('updateState', { hoverTargetQuestionId: '' });
+                      }}
+                      onDragStart={e => onDrag(e, type, _dispatch)}
                       // onDragEnd={e => onDragEnd(e, dispatch)}
                       onClick={e => onClick(e, type, _dispatch)}
                     >
@@ -77,9 +81,9 @@ export default connect(mapStateToProps)(props => {
             <p style={{ textAlign: 'center' }}>完成时显示</p>
             <Icon type="setting" style={{ float: 'right' }} />
             <p>（当 0≤ 分数 ≤ 59时显示）</p>
-            <p contentEditable>测试结束，你的得分是[Score]分. 您需要加强饮食管理：</p>
+            <p contentEditable={false}>测试结束，你的得分是[Score]分. 您需要加强饮食管理：</p>
             <p>（当 60≤ 分数 ≤ 99时显示）</p>
-            <p contentEditable>
+            <p contentEditable={false}>
               {' '}
               测试结束，你的得分是[Score]分. 您很注重饮食管理，如果再做到以下.{' '}
             </p>
@@ -91,7 +95,9 @@ export default connect(mapStateToProps)(props => {
       </Col>
 
       <Col span={6}>
-        <QuestionSetting />
+        <div style={{ width: '17%', position: 'fixed' }}>
+          <QuestionSetting />
+        </div>
       </Col>
     </Row>
   );

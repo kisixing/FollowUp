@@ -22,7 +22,6 @@ export default () => {
   const { panes, activeKey, previewVisible } = state;
 
   const onChange = _activeKey => {
-    // debugger
     setState({ ...state, activeKey: _activeKey });
   };
 

@@ -10,7 +10,6 @@ import MyInput from './MyInput';
 function mapStateToProps({ questionnaire_model }) {
   return { questionnaire_model };
 }
-
 // export default connect(mapStateToProps)(props => {
 @connect(mapStateToProps)
 class EditArea extends Component {
@@ -69,15 +68,22 @@ class EditArea extends Component {
             onDrop={e => {
               e.preventDefault();
               // e.stopPropagation()
-              // debugger
+
               _dispatch('addNewQuestion');
             }}
             onDragOver={e => {
               e.preventDefault();
-              const { target, clientY } = e;
-              const rect = target.getBoundingClientRect();
-              const doesNewQuestionPlaceBefore = clientY < rect.height / 2 + rect.top;
-              _dispatch('updateState', { doesNewQuestionPlaceBefore });
+              // let doesNewQuestionPlaceBefore = false
+
+              // const { target, clientY } = e;
+              // if(clientY>lastY){
+              //   console.log('aaa')
+              //   doesNewQuestionPlaceBefore = true
+              // }
+              // _dispatch('updateState', { doesNewQuestionPlaceBefore });
+
+              // const rect = target.getBoundingClientRect();
+              // const doesNewQuestionPlaceBefore = clientY < rect.height / 2 + rect.top;
             }}
           >
             点击题型 或者 将题型拖入此区域
