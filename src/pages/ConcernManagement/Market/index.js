@@ -37,7 +37,7 @@ class FollowupManagement extends Component {
   };
 
   onDetailClick = id => {
-    router.push(`/concern-management/market/statistics/${id}`);
+    router.push(`/concern-management/market/Edit/Step1/${id}`);
   };
 
   onChartClick = id => {

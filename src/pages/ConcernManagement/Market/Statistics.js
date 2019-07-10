@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import { Card } from 'antd';
+import { Card, Button } from 'antd';
 import styles from './Statistics.less';
 
 import SearchForm from './Statistics/SearchForm';
@@ -24,6 +24,7 @@ class Statistics extends Component {
         </Card>
         <div className={styles.content}>
           <TableForm />
+          <Button className={styles.msg}>发送信息</Button>
         </div>
       </PageHeaderWrapper>
     );

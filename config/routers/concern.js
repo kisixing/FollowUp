@@ -66,5 +66,13 @@ export default {
       path: '/concern-management/market/statistics/:id',
       component: './ConcernManagement/Market/Statistics',
     },
+    {
+      path: '/concern-management/market/Edit/Step1/:id',
+      component: './ConcernManagement/Market/Edit/Step1',
+    },
+    {
+      path: '/concern-management/market/Edit/Step2/:id',
+      component: './ConcernManagement/Market/Edit/Step2',
+    },
   ],
 };
