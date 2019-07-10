@@ -1,18 +1,19 @@
-@width: 300px;
+@rightWidth: 500px;
+@leftWidth: 250px;
 .container {
   .chatPane {
     margin-top: -16px;
     .chatLeft {
       float: left;
-      width: @width;
+      width: @leftWidth;
     }
     .chatRight {
       float: right;
-      width: @width;
+      width: @rightWidth;
     }
     .chatMiddle {
       height: 600px;
-      margin: 0 @width;
+      margin: 0 @rightWidth 0 @leftWidth;
       background: rgb(245, 245, 245);
       border-right: 1px solid #ddd;
       border-left: 1px solid #ddd;

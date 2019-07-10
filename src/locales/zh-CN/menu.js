@@ -64,6 +64,8 @@ export default {
   'menu.concern-management.festival-concern.create.step2': '步骤2',
   'menu.concern-management.festival-concern.create.step3': '步骤3',
   'menu.concern-management.birthday-concern': '生日关怀',
+  // 'menu.concern-management.birthday-concern.index': '列表',
+  'menu.concern-management.birthday-concern.edit': '编辑',
   'menu.concern-management.market': '市场活动',
 
   'menu.knowledge': '知识库',
