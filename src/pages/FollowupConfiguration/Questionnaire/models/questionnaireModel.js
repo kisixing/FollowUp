@@ -85,13 +85,11 @@ export default {
       });
     },
 
-    *addNewQuestion(action, { put, select }) {
-      const {
-        questionList,
-        doesNewQuestionPlaceBefore,
-        questionType,
-        hoverTargetQuestionId,
-      } = yield select(state => state.questionnaire_model);
+    *addNewQuestion({ payload = {} }, { put, select }) {
+      const { doesNewQuestionPlaceBefore } = payload;
+      const { questionList, questionType, hoverTargetQuestionId } = yield select(
+        state => state.questionnaire_model
+      );
       const newQuestion = {
         [TYPE]: questionType,
         [ID]: Math.random(),

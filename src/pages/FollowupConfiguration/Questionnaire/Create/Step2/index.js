@@ -55,7 +55,10 @@ export default connect(mapStateToProps)(props => {
                       className={questionBtn}
                       key={index2}
                       draggable
-                      onDrag={e => onDrag(e, type, _dispatch)}
+                      onDragEnd={() => {
+                        _dispatch('updateState', { hoverTargetQuestionId: '' });
+                      }}
+                      onDragStart={e => onDrag(e, type, _dispatch)}
                       // onDragEnd={e => onDragEnd(e, dispatch)}
                       onClick={e => onClick(e, type, _dispatch)}
                     >

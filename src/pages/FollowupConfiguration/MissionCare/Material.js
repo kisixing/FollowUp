@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import { Input, Button, Modal, Form, Select, Upload, Icon, Row, Col } from 'antd';
 
 import BraftEditor from 'braft-editor';
@@ -10,7 +9,7 @@ const FormItem = Form.Item;
 const SelectOption = Select.Option;
 
 @Form.create()
-class Material extends Component {
+class Material extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

@@ -28,12 +28,15 @@ function mapStateToProps(rootState) {
 export default connect(mapStateToProps)(props => {
   const { dispatch, question, index } = props;
   const _dispatch = dispatchCreator(dispatch);
-  const { hoverTargetQuestionId, doesNewQuestionPlaceBefore, clickTargetQuestionId } = props[MODEL];
+  const { hoverTargetQuestionId, clickTargetQuestionId } = props[MODEL];
   const type = question[TYPE];
   const title = question[TITLE];
   const id = question[ID];
   const dataset = question[DATASET];
 
+  const [state, setState] = useState({
+    doesNewQuestionPlaceBefore: false,
+  });
   // useEffect(() => {
   //   eventEmitter.on('removeFocus', () => {
   //     _dispatch('updateState', { clickTargetQuestionId: '' })
@@ -60,10 +63,11 @@ export default connect(mapStateToProps)(props => {
     }
 
     lastY = clientY;
-    _dispatch('updateState', {
-      doesNewQuestionPlaceBefore: _doesNewQuestionPlaceBefore,
-      hoverTargetQuestionId: question.id,
-    });
+    // _dispatch('updateState', {
+    //   doesNewQuestionPlaceBefore: _doesNewQuestionPlaceBefore,
+    //   hoverTargetQuestionId: question.id,
+    // });
+    setState({ ...state, doesNewQuestionPlaceBefore: _doesNewQuestionPlaceBefore });
   };
 
   function updateDataset(datasetId, label) {
@@ -93,7 +97,7 @@ export default connect(mapStateToProps)(props => {
   // const { } = state;
   const isHoverTarget = hoverTargetQuestionId === id;
   const isClickTarget = clickTargetQuestionId === id;
-
+  const { doesNewQuestionPlaceBefore } = state;
   return (
     <div
       className={styles.container}
@@ -110,16 +114,18 @@ export default connect(mapStateToProps)(props => {
           e.preventDefault();
           // e.stopPropagation()
 
-          _dispatch('addNewQuestion');
+          _dispatch('addNewQuestion', { doesNewQuestionPlaceBefore });
         }}
         onClick={e => {
           e.stopPropagation();
           _dispatch('updateState', { clickTargetQuestionId: id });
         }}
-        onDragOver={onDragOver}
-        onDragLeave={() => {
-          _dispatch('updateState', { hoverTargetQuestionId: '' });
+        onDragEnter={() => {
+          _dispatch('updateState', {
+            hoverTargetQuestionId: id,
+          });
         }}
+        onDragOver={onDragOver}
       >
         <div>
           {`${index + 1}. ${question.type}`}

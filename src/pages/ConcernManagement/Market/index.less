@@ -1,0 +1,49 @@
+@import '~antd/lib/style/themes/default.less';
+@import '~@/utils/utils.less';
+
+.wrapper {
+  :global(.antd-pro-components-page-header-wrapper-index-content) {
+    margin-bottom: 0;
+  }
+}
+
+.cardInfo {
+  .clearfix();
+
+  min-height: 68px;
+  margin-top: 16px;
+  margin-left: 40px;
+
+  & > div {
+    float: right;
+    padding: 0 20px;
+    text-align: right;
+
+    &:first-child {
+      float: left;
+      padding: 0;
+      text-align: left;
+    }
+
+    p {
+      margin: 0;
+      font-weight: bold;
+      font-size: 24px;
+      line-height: 40px;
+    }
+
+    p:first-child {
+      margin-bottom: 4px;
+      color: @text-color-secondary;
+      font-size: 12px;
+      line-height: 20px;
+    }
+  }
+}
+
+.status {
+  float: right;
+  color: @primary-color;
+  font-size: 12px;
+  line-height: 24px;
+}
