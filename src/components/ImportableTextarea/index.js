@@ -7,7 +7,6 @@ export default function ImportableTextarea({
   onInsert = () => {},
   onImport = () => {},
 }) {
-  // debugger
   return (
     <div>
       <Input.TextArea

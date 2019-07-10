@@ -10,28 +10,39 @@ if (flag) {
   document.addEventListener('click', removeActive, true);
   flag = false;
 }
-export default ({ value, onChange }) => {
-  const [state, setState] = useState({
-    active: false,
-  });
-  const { active } = state;
-  useEffect(() => {
-    eventEmitter.on('removeInputFocus', () => {
-      setState({ ...state, active: false });
-    });
-    return () => {
-      eventEmitter.off('removeInputFocus');
+export default class MyInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      active: false,
     };
-  });
-  return (
-    <div
-      className={styles[`${active ? 'active' : 'negative'}`]}
-      onClick={e => {
-        e.stopPropagation();
-        setState({ ...state, active: true });
-      }}
-    >
-      <input value={value} onChange={e => onChange && onChange(e.target.value)} />
-    </div>
-  );
-};
+    eventEmitter.on('removeInputFocus', this.cb);
+  }
+
+  componentWillUnmount() {
+    eventEmitter.off('removeInputFocus', this.cb);
+  }
+
+  cb = () => {
+    this.setState({ active: false });
+  };
+
+  render() {
+    const { active } = this.state;
+
+    const { Left, Right, value, onChange } = this.props;
+    return (
+      <div
+        className={styles[`${active ? 'active' : 'negative'}`]}
+        onClick={() => {
+          // e.stopPropagation();
+          this.setState({ active: true });
+        }}
+      >
+        {Left}
+        <input value={value} onChange={e => onChange && onChange(e.target.value)} />
+        {Right}
+      </div>
+    );
+  }
+}

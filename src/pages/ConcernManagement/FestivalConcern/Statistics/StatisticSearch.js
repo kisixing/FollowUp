@@ -4,7 +4,7 @@ import MyDropdown from '@/components/MyDropdown';
 const { Item } = Form;
 export default ({ status }) => {
   return (
-    <Form layout="inline" style={{ padding: '10px', lineHeight: '40px' }}>
+    <Form layout="inline" style={{ padding: '20px 0', lineHeight: '40px' }}>
       <Item label="开始时间">
         <DatePicker />
       </Item>
