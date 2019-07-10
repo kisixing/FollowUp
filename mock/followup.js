@@ -27,6 +27,7 @@ const dataSource = mockjs.mock({
         '新生儿研究',
       ],
       avatar: '',
+      'departments|1': ['产科', '妇科', '肾内科', '泌尿外科', '健康管理中心'],
       'status|1': [
         {
           code: 'all',
@@ -54,6 +55,272 @@ const dataSource = mockjs.mock({
     },
   ],
 });
+const dataSource1 = mockjs.mock({
+  decs: '随访任务列表',
+  data: [
+    {
+      id: '@id',
+      title: '产前筛查随访', // 无创基因随访、GDM随访、产后42天随访、高危随访、复诊到访随访,
+      type: '专项随访', // '专项随访', '关怀类随访', '管理类随访', '科研随访',
+      avatar: '',
+      departments: '产科', // '妇科', '肾内科', '泌尿外科', '健康管理中心',
+      status: {
+        code: 'running',
+        dec: '运行中',
+      },
+      allFollowup: () => Random.natural(40, 60),
+      todayFollowup: () => Random.natural(20, 40),
+    },
+    {
+      id: '@id',
+      title: '无创基因随访', // GDM随访、产后42天随访、高危随访、复诊到访随访,
+      type: '科研随访', // '专项随访', '关怀类随访', '管理类随访', '科研随访',
+      avatar: '',
+      departments: '产科', // '妇科', '肾内科', '泌尿外科', '健康管理中心',
+      status: {
+        code: 'drafts',
+        dec: '草稿箱',
+      },
+      allFollowup: () => Random.natural(40, 60),
+      todayFollowup: () => Random.natural(20, 40),
+    },
+    {
+      id: '@id',
+      title: 'GDM随访', // 产后42天随访、高危随访、复诊到访随访,
+      type: '管理类随访', // '专项随访', '关怀类随访', '管理类随访', '科研随访',
+      avatar: '',
+      departments: '产科', // '妇科', '肾内科', '泌尿外科', '健康管理中心',
+      status: {
+        code: 'recycled',
+        dec: '回收站',
+      },
+      allFollowup: () => Random.natural(40, 60),
+      todayFollowup: () => Random.natural(20, 40),
+    },
+    {
+      id: '@id',
+      title: '产后42天随访', // 高危随访、复诊到访随访,
+      type: '专项随访', // '专项随访', '关怀类随访', '管理类随访', '科研随访',
+      avatar: '',
+      departments: '产科', // '妇科', '肾内科', '泌尿外科', '健康管理中心',
+      status: {
+        code: 'running',
+        dec: '运行中',
+      },
+      allFollowup: () => Random.natural(40, 60),
+      todayFollowup: () => Random.natural(20, 40),
+    },
+    {
+      id: '@id',
+      title: '高危随访', // 复诊到访随访,
+      type: '管理类随访', // '专项随访', '关怀类随访', '管理类随访', '科研随访',
+      avatar: '',
+      departments: '产科', // '妇科', '肾内科', '泌尿外科', '健康管理中心',
+      status: {
+        code: 'running',
+        dec: '运行中',
+      },
+      allFollowup: () => Random.natural(40, 60),
+      todayFollowup: () => Random.natural(20, 40),
+    },
+    {
+      id: '@id',
+      title: '复诊到访随访',
+      type: '管理类随访', // '专项随访', '关怀类随访', '管理类随访', '科研随访',
+      avatar: '',
+      departments: '产科', // '妇科', '肾内科', '泌尿外科', '健康管理中心',
+      status: {
+        code: 'pause',
+        dec: '暂停',
+      },
+      allFollowup: () => Random.natural(40, 60),
+      todayFollowup: () => Random.natural(20, 40),
+    },
+    {
+      id: '@id',
+      title: 'PAC随访', // 妇科肿瘤随访、妇科术后随访
+      type: '管理类随访', // '专项随访', '关怀类随访', '管理类随访', '科研随访',
+      avatar: '',
+      departments: '妇科', // 肾内科', '泌尿外科', '健康管理中心',
+      status: {
+        code: 'running',
+        dec: '运行中',
+      },
+      allFollowup: () => Random.natural(40, 60),
+      todayFollowup: () => Random.natural(20, 40),
+    },
+    {
+      id: '@id',
+      title: '妇科肿瘤随访', // 妇科术后随访
+      type: '专科随访', // '专项随访', '关怀类随访', '管理类随访', '科研随访',
+      avatar: '',
+      departments: '妇科', // 肾内科', '泌尿外科', '健康管理中心',
+      status: {
+        code: 'pause',
+        dec: '暂停',
+      },
+      allFollowup: () => Random.natural(40, 60),
+      todayFollowup: () => Random.natural(20, 40),
+    },
+    {
+      id: '@id',
+      title: '妇科术后随访',
+      type: '专科随访', // '专项随访', '关怀类随访', '管理类随访', '科研随访',
+      avatar: '',
+      departments: '妇科', // 肾内科', '泌尿外科', '健康管理中心',
+      status: {
+        code: 'running',
+        dec: '运行中',
+      },
+      allFollowup: () => Random.natural(40, 60),
+      todayFollowup: () => Random.natural(20, 40),
+    },
+    {
+      id: '@id',
+      title: '高尿酸血症随访', // 肾病综合征随访、尿毒症覆膜透析、慢性肾病随访
+      type: '专项随访', // '专项随访', '关怀类随访', '管理类随访', '科研随访',
+      avatar: '',
+      departments: '肾内科', // '泌尿外科', '健康管理中心',
+      status: {
+        code: 'running',
+        dec: '运行中',
+      },
+      allFollowup: () => Random.natural(40, 60),
+      todayFollowup: () => Random.natural(20, 40),
+    },
+    {
+      id: '@id',
+      title: '肾病综合征随访', // 尿毒症覆膜透析、慢性肾病随访
+      type: '管理类随访', // '专项随访', '关怀类随访', '管理类随访', '科研随访',
+      avatar: '',
+      departments: '肾内科', // '泌尿外科', '健康管理中心',
+      status: {
+        code: 'running',
+        dec: '运行中',
+      },
+      allFollowup: () => Random.natural(40, 60),
+      todayFollowup: () => Random.natural(20, 40),
+    },
+    {
+      id: '@id',
+      title: '尿毒症覆膜透析', // 慢性肾病随访
+      type: '专科随访', // '专项随访', '关怀类随访', '管理类随访', '科研随访',
+      avatar: '',
+      departments: '肾内科', // '泌尿外科', '健康管理中心',
+      status: {
+        code: 'running',
+        dec: '运行中',
+      },
+      allFollowup: () => Random.natural(40, 60),
+      todayFollowup: () => Random.natural(20, 40),
+    },
+    {
+      id: '@id',
+      title: '慢性肾病随访',
+      type: '专科随访', // '专项随访', '关怀类随访', '管理类随访', '科研随访',
+      avatar: '',
+      departments: '肾内科', // '泌尿外科', '健康管理中心',
+      status: {
+        code: 'running',
+        dec: '运行中',
+      },
+      allFollowup: () => Random.natural(40, 60),
+      todayFollowup: () => Random.natural(20, 40),
+    },
+    {
+      id: '@id',
+      title: '前列腺炎随访', // 混合型尿失禁、膀胱癌随访
+      type: '专科随访', // '专项随访', '关怀类随访', '管理类随访', '科研随访',
+      avatar: '',
+      departments: '泌尿外科', // '健康管理中心',
+      status: {
+        code: 'running',
+        dec: '运行中',
+      },
+      allFollowup: () => Random.natural(40, 60),
+      todayFollowup: () => Random.natural(20, 40),
+    },
+    {
+      id: '@id',
+      title: '混合型尿失禁', // 膀胱癌随访
+      type: '专科随访', // '专项随访', '关怀类随访', '管理类随访', '科研随访',
+      avatar: '',
+      departments: '泌尿外科', // '健康管理中心',
+      status: {
+        code: 'running',
+        dec: '运行中',
+      },
+      allFollowup: () => Random.natural(40, 60),
+      todayFollowup: () => Random.natural(20, 40),
+    },
+    {
+      id: '@id',
+      title: '膀胱癌随访',
+      type: '专科随访', // '专项随访', '关怀类随访', '管理类随访', '科研随访',
+      avatar: '',
+      departments: '泌尿外科', // '健康管理中心',
+      status: {
+        code: 'running',
+        dec: '运行中',
+      },
+      allFollowup: () => Random.natural(40, 60),
+      todayFollowup: () => Random.natural(20, 40),
+    },
+    {
+      id: '@id',
+      title: '高血压随访', // 糖尿病随访、高血脂随访、脑卒中随访
+      type: '科研随访', // '专项随访', '关怀类随访', '管理类随访', '科研随访',
+      avatar: '',
+      departments: '健康管理中心',
+      status: {
+        code: 'running',
+        dec: '运行中',
+      },
+      allFollowup: () => Random.natural(40, 60),
+      todayFollowup: () => Random.natural(20, 40),
+    },
+    {
+      id: '@id',
+      title: '糖尿病随访', // 、高血脂随访、脑卒中随访
+      type: '科研随访', // '专项随访', '关怀类随访', '管理类随访', '科研随访',
+      avatar: '',
+      departments: '健康管理中心',
+      status: {
+        code: 'running',
+        dec: '运行中',
+      },
+      allFollowup: () => Random.natural(40, 60),
+      todayFollowup: () => Random.natural(20, 40),
+    },
+    {
+      id: '@id',
+      title: '高血脂随访', // 脑卒中随访
+      type: '科研随访', // '专项随访', '关怀类随访', '管理类随访', '科研随访',
+      avatar: '',
+      departments: '健康管理中心',
+      status: {
+        code: 'running',
+        dec: '运行中',
+      },
+      allFollowup: () => Random.natural(40, 60),
+      todayFollowup: () => Random.natural(20, 40),
+    },
+    {
+      id: '@id',
+      title: '脑卒中随访',
+      type: '科研随访', // '专项随访', '关怀类随访', '管理类随访', '科研随访',
+      avatar: '',
+      departments: '健康管理中心',
+      status: {
+        code: 'running',
+        dec: '运行中',
+      },
+      allFollowup: () => Random.natural(40, 60),
+      todayFollowup: () => Random.natural(20, 40),
+    },
+  ],
+});
+
 const item = {
   id: '10000',
   title: `高危妊娠复诊管理`,
@@ -146,6 +413,37 @@ export default delay(
         json = {
           decs,
           data: data.filter(_ => _.secondaryType === secondaryType),
+        };
+      }
+      return res.json(json);
+    },
+    'GET /api/followup/tasklists1': (req, res) => {
+      const params = req.query;
+      const { status, type /* secondaryType */ } = params;
+      const { decs, data } = dataSource1;
+      let json = {};
+      if (status === '' || (status === 'all' && !type)) {
+        json = {
+          decs,
+          data,
+        };
+      }
+      if (status && status !== 'all') {
+        json = {
+          decs,
+          data: data.filter(_ => _.status.code === status),
+        };
+      }
+      if (type && status) {
+        json = {
+          decs,
+          data: data.filter(_ => _.status.code === status && _.type === type),
+        };
+      }
+      if (type && (status === '' || status === 'all' || !status)) {
+        json = {
+          decs,
+          data: data.filter(_ => _.type === type),
         };
       }
       return res.json(json);

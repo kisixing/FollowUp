@@ -43,6 +43,7 @@ import styles from './index.less';
   category: followupLists.category,
   secondaryCategory: followupLists.secondaryCategory,
   tabActiveKey: followupLists.tabActiveKey,
+  departments: followupLists.departments,
 }))
 class FollowupManagement extends Component {
   constructor(props) {
@@ -216,7 +217,15 @@ class FollowupManagement extends Component {
       return tagChild;
     };
 
-    const { loading, selectedTags, lists, category, secondaryCategory, tabActiveKey } = this.props;
+    const {
+      loading,
+      selectedTags,
+      lists,
+      category,
+      // secondaryCategory,
+      tabActiveKey,
+      departments,
+    } = this.props;
 
     return (
       <PageHeaderWrapper
@@ -270,11 +279,11 @@ class FollowupManagement extends Component {
                     radio
                     expandable
                     hideCheckAll
-                    value={[selectedTags.secondaryCategory]}
-                    onChange={tags => this.handleTags('secondaryCategory', tags)}
+                    value={[selectedTags.departments]}
+                    onChange={tags => this.handleTags('departments', tags)}
                     actionsText={actionsTextMap}
                   >
-                    {tagOptionsMap(secondaryCategory)}
+                    {tagOptionsMap(departments)}
                   </TagSelect>
                 </Form.Item>
               </StandardFormRow>
