@@ -47,11 +47,11 @@ const QuestionType2 = React.memo(
         <MyInput value={title} onChange={value => updateTitle(value)} />
         {questionType === '打分题' && (
           <div>
-            <Icon type="star" />
-            <Icon type="star" />
-            <Icon type="star" />
-            <Icon type="star" />
-            <Icon type="star" />
+            {Array(5)
+              .fill('')
+              .map(() => (
+                <Icon type="star" key={Math.random()} style={{ fontSize: '16px', margin: '5px' }} />
+              ))}
           </div>
         )}
         {questionType === '填空题' && <Input value="" />}
