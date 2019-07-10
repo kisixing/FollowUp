@@ -9,7 +9,7 @@ import React, { Component } from 'react';
 import router from 'umi/router';
 import { connect } from 'dva';
 
-import { Form, List, Card, Tooltip, Menu, Input, Dropdown, Icon, Avatar, Button, Tag } from 'antd';
+import { Form, List, Card, Tooltip, Menu, Input, Dropdown, Icon, Button, Tag } from 'antd';
 import { TweenOneGroup } from 'rc-tween-one';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import TagSelect from '@/components/TagSelect';
@@ -308,7 +308,7 @@ class FollowupManagement extends Component {
                 >
                   <Card.Meta
                     style={{ cursor: 'pointer' }}
-                    avatar={<Avatar size="small" src={item.avatar} />}
+                    // avatar={<Avatar size="small" src={item.avatar} />}
                     title={
                       <div>
                         {item.title} <span className={styles.status}>{item.status.dec}</span>

@@ -1,5 +1,4 @@
-import { Tree, InputNumber, Icon, Select } from 'antd';
-import styles from './steps.less';
+import { Tree, InputNumber, Select } from 'antd';
 
 const { TreeNode } = Tree;
 const { Option, OptGroup } = Select;
@@ -10,27 +9,27 @@ class MyTree extends React.Component {
     this.state = {
       data: [
         {
-          key: 0,
+          path: [0],
           title: ['and'],
           children: [
             {
-              key: 0,
+              path: [0, 0],
               title: ['age', 'moreEqual', 5],
             },
             {
-              key: 1,
+              path: [0, 1],
               title: ['or'],
               children: [
                 {
-                  key: 0,
+                  path: [0, 1, 0],
                   title: ['diagnosis', 'contain', 'myopia'],
                 },
                 {
-                  key: 1,
+                  path: [0, 1, 1],
                   title: ['diagnosis', 'contain', 'refractive'],
                 },
                 {
-                  key: 2,
+                  path: [0, 1, 2],
                   title: ['diagnosis', 'contain', 'strabismus'],
                 },
               ],
@@ -45,115 +44,109 @@ class MyTree extends React.Component {
   //   const { data } = this.state
   // }
 
-  makeTree = data => {
-    const makeTreeNode = title => {
-      if (title[0] === 'age') {
-        return [
-          <Select key={title[1]} defaultValue={title[1]} style={{ minWidth: 50, marginLeft: 10 }}>
-            <Option value="more">&lt;</Option>
-            <Option value="moreEqual">&le;</Option>
-            <Option value="less">&gt;</Option>
-            <Option value="lessEqual">&ge;</Option>
-            <Option value="equal">=</Option>
-            <Option value="notEqual">≠</Option>
-          </Select>,
-          <InputNumber key={title[2]} defaultValue={title[2]} style={{ marginLeft: 10 }} />,
-        ];
-      }
-      if (title[0] === 'diagnosis') {
-        return [
-          <Select key={title[1]} defaultValue={title[1]} style={{ minWidth: 50, marginLeft: 10 }}>
-            <Option value="contain">包含</Option>
-            <Option value="notContain">不包含</Option>
-          </Select>,
-          <Select key={title[2]} defaultValue={title[2]} style={{ minWidth: 50, marginLeft: 10 }}>
-            <Option value="myopia">近视</Option>
-            <Option value="refractive">屈光不正</Option>
-            <Option value="strabismus">斜视</Option>
-          </Select>,
-        ];
-      }
-      return null;
-    };
-
-    if (data) {
-      const treeList = data.map(item => {
-        const { title, children } = item;
-        return (
-          <TreeNode
-            key={item.key}
-            className={styles.treeNode}
-            title={
-              <div>
-                <Select
-                  defaultValue={title[0]}
-                  onChange={this.handleSelect}
-                  style={{ minWidth: 50 }}
-                >
-                  <OptGroup label="逻辑关系">
-                    <Option value="and">并且</Option>
-                    <Option value="or">或者</Option>
-                    <Option value="non">非</Option>
-                  </OptGroup>
-                  <OptGroup label="事项">
-                    <Option value="age">年龄</Option>
-                    <Option value="diagnosis">诊断</Option>
-                  </OptGroup>
-                </Select>
-                {makeTreeNode(title)}
-              </div>
-            }
-          >
-            {['and', 'or', 'non'].includes(title[0]) && children && this.makeTree(children)}
-          </TreeNode>
-        );
-      });
-
-      treeList.push(
-        <TreeNode
-          key={data.length}
-          className={styles.treeNode}
-          title={<Icon type="plus-circle" />}
-          onClick={this.handleAdd}
-        />
+  makeTreeNode = (title, path) => {
+    const treeNode = [
+      <Select
+        key={0}
+        defaultValue={title[0]}
+        onChange={val => this.handleChange('select', val, path)}
+        style={{ minWidth: 50 }}
+      >
+        <OptGroup label="逻辑关系">
+          <Option value="and">并且</Option>
+          <Option value="or">或者</Option>
+          <Option value="non">非</Option>
+        </OptGroup>
+        <OptGroup label="事项">
+          <Option value="age">年龄</Option>
+          <Option value="diagnosis">诊断</Option>
+        </OptGroup>
+      </Select>,
+    ];
+    if (title[0] === 'age') {
+      treeNode.push(
+        <Select key={1} value={title[1]} style={{ minWidth: 50, marginLeft: 10 }}>
+          <Option value="less">&lt;</Option>
+          <Option value="lessEqual">&le;</Option>
+          <Option value="more">&gt;</Option>
+          <Option value="moreEqual">&ge;</Option>
+          <Option value="equal">=</Option>
+          <Option value="notEqual">≠</Option>
+        </Select>,
+        <InputNumber key={2} value={title[2]} style={{ marginLeft: 10 }} />
       );
-      return treeList;
     }
-
-    return (
-      <TreeNode
-        className={styles.treeNode}
-        title={<Icon type="plus-circle" onClick={this.handleAdd} />}
-      />
-    );
+    if (title[0] === 'diagnosis') {
+      treeNode.push(
+        <Select key={1} value={title[1]} style={{ minWidth: 50, marginLeft: 10 }}>
+          <Option value="contain">包含</Option>
+          <Option value="notContain">不包含</Option>
+        </Select>,
+        <Select key={2} value={title[2]} style={{ minWidth: 50, marginLeft: 10 }}>
+          <Option value="myopia">近视</Option>
+          <Option value="refractive">屈光不正</Option>
+          <Option value="strabismus">斜视</Option>
+        </Select>
+      );
+    }
+    return treeNode;
   };
 
-  // handleSelect = (val) => {
-  //   if (val === 'age') {
-  //     this.setState({
-  //       SelectContent: null
-  //     })
-  //   } else if (val === 'diagnosis') {
-  //     this.setState({
-  //       SelectContent: (
-  //         <div>
-  //           <Select style={{ width: 70 }}>
-  //             <Option value='more'>包含</Option>
-  //             <Option value='moreEqual'>不包含</Option>
-  //           </Select>
-  //           <InputNumber decimalSeparator='0' />
-  //         </div>
-  //       )
-  //     })
-  //   }
-  // }
+  makeTree = data => {
+    // const { cascader } = this.props
+
+    const treeNodeStyle = {
+      margin: '10px 0',
+    };
+
+    const { path, title, children } = data;
+    return (
+      <TreeNode key={path} style={treeNodeStyle} title={this.makeTreeNode(title, path)}>
+        {['and', 'or', 'non'].includes(title[0]) &&
+          children &&
+          children.map(item => this.makeTree(item))}
+      </TreeNode>
+    );
+
+    // const lastPath = data[data.length - 1].path.slice()
+    // lastPath.splice(lastPath.length - 1, 1, lastPath)
+    // treeList.push(
+    //   <TreeNode
+    //     key={lastPath}
+    //     title={<Icon type="plus-circle" />}
+    //     onClick={this.handleAdd}
+    //   />
+    // );
+    // return treeList;
+
+    // return (
+    //   <TreeNode
+    //     title={<Icon type="plus-circle" onClick={this.handleAdd} />}
+    //   />
+    // );
+  };
+
+  handleChange = (type, val, path) => {
+    if (type === 'select') {
+      const { data } = this.state;
+      const treeNode = path.reduce(
+        (total, index) => (Array.isArray(total) ? total[index] : total.children[index]),
+        data
+      );
+      treeNode.title = [val, undefined, undefined];
+      if (!['and', 'or', 'non'].includes(val)) {
+        treeNode.children = [];
+      }
+      this.setState({ data });
+    }
+  };
 
   render() {
     const { data } = this.state;
 
     return (
       <Tree defaultExpandAll showLine>
-        {this.makeTree(data)}
+        {data.map(item => this.makeTree(item))}
       </Tree>
     );
   }
