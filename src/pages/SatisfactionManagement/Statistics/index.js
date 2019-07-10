@@ -172,6 +172,7 @@ class SearchList extends Component {
       <PageHeaderWrapper title="搜索列表" content={<SearchForm style={{ border: '0' }} />}>
         <div className={styles.content}>
           <OfflineData
+            title="满意度分析"
             subTitle="平均满意度"
             activeKey={activeKey}
             loading={false}

@@ -50,7 +50,16 @@ const CustomTab = ({ data, currentTabKey: currentKey, subTitle = '成功率' }) 
 const { TabPane } = Tabs;
 
 const OfflineData = memo(
-  ({ activeKey, loading, offlineData, offlineChartData, handleTabChange, children, subTitle }) => {
+  ({
+    title = '人工随访成功率分析',
+    activeKey,
+    loading,
+    offlineData,
+    offlineChartData,
+    handleTabChange,
+    children,
+    subTitle,
+  }) => {
     const _children = children || (
       <div style={{ padding: '0 24px' }}>
         <TimelineChart
@@ -65,7 +74,7 @@ const OfflineData = memo(
     );
     return (
       <Card
-        title="人工随访成功率分析"
+        title={title}
         loading={loading}
         className={styles.offlineCard}
         bordered={false}

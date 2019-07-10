@@ -1,4 +1,8 @@
 import concern from './routers/concern';
+import appointmentTracking from './routers/appointmentTracking';
+import nursingTracking from './routers/nursingTracking';
+
+debugger;
 export default [
   // user
   {
@@ -223,25 +227,8 @@ export default [
           // }
         ],
       },
-      {
-        path: '/appointment-tracking',
-        name: 'appointment-tracking',
-        icon: 'book',
-        component: './AppointmentTracking/List',
-      },
-      {
-        path: '/appointment-tracking/edit',
-        name: 'appointment-tracking-edit',
-        icon: 'book',
-        component: './AppointmentTracking/Edit',
-        hideInMenu: true,
-      },
-      {
-        path: '/nursing-tracking',
-        name: 'nursing-tracking',
-        icon: 'book',
-        component: './ArchivesManagement/index',
-      },
+      appointmentTracking,
+      nursingTracking,
       concern,
       {
         path: '/online-service',

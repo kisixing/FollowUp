@@ -2,7 +2,7 @@ const MODLE = 'ConcernManagement';
 export default {
   path: '/concern-management',
   name: 'concern-management',
-  icon: 'book',
+  icon: 'heart',
   routes: [
     {
       // 节日问候
