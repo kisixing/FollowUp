@@ -90,9 +90,10 @@ export default {
       const { questionList, questionType, hoverTargetQuestionId } = yield select(
         state => state.questionnaire_model
       );
+      const id = Math.random();
       const newQuestion = {
         [TYPE]: questionType,
-        [ID]: Math.random(),
+        [ID]: id,
         [TITLE]: '请输入题目标题',
         [DATASET]: ['单选题', '多选题', '下拉提'].includes(questionType) && [
           {
@@ -115,7 +116,10 @@ export default {
         // 点击添加
         questionList.push(newQuestion);
       }
-      yield put({ type: `updateState`, payload: { questionList, hoverTargetQuestionId: '' } });
+      yield put({
+        type: `updateState`,
+        payload: { questionList, hoverTargetQuestionId: '', clickTargetQuestionId: id },
+      });
     },
     *removeQuestion({ payload }, { select, put }) {
       const { questionId } = payload;

@@ -4,6 +4,7 @@ import { MODEL, DATASET, TITLE, ID, TYPE, dispatchCreator } from '../../models/q
 import styles from './QuestionItem.less';
 import QuestionStategies from './QuestionStategies';
 // import eventEmitter from '@/utils/Event';
+import useScroll from '@/utils/useScroll';
 
 let lastY = 0;
 
@@ -37,6 +38,8 @@ export default connect(mapStateToProps)(props => {
   const [state, setState] = useState({
     doesNewQuestionPlaceBefore: false,
   });
+
+  const [scroll, ref] = useScroll();
   // useEffect(() => {
   //   eventEmitter.on('removeFocus', () => {
   //     _dispatch('updateState', { clickTargetQuestionId: '' })
@@ -100,6 +103,7 @@ export default connect(mapStateToProps)(props => {
   const { doesNewQuestionPlaceBefore } = state;
   return (
     <div
+      {...ref}
       className={styles.container}
       style={{
         [`border${doesNewQuestionPlaceBefore ? 'Top' : 'Bottom'}`]: `5px solid ${
@@ -118,6 +122,7 @@ export default connect(mapStateToProps)(props => {
         }}
         onClick={e => {
           e.stopPropagation();
+          scroll();
           _dispatch('updateState', { clickTargetQuestionId: id });
         }}
         onDragEnter={() => {
