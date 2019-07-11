@@ -8,37 +8,12 @@ class MyTree extends React.Component {
     super(props);
     this.state = {
       options: {
-        逻辑关系: ['并且', '或者', '非'],
+        逻辑关系: [['并且'], ['或者'], ['非']],
       },
-
-      data: { title: [''] },
-      // {
-      //   title: ['并且'],
-      //   children: [
-      //     {
-      //       path: [0],
-      //       title: [['年龄'], '大于等于', 5],
-      //     },
-      //     {
-      //       path: [1],
-      //       title: ['或者'],
-      //       children: [
-      //         {
-      //           path: [1, 0],
-      //           title: [['诊断'], '包含', '近视'],
-      //         },
-      //         {
-      //           path: [1, 1],
-      //           title: [['诊断'], '包含', '屈光不正'],
-      //         },
-      //         {
-      //           path: [1, 2],
-      //           title: [['诊断'], '包含', '斜视'],
-      //         },
-      //       ],
-      //     },
-      //   ],
-      // },
+      data: {
+        path: [-1],
+        title: [''],
+      },
     };
   }
 
@@ -48,32 +23,44 @@ class MyTree extends React.Component {
     this.setState({ options });
   }
 
+  // 判断数组包含关系
+  isIncludes = (arr, val) => {
+    return arr.reduce((total, item) => {
+      if (total) {
+        return total;
+      }
+      return item === val;
+    }, false);
+  };
+
   makeTreeNode = (title, path) => {
     const itemStyle = {
       width: 200,
     };
+
     const { options } = this.state;
-    // console.log(options)
 
     const treeNode = [
       <Select
-        key={path || -1}
+        key={0}
         value={title[0]}
         onChange={val => this.handleChange('select', val, path)}
         style={itemStyle}
       >
-        <OptGroup label="逻辑关系">
-          <Option value="并且">并且</Option>
-          <Option value="或者">或者</Option>
-          <Option value="非">非</Option>
-        </OptGroup>
-        <OptGroup label="事项">
-          {options['事项'] &&
-            options['事项'].map(item => <Option value={item.join('/')}>{item.join('/')}</Option>)}
-        </OptGroup>
+        {Object.entries(options).map(item => (
+          <OptGroup label={item[0]} key={item[0]}>
+            {item[1] &&
+              item[1].map(item2 => (
+                <Option key={item2.join('/')} value={item2.join('/')}>
+                  {item2.join('/')}
+                </Option>
+              ))}
+          </OptGroup>
+        ))}
       </Select>,
     ];
-    if (title[0] !== '并且' && title[0] !== '或者' && title[0] !== '非' && title[0]) {
+
+    if (title[0] && this.isIncludes(options['逻辑关系'], title[0])) {
       if (title[0].includes('诊断')) {
         treeNode.push(
           <Select
@@ -120,7 +107,8 @@ class MyTree extends React.Component {
         );
       }
     }
-    treeNode.push(<Icon type="plus-circle" onClick={() => this.handleAdd(path)} />);
+    path[0] !== -1 &&
+      treeNode.push(<Icon key={3} type="plus-circle" onClick={() => this.handleAdd(path)} />);
     return treeNode;
   };
 
@@ -129,60 +117,54 @@ class MyTree extends React.Component {
       margin: '10px 0',
     };
 
-    if (data) {
-      const { path, title, children } = data;
-      return (
-        <TreeNode key={path || -1} style={treeNodeStyle} title={this.makeTreeNode(title, path)}>
-          {children && children.map(item => this.makeTree(item))}
-        </TreeNode>
-      );
-    }
-
-    return <TreeNode title={<Icon type="plus-circle" onClick={this.handleAdd} />} />;
+    const { path, title, children } = data;
+    return (
+      <TreeNode key={path} style={treeNodeStyle} title={this.makeTreeNode(title, path)}>
+        {children && children.map(item => this.makeTree(item))}
+      </TreeNode>
+    );
   };
 
   handleChange = (type, val, path) => {
     const { data } = this.state;
-    const treeNode = path
-      ? path.reduce(
-          (total, index) => (Array.isArray(total) ? total[index] : total.children[index]),
-          data
-        )
-      : data;
+    const treeNode = this.pathToTreeNode(path);
 
     if (type === 'select') {
       treeNode.title = [val];
       if (['并且', '或者'].includes(val)) {
         treeNode.children = [
           {
-            path: path ? [...path, 0] : [0],
+            path: path[0] !== -1 ? [...path, 0] : [0],
             title: [''],
           },
           {
-            path: path ? [...path, 1] : [1],
+            path: path[0] !== -1 ? [...path, 1] : [1],
             title: [''],
           },
         ];
       } else if (val === '非') {
         treeNode.children = [
           {
-            path: path ? [...path, 0] : [0],
+            path: [-1],
             title: [''],
           },
         ];
       } else {
         delete treeNode.children;
       }
-      this.setState(
-        { data }
-        // () => console.log(this.state)
-      );
+
+      this.setState({ data });
     }
 
     // if (type === 'input') {
     //   console.log(val)
 
     // }
+  };
+
+  pathToTreeNode = path => {
+    const { data } = this.state;
+    return path.reduce((total, index) => (index === -1 ? data : total.children[index]), data);
   };
 
   handleAdd(path) {

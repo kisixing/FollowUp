@@ -42,6 +42,7 @@ module.exports = {
     'linebreak-style': 0,
     camelcase: 'off',
     'no-underscore-dangle': 'off',
+    'no-unused-expressions': 'off',
   },
   settings: {
     polyfills: ['fetch', 'promises', 'url', 'object-assign'],

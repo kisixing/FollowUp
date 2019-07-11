@@ -119,6 +119,16 @@ export const second = {
   ],
   手术评估单: [
     {
+      label: '诊断',
+      value: '诊断',
+      children: [
+        {
+          value: '诊断',
+          label: '诊断',
+        },
+      ],
+    },
+    {
       label: '身高',
       value: '身高',
       children: [
@@ -129,29 +139,11 @@ export const second = {
       ],
     },
     {
-      label: '诊断',
-      value: '诊断',
-      children: [
-        {
-          value: '近视',
-          label: '近视',
-        },
-        {
-          value: '屈光不正',
-          label: '屈光不正',
-        },
-        {
-          value: '斜视',
-          label: '斜视',
-        },
-      ],
-    },
-    {
       label: '年龄',
       value: '年龄',
       children: [
         {
-          value: '0年龄',
+          value: '年龄',
           label: '年龄',
         },
       ],
