@@ -53,6 +53,7 @@ export default {
     hoverTargetQuestionId: '',
     clickTargetQuestionId: '',
     questionnaireTitle: '',
+    latestQuestionId: '',
   },
 
   effects: {
@@ -87,9 +88,12 @@ export default {
 
     *addNewQuestion({ payload = {} }, { put, select }) {
       const { doesNewQuestionPlaceBefore } = payload;
-      const { questionList, questionType, hoverTargetQuestionId } = yield select(
-        state => state.questionnaire_model
-      );
+      const {
+        questionList,
+        questionType,
+        hoverTargetQuestionId,
+        clickTargetQuestionId,
+      } = yield select(state => state.questionnaire_model);
       const id = Math.random();
       const newQuestion = {
         [TYPE]: questionType,
@@ -112,13 +116,22 @@ export default {
         // eslint-disable-next-line no-unused-expressions
         doesNewQuestionPlaceBefore || (index += 1);
         questionList.splice(index, 0, newQuestion);
-      } else {
+
         // 点击添加
+      } else if (clickTargetQuestionId) {
+        const index = questionList.findIndex(q => q.id === clickTargetQuestionId) + 1;
+        questionList.splice(index, 0, newQuestion);
+      } else {
         questionList.push(newQuestion);
       }
       yield put({
         type: `updateState`,
-        payload: { questionList, hoverTargetQuestionId: '', clickTargetQuestionId: id },
+        payload: {
+          questionList,
+          hoverTargetQuestionId: '',
+          clickTargetQuestionId: id,
+          latestQuestionId: id,
+        },
       });
     },
     *removeQuestion({ payload }, { select, put }) {

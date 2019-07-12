@@ -29,7 +29,7 @@ function mapStateToProps(rootState) {
 export default connect(mapStateToProps)(props => {
   const { dispatch, question, index } = props;
   const _dispatch = dispatchCreator(dispatch);
-  const { hoverTargetQuestionId, clickTargetQuestionId } = props[MODEL];
+  const { hoverTargetQuestionId, clickTargetQuestionId, latestQuestionId } = props[MODEL];
   const type = question[TYPE];
   const title = question[TITLE];
   const id = question[ID];
@@ -48,7 +48,12 @@ export default connect(mapStateToProps)(props => {
   //     eventEmitter.off('removeFocus');
   //   };
   // });
-
+  useEffect(() => {
+    if (latestQuestionId === id) {
+      scroll();
+      _dispatch('updateState', { latestQuestionId: '' });
+    }
+  });
   function updateTitle(value) {
     _dispatch(`updateQuestion`, { id: question.id, [TITLE]: value });
   }
@@ -122,7 +127,7 @@ export default connect(mapStateToProps)(props => {
         }}
         onClick={e => {
           e.stopPropagation();
-          scroll();
+          // scroll();
           _dispatch('updateState', { clickTargetQuestionId: id });
         }}
         onDragEnter={() => {
