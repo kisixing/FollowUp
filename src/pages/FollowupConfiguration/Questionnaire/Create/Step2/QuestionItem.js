@@ -4,6 +4,7 @@ import { MODEL, DATASET, TITLE, ID, TYPE, dispatchCreator } from '../../models/q
 import styles from './QuestionItem.less';
 import QuestionStategies from './QuestionStategies';
 // import eventEmitter from '@/utils/Event';
+import useScroll from '@/utils/useScroll';
 
 let lastY = 0;
 
@@ -28,7 +29,7 @@ function mapStateToProps(rootState) {
 export default connect(mapStateToProps)(props => {
   const { dispatch, question, index } = props;
   const _dispatch = dispatchCreator(dispatch);
-  const { hoverTargetQuestionId, clickTargetQuestionId } = props[MODEL];
+  const { hoverTargetQuestionId, clickTargetQuestionId, latestQuestionId } = props[MODEL];
   const type = question[TYPE];
   const title = question[TITLE];
   const id = question[ID];
@@ -37,6 +38,8 @@ export default connect(mapStateToProps)(props => {
   const [state, setState] = useState({
     doesNewQuestionPlaceBefore: false,
   });
+
+  const [scroll, ref] = useScroll();
   // useEffect(() => {
   //   eventEmitter.on('removeFocus', () => {
   //     _dispatch('updateState', { clickTargetQuestionId: '' })
@@ -45,7 +48,12 @@ export default connect(mapStateToProps)(props => {
   //     eventEmitter.off('removeFocus');
   //   };
   // });
-
+  useEffect(() => {
+    if (latestQuestionId === id) {
+      scroll();
+      _dispatch('updateState', { latestQuestionId: '' });
+    }
+  });
   function updateTitle(value) {
     _dispatch(`updateQuestion`, { id: question.id, [TITLE]: value });
   }
@@ -100,6 +108,7 @@ export default connect(mapStateToProps)(props => {
   const { doesNewQuestionPlaceBefore } = state;
   return (
     <div
+      {...ref}
       className={styles.container}
       style={{
         [`border${doesNewQuestionPlaceBefore ? 'Top' : 'Bottom'}`]: `5px solid ${
@@ -118,6 +127,7 @@ export default connect(mapStateToProps)(props => {
         }}
         onClick={e => {
           e.stopPropagation();
+          // scroll();
           _dispatch('updateState', { clickTargetQuestionId: id });
         }}
         onDragEnter={() => {

@@ -83,8 +83,10 @@ export default (config, { webpack }) => {
   config.plugin('provide').use(webpack.ProvidePlugin, [
     {
       connect: ['dva', 'connect'],
-      useState: ['react', 'useState'],
-      useEffect: ['react', 'useEffect'],
+      ...['useState', 'useEffect', 'useRef'].reduce((p, n) => {
+        p[n] = ['react', n];
+        return p;
+      }, {}),
     },
   ]);
 };
