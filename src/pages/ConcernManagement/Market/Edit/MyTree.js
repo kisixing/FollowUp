@@ -8,7 +8,7 @@ class MyTree extends React.Component {
     super(props);
     this.state = {
       options: {
-        逻辑关系: [['并且'], ['或者'], ['非']],
+        逻辑关系: ['并且', '或者', '非'],
       },
       data: {
         path: [-1],
@@ -23,36 +23,31 @@ class MyTree extends React.Component {
     this.setState({ options });
   }
 
-  // 判断数组包含关系
-  isIncludes = (arr, val) => {
-    return arr.reduce((total, item) => {
-      if (total) {
-        return total;
-      }
-      return item === val;
-    }, false);
-  };
-
   makeTreeNode = (title, path) => {
-    const itemStyle = {
+    const zeroStyle = {
       width: 200,
     };
-
+    const firstStyle = {
+      width: 100,
+      marginLeft: 10,
+    };
+    const thirdStyle = {
+      marginLeft: 10,
+    };
     const { options } = this.state;
-
     const treeNode = [
       <Select
         key={0}
         value={title[0]}
-        onChange={val => this.handleChange('select', val, path)}
-        style={itemStyle}
+        onChange={val => this.handleChange('first', val, path)}
+        style={zeroStyle}
       >
         {Object.entries(options).map(item => (
           <OptGroup label={item[0]} key={item[0]}>
             {item[1] &&
               item[1].map(item2 => (
-                <Option key={item2.join('/')} value={item2.join('/')}>
-                  {item2.join('/')}
+                <Option key={item2} value={item2}>
+                  {item2}
                 </Option>
               ))}
           </OptGroup>
@@ -60,13 +55,13 @@ class MyTree extends React.Component {
       </Select>,
     ];
 
-    if (title[0] && this.isIncludes(options['逻辑关系'], title[0])) {
+    if (title[0] && !options['逻辑关系'].includes(title[0])) {
       if (title[0].includes('诊断')) {
         treeNode.push(
           <Select
             key={1}
             // value={title[1]}
-            style={{ minWidth: 50, marginLeft: 10 }}
+            style={firstStyle}
             // onChange={(val) => this.handleChange('input', val, path, 1)}
           >
             <Option value="包含">包含</Option>
@@ -75,7 +70,7 @@ class MyTree extends React.Component {
           <Select
             key={2}
             // value={title[2]}
-            style={{ minWidth: 50, marginLeft: 10 }}
+            style={firstStyle}
             // onChange={(val) => this.handleChange('input', val, path, 2)}
           >
             <Option value="近视">近视</Option>
@@ -88,7 +83,7 @@ class MyTree extends React.Component {
           <Select
             key={1}
             // value={title[1]}
-            style={{ minWidth: 50, marginLeft: 10 }}
+            style={firstStyle}
             // onChange={(val) => this.handleChange('input', val, path, 1)}
           >
             <Option value="小于">&lt;</Option>
@@ -100,15 +95,23 @@ class MyTree extends React.Component {
           </Select>,
           <InputNumber
             key={2}
+            style={firstStyle}
             // value={title[2]}
-            style={{ marginLeft: 10 }}
             // onChange={(val) => this.handleChange('input', val, path, 2)}
           />
         );
       }
     }
     path[0] !== -1 &&
-      treeNode.push(<Icon key={3} type="plus-circle" onClick={() => this.handleAdd(path)} />);
+      treeNode.push(
+        <Icon key={3} style={thirdStyle} type="plus-circle" onClick={() => this.handleAdd(path)} />,
+        <Icon
+          key={4}
+          style={thirdStyle}
+          type="close-circle"
+          onClick={() => this.handleDelete(path)}
+        />
+      );
     return treeNode;
   };
 
@@ -129,7 +132,7 @@ class MyTree extends React.Component {
     const { data } = this.state;
     const treeNode = this.pathToTreeNode(path);
 
-    if (type === 'select') {
+    if (type === 'first') {
       treeNode.title = [val];
       if (['并且', '或者'].includes(val)) {
         treeNode.children = [
@@ -152,7 +155,6 @@ class MyTree extends React.Component {
       } else {
         delete treeNode.children;
       }
-
       this.setState({ data });
     }
 
@@ -169,16 +171,24 @@ class MyTree extends React.Component {
 
   handleAdd(path) {
     const { data } = this.state;
-    if (path) {
+    if (path[0] !== -1) {
       const pos = path[path.length - 1];
-      const treeNode = path
-        .slice(0, -1)
-        .reduce(
-          (total, index) => (Array.isArray(total) ? total[index] : total.children[index]),
-          data
-        );
-      const newNode = { title: [''] };
-      treeNode.children.splice(pos + 1, 0, newNode);
+      const treeNode = this.pathToTreeNode(path.slice(0, -1));
+      const newNode = {
+        path,
+        title: [''],
+      };
+      treeNode.children.splice(pos, 0, newNode);
+      this.setState({ data });
+    }
+  }
+
+  handleDelete(path) {
+    const { data } = this.state;
+    if (path[0] !== -1) {
+      const pos = path[path.length - 1];
+      const treeNode = this.pathToTreeNode(path.slice(0, -1));
+      treeNode.children.splice(pos + 1, 1);
       this.setState({ data });
     }
   }
