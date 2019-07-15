@@ -40,7 +40,11 @@ export default class MyInput extends React.Component {
         }}
       >
         {Left}
-        <input value={value} onChange={e => onChange && onChange(e.target.value)} />
+        <input
+          className={styles.input}
+          value={value}
+          onChange={e => onChange && onChange(e.target.value)}
+        />
         {Right}
       </div>
     );
