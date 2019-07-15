@@ -25,6 +25,7 @@
     "prettier": "node ./scripts/prettier.js",
     "site": "umi build && npm run functions:build",
     "start": "cross-env PORT=7002 umi dev",
+    "debug": "cross-env PORT=7002 node --inspect-brk=9229 node_modules/umi/lib/cli.js dev",
     "start:no-mock": "cross-env MOCK=none umi dev",
     "test": "umi test",
     "test:all": "node ./tests/run-tests.js",

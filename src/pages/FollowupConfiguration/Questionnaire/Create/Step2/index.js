@@ -6,6 +6,7 @@ import styles from './index.less';
 import EditArea from './EditArea';
 import { MODEL, dispatchCreator } from '../../models/questionnaireModel';
 import QuestionSetting from './QuestionSetting';
+import { windowSrcoll as onDrag } from './dragUtils';
 
 const types = {
   选择填空: [{ type: '单选题' }, { type: '多选题' }, { type: '填空题' }, { type: '下拉题' }],
@@ -13,8 +14,7 @@ const types = {
   文字说明: [{ type: '段落说明' }],
 };
 
-function onDrag(e, questionType, dispatch) {
-  // console.log({...e},e.clientX)
+function onDragStart(e, questionType, dispatch) {
   dispatch('updateState', { questionType });
 }
 function onClick(e, questionType, dispatch) {
@@ -58,7 +58,8 @@ export default connect(mapStateToProps)(props => {
                       onDragEnd={() => {
                         _dispatch('updateState', { hoverTargetQuestionId: '' });
                       }}
-                      onDragStart={e => onDrag(e, type, _dispatch)}
+                      onDrag={onDrag}
+                      onDragStart={e => onDragStart(e, type, _dispatch)}
                       // onDragEnd={e => onDragEnd(e, dispatch)}
                       onClick={e => onClick(e, type, _dispatch)}
                     >
