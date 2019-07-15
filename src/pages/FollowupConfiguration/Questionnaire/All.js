@@ -236,7 +236,7 @@ class All extends Component {
                     height: 200,
                     fontSize: 20,
                   }}
-                  onClick={() => router.push('/followup-configuration/questionnaire/create')}
+                  onClick={() => router.push('create/step1')}
                 >
                   <Icon type="plus" /> 新建
                 </Button>

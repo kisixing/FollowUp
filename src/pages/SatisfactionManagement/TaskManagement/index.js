@@ -59,7 +59,7 @@ class FollowupManagement extends Component {
 
   onDetailClick = () => {
     // const { match } = this.props;
-    router.push(`/satisfaction-management/praise-lists`);
+    router.push(`manual-followup`);
   };
 
   onChartClick = () => {
@@ -149,12 +149,7 @@ class FollowupManagement extends Component {
     );
 
     const tabBarExtraContent = (
-      <Button
-        size="small"
-        type="primary"
-        icon="plus"
-        onClick={() => router.push('/satisfaction-management/satisfaction-lists/create')}
-      >
+      <Button size="small" type="primary" icon="plus" onClick={() => router.push('create/step1')}>
         新建
       </Button>
     );

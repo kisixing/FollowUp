@@ -1,8 +1,9 @@
 import concern from './routers/concern';
 import appointmentTracking from './routers/appointmentTracking';
 import nursingTracking from './routers/nursingTracking';
+import satisfactionManagement from './routers/satisfactionManagement';
+import followupConfiguration from './routers/followupConfiguration';
 
-debugger;
 export default [
   // user
   {
@@ -63,85 +64,7 @@ export default [
         icon: 'book',
         component: './ArchivesManagement/index',
       },
-      {
-        path: '/satisfaction-management',
-        name: 'satisfaction-management',
-        icon: 'book',
-        routes: [
-          {
-            // 投诉建议
-            path: '/satisfaction-management/complaint-lists',
-            name: 'complaint-lists',
-            // icon: 'edit',
-            component: './SatisfactionManagement/TaskManagement/ManualFollowUp',
-          },
-          {
-            // 表扬
-            path: '/satisfaction-management/praise-lists',
-            name: 'praise-lists',
-            // icon: 'edit',
-            component: './SatisfactionManagement/TaskManagement/ManualFollowUp',
-          },
-          {
-            // 满意度
-            path: '/satisfaction-management/satisfaction-lists',
-            name: 'satisfaction-lists',
-            // icon: 'edit',
-            component: './SatisfactionManagement/TaskManagement/index',
-          },
-          // 人工随访列表
-          {
-            path: '/satisfaction-management/satisfaction-lists/manual-followup',
-            component: './SatisfactionManagement/TaskManagement/ManualFollowUp',
-          },
-          {
-            path: '/satisfaction-management/satisfaction-lists/statistics',
-            component: './SatisfactionManagement/Statistics',
-          },
-          {
-            path: '/satisfaction-management/satisfaction-lists/create',
-            name: 'create',
-            // icon: 'edit',
-            component: './SatisfactionManagement/Create/Layout',
-            hideInMenu: true,
-
-            routes: [
-              {
-                path: '/satisfaction-management/satisfaction-lists/create',
-                redirect: '/satisfaction-management/satisfaction-lists/create/step1',
-              },
-              {
-                // 选择任务类型
-                path: '/satisfaction-management/satisfaction-lists/create/step1',
-                name: 'step1',
-                component: './SatisfactionManagement/Create/Step1',
-                hideInMenu: true,
-              },
-              {
-                // 选择对象
-                path: '/satisfaction-management/satisfaction-lists/create/step2',
-                name: 'step2',
-                component: './SatisfactionManagement/Create/Step2',
-                hideInMenu: true,
-              },
-              {
-                // 编辑任务内容
-                path: '/satisfaction-management/satisfaction-lists/create/step3',
-                name: 'step3',
-                component: './SatisfactionManagement/Create/Step3',
-                hideInMenu: true,
-              },
-              {
-                // 发布statistics
-                path: '/satisfaction-management/satisfaction-lists/create/step4',
-                name: 'step4',
-                component: './SatisfactionManagement/Create/Step4',
-                hideInMenu: true,
-              },
-            ],
-          },
-        ],
-      },
+      satisfactionManagement,
       {
         path: '/followup-management',
         name: 'followup-management',
@@ -210,21 +133,6 @@ export default [
               },
             ],
           },
-          // {
-          //   // 全部随访的统计分析
-          //   path: '/followup-management/statistics',
-          //   name: 'statistics',
-          //   icon: 'table',
-          //   component: './FollowupManagement/Statistics/index',
-          // },
-          // {
-          //   // 单个随访任务图形分析统计
-          //   path: '/followup-management/statistics/detail/:followupId',
-          //   name: 'statistics-detail',
-          //   icon: 'bar-chart',
-          //   component: './FollowupManagement/Statistics/detail',
-          //   hideInMenu: true,
-          // }
         ],
       },
       appointmentTracking,
@@ -236,69 +144,7 @@ export default [
         icon: 'book',
         component: './OnlineService',
       },
-      {
-        path: '/followup-configuration',
-        name: 'followup-configuration',
-        icon: 'tool',
-        routes: [
-          {
-            path: '/followup-configuration',
-            redirect: '/followup-configuration/Questionnaire',
-          },
-          {
-            path: '/followup-configuration/Questionnaire',
-            name: 'questionnaire',
-            // icon: 'snippets',
-            component: './FollowupConfiguration/Questionnaire',
-          },
-          // {
-          //   path: '/followup-configuration/Questionnaire/Create',
-          //   name: 'questionnaire-create',
-          //   icon: 'snippets',
-          //   component: './FollowupConfiguration/QuestionnaireCreate',
-          //   hideInMenu: true
-          // },
-          {
-            path: '/followup-configuration/questionnaire/create',
-            // name: 'questionnaire-create',
-            icon: 'edit',
-            component: './FollowupConfiguration/Questionnaire/Create/Layout',
-            hideInMenu: true,
-            routes: [
-              {
-                path: '/followup-configuration/questionnaire/create',
-                redirect: '/followup-configuration/questionnaire/create/step1',
-              },
-              {
-                // 选择任务类型
-                path: '/followup-configuration/questionnaire/create/step1',
-                // name: 'questionnaire-create1',
-                component: './FollowupConfiguration/Questionnaire/Create/Step1',
-                hideInMenu: true,
-              },
-              {
-                // 选择对象
-                path: '/followup-configuration/questionnaire/create/step2',
-                // name: 'questionnaire-create2',
-                component: './FollowupConfiguration/Questionnaire/Create/Step2',
-                hideInMenu: true,
-              },
-            ],
-          },
-          {
-            path: '/followup-configuration/mission-care',
-            name: 'mission-care',
-            // icon: 'heart',
-            component: './FollowupConfiguration/MissionCare',
-          },
-          {
-            path: '/followup-configuration/medium',
-            name: 'medium',
-            // icon: 'wechat',
-            component: './FollowupConfiguration/Medium',
-          },
-        ],
-      },
+      followupConfiguration,
       {
         path: '/knowledge',
         name: 'knowledge',
@@ -380,27 +226,6 @@ export default [
           },
         ],
       },
-
-      // {
-      //   path: '/schedule-reminder',
-      //   name: 'schedule-reminder',
-      //   icon: 'book',
-      //   routes: [
-      //     {
-      //       path: '/schedule-reminder/create',
-      //       name: 'create',
-      //       icon: 'edit',
-      //       // component: './ScheduleReminder/Create',
-      //     },
-      //     {
-      //       path: '/schedule-reminder/management',
-      //       name: 'management',
-      //       icon: 'edit',
-      //       // component: './ScheduleReminder/Management',
-      //     },
-      //   ],
-      // },
-
       {
         path: '/system-settings',
         name: 'system-settings',
