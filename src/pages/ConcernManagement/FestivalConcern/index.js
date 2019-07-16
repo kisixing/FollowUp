@@ -23,16 +23,9 @@ export default () => {
     loading: false,
     selectedMonth: [],
     selectedType: [],
+    title: '',
   });
-  const { list, status, selectedMonth, selectedType, loading } = state;
-
-  const handleTabChange = key => {
-    setState({ ...state, status: key });
-  };
-
-  const handleFormSubmit = value => {
-    console.log(value);
-  };
+  const { list, status, selectedMonth, selectedType, loading, title } = state;
 
   // 选择标签
   const handleTags = (target, checkedTag) => {
@@ -54,7 +47,7 @@ export default () => {
     const type = selectedType.length === 1 ? selectedType[0] : null;
     const _status = status === 'all' ? null : parseInt(status, 10);
     request
-      .post('/api/festivalConcern/list', { data: { month, type, status: _status } })
+      .post('/api/festivalConcern/list', { data: { month, type, status: _status, title } })
       .then(data => {
         setState({ ...state, list: data, loading: false });
       });
@@ -95,22 +88,19 @@ export default () => {
   const mainSearch = (
     <div style={{ textAlign: 'center' }}>
       <Input.Search
+        value={title}
+        onChange={e => setState({ ...state, title: e.target.value })}
         placeholder="请输入"
         enterButton="搜索"
         size="large"
-        onSearch={handleFormSubmit}
+        onSearch={() => fetchData()}
         style={{ maxWidth: 522, width: '100%' }}
       />
     </div>
   );
 
   const tabBarExtraContent = (
-    <Button
-      size="small"
-      type="primary"
-      icon="plus"
-      onClick={() => router.push('/concern-management/festival-concern/create/step1')}
-    >
+    <Button size="small" type="primary" icon="plus" onClick={() => router.push('create/step1')}>
       新建
     </Button>
   );
@@ -153,7 +143,9 @@ export default () => {
       tabList={tabList}
       tabBarExtraContent={tabBarExtraContent}
       tabActiveKey={status}
-      onTabChange={handleTabChange}
+      onTabChange={key => {
+        setState({ ...state, status: key });
+      }}
     >
       <div className={styles.content}>
         <Card>

@@ -56,10 +56,7 @@ export default item => {
             <Icon type="pause" />
           </Tooltip>,
           <Tooltip title="编辑">
-            <Icon
-              type="edit"
-              onClick={() => router.push('/concern-management/festival-concern/create/step2')}
-            />
+            <Icon type="edit" onClick={() => router.push('create/step2')} />
           </Tooltip>,
           <Tooltip title="统计">
             <Icon type="ordered-list" onClick={() => onChartClick(item)} />
