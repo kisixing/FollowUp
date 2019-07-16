@@ -1,3 +1,7 @@
+import { delay } from 'roadhog-api-doc';
+import { list } from './data/questionnaire';
+import { filter } from './utils';
+
 const questionList = [
   {
     type: '单选题',
@@ -273,6 +277,17 @@ const getFakeQuestionnaireData = {
   questionList,
 };
 
-export default {
-  'GET /api/fake_questionnaire': getFakeQuestionnaireData,
-};
+export default delay(
+  {
+    'GET /api/fake_questionnaire': getFakeQuestionnaireData,
+    'POST /api/questionnaire/list': (req, res) => {
+      const { status, type, title } = req.body;
+      let data = filter(list, { status, type });
+      if (title) {
+        data = data.filter(_ => _.title.includes(title));
+      }
+      return res.json(data);
+    },
+  },
+  1000
+);
