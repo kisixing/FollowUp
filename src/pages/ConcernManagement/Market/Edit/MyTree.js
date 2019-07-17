@@ -10,20 +10,17 @@ class MyTree extends React.Component {
       options: {
         逻辑关系: ['并且', '或者', '非'],
       },
-      data: {
-        path: [-1],
-        title: [''],
-      },
+      data: [
+        {
+          key: 0,
+          value: [''],
+        },
+      ],
+      nums: 1,
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { options } = this.state;
-    options['事项'] = nextProps.results;
-    this.setState({ options });
-  }
-
-  makeTreeNode = (title, path) => {
+  makeTreeNode = (value, key, parent) => {
     const zeroStyle = {
       width: 200,
     };
@@ -34,12 +31,16 @@ class MyTree extends React.Component {
     const thirdStyle = {
       marginLeft: 10,
     };
+
     const { options } = this.state;
+    const { results } = this.props;
+    options['事项'] = results;
+
     const treeNode = [
       <Select
         key={0}
-        value={title[0]}
-        onChange={val => this.handleChange('first', val, path)}
+        value={value[0]}
+        onChange={val => this.handleChange(val, key, 0)}
         style={zeroStyle}
       >
         {Object.entries(options).map(item => (
@@ -55,23 +56,23 @@ class MyTree extends React.Component {
       </Select>,
     ];
 
-    if (title[0] && !options['逻辑关系'].includes(title[0])) {
-      if (title[0].includes('诊断')) {
+    if (value[0] && !options['逻辑关系'].includes(value[0])) {
+      if (value[0].includes('诊断')) {
         treeNode.push(
           <Select
             key={1}
-            // value={title[1]}
+            value={value[1]}
             style={firstStyle}
-            // onChange={(val) => this.handleChange('input', val, path, 1)}
+            onChange={val => this.handleChange(val, key, 1)}
           >
             <Option value="包含">包含</Option>
             <Option value="不包含">不包含</Option>
           </Select>,
           <Select
             key={2}
-            // value={title[2]}
+            value={value[2]}
             style={firstStyle}
-            // onChange={(val) => this.handleChange('input', val, path, 2)}
+            onChange={val => this.handleChange(val, key, 2)}
           >
             <Option value="近视">近视</Option>
             <Option value="屈光不正">屈光不正</Option>
@@ -82,9 +83,9 @@ class MyTree extends React.Component {
         treeNode.push(
           <Select
             key={1}
-            // value={title[1]}
+            value={value[1]}
             style={firstStyle}
-            // onChange={(val) => this.handleChange('input', val, path, 1)}
+            onChange={val => this.handleChange(val, key, 1)}
           >
             <Option value="小于">&lt;</Option>
             <Option value="小于等于">&le;</Option>
@@ -96,22 +97,39 @@ class MyTree extends React.Component {
           <InputNumber
             key={2}
             style={firstStyle}
-            // value={title[2]}
-            // onChange={(val) => this.handleChange('input', val, path, 2)}
+            value={value[2]}
+            onChange={val => this.handleChange(val, key, 2)}
           />
         );
       }
     }
-    path[0] !== -1 &&
+    const parentNode = parent !== undefined && this.keyToNode(parent);
+    // 添加增加按钮
+    if (parent !== undefined && parentNode.value[0] !== '非') {
       treeNode.push(
-        <Icon key={3} style={thirdStyle} type="plus-circle" onClick={() => this.handleAdd(path)} />,
+        <Icon
+          key={3}
+          style={thirdStyle}
+          type="plus-circle"
+          onClick={() => this.handleAdd(key, parent)}
+        />
+      );
+    }
+    // 添加删除按钮
+    if (
+      parent !== undefined &&
+      !(['并且', '或者'].includes(parentNode.value[0]) && parentNode.children.length === 2) &&
+      parentNode.children.length !== 1
+    ) {
+      treeNode.push(
         <Icon
           key={4}
           style={thirdStyle}
           type="close-circle"
-          onClick={() => this.handleDelete(path)}
+          onClick={() => this.handleDelete(key, parent)}
         />
       );
+    }
     return treeNode;
   };
 
@@ -120,85 +138,134 @@ class MyTree extends React.Component {
       margin: '10px 0',
     };
 
-    const { path, title, children } = data;
+    const { key, value, children, parent } = data;
     return (
-      <TreeNode key={path} style={treeNodeStyle} title={this.makeTreeNode(title, path)}>
-        {children && children.map(item => this.makeTree(item))}
+      <TreeNode key={key} style={treeNodeStyle} title={this.makeTreeNode(value, key, parent)}>
+        {children && children.map(v => this.keyToNode(v)).map(item => this.makeTree(item))}
       </TreeNode>
     );
   };
 
-  handleChange = (type, val, path) => {
-    const { data } = this.state;
-    const treeNode = this.pathToTreeNode(path);
+  handleChange = (val, key, pos) => {
+    const { data, nums } = this.state;
+    const treeNode = this.keyToNode(key);
 
-    if (type === 'first') {
-      treeNode.title = [val];
+    if (pos === 0) {
       if (['并且', '或者'].includes(val)) {
-        treeNode.children = [
-          {
-            path: path[0] !== -1 ? [...path, 0] : [0],
-            title: [''],
-          },
-          {
-            path: path[0] !== -1 ? [...path, 1] : [1],
-            title: [''],
-          },
-        ];
+        if (['并且', '或者'].includes(treeNode.value[pos])) {
+          treeNode.value[pos] = val;
+        } else {
+          treeNode.value[pos] = val;
+          treeNode.children &&
+            treeNode.children.forEach(v => {
+              const index = this.keyToIndex(v);
+              if (index) {
+                data.splice(index, 1);
+              }
+            });
+          treeNode.children = [nums, nums + 1];
+          data.push(
+            {
+              key: nums,
+              parent: key,
+              value: [''],
+            },
+            {
+              key: nums + 1,
+              parent: key,
+              value: [''],
+            }
+          );
+          this.setState({ nums: nums + 2 });
+        }
       } else if (val === '非') {
-        treeNode.children = [
-          {
-            path: [-1],
-            title: [''],
-          },
-        ];
+        treeNode.value[pos] = val;
+        treeNode.children &&
+          treeNode.children.forEach(v => {
+            const index = this.keyToIndex(v);
+            if (index) {
+              data.splice(index, 1);
+            }
+          });
+        treeNode.children = [nums];
+        data.push({
+          key: nums,
+          parent: key,
+          value: [''],
+        });
+        this.setState({ nums: nums + 1 });
       } else {
+        treeNode.value[pos] = val;
+        treeNode.children &&
+          treeNode.children.forEach(v => {
+            const index = this.keyToIndex(v);
+            if (index) {
+              data.splice(index, 1);
+            }
+          });
         delete treeNode.children;
       }
-      this.setState({ data });
+    } else {
+      treeNode.value[pos] = val;
     }
 
-    // if (type === 'input') {
-    //   console.log(val)
-
-    // }
+    this.setState({ data });
   };
 
-  pathToTreeNode = path => {
+  keyToNode = key => {
     const { data } = this.state;
-    return path.reduce((total, index) => (index === -1 ? data : total.children[index]), data);
+    return data.filter(value => value.key === key).pop();
   };
 
-  handleAdd(path) {
+  keyToIndex = key => {
     const { data } = this.state;
-    if (path[0] !== -1) {
-      const pos = path[path.length - 1];
-      const treeNode = this.pathToTreeNode(path.slice(0, -1));
-      const newNode = {
-        path,
-        title: [''],
-      };
-      treeNode.children.splice(pos, 0, newNode);
-      this.setState({ data });
+    for (let i = 0; i < data.length; i += 1) {
+      if (data[i].key === key) return i;
     }
+    return null;
+  };
+
+  handleAdd(key, parent) {
+    const { data, nums } = this.state;
+    data.push({
+      key: nums,
+      parent,
+      value: [''],
+    });
+    const parentNode = this.keyToNode(parent);
+    const { children } = parentNode;
+    children.splice(children.indexOf(key) + 1, 0, nums);
+
+    this.setState({
+      nums: nums + 1,
+      data,
+    });
   }
 
-  handleDelete(path) {
+  handleDelete(key, parent) {
     const { data } = this.state;
-    if (path[0] !== -1) {
-      const pos = path[path.length - 1];
-      const treeNode = this.pathToTreeNode(path.slice(0, -1));
-      treeNode.children.splice(pos + 1, 1);
-      this.setState({ data });
-    }
+    // 抹掉父节点中自己的标记
+    const parentNode = this.keyToNode(parent);
+    const { children } = parentNode;
+    children.splice(children.indexOf(key), 1);
+    // 递归删掉子节点
+    const { chl } = this.keyToNode(key);
+    chl && chl.map(k => this.handleDelete(k, key));
+    // 删掉自己
+    data.splice(this.keyToIndex(key), 1);
+
+    this.setState({ data });
   }
 
   render() {
     const { data } = this.state;
 
+    const expandedList = [];
+    data.map(v => v.children && expandedList.push(v.key.toString()));
+
     return (
-      <Tree defaultExpandAll showLine>
-        {this.makeTree(data)}
+      <Tree expandedKeys={expandedList} showLine>
+        {this.makeTree(data[0])}
       </Tree>
     );
   }

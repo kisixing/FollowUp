@@ -10,33 +10,43 @@ class Step1 extends React.Component {
     super(props);
     this.state = {
       results: [],
-      firstSelect: [],
-      // dataList: []
+      firstSelect: '',
+      dataList: [],
+      filterList: null,
+      fileName: '',
     };
   }
 
-  // componentDidMount() {
-  //   const dataList = []
-  //   const getDataList = data => {
-  //     if (data.children) {
-  //       data.children.map(item => getDataList(item))
-  //     }
-  //     dataList.push(data.value)
-  //   }
-  //   first.map(item => getDataList(item))
-  //   this.setState({ dataList })
-  // }
+  componentDidMount() {
+    const dataList = [];
+    const getDataList = (data, result = '') => {
+      if (data.children) {
+        data.children.map(item => getDataList(item, `${result}${data.value}/`));
+      } else {
+        dataList.push(`${result}${data.value}/`);
+      }
+    };
+    first.map(item => getDataList(item));
+    this.setState({ dataList });
+  }
 
   handleChange = (type, val) => {
+    const { firstSelect, results } = this.state;
     if (type === 'first') {
-      console.log(val.target.value);
+      const { value } = val.target;
+      const { dataList } = this.state;
 
-      this.setState({ firstSelect: val.target.value });
+      this.setState({
+        fileName: value,
+        filterList: value
+          ? dataList.filter(v => v.includes(value)).map(v => ({ value: v.slice(0, -1) }))
+          : null, // 查询 & 构造树节点
+        firstSelect: '',
+      });
     } else if (type === 'second') {
-      const { firstSelect, results } = this.state;
-      // 添加备选项
+      // 添加备选项 & 去掉最后‘/‘
       results.push(
-        firstSelect[0]
+        firstSelect
           .split('/')
           .slice(-2, -1)
           .concat(val)
@@ -67,17 +77,19 @@ class Step1 extends React.Component {
     ));
 
   handleChecked = checkedKeys => {
+    const checked = checkedKeys.pop();
     this.setState({
-      firstSelect: checkedKeys.slice(-1),
+      firstSelect: checked,
+      fileName: checked,
     });
   };
 
   render() {
-    const { firstSelect, results } = this.state;
+    const { firstSelect, results, fileName, filterList } = this.state;
 
     let checked = null;
-    if (firstSelect[0]) {
-      checked = firstSelect[0].split('/');
+    if (firstSelect) {
+      checked = firstSelect.split('/');
       checked = checked[checked.length - 2];
     }
 
@@ -85,22 +97,30 @@ class Step1 extends React.Component {
       <div>
         <Row style={{ height: 500, marginBottom: 20 }} gutter={8}>
           <Col span={12} style={{ height: '100%' }}>
-            <Row style={{ height: '50%', paddingBottom: 10 }}>
-              <Card style={{ height: '100%' }}>
-                <h2>事项</h2>
-                档案名称：
-                <br />
-                {/* <Cascader
-                  style={{ margin: 10, width: '100%' }}
-                  options={first}
-                  onChange={val => this.handleCascader('first', val)}
-                /> */}
-                <Input
-                  style={{ margin: 10, width: '100%' }}
-                  value={firstSelect}
-                  onChange={val => this.handleChange('first', val)}
-                />
-                <br />
+            <Card style={{ height: '100%' }}>
+              <h2>事项</h2>
+              档案名称：
+              <br />
+              <Input
+                style={{ margin: 10, width: '100%' }}
+                value={fileName}
+                onChange={val => this.handleChange('first', val)}
+              />
+              <br />
+              <Tree
+                checkable
+                checkedKeys={firstSelect ? [firstSelect] : []}
+                defaultExpandAll
+                onCheck={checkedKeys => this.handleChecked(checkedKeys)}
+              >
+                {this.makeTree(filterList !== null ? filterList : first)}
+              </Tree>
+            </Card>
+          </Col>
+
+          <Col span={12} style={{ height: '100%' }}>
+            <Row style={{ height: '30%' }}>
+              <Card>
                 数据：
                 <br />
                 <Cascader
@@ -110,36 +130,20 @@ class Step1 extends React.Component {
                 />
               </Card>
             </Row>
-
-            <Row style={{ height: '50%' }}>
-              <Card style={{ height: '100%' }}>
-                <h2>备选项</h2>
-                <Row gutter={8}>
-                  {results.map((item, index) => (
-                    <Col span={12} key={item}>
-                      {index + 1}. {item}
-                      <Icon
-                        style={{ marginLeft: 10 }}
-                        type="close-circle"
-                        onClick={() => this.handleDelete(index)}
-                      />
-                    </Col>
-                  ))}
-                </Row>
-              </Card>
-            </Row>
-          </Col>
-
-          <Col span={12} style={{ height: '100%' }}>
-            <Card style={{ height: '100%' }}>
-              <Tree
-                checkable
-                checkedKeys={firstSelect}
-                defaultExpandAll
-                onCheck={this.handleChecked}
-              >
-                {this.makeTree(first)}
-              </Tree>
+            <Card style={{ height: '70%' }}>
+              <h2>备选项</h2>
+              <Row gutter={8}>
+                {results.map((item, index) => (
+                  <Col span={12} key={item}>
+                    {index + 1}. {item}
+                    <Icon
+                      style={{ marginLeft: 10 }}
+                      type="close-circle"
+                      onClick={() => this.handleDelete(index)}
+                    />
+                  </Col>
+                ))}
+              </Row>
             </Card>
           </Col>
         </Row>
