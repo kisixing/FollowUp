@@ -1,182 +1,91 @@
 /* eslint-disable no-console */
 
-import React, { Component } from 'react';
-import router from 'umi/router';
-import { connect } from 'dva';
-
-import { Form, List, Card, Input, Avatar, Statistic, Tooltip, Icon } from 'antd';
+// import router from 'umi/router';
+import { List, Input } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-
+import Item from './Item';
 import styles from './index.less';
+import request from '@/utils/request';
 
-@connect(({ global }) => ({
-  global,
-}))
-class FollowupManagement extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tabActiveKey: 'all',
-      lists: ['护理跟踪'].map(_ => ({
-        title: _,
-        status: {
-          dec: '进行中',
-          code: 'running',
-        },
-        all: +Math.random()
-          .toString()
-          .slice(12),
-        id: Math.random(),
-      })),
-    };
-  }
+export default () => {
+  const [state, setState] = useState({
+    list: [],
+    status: 'all',
+    loading: false,
+    title: '',
+  });
+  const { list, status, loading, title } = state;
 
-  componentDidMount() {
-    const { dispatch } = this.props;
-    const { tabActiveKey } = this.state;
-    dispatch({
-      type: 'followupLists/query',
-      payload: {
-        status: tabActiveKey,
-      },
-    });
-  }
-
-  handleTabChange = key => {
-    this.setState({ tabActiveKey: key, loading: true });
-    setTimeout(() => {
-      this.setState({ loading: false });
-    }, 500);
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'followupLists/query',
-      payload: {
-        status: key,
-      },
-    });
+  const fetchData = () => {
+    setState({ ...state, loading: true });
+    const _status = status === 'all' ? null : parseInt(status, 10);
+    request
+      .post('/api/appointmentTracking/list', { data: { status: _status, title } })
+      .then(data => {
+        setState({ ...state, list: data, loading: false });
+      });
   };
+  useEffect(() => {
+    fetchData();
+  }, [status]);
 
-  handleFormSubmit = value => {
-    console.log(value);
-  };
+  const tabList = [
+    {
+      key: 'all',
+      tab: '全部',
+    },
+    {
+      key: 0,
+      tab: '运行中',
+    },
+    {
+      key: 1,
+      tab: '暂停',
+    },
+  ];
 
-  onDetailClick = e => {
-    // const { match } = this.props;
-    router.push(`/satisfaction-management/satisfaction-lists/table/${e.id}`);
-  };
+  const mainSearch = (
+    <div style={{ textAlign: 'center' }}>
+      <Input.Search
+        value={title}
+        onChange={e => setState({ ...state, title: e.target.value })}
+        placeholder="请输入"
+        enterButton="搜索"
+        size="large"
+        onSearch={() => fetchData()}
+        style={{ maxWidth: 522, width: '100%' }}
+      />
+    </div>
+  );
 
-  onChartClick = e => {
-    router.push(`/satisfaction-management/satisfaction-lists/chart/${e.id}`);
-  };
+  // const tabBarExtraContent = (
+  //   <Button size="small" type="primary" icon="plus" onClick={() => router.push('create/step1')}>
+  //     新建
+  //   </Button>
+  // );
 
-  // 选择标签
-  handleTags = (target, checkedTag) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'followupLists/updateTags',
-      payload: {
-        target,
-        checkedTag,
-      },
-    });
-  };
-
-  handleTagClose = removedTag => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'followupLists/removeTag',
-      payload: removedTag,
-    });
-  };
-
-  render() {
-    const tabList = [
-      {
-        key: 'all',
-        tab: '全部',
-      },
-      {
-        key: 'running',
-        tab: '运行中',
-      },
-      {
-        key: 'pause',
-        tab: '暂停',
-      },
-    ];
-
-    const mainSearch = (
-      <div style={{ textAlign: 'center' }}>
-        <Input.Search
-          placeholder="请输入"
-          enterButton="搜索"
-          size="large"
-          onSearch={this.handleFormSubmit}
-          style={{ maxWidth: 522, width: '100%' }}
+  return (
+    <PageHeaderWrapper
+      wrapperClassName={styles.wrapper}
+      title="列表搜索"
+      content={mainSearch}
+      tabList={tabList}
+      // tabBarExtraContent={tabBarExtraContent}
+      tabActiveKey={status}
+      onTabChange={key => {
+        setState({ ...state, status: key });
+      }}
+    >
+      <div className={styles.content}>
+        <List
+          rowKey="id"
+          style={{ marginTop: 24 }}
+          grid={{ gutter: 24, xxl: 4, xl: 3, lg: 2, md: 2, sm: 1 }}
+          loading={loading}
+          dataSource={list}
+          renderItem={item => <Item {...item} />}
         />
       </div>
-    );
-
-    const CardInfo = ({ all }) => (
-      <div className={styles.cardInfo}>
-        <Statistic title="今日跟踪任务" value={all} />
-      </div>
-    );
-
-    const { tabActiveKey, lists, loading } = this.state;
-    const dataSource = lists.filter(_ => tabActiveKey === 'all' || _.status.code === tabActiveKey);
-    return (
-      <PageHeaderWrapper
-        wrapperClassName={styles.wrapper}
-        title="列表搜索"
-        content={mainSearch}
-        tabList={tabList}
-        // tabBarExtraContent={tabBarExtraContent}
-        tabActiveKey={tabActiveKey}
-        onTabChange={this.handleTabChange}
-      >
-        <div className={styles.content}>
-          <List
-            rowKey="id"
-            style={{ marginTop: 24 }}
-            grid={{ gutter: 24, xxl: 4, xl: 3, lg: 2, md: 2, sm: 1 }}
-            loading={loading}
-            dataSource={dataSource}
-            renderItem={item => (
-              <List.Item key={item.id}>
-                <Card
-                  hoverable
-                  bodyStyle={{ paddingBottom: 20 }}
-                  // onClick={() => router.push('/appointment-tracking/edit')}
-                  actions={[
-                    <Tooltip title="详情">
-                      <Icon type="ordered-list" onClick={() => router.push('detail')} />
-                    </Tooltip>,
-                    <Tooltip title="编辑">
-                      <Icon type="edit" onClick={() => router.push('edit')} />
-                    </Tooltip>,
-                  ]}
-                >
-                  <Card.Meta
-                    style={{ cursor: 'pointer' }}
-                    avatar={<Avatar size="small" src={item.avatar} />}
-                    title={
-                      <div>
-                        {item.title} <span className={styles.status}>{item.status.dec}</span>
-                      </div>
-                    }
-                  />
-                  <div className={styles.cardItemContent}>
-                    <CardInfo all={item.all} today={item.todayFollowup} />
-                  </div>
-                </Card>
-              </List.Item>
-            )}
-          />
-        </div>
-      </PageHeaderWrapper>
-    );
-  }
-}
-
-export default Form.create()(FollowupManagement);
+    </PageHeaderWrapper>
+  );
+};

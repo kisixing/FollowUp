@@ -19,11 +19,3 @@ export const festivalConcernList = mockjs.mock({
 }).data;
 
 export default {};
-// {
-//   title: _,
-//   id: Math.random(),
-//   all: new Date(+new Date() + 1000 * 60 * 60 * 24 * time).toLocaleDateString(),
-//   time,
-//   status: { dec: '运行中', code: 'running' },
-//   avatar: '',
-// };

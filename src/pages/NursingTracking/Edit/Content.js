@@ -45,7 +45,7 @@ const Content = connect(mapStateToProps)(function A({ satisfactionCreation_model
       wrapperCol={{ span: 14 }}
       labelAlign="left"
     >
-      <Title label="护理跟踪时间&媒介" isTop />
+      <Title label="预约跟踪时间&媒介" isTop />
       <Form.Item label="时间">
         <Input.Group compact style={{ lineHeight: '32px' }}>
           预约日期
