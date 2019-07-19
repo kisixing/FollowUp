@@ -5,9 +5,9 @@ import styles from './QuestionItem.less';
 import QuestionStategies from './QuestionStategies';
 // import eventEmitter from '@/utils/Event';
 import useScroll from '@/utils/useScroll';
+import { getLabel } from './types';
 
 let lastY = 0;
-
 // let flag = true;
 // function removeActive() {
 //   eventEmitter.emit('removeFocus');
@@ -89,18 +89,6 @@ export default connect(mapStateToProps)(props => {
     _dispatch(`updateQuestion`, { id: question.id, [DATASET]: newDataset });
   }
 
-  function addNewDataset() {
-    const oldDataset = Array.isArray(dataset) ? dataset : [];
-    const newDataset = oldDataset.concat({
-      [ID]: Math.random(),
-      [F_LABEL]: `选项${oldDataset.length + 1}`,
-    });
-    _dispatch(`updateQuestion`, {
-      id: question.id,
-      dataset: newDataset,
-    });
-  }
-
   // const [state, setState] = useState({});
   // const { } = state;
   const isHoverTarget = hoverTargetQuestionId === id;
@@ -138,7 +126,7 @@ export default connect(mapStateToProps)(props => {
         onDragOver={onDragOver}
       >
         <div>
-          {`${index + 1}. ${question.type}`}
+          {`${index + 1}. ${getLabel(type)}`}
           <Icon
             type="delete"
             onClick={() => _dispatch('removeQuestion', { questionId: id })}
@@ -151,7 +139,6 @@ export default connect(mapStateToProps)(props => {
           updateTitle={updateTitle}
           dataset={dataset}
           id={id}
-          addNewDataset={addNewDataset}
           updateDataset={updateDataset}
           isClickTarget={isClickTarget}
         />

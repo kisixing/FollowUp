@@ -1,5 +1,6 @@
 import { queryTaskTemplates } from '../Create/service';
 import { fakeQuestionnarieData } from '@/services/api';
+import { QUESTION_DATASET_SYMBOL } from '../Create/Step2/types';
 
 export const MODEL = 'questionnaire_model';
 export const DATASET = 'dataset';
@@ -8,6 +9,17 @@ export const SCORE = 'score';
 export const TYPE = 'type';
 export const ID = 'id';
 
+// const { single, multiple, dropdown, blank, score, remark, } = QUESTION_SYMBOL
+const { normal } = QUESTION_DATASET_SYMBOL;
+export const getDataset = (data = {}) => {
+  return {
+    [ID]: Math.random(),
+    [F_LABEL]: `选项`,
+    [TYPE]: normal,
+    score: 0,
+    ...data,
+  };
+};
 export const dispatchCreator = dispatch => {
   return (actionType, payload) => {
     dispatch({
@@ -99,16 +111,9 @@ export default {
         [TYPE]: questionType,
         [ID]: id,
         [TITLE]: '请输入题目标题',
-        [DATASET]: ['单选题', '多选题', '下拉提'].includes(questionType) && [
-          {
-            [F_LABEL]: '选项1',
-            [ID]: Math.random(),
-          },
-          {
-            [F_LABEL]: '选项2',
-            [ID]: Math.random(),
-          },
-        ],
+        [SCORE]: 0,
+        jumps: [],
+        [DATASET]: ['1', '2', '3'].includes(questionType) && [getDataset(), getDataset()],
       };
       // 拖拽添加
       if (hoverTargetQuestionId) {
@@ -154,9 +159,29 @@ export default {
         if (_.id === id) {
           return { ..._, ...payload };
         }
-        return _;
+        return { ..._ };
       });
       yield put({ type: `updateState`, payload: { questionList: newQuestionList } });
+    },
+    *addNewDataset({ payload }, { select, put }) {
+      const { questionId, data = {} } = payload;
+      const { questionList } = yield select(state => state.questionnaire_model);
+      const question = questionList.find(q => q[ID] === questionId);
+      const oldDataset = question[DATASET] || [];
+
+      const newDataset = oldDataset.concat(
+        getDataset({
+          [F_LABEL]: `选项${oldDataset.length + 1}`,
+          ...data,
+        })
+      );
+      yield put({
+        type: `updateQuestion`,
+        payload: {
+          id: questionId,
+          dataset: newDataset,
+        },
+      });
     },
     *removeDatasetItem({ payload }, { put, select }) {
       const { questionId, datasetId } = payload;
@@ -170,7 +195,24 @@ export default {
           type: `updateQuestion`,
           payload: {
             id: question[ID],
-            dataset,
+            dataset: [...dataset],
+          },
+        });
+      }
+    },
+    *updateDateset({ payload }, { put, select }) {
+      const { questionId, datasetId, data = {} } = payload;
+      const { questionList } = yield select(state => state.questionnaire_model);
+      const question = questionList.find(q => q[ID] === questionId);
+      const dataset = question && question[DATASET];
+      if (dataset) {
+        const target = dataset.find(d => d[ID] === datasetId);
+        Object.assign(target, data);
+        yield put({
+          type: `updateQuestion`,
+          payload: {
+            id: questionId,
+            dataset: [...dataset],
           },
         });
       }

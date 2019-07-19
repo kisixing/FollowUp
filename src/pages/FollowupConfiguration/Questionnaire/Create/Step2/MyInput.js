@@ -30,7 +30,7 @@ export default class MyInput extends React.Component {
   render() {
     const { active } = this.state;
 
-    const { Left, Right, value, onChange } = this.props;
+    const { Left, Right, value, onChange, style } = this.props;
     return (
       <div
         className={styles[`${active ? 'active' : 'negative'}`]}
@@ -38,6 +38,7 @@ export default class MyInput extends React.Component {
           // e.stopPropagation();
           this.setState({ active: true });
         }}
+        style={{ ...style, display: 'inline-block', width: '90%' }}
       >
         {Left}
         <input

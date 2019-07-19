@@ -1,17 +1,20 @@
 /* eslint-disable react/no-array-index-key */
 
-import router from 'umi/router';
+// import router from 'umi/router';
 import { Button, Row, Col, Icon } from 'antd';
 import styles from './index.less';
 import EditArea from './EditArea';
 import { MODEL, dispatchCreator } from '../../models/questionnaireModel';
 import QuestionSetting from './QuestionSetting';
 import { windowSrcoll as onDrag } from './dragUtils';
+import { QUESTION_SYMBOL, getLabel } from './types';
+
+const { single, multiple, dropdown, blank, score, remark } = QUESTION_SYMBOL;
 
 const types = {
-  选择填空: [{ type: '单选题' }, { type: '多选题' }, { type: '填空题' }, { type: '下拉题' }],
-  评分题: [{ type: '打分题' }],
-  文字说明: [{ type: '段落说明' }],
+  选择填空: [single, multiple, dropdown, blank],
+  评分题: [score],
+  文字说明: [remark],
 };
 
 function onDragStart(e, questionType, dispatch) {
@@ -48,7 +51,7 @@ export default connect(mapStateToProps)(props => {
             return (
               <div key={index1}>
                 <Title>{typeKey}</Title>
-                {types[typeKey].map(({ type }, index2) => {
+                {types[typeKey].map((type, index2) => {
                   return (
                     <Button
                       type="ghost"
@@ -63,7 +66,7 @@ export default connect(mapStateToProps)(props => {
                       // onDragEnd={e => onDragEnd(e, dispatch)}
                       onClick={e => onClick(e, type, _dispatch)}
                     >
-                      {type}
+                      {getLabel(type)}
                     </Button>
                   );
                 })}
@@ -88,7 +91,12 @@ export default connect(mapStateToProps)(props => {
               {' '}
               测试结束，你的得分是[Score]分. 您很注重饮食管理，如果再做到以下.{' '}
             </p>
-            <Button onClick={() => router.push('/followup-configuration/Questionnaire')}>
+            <Button
+              onClick={() => {
+                // router.push('/followup-configuration/Questionnaire')
+                console.log(props[MODEL].questionList);
+              }}
+            >
               确定
             </Button>
           </div>

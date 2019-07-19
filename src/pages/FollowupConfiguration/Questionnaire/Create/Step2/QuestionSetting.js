@@ -1,6 +1,7 @@
-import { Switch, Button, Modal, Dropdown, Menu, Icon, Input } from 'antd';
+import { Switch, Button, Modal, Dropdown, Menu, Icon, InputNumber } from 'antd';
 import { MODEL, dispatchCreator } from '../../models/questionnaireModel';
 import styles from './QuestionSetting.less';
+import { isSelectableType, isSingleType } from './types';
 
 function mapStateToProps(rootState) {
   return rootState[MODEL];
@@ -13,11 +14,17 @@ const itemMenu = (
 );
 
 export default connect(mapStateToProps)(props => {
+  const { clickTargetQuestionId, questionList } = props;
+  if (!clickTargetQuestionId) return null;
   const { dispatch } = props;
   const _dispatch = dispatchCreator(dispatch);
-  const { clickTargetQuestionId, questionList } = props;
   const clickTargetQuestionIndex = questionList.findIndex(({ id }) => id === clickTargetQuestionId);
-  const target = questionList.find(_ => _.id === clickTargetQuestionId);
+
+  const target = questionList.find(_ => _.id === clickTargetQuestionId) || {};
+
+  const { type, dataset, score, compulsory, jumps } = target;
+  const isSelectable = isSelectableType(type);
+  const isSingle = isSingleType(type);
   const [state, setState] = useState({ visible: false });
   const { visible } = state;
   const onCancel = () => {
@@ -27,7 +34,9 @@ export default connect(mapStateToProps)(props => {
   const onOk = () => {
     setState({ visible: false });
   };
-
+  const updateDateset = (data, datasetId) => {
+    _dispatch('updateDateset', { datasetId, questionId: clickTargetQuestionId, data });
+  };
   return (
     clickTargetQuestionId && (
       <div className={styles.containner}>
@@ -46,7 +55,12 @@ export default connect(mapStateToProps)(props => {
         <div className={styles.item}>
           <span>此题必答</span>
           <span>
-            <Switch />
+            <Switch
+              checked={compulsory}
+              onChange={_compulsory => {
+                _dispatch('updateQuestion', { compulsory: _compulsory, id: clickTargetQuestionId });
+              }}
+            />
           </span>
         </div>
         <div className={styles.item}>
@@ -62,54 +76,69 @@ export default connect(mapStateToProps)(props => {
             </Button>
           </span>
         </div>
-        {target &&
-          target.dataset &&
-          target.dataset.map(_ => {
+
+        {isSelectable ? (
+          dataset.map(_ => {
             return (
               <div className={styles.item} key={_.id}>
                 <span>{_.label}</span>
                 <span>
-                  <Input placeholder="请输入分值" style={{ width: '100px' }} />
+                  <InputNumber
+                    placeholder="输入分值"
+                    style={{ width: '100px' }}
+                    value={_.score}
+                    onChange={_score => updateDateset({ score: _score }, _.id)}
+                  />
                 </span>
               </div>
             );
-          })}
-        {target && !target.dataset && (
+          })
+        ) : (
           <div className={styles.item}>
             <span>分值设置</span>
             <span>
-              <Input placeholder="请输入分值" style={{ width: '100px' }} />
+              <InputNumber
+                placeholder="输入分值"
+                style={{ width: '100px' }}
+                value={score}
+                onChange={_score =>
+                  _dispatch('updateQuestion', { id: clickTargetQuestionId, score: _score })
+                }
+              />
             </span>
           </div>
         )}
-        <Modal visible={visible} onCancel={onCancel} onOk={onOk} title="跳转逻辑">
-          <div>
-            <span>共有1条跳转逻辑</span>
+
+        {isSingle && (
+          <Modal visible={visible} onCancel={onCancel} onOk={onOk} title="跳转逻辑">
             <div>
-              如果本题选中
-              <Dropdown overlay={itemMenu}>
-                <Button size="small">
-                  选项1
-                  <Icon type="down" />
-                </Button>
-              </Dropdown>
-              ，则跳转到
-              <Dropdown
-                overlay={
-                  <Menu>
-                    <Menu.Item>题目1</Menu.Item>
-                    <Menu.Item>题目2</Menu.Item>
-                  </Menu>
-                }
-              >
-                <Button size="small">
-                  题目1
-                  <Icon type="down" />
-                </Button>
-              </Dropdown>
+              <span>共有{jumps.length}条跳转逻辑</span>
+              <div>
+                如果本题选中
+                <Dropdown overlay={itemMenu}>
+                  <Button size="small">
+                    选项1
+                    <Icon type="down" />
+                  </Button>
+                </Dropdown>
+                ，则跳转到
+                <Dropdown
+                  overlay={
+                    <Menu>
+                      <Menu.Item>题目1</Menu.Item>
+                      <Menu.Item>题目2</Menu.Item>
+                    </Menu>
+                  }
+                >
+                  <Button size="small">
+                    题目1
+                    <Icon type="down" />
+                  </Button>
+                </Dropdown>
+              </div>
             </div>
-          </div>
-        </Modal>
+          </Modal>
+        )}
       </div>
     )
   );
