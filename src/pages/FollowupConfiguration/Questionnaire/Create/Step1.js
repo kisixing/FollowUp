@@ -5,34 +5,38 @@ import { Form, List, Card, Input, Icon, Avatar, Button } from 'antd';
 
 import styles from './Step1.less';
 
-// const category = ['科室随访', '专项随访', '关怀类随访', '管理类随访', '科研随访'];
-// const secondaryCategory = [
-//   '高危妊娠孕妇复诊管理',
-//   '妊娠糖尿病孕妇管理',
-//   '产后随访',
-//   '无创基因检查随访',
-//   'OGTT异常随访',
-//   '节日问候',
-//   '生日问候',
-//   '三伏天通知',
-//   '新生儿疾病护理讲座通知',
-//   '可是满意度',
-//   '投诉建议',
-//   '妊娠期体重管理与巨大儿',
-//   '妊娠糖尿病产后病情发展',
-// ];
-
-/**
- * 主页面内容
- */
-// eslint-disable-next-line camelcase
+const templateList = [
+  {
+    id: '11211132221',
+    title: '妊娠高血压产后复诊提醒',
+    hospital: '华侨医院',
+    description: '自动发送复诊提醒 · 管理复诊结果',
+  },
+  {
+    id: '11211142221',
+    title: '高危复诊提醒',
+    hospital: '华侨医院',
+    description: '自动发送复诊提醒 · 管理复诊结果',
+  },
+  {
+    id: '11216112221',
+    title: '产后42天复诊复诊提醒',
+    hospital: '华侨医院',
+    description: '自动发送复诊提醒 · 管理复诊结果',
+  },
+  {
+    id: '11211712221',
+    title: '妊娠糖尿病产后复诊提醒',
+    hospital: '华侨医院',
+    description: '自动发送复诊提醒 · 管理复诊结果',
+  },
+];
 @connect(({ global, questionnaire_model }) => ({
   global,
   selectedTags: questionnaire_model.selectedTags,
   lists: questionnaire_model.lists,
   category: questionnaire_model.category,
   secondaryCategory: questionnaire_model.secondaryCategory,
-  templateList: questionnaire_model.templateList,
 }))
 class Step1 extends Component {
   constructor(props) {
@@ -70,7 +74,7 @@ class Step1 extends Component {
 
   render() {
     const { showTemplate } = this.state;
-    const { loading, lists, templateList } = this.props;
+    const { loading, lists } = this.props;
 
     return (
       <div className={styles.step1}>

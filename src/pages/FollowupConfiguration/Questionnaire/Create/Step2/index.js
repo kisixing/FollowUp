@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 
-// import router from 'umi/router';
+import router from 'umi/router';
 import { Button, Row, Col, Icon } from 'antd';
 import styles from './index.less';
 import EditArea from './EditArea';
@@ -94,10 +94,18 @@ export default connect(mapStateToProps)(props => {
             <Button
               onClick={() => {
                 // router.push('/followup-configuration/Questionnaire')
-                console.log(props[MODEL].questionList);
+                // console.log(props[MODEL].questionList);
               }}
             >
               确定
+            </Button>
+            <Button
+              onClick={() => {
+                _dispatch('fetchPreviewData', {});
+                router.push('../preview');
+              }}
+            >
+              预览
             </Button>
           </div>
         </div>

@@ -35,7 +35,7 @@ class EditArea extends Component {
   render() {
     // const [state, setState] = useState({});
     const { dispatch, questionnaire_model } = this.props;
-    const { questionList, questionnaireTitle } = questionnaire_model;
+    const { questionList, questionnaireTitle, questionnaireSubTitle } = questionnaire_model;
     // const { } = state;
 
     const _dispatch = dispatchCreator(dispatch);
@@ -52,7 +52,14 @@ class EditArea extends Component {
               }}
             />
           </div>
-          <MyInput value="感谢您能抽出几分钟时间来参加本次答题，现在我们就马上开始吧！" />
+          <MyInput
+            value={questionnaireSubTitle}
+            onChange={_questionnaireSubTitle => {
+              _dispatch('updateState', {
+                questionnaireSubTitle: _questionnaireSubTitle,
+              });
+            }}
+          />
         </div>
         {questionList.length > 0 ? (
           questionList.map((question, index) => {

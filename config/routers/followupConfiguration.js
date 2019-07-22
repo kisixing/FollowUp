@@ -8,7 +8,7 @@ export default {
       name: 'questionnaire',
       routes: [
         {
-          path: '/followup-configuration/Questionnaire',
+          path: '/followup-configuration/questionnaire',
           redirect: 'index',
         },
         {
@@ -33,6 +33,10 @@ export default {
               component: './FollowupConfiguration/Questionnaire/Create/Step2',
             },
           ],
+        },
+        {
+          path: 'preview',
+          component: './FollowupConfiguration/Questionnaire/Preview',
         },
       ],
     },

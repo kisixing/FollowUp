@@ -33,39 +33,19 @@ export default {
   namespace: MODEL,
 
   state: {
-    templateList: [
-      {
-        id: '11211132221',
-        title: '妊娠高血压产后复诊提醒',
-        hospital: '华侨医院',
-        description: '自动发送复诊提醒 · 管理复诊结果',
-      },
-      {
-        id: '11211142221',
-        title: '高危复诊提醒',
-        hospital: '华侨医院',
-        description: '自动发送复诊提醒 · 管理复诊结果',
-      },
-      {
-        id: '11216112221',
-        title: '产后42天复诊复诊提醒',
-        hospital: '华侨医院',
-        description: '自动发送复诊提醒 · 管理复诊结果',
-      },
-      {
-        id: '11211712221',
-        title: '妊娠糖尿病产后复诊提醒',
-        hospital: '华侨医院',
-        description: '自动发送复诊提醒 · 管理复诊结果',
-      },
-    ],
+    questionnaireTitle: '',
+    questionnaireSubTitle: '',
     questionList: [],
     doesNewQuestionPlaceBefore: false,
-    questionType: '',
+    questionType: '', // 将要新增的问题类型
     hoverTargetQuestionId: '',
     clickTargetQuestionId: '',
-    questionnaireTitle: '',
-    latestQuestionId: '',
+    latestQuestionId: '', // 新增的问题id
+    previewData: {
+      questionnaireTitle: '',
+      questionnaireSubTitle: '',
+      questionList: [],
+    },
   },
 
   effects: {
@@ -82,6 +62,7 @@ export default {
               type: 'updateState',
               payload: {
                 questionnaireTitle: '请填写问卷标题',
+                questionnaireSubTitle: '感谢您能抽出几分钟参加本问卷，现在让我们开始吧',
                 questionList: [],
               },
             }
@@ -97,7 +78,24 @@ export default {
         },
       });
     },
+    *fetchPreviewData({ payload }, { put, select }) {
+      // eslint-disable-next-line no-unused-vars
+      const { id } = payload;
 
+      const { questionList, questionnaireTitle, questionnaireSubTitle } = yield select(
+        state => state[MODEL]
+      );
+      yield put({
+        type: `updateState`,
+        payload: {
+          previewData: {
+            questionList,
+            questionnaireTitle,
+            questionnaireSubTitle,
+          },
+        },
+      });
+    },
     *addNewQuestion({ payload = {} }, { put, select }) {
       const { doesNewQuestionPlaceBefore } = payload;
       const {
@@ -105,7 +103,7 @@ export default {
         questionType,
         hoverTargetQuestionId,
         clickTargetQuestionId,
-      } = yield select(state => state.questionnaire_model);
+      } = yield select(state => state[MODEL]);
       const id = Math.random();
       const newQuestion = {
         [TYPE]: questionType,
@@ -141,7 +139,7 @@ export default {
     },
     *removeQuestion({ payload }, { select, put }) {
       const { questionId } = payload;
-      const { questionList } = yield select(state => state.questionnaire_model);
+      const { questionList } = yield select(state => state[MODEL]);
       const delIndex = questionList.findIndex(_ => _[ID] === questionId);
       questionList.splice(delIndex, 1);
       yield put({
@@ -153,7 +151,7 @@ export default {
     },
     *updateQuestion({ payload }, { put, select }) {
       const { id } = payload;
-      const { questionList } = yield select(state => state.questionnaire_model);
+      const { questionList } = yield select(state => state[MODEL]);
 
       const newQuestionList = questionList.map(_ => {
         if (_.id === id) {
@@ -165,7 +163,7 @@ export default {
     },
     *addNewDataset({ payload }, { select, put }) {
       const { questionId, data = {} } = payload;
-      const { questionList } = yield select(state => state.questionnaire_model);
+      const { questionList } = yield select(state => state[MODEL]);
       const question = questionList.find(q => q[ID] === questionId);
       const oldDataset = question[DATASET] || [];
 
@@ -185,7 +183,7 @@ export default {
     },
     *removeDatasetItem({ payload }, { put, select }) {
       const { questionId, datasetId } = payload;
-      const { questionList } = yield select(state => state.questionnaire_model);
+      const { questionList } = yield select(state => state[MODEL]);
       const question = questionList.find(q => q[ID] === questionId);
       const dataset = question && question[DATASET];
       if (dataset) {
@@ -202,7 +200,7 @@ export default {
     },
     *updateDateset({ payload }, { put, select }) {
       const { questionId, datasetId, data = {} } = payload;
-      const { questionList } = yield select(state => state.questionnaire_model);
+      const { questionList } = yield select(state => state[MODEL]);
       const question = questionList.find(q => q[ID] === questionId);
       const dataset = question && question[DATASET];
       if (dataset) {
@@ -221,7 +219,6 @@ export default {
 
   reducers: {
     updateState(state, { payload }) {
-      // console.log(payload)
       return {
         ...state,
         ...payload,
