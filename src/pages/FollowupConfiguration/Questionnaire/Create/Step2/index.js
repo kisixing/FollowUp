@@ -7,7 +7,10 @@ import EditArea from './EditArea';
 import { MODEL, dispatchCreator } from '../../models/questionnaireModel';
 import QuestionSetting from './QuestionSetting';
 import { windowSrcoll as onDrag } from './dragUtils';
-import { QUESTION_SYMBOL, getLabel } from './types';
+import {
+  QUESTION_SYMBOL,
+  getLabel,
+} from '@/pages/FollowupConfiguration/Questionnaire/questionTypes';
 
 const { single, multiple, dropdown, blank, score, remark } = QUESTION_SYMBOL;
 
@@ -94,7 +97,7 @@ export default connect(mapStateToProps)(props => {
             <Button
               onClick={() => {
                 // router.push('/followup-configuration/Questionnaire')
-                // console.log(props[MODEL].questionList);
+                console.log(props[MODEL].questionList);
               }}
             >
               确定

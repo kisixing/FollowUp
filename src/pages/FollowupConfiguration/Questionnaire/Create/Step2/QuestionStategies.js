@@ -2,7 +2,12 @@ import { Input, Button, Icon } from 'antd';
 import DatasetItem from './DatasetItem';
 import { ID, dispatchCreator } from '../../models/questionnaireModel';
 import MyInput from './MyInput';
-import { QUESTION_DATASET_SYMBOL } from './types';
+import {
+  QUESTION_DATASET_SYMBOL,
+  QUESTION_SYMBOL,
+} from '@/pages/FollowupConfiguration/Questionnaire/questionTypes';
+
+const { single, multiple, dropdown, blank, score, remark } = QUESTION_SYMBOL;
 
 const { other, normal } = QUESTION_DATASET_SYMBOL;
 
@@ -86,15 +91,16 @@ const QuestionType2 = React.memo(
     return prev.title === next.title && prev.questionType === next.questionType;
   }
 );
-export default React.memo(props => {
+const RenderType = {
+  [single]: QuestionType1,
+  [multiple]: QuestionType1,
+  [dropdown]: QuestionType1,
+  [score]: QuestionType2,
+  [blank]: QuestionType2,
+  [remark]: QuestionType2,
+};
+export default props => {
   const { questionType } = props;
-  const RenderType = {
-    1: QuestionType1,
-    2: QuestionType1,
-    3: QuestionType1,
-    4: QuestionType2,
-    5: QuestionType2,
-    6: QuestionType2,
-  }[questionType];
-  return <RenderType {...props} />;
-});
+  const Type = RenderType[questionType];
+  return <Type {...props} />;
+};

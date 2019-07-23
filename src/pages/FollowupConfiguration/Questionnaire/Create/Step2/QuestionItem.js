@@ -5,7 +5,7 @@ import styles from './QuestionItem.less';
 import QuestionStategies from './QuestionStategies';
 // import eventEmitter from '@/utils/Event';
 import useScroll from '@/utils/useScroll';
-import { getLabel } from './types';
+import { getLabel } from '@/pages/FollowupConfiguration/Questionnaire/questionTypes';
 
 let lastY = 0;
 // let flag = true;

@@ -2,7 +2,10 @@ import Icon from '@/components/IconFont';
 import styles from './DatasetItem.less';
 import { dispatchCreator } from '../../models/questionnaireModel';
 import MyInput from './MyInput';
-import { QUESTION_SYMBOL, QUESTION_DATASET_SYMBOL } from './types';
+import {
+  QUESTION_SYMBOL,
+  QUESTION_DATASET_SYMBOL,
+} from '@/pages/FollowupConfiguration/Questionnaire/questionTypes';
 
 const { other } = QUESTION_DATASET_SYMBOL;
 const { single, multiple, dropdown } = QUESTION_SYMBOL;

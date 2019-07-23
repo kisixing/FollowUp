@@ -1,7 +1,10 @@
 import { Switch, Button, Modal, Dropdown, Menu, Icon, InputNumber } from 'antd';
 import { MODEL, dispatchCreator } from '../../models/questionnaireModel';
 import styles from './QuestionSetting.less';
-import { isSelectableType, isSingleType } from './types';
+import {
+  isSelectableType,
+  isSingleType,
+} from '@/pages/FollowupConfiguration/Questionnaire/questionTypes';
 
 function mapStateToProps(rootState) {
   return rootState[MODEL];
