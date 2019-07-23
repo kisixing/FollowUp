@@ -1,6 +1,6 @@
 import { queryTaskTemplates } from '../Create/service';
 import { fakeQuestionnarieData } from '@/services/api';
-import { QUESTION_DATASET_SYMBOL } from '../Create/Step2/types';
+import { QUESTION_DATASET_SYMBOL, QUESTION_SYMBOL } from '../Create/Step2/types';
 
 export const MODEL = 'questionnaire_model';
 export const DATASET = 'dataset';
@@ -9,7 +9,7 @@ export const SCORE = 'score';
 export const TYPE = 'type';
 export const ID = 'id';
 
-// const { single, multiple, dropdown, blank, score, remark, } = QUESTION_SYMBOL
+const { single, multiple, dropdown } = QUESTION_SYMBOL;
 const { normal } = QUESTION_DATASET_SYMBOL;
 export const getDataset = (data = {}) => {
   return {
@@ -40,7 +40,7 @@ export default {
     questionType: '', // 将要新增的问题类型
     hoverTargetQuestionId: '',
     clickTargetQuestionId: '',
-    latestQuestionId: '', // 新增的问题id
+    latestQuestionId: '', // 新增的问题id,滚动后清空
     previewData: {
       questionnaireTitle: '',
       questionnaireSubTitle: '',
@@ -111,7 +111,11 @@ export default {
         [TITLE]: '请输入题目标题',
         [SCORE]: 0,
         jumps: [],
-        [DATASET]: ['1', '2', '3'].includes(questionType) && [getDataset(), getDataset()],
+        compulsory: false,
+        [DATASET]: [single, multiple, dropdown].includes(questionType) && [
+          getDataset(),
+          getDataset(),
+        ],
       };
       // 拖拽添加
       if (hoverTargetQuestionId) {
@@ -139,13 +143,18 @@ export default {
     },
     *removeQuestion({ payload }, { select, put }) {
       const { questionId } = payload;
-      const { questionList } = yield select(state => state[MODEL]);
+      const { questionList, clickTargetQuestionId } = yield select(state => state[MODEL]);
       const delIndex = questionList.findIndex(_ => _[ID] === questionId);
       questionList.splice(delIndex, 1);
+      const isClickTarget = clickTargetQuestionId === questionId;
+      const next = questionList[delIndex];
+      const nextId = (next && next.id) || '';
       yield put({
         type: `updateState`,
         payload: {
-          questionList,
+          questionList: [...questionList],
+          clickTargetQuestionId: isClickTarget ? nextId : clickTargetQuestionId,
+          latestQuestionId: isClickTarget ? nextId : '',
         },
       });
     },
