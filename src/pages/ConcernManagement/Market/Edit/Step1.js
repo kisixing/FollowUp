@@ -1,4 +1,4 @@
-import { Card, Row, Col, Button, Cascader, Icon, Tree, Input } from 'antd';
+import { Card, Row, Col, Button, Cascader, Icon, Tree, Input, Divider, message } from 'antd';
 import router from 'umi/router';
 import { first, second } from './FakeData';
 import MyTree from './MyTree';
@@ -14,6 +14,12 @@ class Step1 extends React.Component {
       dataList: [],
       filterList: null,
       fileName: '',
+      data: [
+        {
+          key: 0,
+          value: [''],
+        },
+      ],
     };
   }
 
@@ -53,7 +59,13 @@ class Step1 extends React.Component {
           .join('/')
       );
       this.setState({
-        results: results.filter((v, i, arr) => arr.indexOf(v) === i), // 去重
+        results: results.filter((v, i, arr) => {
+          if (arr.indexOf(v) === i) {
+            return true;
+          }
+          message.error('选项已存在');
+          return false;
+        }), // 去重
       });
     }
   };
@@ -84,8 +96,36 @@ class Step1 extends React.Component {
     });
   };
 
+  nextStep = () => {
+    const { data } = this.state;
+    const json = this.makeJSON(data, 0);
+    // eslint-disable-next-line no-console
+    console.log(json, data);
+    router.push('/concern-management/market/Edit/Step2/123');
+  };
+
+  makeJSON = (data, pos) => {
+    const { value, children } = this.keyToNode(data, pos);
+    const json = { value };
+    if (children) json.children = children.map(p => this.makeJSON(data, p));
+    return json;
+  };
+
+  keyToNode = (data, pos) => {
+    const { value, children } = data
+      .filter((val, index, arr) => {
+        if (val.key === pos) {
+          arr.splice(index, 1);
+          return true;
+        }
+        return false;
+      })
+      .pop();
+    return { value, children };
+  };
+
   render() {
-    const { firstSelect, results, fileName, filterList } = this.state;
+    const { firstSelect, results, fileName, filterList, data } = this.state;
 
     let checked = null;
     if (firstSelect) {
@@ -119,20 +159,20 @@ class Step1 extends React.Component {
           </Col>
 
           <Col span={12} style={{ height: '100%' }}>
-            <Row style={{ height: '30%' }}>
-              <Card>
+            <Card style={{ height: '100%' }}>
+              <Row style={{ height: '30%' }}>
                 数据：
                 <br />
                 <Cascader
                   style={{ margin: 10, width: '100%' }}
                   options={second[checked]}
                   onChange={val => this.handleChange('second', val)}
+                  allowClear={false}
                 />
-              </Card>
-            </Row>
-            <Card style={{ height: '70%' }}>
-              <h2>备选项</h2>
-              <Row gutter={8}>
+                <Divider />
+              </Row>
+              <Row gutter={8} style={{ height: '70%' }}>
+                <h2>备选项： </h2>
                 {results.map((item, index) => (
                   <Col span={12} key={item}>
                     {index + 1}. {item}
@@ -156,14 +196,11 @@ class Step1 extends React.Component {
                 <h3>系统内用户范围：</h3>
               </Col>
               <Col offset={2}>
-                <MyTree results={results} />
+                <MyTree results={results} data={data} />
               </Col>
             </Row>
             <Row type="flex" justify="center">
-              <Button
-                type="primary"
-                onClick={() => router.push('/concern-management/market/Edit/Step2/123')}
-              >
+              <Button type="primary" onClick={this.nextStep}>
                 下一步
               </Button>
             </Row>

@@ -6,21 +6,38 @@ const { Option, OptGroup } = Select;
 class MyTree extends React.Component {
   constructor(props) {
     super(props);
+
+    const { data } = props;
+    const nums = data.length;
+
     this.state = {
       options: {
         逻辑关系: ['并且', '或者', '非'],
       },
-      data: [
-        {
-          key: 0,
-          value: [''],
-        },
-      ],
-      nums: 1,
+      expandedList: [],
+      data,
+      nums,
     };
   }
 
-  makeTreeNode = (value, key, parent) => {
+  makeTree = data => {
+    const treeNodeStyle = {
+      margin: '10px 0',
+    };
+
+    const { key, value, children, parent, autoFocus } = data;
+    return (
+      <TreeNode
+        key={key}
+        style={treeNodeStyle}
+        title={this.makeTreeNode(value, key, parent, autoFocus)}
+      >
+        {children && children.map(v => this.keyToNode(v)).map(item => this.makeTree(item))}
+      </TreeNode>
+    );
+  };
+
+  makeTreeNode = (value, key, parent, autoFocus) => {
     const zeroStyle = {
       width: 200,
     };
@@ -42,6 +59,7 @@ class MyTree extends React.Component {
         value={value[0]}
         onChange={val => this.handleChange(val, key, 0)}
         style={zeroStyle}
+        autoFocus={autoFocus}
       >
         {Object.entries(options).map(item => (
           <OptGroup label={item[0]} key={item[0]}>
@@ -133,21 +151,8 @@ class MyTree extends React.Component {
     return treeNode;
   };
 
-  makeTree = data => {
-    const treeNodeStyle = {
-      margin: '10px 0',
-    };
-
-    const { key, value, children, parent } = data;
-    return (
-      <TreeNode key={key} style={treeNodeStyle} title={this.makeTreeNode(value, key, parent)}>
-        {children && children.map(v => this.keyToNode(v)).map(item => this.makeTree(item))}
-      </TreeNode>
-    );
-  };
-
   handleChange = (val, key, pos) => {
-    const { data, nums } = this.state;
+    const { data, nums, expandedList } = this.state;
     const treeNode = this.keyToNode(key);
 
     if (pos === 0) {
@@ -176,7 +181,11 @@ class MyTree extends React.Component {
               value: [''],
             }
           );
-          this.setState({ nums: nums + 2 });
+          this.setState({
+            data,
+            expandedList: [...expandedList, key.toString()],
+            nums: nums + 2,
+          });
         }
       } else if (val === '非') {
         treeNode.value[pos] = val;
@@ -193,7 +202,11 @@ class MyTree extends React.Component {
           parent: key,
           value: [''],
         });
-        this.setState({ nums: nums + 1 });
+        this.setState({
+          expandedList: [...expandedList, key.toString()],
+          data,
+          nums: nums + 1,
+        });
       } else {
         treeNode.value[pos] = val;
         treeNode.children &&
@@ -225,23 +238,6 @@ class MyTree extends React.Component {
     return null;
   };
 
-  handleAdd(key, parent) {
-    const { data, nums } = this.state;
-    data.push({
-      key: nums,
-      parent,
-      value: [''],
-    });
-    const parentNode = this.keyToNode(parent);
-    const { children } = parentNode;
-    children.splice(children.indexOf(key) + 1, 0, nums);
-
-    this.setState({
-      nums: nums + 1,
-      data,
-    });
-  }
-
   handleDelete(key, parent) {
     const { data } = this.state;
     // 抹掉父节点中自己的标记
@@ -257,14 +253,33 @@ class MyTree extends React.Component {
     this.setState({ data });
   }
 
-  render() {
-    const { data } = this.state;
+  handleAdd(key, parent) {
+    const { data, nums } = this.state;
+    data.push({
+      key: nums,
+      parent,
+      value: [''],
+      autoFocus: true,
+    });
+    const parentNode = this.keyToNode(parent);
+    const { children } = parentNode;
+    children.splice(children.indexOf(key) + 1, 0, nums);
 
-    const expandedList = [];
-    data.map(v => v.children && expandedList.push(v.key.toString()));
+    this.setState({
+      nums: nums + 1,
+      data,
+    });
+  }
+
+  render() {
+    const { data, expandedList } = this.state;
 
     return (
-      <Tree expandedKeys={expandedList} showLine>
+      <Tree
+        expandedKeys={expandedList}
+        showLine
+        onExpand={expandedKey => this.setState({ expandedList: expandedKey })}
+      >
         {this.makeTree(data[0])}
       </Tree>
     );
