@@ -202,7 +202,7 @@ export default {
       const { questionId, datasetId } = payload;
       const { questionList } = yield select(state => state[MODEL]);
       const question = questionList.find(q => q[ID] === questionId);
-      const dataset = question && question[DATASET];
+      const dataset = question && [...question[DATASET]];
       if (dataset) {
         const delIndex = dataset.findIndex(d => d[ID] === datasetId);
         dataset.splice(delIndex, 1);
