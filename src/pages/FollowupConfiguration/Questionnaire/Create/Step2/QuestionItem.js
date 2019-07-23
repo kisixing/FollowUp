@@ -129,7 +129,10 @@ export default connect(mapStateToProps)(props => {
           {`${index + 1}. ${getLabel(type)}`}
           <Icon
             type="delete"
-            onClick={() => _dispatch('removeQuestion', { questionId: id })}
+            onClick={e => {
+              _dispatch('removeQuestion', { questionId: id });
+              e.stopPropagation();
+            }}
             className={styles.delete}
           />
         </div>
