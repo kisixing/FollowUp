@@ -39,7 +39,7 @@ export default connect(mapStateToProps)(props => {
     doesNewQuestionPlaceBefore: false,
   });
 
-  const [scroll, ref] = useScroll();
+  const [ref, scroll] = useScroll();
   // useEffect(() => {
   //   eventEmitter.on('removeFocus', () => {
   //     _dispatch('updateState', { clickTargetQuestionId: '' })
@@ -53,7 +53,7 @@ export default connect(mapStateToProps)(props => {
       scroll();
       _dispatch('updateState', { latestQuestionId: '' });
     }
-  });
+  }, [latestQuestionId]);
   function updateTitle(value) {
     _dispatch(`updateQuestion`, { id: question.id, [TITLE]: value });
   }
@@ -96,7 +96,7 @@ export default connect(mapStateToProps)(props => {
   const { doesNewQuestionPlaceBefore } = state;
   return (
     <div
-      {...ref}
+      ref={ref}
       className={styles.container}
       style={{
         [`border${doesNewQuestionPlaceBefore ? 'Top' : 'Bottom'}`]: `5px solid ${

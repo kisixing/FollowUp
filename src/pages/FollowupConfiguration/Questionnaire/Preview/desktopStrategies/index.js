@@ -5,6 +5,8 @@ import DropdownType from './Dropdown';
 import Blank from './Blank';
 import Score from './Score';
 import Remark from './Remark';
+import useScroll from '@/utils/useScroll';
+import { MODEL, dispatchCreator } from '../../models/questionnaireModel';
 
 const { single, multiple, dropdown, blank, score, remark } = QUESTION_SYMBOL;
 
@@ -16,8 +18,21 @@ const RenderType = {
   [blank]: Blank,
   [remark]: Remark,
 };
-export default React.memo(props => {
-  const { type } = props;
+function mapStateToProps(rootState) {
+  return rootState[MODEL];
+}
+
+export default connect(mapStateToProps)(props => {
+  const [ref, scroll] = useScroll();
+  const { type, questionToScroll, dispatch, id } = props;
+  const _dispatch = dispatchCreator(dispatch);
+  useEffect(() => {
+    if (questionToScroll === id) {
+      scroll();
+      _dispatch('updateState', { questionToScroll: '' });
+    }
+  }, [questionToScroll]);
+
   const Type = RenderType[type];
-  return <Type {...props} />;
+  return <Type {...props} ref={ref} />;
 });

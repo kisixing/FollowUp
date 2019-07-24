@@ -1,41 +1,30 @@
-import { Switch, Button, Modal, Dropdown, Menu, Icon, InputNumber } from 'antd';
+import { Switch, Button, InputNumber } from 'antd';
 import { MODEL, dispatchCreator } from '../../models/questionnaireModel';
 import styles from './QuestionSetting.less';
-import {
-  isSelectableType,
-  isSingleType,
-} from '@/pages/FollowupConfiguration/Questionnaire/questionTypes';
+import { isSelectableType } from '@/pages/FollowupConfiguration/Questionnaire/questionTypes';
+import JumpsSetting from './JumpsSetting';
 
 function mapStateToProps(rootState) {
   return rootState[MODEL];
 }
-const itemMenu = (
-  <Menu>
-    <Menu.Item>选项1</Menu.Item>
-    <Menu.Item>选项2</Menu.Item>
-  </Menu>
-);
 
 export default connect(mapStateToProps)(props => {
-  const { clickTargetQuestionId, questionList } = props;
+  const { clickTargetQuestionId, questionList, dispatch } = props;
   if (!clickTargetQuestionId) return null;
-  const { dispatch } = props;
   const _dispatch = dispatchCreator(dispatch);
   const clickTargetQuestionIndex = questionList.findIndex(({ id }) => id === clickTargetQuestionId);
-
   const target = questionList.find(_ => _.id === clickTargetQuestionId) || {};
+  const { type, dataset, score, compulsory } = target;
 
-  const { type, dataset, score, compulsory, jumps } = target;
   const isSelectable = isSelectableType(type);
-  const isSingle = isSingleType(type);
-  const [state, setState] = useState({ visible: false });
+  const [state, setState] = useState({
+    visible: false,
+  });
+
   const { visible } = state;
-  const onCancel = () => {
-    setState({ visible: false });
-    _dispatch();
-  };
-  const onOk = () => {
-    setState({ visible: false });
+
+  const onVisibleChange = _visible => {
+    setState({ visible: _visible });
   };
   const updateDateset = (data, datasetId) => {
     _dispatch('updateDateset', { datasetId, questionId: clickTargetQuestionId, data });
@@ -66,19 +55,21 @@ export default connect(mapStateToProps)(props => {
             />
           </span>
         </div>
-        <div className={styles.item}>
-          <span>跳转逻辑</span>
-          <span>
-            <Button
-              type="link"
-              onClick={() => {
-                setState({ visible: true });
-              }}
-            >
-              设置
-            </Button>
-          </span>
-        </div>
+        {isSelectable && (
+          <div className={styles.item}>
+            <span>跳转逻辑</span>
+            <span>
+              <Button
+                type="link"
+                onClick={() => {
+                  setState({ visible: true });
+                }}
+              >
+                设置
+              </Button>
+            </span>
+          </div>
+        )}
 
         {isSelectable ? (
           dataset.map(_ => {
@@ -112,35 +103,8 @@ export default connect(mapStateToProps)(props => {
           </div>
         )}
 
-        {isSingle && (
-          <Modal visible={visible} onCancel={onCancel} onOk={onOk} title="跳转逻辑">
-            <div>
-              <span>共有{jumps.length}条跳转逻辑</span>
-              <div>
-                如果本题选中
-                <Dropdown overlay={itemMenu}>
-                  <Button size="small">
-                    选项1
-                    <Icon type="down" />
-                  </Button>
-                </Dropdown>
-                ，则跳转到
-                <Dropdown
-                  overlay={
-                    <Menu>
-                      <Menu.Item>题目1</Menu.Item>
-                      <Menu.Item>题目2</Menu.Item>
-                    </Menu>
-                  }
-                >
-                  <Button size="small">
-                    题目1
-                    <Icon type="down" />
-                  </Button>
-                </Dropdown>
-              </div>
-            </div>
-          </Modal>
+        {isSelectable && (
+          <JumpsSetting {...target} visible={visible} onVisibleChange={onVisibleChange} />
         )}
       </div>
     )

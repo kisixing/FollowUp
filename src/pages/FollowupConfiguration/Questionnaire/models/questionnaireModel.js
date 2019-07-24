@@ -50,6 +50,7 @@ export default {
     hoverTargetQuestionId: '',
     clickTargetQuestionId: '',
     latestQuestionId: '', // 新增的问题id,滚动后清空
+    questionToScroll: '', // 预览滚动
     previewData: {
       questionnaireTitle: '',
       questionnaireSubTitle: '',
