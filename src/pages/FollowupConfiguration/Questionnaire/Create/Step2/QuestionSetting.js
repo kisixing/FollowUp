@@ -104,7 +104,12 @@ export default connect(mapStateToProps)(props => {
         )}
 
         {isSelectable && (
-          <JumpsSetting {...target} visible={visible} onVisibleChange={onVisibleChange} />
+          <JumpsSetting
+            {...target}
+            visible={visible}
+            onVisibleChange={onVisibleChange}
+            questionList={questionList}
+          />
         )}
       </div>
     )

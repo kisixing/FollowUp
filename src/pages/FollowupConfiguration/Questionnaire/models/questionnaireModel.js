@@ -123,8 +123,8 @@ export default {
         jumps: [],
         compulsory: false,
         [DATASET]: [single, multiple, dropdown].includes(questionType) && [
-          getDataset(),
-          getDataset(),
+          getDataset({ label: '选项1' }),
+          getDataset({ label: '选项2' }),
         ],
       };
       // 拖拽添加

@@ -1,4 +1,4 @@
-import { Form } from 'antd';
+import { Form, Button } from 'antd';
 import { MODEL } from '../models/questionnaireModel';
 import { QUESTION_SYMBOL } from '@/pages/FollowupConfiguration/Questionnaire/questionTypes';
 
@@ -52,6 +52,7 @@ export default connect(mapStateToProps)(props => {
           );
         })}
       </Form>
+      <Button onClick={() => console.log(formData)}>提交</Button>
     </div>
   );
 });

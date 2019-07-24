@@ -36,5 +36,9 @@ export default connect(mapStateToProps)(props => {
   }, [questionToScroll]);
 
   const Type = RenderType[type];
-  return <Type {...props} ref={ref} />;
+  return (
+    <div ref={ref}>
+      <Type {...props} />
+    </div>
+  );
 });
