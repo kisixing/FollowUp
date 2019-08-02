@@ -3,12 +3,6 @@ import provinceData from '@/../mock/geographic/province.json';
 import cityData from '@/../mock/geographic/city.json';
 
 const { Option } = Select;
-// const provinceData = ['Zhejiang', 'Jiangsu'];
-// const cityData = {
-//   Zhejiang: ['Hangzhou', 'Ningbo', 'Wenzhou'],
-//   Jiangsu: ['Nanjing', 'Suzhou', 'Zhenjiang'],
-// };
-
 const initProvinceId = provinceData[0].id;
 
 export default function Item(props) {
@@ -16,33 +10,34 @@ export default function Item(props) {
     getFieldDecorator,
     setFieldsValue,
     getFieldValue,
-    label = '地址',
-    option1 = [
-      'note1',
-      {
-        rules: [{ required: true, message: '请输入省份' }],
-        initialValue: initProvinceId,
-      },
-    ],
-    option2 = [
-      'note222222222',
-      {
-        rules: [{ required: true, message: '请输入城市' }],
-        // initialValue: cityData[initProvinceId][0].id
-      },
-    ],
+
+    provinceFieldName = 'provinceFieldName',
+    cityFieldName = 'cityFieldName',
+    provinceFieldOptions = {},
+    cityFieldOptions = {},
   } = props;
+
+  const _provinceFieldOptions = {
+    rules: [{ required: true, message: '请输入省份' }],
+    initialValue: initProvinceId,
+    ...provinceFieldOptions,
+  };
+  const _cityFieldOptions = {
+    rules: [{ required: true, message: '请输入城市' }],
+    // initialValue: cityData[initProvinceId][0].id
+    ...cityFieldOptions,
+  };
 
   const handleProvinceChange = value => {
     setFieldsValue({
-      [option2[0]]: cityData[value][0].id,
+      [cityFieldName]: cityData[value][0].id,
     });
   };
 
   return (
-    <Form.Item label={label} {...props}>
+    <div style={{ display: 'inline-block', marginRight: '10px' }}>
       <Form.Item style={{ display: 'inline-block', margin: '0', marginRight: '10px' }}>
-        {getFieldDecorator(...option1)(
+        {getFieldDecorator(provinceFieldName, _provinceFieldOptions)(
           <Select style={{ width: 120 }} onChange={handleProvinceChange}>
             {provinceData.map(({ id, name }) => (
               <Option key={id}>{name}</Option>
@@ -51,14 +46,14 @@ export default function Item(props) {
         )}
       </Form.Item>
       <Form.Item style={{ display: 'inline-block', margin: '0' }}>
-        {getFieldDecorator(...option2)(
+        {getFieldDecorator(cityFieldName, _cityFieldOptions)(
           <Select style={{ width: 120 }}>
-            {(cityData[getFieldValue(option1[0])] || []).map(({ id, name }) => (
+            {(cityData[getFieldValue(provinceFieldName)] || []).map(({ id, name }) => (
               <Option key={id}>{name}</Option>
             ))}
           </Select>
         )}
       </Form.Item>
-    </Form.Item>
+    </div>
   );
 }
