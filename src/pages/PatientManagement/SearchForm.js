@@ -12,7 +12,8 @@ const { Option } = Select;
 const fieldLabels = {
   startTime: { label: '建卡开始时间', value: 'startTime' },
   endTime: { label: '建卡结束时间', value: 'endTime' },
-  ageGroup: { label: '年龄段', value: 'ageGroup' },
+  ageMin: { label: '年龄段', value: 'ageMin' },
+  ageMax: { label: '年龄段', value: 'ageMax' },
   type: { label: '类型', value: 'type' },
 };
 
@@ -80,28 +81,18 @@ class SearchForm extends PureComponent {
           </Col>
           <Col lg={8} md={0} sm={0} style={{ height: '64px' }} />
           <Col lg={8} md={12} sm={24}>
-            <Form.Item label={fieldLabels.ageGroup.label}>
-              {getFieldDecorator(fieldLabels.ageGroup.value, {
-                rules: [{ required: false, message: '请选择年龄段' }],
-              })(
-                <Input.Group compact>
-                  <Input style={{ width: '45%', textAlign: 'center' }} placeholder="Minimum" />
-                  <Input
-                    style={{
-                      width: '10%',
-                      borderLeft: 0,
-                      pointerEvents: 'none',
-                      backgroundColor: '#fff',
-                    }}
-                    placeholder="~"
-                    disabled
-                  />
-                  <Input
-                    style={{ width: '45%', textAlign: 'center', borderLeft: 0 }}
-                    placeholder="Maximum"
-                  />
-                </Input.Group>
-              )}
+            <Form.Item label={fieldLabels.ageMin.label}>
+              <Form.Item style={{ display: 'inline-block', width: '45%' }}>
+                {getFieldDecorator(fieldLabels.ageMin.value, {
+                  rules: [{ required: false, message: '请选择年龄段' }],
+                })(<Input style={{ textAlign: 'center' }} placeholder="Minimum" />)}
+              </Form.Item>
+              <span> ~ </span>
+              <Form.Item style={{ display: 'inline-block', width: '45%' }}>
+                {getFieldDecorator(fieldLabels.ageMax.value)(
+                  <Input style={{ textAlign: 'center' }} placeholder="Maximum" />
+                )}
+              </Form.Item>
             </Form.Item>
           </Col>
           <Col lg={8} md={12} sm={24}>

@@ -2,7 +2,7 @@
 
 import router from 'umi/router';
 
-import { Form, List, Card, Input, Button, Tag } from 'antd';
+import { Form, List, Card, Input, Button, Tag, Spin } from 'antd';
 import { TweenOneGroup } from 'rc-tween-one';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import TagSelect from '@/components/TagSelect';
@@ -148,55 +148,57 @@ export default () => {
     >
       <div className={styles.content}>
         <Card>
-          <Form layout="inline" loading={loading}>
-            <StandardFormRow title="已选类目" block style={{ paddingBottom: 11 }}>
-              <div style={{ lineHeight: '32px' }}>
-                <TweenOneGroup
-                  enter={{
-                    scale: 0.8,
-                    opacity: 0,
-                    type: 'from',
-                    duration: 100,
-                    onComplete: e => {
-                      e.target.style = '';
-                    },
-                  }}
-                  leave={{ opacity: 0, width: 0, scale: 0, duration: 200 }}
-                  appear={false}
-                >
-                  {tagsMap(selectedItems)}
-                </TweenOneGroup>
-              </div>
-            </StandardFormRow>
-            <StandardFormRow title="对象分类" block style={{ paddingBottom: 11 }}>
-              <Form.Item>
-                <TagSelect
-                  radio
-                  expandable
-                  // hideCheckAll
-                  value={selectedScene}
-                  onChange={tags => handleTags('selectedScene', tags)}
-                  actionsText={actionsTextMap}
-                >
-                  {tagOptionsMap(category1)}
-                </TagSelect>
-              </Form.Item>
-            </StandardFormRow>
-            <StandardFormRow title="时间场景" block style={{ paddingBottom: 11 }}>
-              <Form.Item>
-                <TagSelect
-                  radio
-                  expandable
-                  // hideCheckAll
-                  value={selectedType}
-                  onChange={tags => handleTags('selectedType', tags)}
-                  actionsText={actionsTextMap}
-                >
-                  {tagOptionsMap(category2)}
-                </TagSelect>
-              </Form.Item>
-            </StandardFormRow>
-          </Form>
+          <Spin spinning={loading}>
+            <Form layout="inline">
+              <StandardFormRow title="已选类目" block style={{ paddingBottom: 11 }}>
+                <div style={{ lineHeight: '32px' }}>
+                  <TweenOneGroup
+                    enter={{
+                      scale: 0.8,
+                      opacity: 0,
+                      type: 'from',
+                      duration: 100,
+                      onComplete: e => {
+                        e.target.style = '';
+                      },
+                    }}
+                    leave={{ opacity: 0, width: 0, scale: 0, duration: 200 }}
+                    appear={false}
+                  >
+                    {tagsMap(selectedItems)}
+                  </TweenOneGroup>
+                </div>
+              </StandardFormRow>
+              <StandardFormRow title="对象分类" block style={{ paddingBottom: 11 }}>
+                <Form.Item>
+                  <TagSelect
+                    radio
+                    expandable
+                    // hideCheckAll
+                    value={selectedScene}
+                    onChange={tags => handleTags('selectedScene', tags)}
+                    actionsText={actionsTextMap}
+                  >
+                    {tagOptionsMap(category1)}
+                  </TagSelect>
+                </Form.Item>
+              </StandardFormRow>
+              <StandardFormRow title="时间场景" block style={{ paddingBottom: 11 }}>
+                <Form.Item>
+                  <TagSelect
+                    radio
+                    expandable
+                    // hideCheckAll
+                    value={selectedType}
+                    onChange={tags => handleTags('selectedType', tags)}
+                    actionsText={actionsTextMap}
+                  >
+                    {tagOptionsMap(category2)}
+                  </TagSelect>
+                </Form.Item>
+              </StandardFormRow>
+            </Form>
+          </Spin>
         </Card>
         <List
           rowKey="id"

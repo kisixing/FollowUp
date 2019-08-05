@@ -12,32 +12,32 @@ const columns = [
 const dataSource = [
   {
     name: '李依伊',
-
+    key: 1,
     status: '成功',
   },
   {
     name: '李思思',
-
+    key: 2,
     status: '成功',
   },
   {
     name: '张丹丹',
-
+    key: 3,
     status: '成功',
   },
   {
     name: '陈甜甜',
-
+    key: 4,
     status: '成功',
   },
   {
     name: '黄海峰',
-
+    key: 5,
     status: '成功',
   },
   {
     name: '郭子仪',
-
+    key: 6,
     status: '成功',
   },
 ].map(_ => ({

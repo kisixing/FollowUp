@@ -48,7 +48,7 @@ class MissionCare extends Component {
     );
 
     return (
-      <PageHeaderWrapper title="搜索列表" content={mainSearch}>
+      <PageHeaderWrapper content={mainSearch}>
         <MissionCareComponent />
       </PageHeaderWrapper>
     );

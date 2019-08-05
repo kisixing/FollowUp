@@ -74,7 +74,6 @@ class Medium extends Component {
 
     return (
       <PageHeaderWrapper
-        title="搜索列表"
         content={mainSearch}
         tabList={tabList}
         tabActiveKey={tabActiveKey}

@@ -99,7 +99,7 @@ const ROLES = mockjs.mock({
       permissions: [],
     },
     {
-      id: '20180092',
+      id: '20180093',
       nickname: '医生用户',
       authority: '自定义',
       grade: '4',
@@ -108,7 +108,7 @@ const ROLES = mockjs.mock({
       permissions: [],
     },
     {
-      id: '20180092',
+      id: '20180094',
       nickname: '护士长用户',
       authority: '自定义',
       grade: '5',
@@ -117,7 +117,7 @@ const ROLES = mockjs.mock({
       permissions: [],
     },
     {
-      id: '20180092',
+      id: '20180095',
       nickname: '护士用户',
       authority: '自定义',
       grade: '6',

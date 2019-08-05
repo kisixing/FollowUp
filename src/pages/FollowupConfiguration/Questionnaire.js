@@ -15,7 +15,7 @@ class Questionnaire extends React.Component {
   render() {
     const { children } = this.state;
 
-    return <PageHeaderWrapper title="搜索列表">{children}</PageHeaderWrapper>;
+    return <PageHeaderWrapper>{children}</PageHeaderWrapper>;
   }
 }
 

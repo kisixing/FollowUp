@@ -38,7 +38,6 @@ class SearchList extends Component {
     };
     return (
       <PageHeaderWrapper
-        title="搜索列表"
         content={
           <SearchForm
             {...searchFormProps}

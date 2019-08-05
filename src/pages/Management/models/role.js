@@ -1,5 +1,4 @@
 import { query, add, update, deleted } from '../services/role';
-// import { query, update } from '../services/role';
 
 export default {
   namespace: 'roleManagemant',
