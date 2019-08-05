@@ -5,6 +5,8 @@ export interface MyDropdownProps {
   value?: string;
   onChange?: (value: string) => void;
   dataset: Array<{ label: string; value: string }>;
+  labelKey: string;
+  valueKey: string;
 }
 
 interface MyDropdown extends WrappedFormUtils {}

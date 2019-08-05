@@ -4,7 +4,7 @@
 // let times = 0
 export default () => {
   const ref = useRef(null);
-  const executeScroll = () => {
+  const scroll = () => {
     ref.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
     // const { current: { offsetTop } } = ref
     // times = 0
@@ -22,7 +22,6 @@ export default () => {
 
     // }, interval)
   };
-  const htmlElementAttributes = { ref };
 
-  return [executeScroll, htmlElementAttributes];
+  return [ref, scroll];
 };

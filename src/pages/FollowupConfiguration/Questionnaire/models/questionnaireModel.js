@@ -1,6 +1,9 @@
 import { queryTaskTemplates } from '../Create/service';
 import { fakeQuestionnarieData } from '@/services/api';
-import { QUESTION_DATASET_SYMBOL, QUESTION_SYMBOL } from '../Create/Step2/types';
+import {
+  QUESTION_DATASET_SYMBOL,
+  QUESTION_SYMBOL,
+} from '@/pages/FollowupConfiguration/Questionnaire/questionTypes';
 
 export const MODEL = 'questionnaire_model';
 export const DATASET = 'dataset';
@@ -9,11 +12,17 @@ export const SCORE = 'score';
 export const TYPE = 'type';
 export const ID = 'id';
 
+function getId() {
+  return Math.random()
+    .toString(16)
+    .slice(2);
+}
+
 const { single, multiple, dropdown } = QUESTION_SYMBOL;
 const { normal } = QUESTION_DATASET_SYMBOL;
 export const getDataset = (data = {}) => {
   return {
-    [ID]: Math.random(),
+    [ID]: getId(),
     [F_LABEL]: `选项`,
     [TYPE]: normal,
     score: 0,
@@ -41,6 +50,7 @@ export default {
     hoverTargetQuestionId: '',
     clickTargetQuestionId: '',
     latestQuestionId: '', // 新增的问题id,滚动后清空
+    questionToScroll: '', // 预览滚动
     previewData: {
       questionnaireTitle: '',
       questionnaireSubTitle: '',
@@ -63,7 +73,7 @@ export default {
               payload: {
                 questionnaireTitle: '请填写问卷标题',
                 questionnaireSubTitle: '感谢您能抽出几分钟参加本问卷，现在让我们开始吧',
-                questionList: [],
+                // questionList: [],
               },
             }
       );
@@ -104,7 +114,7 @@ export default {
         hoverTargetQuestionId,
         clickTargetQuestionId,
       } = yield select(state => state[MODEL]);
-      const id = Math.random();
+      const id = getId();
       const newQuestion = {
         [TYPE]: questionType,
         [ID]: id,
@@ -113,8 +123,8 @@ export default {
         jumps: [],
         compulsory: false,
         [DATASET]: [single, multiple, dropdown].includes(questionType) && [
-          getDataset(),
-          getDataset(),
+          getDataset({ label: '选项1' }),
+          getDataset({ label: '选项2' }),
         ],
       };
       // 拖拽添加
@@ -161,7 +171,6 @@ export default {
     *updateQuestion({ payload }, { put, select }) {
       const { id } = payload;
       const { questionList } = yield select(state => state[MODEL]);
-
       const newQuestionList = questionList.map(_ => {
         if (_.id === id) {
           return { ..._, ...payload };
@@ -194,7 +203,7 @@ export default {
       const { questionId, datasetId } = payload;
       const { questionList } = yield select(state => state[MODEL]);
       const question = questionList.find(q => q[ID] === questionId);
-      const dataset = question && question[DATASET];
+      const dataset = question && [...question[DATASET]];
       if (dataset) {
         const delIndex = dataset.findIndex(d => d[ID] === datasetId);
         dataset.splice(delIndex, 1);

@@ -1,5 +1,7 @@
 import phone_bg from '@/assets/phone_bg.png';
-import MobileContent from './MobileContent';
+import MobileLayout from './Layout';
+import styles from './Mobile.less';
+import Strategies from './mobileStrategies';
 
 function mapStateToProps(rootState) {
   return rootState;
@@ -13,23 +15,11 @@ export default connect(mapStateToProps)(() => {
     <div
       style={{
         backgroundImage: `url(${phone_bg})`,
-        backgroundSize: '372px 744px',
-        width: '372px',
-        height: '744px',
-        display: 'inline-block',
-        textAlign: 'center',
       }}
+      className={styles.containner}
     >
-      <div
-        style={{
-          width: '318px',
-          height: '568px',
-          marginTop: '74px',
-          display: 'inline-block',
-          background: 'white',
-        }}
-      >
-        <MobileContent />
+      <div className={styles.contentWrap}>
+        <MobileLayout Strategies={Strategies} isMobile />
       </div>
     </div>
   );

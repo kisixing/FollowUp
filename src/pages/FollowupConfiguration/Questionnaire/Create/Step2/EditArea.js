@@ -21,15 +21,11 @@ class EditArea extends Component {
       },
     } = this.props;
     // eslint-disable-next-line no-unused-expressions
-    edit
-      ? dispatch({
-          type: 'questionnaire_model/fetch',
-          payload: { edit },
-        })
-      : dispatch({
-          type: 'questionnaire_model/fetch',
-          payload: { edit: false },
-        });
+
+    dispatch({
+      type: 'questionnaire_model/fetch',
+      payload: { edit: !!edit },
+    });
   }
 
   render() {
