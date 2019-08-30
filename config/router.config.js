@@ -43,7 +43,18 @@ export default [
       // dashboard
       {
         path: '/',
-        redirect: '/calendar',
+        redirect: '/dashboard',
+        authority: ['admin', 'user'],
+      },
+      {
+        path: '/dashboard',
+        name: 'dashboard',
+        icon: 'dashboard',
+        component: './Dashboard',
+      },
+      {
+        path: '/',
+        // redirect: '/calendar',
         authority: ['admin', 'user'],
       },
       {

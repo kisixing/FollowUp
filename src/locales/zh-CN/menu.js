@@ -32,6 +32,7 @@ export default {
   'menu.system-settings.permission': '权限管理',
   'menu.system-settings.monitor-logs': '操作日记',
   'menu.system-settings.monitor': '监控台',
+  'menu.dashboard': '表格组件',
 
   'menu.satisfaction-management': '满意度管理',
   'menu.satisfaction-management.complaint-lists': '投诉建议',
