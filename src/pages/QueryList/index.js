@@ -1,8 +1,8 @@
 import MyTable from './MyTable';
 import data from './config';
 
-const Dashboard = () => {
+const configTable = () => {
   return <MyTable data={data} />;
 };
 
-export default Dashboard;
+export default configTable;

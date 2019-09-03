@@ -5,7 +5,7 @@ import { DatePicker, Input, Button, Row, Col, Form, Icon, Select } from 'antd';
 const { RangePicker } = DatePicker;
 
 export default Form.create()(
-  ({ data, url, onSearch, form: { getFieldDecorator, validateFields, resetFields } }) => {
+  ({ data, onSearch, form: { getFieldDecorator, validateFields, resetFields } }) => {
     const [defaultValue, setdefaultValue] = useState({});
     const [dateFormat] = useState(() =>
       data.reduce((total, current) => {
@@ -34,7 +34,7 @@ export default Form.create()(
     useEffect(() => {
       import('./data.js').then(myModule => {
         setdefaultValue(convertDateFormat(myModule.defaultValue));
-        onSearch(myModule.defaultValue, url);
+        onSearch(undefined, myModule.defaultValue);
       });
     }, []);
 
@@ -82,9 +82,11 @@ export default Form.create()(
                 {getFieldDecorator(key, {
                   initialValue: defaultValue[key],
                 })(
-                  <Select mode="multiple">
+                  <Select>
                     {options.map(opt => (
-                      <Select.Option key={opt.key}>{opt.title}</Select.Option>
+                      <Select.Option key={opt.key} value={opt.key}>
+                        {opt.title}
+                      </Select.Option>
                     ))}
                   </Select>
                 )}
@@ -110,7 +112,7 @@ export default Form.create()(
           console.log(err);
         }
         const convertValues = convertDateFormat(values);
-        onSearch(convertValues, url);
+        onSearch(undefined, convertValues);
       });
     };
 
@@ -130,7 +132,7 @@ export default Form.create()(
                   type="primary"
                   onClick={() => {
                     resetFields();
-                    onSearch(defaultValue, url);
+                    onSearch(undefined, defaultValue);
                   }}
                 >
                   {' '}

@@ -7,12 +7,20 @@ import CustomizableTable from './CustomizableTable';
 export default ({ data }) => {
   const { url, columns, scroll, pagination } = data;
 
-  const [state, setstate] = useState([]);
+  const [state, setstate] = useState({});
+  const [searchItems, setsearchItems] = useState({});
 
   // 以后改成请求接口
-  const heardSearch = (items, address) => {
-    console.log(items, address);
-    import('./data.js').then(myModule => setstate(myModule.default));
+  const heardSearch = (current = 1, items = searchItems) => {
+    console.log(items, url, pagination, current);
+    setsearchItems(items);
+    import('./data.js').then(myModule => {
+      const { data: res, total } = myModule.default;
+      const dataSource = pagination
+        ? res.slice(pagination * (current - 1), pagination * current)
+        : res;
+      setstate({ dataSource, total });
+    });
   };
 
   const heardData = columns
@@ -29,7 +37,7 @@ export default ({ data }) => {
     <div style={{ background: '#ECECEC', padding: '10px' }}>
       {heardData && (
         <Card style={cardStyle}>
-          <Search data={heardData} url={url} onSearch={heardSearch} />
+          <Search data={heardData} onSearch={heardSearch} />
         </Card>
       )}
       <Card style={cardStyle}>
@@ -38,6 +46,7 @@ export default ({ data }) => {
           dataSource={state}
           scroll={scroll}
           pagination={pagination}
+          onSearch={heardSearch}
         />
       </Card>
     </div>

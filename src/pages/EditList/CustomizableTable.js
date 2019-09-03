@@ -38,19 +38,26 @@ const sorter = (type, key) => {
 
 const EditableContext = React.createContext();
 const EditableCell = props => {
-  const { editing, dataIndex, title, inputType, record, index, children, ...restProps } = props;
-
+  const { editing, dataIndex, inputType, options, record, children, ...restProps } = props;
+  const style = { width: '100%' };
+  // console.log(inputType)
   const getInput = () => {
-    if (inputType === 'input') {
-      return <InputNumber />;
+    if (inputType === 'number') {
+      return <InputNumber style={style} />;
     }
     if (inputType === 'select') {
-      return <Select />;
+      return (
+        <Select style={style}>
+          {options.map(opt => (
+            <Select.Option key={opt.key}>{opt.title}</Select.Option>
+          ))}
+        </Select>
+      );
     }
     if (inputType === 'date') {
-      return <DatePicker />;
+      return <DatePicker style={style} />;
     }
-    return <Input />;
+    return <Input style={style} />;
   };
   const { getFieldDecorator } = useContext(EditableContext);
   return (
@@ -74,15 +81,19 @@ const EditableCell = props => {
   );
 };
 
-export default Form.create()(({ columns, dataSource, scroll, form }) => {
-  const [mapData, setmapData] = useState(() => {
+export default Form.create()(props => {
+  const { columns, dataSource, scroll } = props;
+
+  const [mapData, setmapData] = useState();
+  useEffect(() => {
     // 需要映射的列
     const mapping = columns.filter(ele => ele.map).map(ele => ele.key);
     // 映射后的列
-    return dataSource.map(ele =>
+    const mData = dataSource.map(ele =>
       mapping.reduce((result, key) => ({ ...result, [key]: Mapping[key][result[key]] }), ele)
     );
-  });
+    setmapData(mData);
+  }, [dataSource]);
 
   // 以下为实现列搜索功能
   // 列搜索输入框输入的内容
@@ -102,66 +113,71 @@ export default Form.create()(({ columns, dataSource, scroll, form }) => {
     setsearchText(newSearchText);
   };
   // 使列有搜索功能
-  const getColumnSearchProps = dataIndex => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
-      <div style={{ padding: 8 }}>
-        <Input
-          ref={node => {
-            searchInput.current = node;
-          }}
-          placeholder={`查询 ${dataIndex}`}
-          value={selectedKeys[0]}
-          onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-          onPressEnter={() => handleSearch(dataIndex, selectedKeys[0], confirm)}
-          style={{ width: 188, marginBottom: 8, display: 'block' }}
+  const getColumnSearchProps = (filter, dataIndex, title) => {
+    if (!filter) {
+      return null;
+    }
+    return {
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+        <div style={{ padding: 8 }}>
+          <Input
+            ref={node => {
+              searchInput.current = node;
+            }}
+            placeholder={`查询 ${title}`}
+            value={selectedKeys[0]}
+            onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+            onPressEnter={() => handleSearch(dataIndex, selectedKeys[0], confirm)}
+            style={{ width: 188, marginBottom: 8, display: 'block' }}
+          />
+          <Button
+            type="primary"
+            onClick={() => handleSearch(dataIndex, selectedKeys[0], confirm)}
+            icon="search"
+            size="small"
+            style={{ width: 90, marginRight: 8 }}
+          >
+            查询
+          </Button>
+          <Button
+            onClick={() => handleReset(dataIndex, clearFilters)}
+            size="small"
+            style={{ width: 90 }}
+          >
+            重置
+          </Button>
+        </div>
+      ),
+      filterIcon: filtered => (
+        <Icon type="search" style={{ color: filtered ? '#1890ff' : undefined }} />
+      ),
+      onFilter: (value, record) =>
+        record[dataIndex]
+          .toString()
+          .toLowerCase()
+          .includes(value.toLowerCase()),
+      onFilterDropdownVisibleChange: visible => {
+        if (visible) {
+          setTimeout(() => searchInput.current.focus());
+        }
+      },
+      render: text => (
+        <Highlighter
+          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+          searchWords={[searchText[dataIndex]]}
+          autoEscape
+          textToHighlight={text.toString()}
         />
-        <Button
-          type="primary"
-          onClick={() => handleSearch(dataIndex, selectedKeys[0], confirm)}
-          icon="search"
-          size="small"
-          style={{ width: 90, marginRight: 8 }}
-        >
-          查询
-        </Button>
-        <Button
-          onClick={() => handleReset(dataIndex, clearFilters)}
-          size="small"
-          style={{ width: 90 }}
-        >
-          重置
-        </Button>
-      </div>
-    ),
-    filterIcon: filtered => (
-      <Icon type="search" style={{ color: filtered ? '#1890ff' : undefined }} />
-    ),
-    onFilter: (value, record) =>
-      record[dataIndex]
-        .toString()
-        .toLowerCase()
-        .includes(value.toLowerCase()),
-    onFilterDropdownVisibleChange: visible => {
-      if (visible) {
-        setTimeout(() => searchInput.current.focus());
-      }
-    },
-    render: text => (
-      <Highlighter
-        highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-        searchWords={[searchText[dataIndex]]}
-        autoEscape
-        textToHighlight={text.toString()}
-      />
-    ),
-  });
+      ),
+    };
+  };
 
   const [editingKey, seteditingKey] = useState('');
   const isEditing = record => record.key === editingKey;
   const cancel = () => {
     seteditingKey('');
   };
-  const save = key => {
+  const save = (form, key) => {
     form.validateFields((error, row) => {
       if (error) {
         return;
@@ -186,24 +202,33 @@ export default Form.create()(({ columns, dataSource, scroll, form }) => {
   const edit = key => {
     seteditingKey(key);
   };
-  const makeActions = actionType => {
-    if (actionType === 'edit') {
-      return (text, record) => {
-        const editable = isEditing(record);
-        return editable ? (
-          <span>
-            <a onClick={() => save(record.key)} style={{ marginRight: 8 }}>
-              Save
+  const makeActions = (key, actionType) => {
+    if (key !== 'action') {
+      return null;
+    }
+    if (actionType.includes('edit')) {
+      return {
+        render: (text, record) => {
+          const editable = isEditing(record);
+          return editable ? (
+            <span>
+              <EditableContext.Consumer>
+                {form => (
+                  <a onClick={() => save(form, record.key)} style={{ marginRight: 8 }}>
+                    保存
+                  </a>
+                )}
+              </EditableContext.Consumer>
+              <Popconfirm title="确定放弃修改？" onConfirm={() => cancel(record.key)}>
+                <a>撤销</a>
+              </Popconfirm>
+            </span>
+          ) : (
+            <a disabled={editingKey !== ''} onClick={() => edit(record.key)}>
+              编辑
             </a>
-            <Popconfirm title="Sure to cancel?" onConfirm={() => cancel(record.key)}>
-              <a>Cancel</a>
-            </Popconfirm>
-          </span>
-        ) : (
-          <a disabled={editingKey !== ''} onClick={() => edit(record.key)}>
-            Edit
-          </a>
-        );
+          );
+        },
       };
     }
     return null;
@@ -222,19 +247,22 @@ export default Form.create()(({ columns, dataSource, scroll, form }) => {
         sorter: col.sort ? sorter(col.sort, col.key) : false,
         width: col.width,
         fixed: col.fixed,
-        children: makeCols(col.children),
-        render: col.key === 'action' ? makeActions(col.actionType) : null,
-        ...getColumnSearchProps(col.key),
+        children: col.children && makeCols(col.children),
+        ...makeActions(col.key, col.actionType),
+        ...getColumnSearchProps(col.filter, col.key, col.title),
       };
+
       if (!col.editable) {
         return result;
       }
+      // console.log(col.editable.inputType)
       return {
         ...result,
         onCell: record => ({
           record,
           inputType: col.editable.inputType,
-          dataIndex: col.dataIndex,
+          options: col.editable.options,
+          dataIndex: col.key,
           title: col.title,
           editing: isEditing(record),
         }),
@@ -242,7 +270,7 @@ export default Form.create()(({ columns, dataSource, scroll, form }) => {
     });
 
   return (
-    <EditableContext.Provider value={form}>
+    <EditableContext.Provider value={props.form}>
       <Table
         components={components}
         columns={makeCols(columns)}

@@ -47,10 +47,16 @@ export default [
         authority: ['admin', 'user'],
       },
       {
-        path: '/dashboard',
-        name: 'dashboard',
+        path: '/query-list',
+        name: 'queryList',
         icon: 'dashboard',
-        component: './Dashboard',
+        component: './QueryList',
+      },
+      {
+        path: '/edit-list',
+        name: 'editList',
+        icon: 'dashboard',
+        component: './EditList',
       },
       {
         path: '/',

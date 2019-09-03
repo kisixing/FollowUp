@@ -42,18 +42,12 @@ export default {
       search: { type: 'input' },
       width: 200,
       filter: true,
-      editable: {
-        inputType: 'number',
-      },
     },
     {
       key: 'highRiskFactor',
       title: '高危因素',
       width: 100,
       search: { type: 'input' },
-      editable: {
-        inputType: 'input',
-      },
     },
     {
       key: 'highRiskLevel',
@@ -62,6 +56,27 @@ export default {
       map: 100,
       search: {
         type: 'select',
+        options: [
+          {
+            key: 3,
+            title: '高危',
+          },
+          {
+            key: 2,
+            title: '轻微',
+          },
+          {
+            key: 1,
+            title: '正常',
+          },
+          {
+            key: 0,
+            title: '良好',
+          },
+        ],
+      },
+      editable: {
+        inputType: 'select',
         options: [
           {
             key: 3,
