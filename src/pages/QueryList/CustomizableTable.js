@@ -2,7 +2,7 @@ import Highlighter from 'react-highlight-words';
 import { Table, Button, Input, Icon, Form, Alert } from 'antd';
 import moment from 'moment';
 
-// 需要映射列，结构一样后端传入即可
+// 需要映射列
 const Mapping = {
   highRiskLevel: {
     0: '良好',
@@ -135,14 +135,15 @@ export default Form.create()(props => {
       ...getColumnSearchProps(col.filter, col.key, col.title),
     }));
 
+  // 多选功能
   const [selectedRowsKeys, setselectedRowsKeys] = useState([]);
   const rowSelection = {
     selectedRowKeys: selectedRowsKeys,
     onChange: rowsKeys => setselectedRowsKeys(rowsKeys),
   };
+  // 批量删除
   const handleRemove = () => {
     const a = mapData.filter(item => !selectedRowsKeys.includes(item.key));
-
     setmapData(a);
   };
 

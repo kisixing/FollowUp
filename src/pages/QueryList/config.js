@@ -5,10 +5,15 @@ export default {
   },
   // table表头设置：
   // key：后端对应字段；title：前端显示字段
+  // children([object]):子列
   // width(string|number): 每列宽度，可省略;如果列分组（有子列）需要在最下层子列设置宽度。支持：'10%','10px',100等设置
   // sort(string): 排序。支持：'number'，'date'
-  // search(object): 头部Search.js处需要搜索的列。支持：{type:'input'},{type:'date',format:'YYYY-MM-DD'}(format内容要对应数据库里数据格式)
-  // fixed(string): 固定某些列，如果列分组（有子列）需要在最上层设置fixed。注意：非固定列宽度<=scroll.x。支持：'left','rightn'
+  // search(object): 头部Search.js处需要搜索的列。支持：{type:'input'},{type:'date',format:'YYYY-MM-DD'}(format内容要对应数据库里数据格式)，{type:'select',option:[{key,title}]}
+  // filter(boolean):表头处是否可以搜索
+  // map(true):数据是否需要映射
+  // fixed(string): 固定某些列，如果列分组（有子列）需要在最上层设置fixed。注意：非固定列宽度小于等于scroll.x。支持：'left','right'
+  // scroll(object:{x,y}):设置表格宽高。固定表头需要设置y，固定某列需要设置x
+  // pagination(int):设置每页显示条数，不设置为默认样式，设置时为懒加载。
   columns: [
     {
       key: 'name',
@@ -53,7 +58,7 @@ export default {
       key: 'highRiskLevel',
       title: '高危等级',
       width: '10%',
-      map: 100,
+      map: true,
       search: {
         type: 'select',
         options: [
@@ -75,27 +80,27 @@ export default {
           },
         ],
       },
-      editable: {
-        inputType: 'select',
-        options: [
-          {
-            key: 3,
-            title: '高危',
-          },
-          {
-            key: 2,
-            title: '轻微',
-          },
-          {
-            key: 1,
-            title: '正常',
-          },
-          {
-            key: 0,
-            title: '良好',
-          },
-        ],
-      },
+      // editable: {
+      //   inputType: 'select',
+      //   options: [
+      //     {
+      //       key: 3,
+      //       title: '高危',
+      //     },
+      //     {
+      //       key: 2,
+      //       title: '轻微',
+      //     },
+      //     {
+      //       key: 1,
+      //       title: '正常',
+      //     },
+      //     {
+      //       key: 0,
+      //       title: '良好',
+      //     },
+      //   ],
+      // },
     },
     {
       key: 'startDate',

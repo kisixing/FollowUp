@@ -35,11 +35,14 @@ export default ({ data }) => {
 
   return (
     <div style={{ background: '#ECECEC', padding: '10px' }}>
+      {/* 头部查询组件 */}
       {heardData && (
         <Card style={cardStyle}>
           <Search data={heardData} onSearch={heardSearch} />
         </Card>
       )}
+
+      {/* 表格部分 */}
       <Card style={cardStyle}>
         <CustomizableTable
           columns={columns}

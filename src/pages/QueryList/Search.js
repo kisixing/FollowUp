@@ -6,7 +6,7 @@ const { RangePicker } = DatePicker;
 
 export default Form.create()(
   ({ data, onSearch, form: { getFieldDecorator, validateFields, resetFields } }) => {
-    const [defaultValue, setdefaultValue] = useState({});
+    // 把date需要格式化的抽离出来
     const [dateFormat] = useState(() =>
       data.reduce((total, current) => {
         if (current.search.type === 'date') {
@@ -18,6 +18,7 @@ export default Form.create()(
         return total;
       }, {})
     );
+    // 转换date的格式转换
     const convertDateFormat = values =>
       Object.keys(dateFormat).reduce(
         (total, key) => {
@@ -31,6 +32,8 @@ export default Form.create()(
         },
         { ...values }
       );
+    // 默认查询的内容
+    const [defaultValue, setdefaultValue] = useState({});
     useEffect(() => {
       import('./data.js').then(myModule => {
         setdefaultValue(convertDateFormat(myModule.defaultValue));
@@ -38,8 +41,8 @@ export default Form.create()(
       });
     }, []);
 
+    // 头部展开和收起
     const [expandForm, setexpandForm] = useState(false);
-
     const colSpan = { xl: 8, md: 12, xs: 24 };
     const makeForm = () => {
       let headItems = data.slice(0, 2);
@@ -52,7 +55,6 @@ export default Form.create()(
           key,
           title,
         } = item;
-
         if (type === 'date') {
           return (
             <Col {...colSpan} key={key}>
